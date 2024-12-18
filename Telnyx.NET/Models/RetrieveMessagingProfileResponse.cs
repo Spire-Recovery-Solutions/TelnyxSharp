@@ -106,5 +106,27 @@ namespace Telnyx.NET.Models
         /// </summary>
         [JsonPropertyName("url_shortener_settings")]
         public UrlShortenerSettings? UrlShortenerSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the alpha sender name used in the messaging profile. 
+        /// This is typically used for sender identification in messages.
+        /// </summary>
+        [JsonPropertyName("alpha_sender")]
+        public string? AlphaSender { get; set; }
+
+        /// <summary>
+        /// Gets or sets the daily spend limit for the messaging profile.
+        /// The value is a string representing the monetary limit (e.g., "100.00").
+        /// </summary>
+        [JsonPropertyName("daily_spend_limit")]
+        public string DailySpendLimit { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the daily spend limit is enabled for the messaging profile.
+        /// When <c>true</c>, the daily spend limit is enforced.
+        /// </summary>
+        [JsonPropertyName("daily_spend_limit_enabled")]
+        public bool DailySpendLimitEnabled { get; set; }
+
     }
 }
