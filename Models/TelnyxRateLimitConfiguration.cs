@@ -1,0 +1,26 @@
+﻿namespace Telnyx.NET.Models
+{
+    public sealed class TelnyxRateLimitConfiguration
+    {
+        public int Global { get; set; } = 200;
+        // Unauthed number search also possible at 10 per minute but do we care?
+        public int NumberSearch { get; set; } = 1;
+        public int PhoneNumbers { get; set; } = 5;
+        public int Connections { get; set; } = 5;
+        public int FQDNConnections { get; set; } = 5;
+        public int IPConnections { get; set; } = 5;
+        public int CredentialsConnections { get; set; } = 5;
+        public int CallControlApplications { get; set; } = 5;
+        public int TeXMLApplications { get; set; } = 5;
+        public int FaxApplications { get; set; } = 5;
+        public int OutboundVoiceProfiles { get; set; } = 5;
+        public int MessagingProfiles { get; set; } = 5;
+        public int NumberOrders { get; set; } = 1;
+        public int SendMessage { get; set; } = 1;
+        public int PortNumbers { get; set; } = 1;
+        public int NumberReservations { get; set; } = 1;
+        public int NumberLookups { get; set; } = 1;
+        public int Calls { get; set; } = 100;
+
+    }
+}
