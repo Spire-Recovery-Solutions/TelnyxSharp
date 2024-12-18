@@ -1,0 +1,46 @@
+name: Publish NuGet Packages
+
+on:
+  push:
+    branches:
+      - master
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      
+    - name: Checkout Code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.x'
+
+    - name: Calculate Version
+      id: calculate_version
+      run: |
+        COMMITS=$(git rev-list --count HEAD)
+        VERSION="0.1.0.${COMMITS}"
+        echo "version=$VERSION" >> $GITHUB_ENV
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+    - name: Update Version in Project Files
+      run: |
+        find . -name '*.csproj' -type f -exec sed -i 's/1\.2\.3\.4/${{ env.version }}/g' {} +
+
+    - name: Restore Dependencies
+      run: dotnet restore
+
+    - name: Build Project
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Publish NuGet Package
+      run: dotnet pack --configuration Release --output ./artifacts --no-build -p:Version=${{ env.version }}
+
+    - name: Push NuGet Package to NuGet.org
+      run: dotnet nuget push ./artifacts/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
