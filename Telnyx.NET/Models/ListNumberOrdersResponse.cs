@@ -1,11 +1,8 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
 {
-    using System.Collections.Generic;
-    
-    using Interfaces;
-
     public class ListNumberOrdersResponse : ITelnyxResponse
     {
         [JsonPropertyName("data")]

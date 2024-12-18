@@ -202,5 +202,13 @@ namespace Telnyx.NET.Interfaces
         /// <param name="cancellationToken">Optional cancellation token for the operation.</param>
         /// <returns>A <see cref="TransferCallResponse"/> containing the result of the transfer operation.</returns>
         Task<TransferCallResponse?> TransferCall(string callControlId, TransferCallRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves messaging profiles based on the given request parameters.
+        /// </summary>
+        /// <param name="request">The request containing parameters for filtering and pagination.</param>
+        /// <param name="cancellationToken">A token to observe for cancellation requests.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the response with messaging profiles or null if the operation fails.</returns>
+        Task<MessagingProfilesResponse?> GetMessagingProfiles(MessagingProfilesRequest request, CancellationToken cancellationToken = default);
     }
 }
