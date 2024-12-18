@@ -1,46 +1,44 @@
-name: Publish NuGet Packages
+name: Publish to NuGet
 
 on:
   push:
     branches:
-      - master
-      - main
+      - main  # Trigger the workflow on push to the main branch
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
     steps:
-      
-    - name: Checkout Code
+    
+    - name: Checkout code
       uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '8.x'
+        dotnet-version: 8.0.x
 
-    - name: Calculate Version
-      id: calculate_version
+    - name: Build
       run: |
-        COMMITS=$(git rev-list --count HEAD)
-        VERSION="0.1.0.${COMMITS}"
-        echo "version=$VERSION" >> $GITHUB_ENV
-        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        cd Telnyx.Net
+        dotnet restore
+        dotnet build --configuration Release --no-restore
 
-    - name: Update Version in Project Files
+    - name: Test
       run: |
-        find . -name '*.csproj' -type f -exec sed -i 's/1\.2\.3\.4/${{ env.version }}/g' {} +
+        cd Telnyx.Net.Tests
+        dotnet test
+      env:
+        API_KEY: ${{ secrets.API_KEY }}
+        API_URL: ${{ secrets.API_URL }}
+        RANDOM_SEED: ${{ secrets.RANDOM_SEED }}
 
-    - name: Restore Dependencies
-      run: dotnet restore
+    - name: Pack
+      run: |
+        cd Telnyx.Net
+        dotnet pack --configuration Release --no-restore --output nupkg /p:Version=${{ env.version }}
 
-    - name: Build Project
-      run: dotnet build --configuration Release --no-restore
-
-    - name: Publish NuGet Package
-      run: dotnet pack --configuration Release --output ./artifacts --no-build -p:Version=${{ env.version }}
-
-    - name: Push NuGet Package to NuGet.org
-      run: dotnet nuget push ./artifacts/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+    - name: Push to NuGet
+      run: |
+        cd Telnyx.Net
+        dotnet nuget push nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
