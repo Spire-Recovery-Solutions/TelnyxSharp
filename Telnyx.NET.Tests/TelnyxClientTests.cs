@@ -1,23 +1,13 @@
 using Moq;
-using Polly;
 using RestSharp;
-using Telnyx.NET;
-using Telnyx.NET.Interfaces;
 using Telnyx.NET.Models;
-using Xunit;
 
 namespace Telnyx.NET.Tests
 {
     public class TelnyxClientTests
     {
-        private readonly Mock<RestClient> _mockRestClient;
-        private readonly TelnyxClient _telnyxClient;
-
-        public TelnyxClientTests()
-        {
-            _mockRestClient = new Mock<RestClient>();
-            _telnyxClient = new TelnyxClient("fakeApiKey");
-        }
+        private readonly Mock<RestClient> _mockRestClient = new();
+        private readonly TelnyxClient _telnyxClient = new("fakeApiKey");
 
         [Fact]
         public async Task NumberLookup_ShouldReturnExpectedResponse()
@@ -31,10 +21,14 @@ namespace Telnyx.NET.Tests
 
             var expectedResponse = new NumberLookupResponse
             {
-                Data = new NumberLookupResponseData
+                Data = new NumberLookupDatum
                 {
                     PhoneNumber = "1234567890",
-                    CallerName = "John Doe"
+                    CallerName = new NumberLookupCallerName
+                    {
+                        CallerNameCallerName = "John Doe",
+                        ErrorCode = null
+                    }
                 }
             };
 
