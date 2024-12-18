@@ -33,7 +33,7 @@ namespace Telnyx.NET.Models
         /// Identifies the type of resource.
         /// </summary>
         [JsonPropertyName("record_type")]
-        public string RecordType { get; set; }
+        public string RecordType { get; set; } = string.Empty;
 
         /// <summary>
         /// The unique identifier of the messaging profile.
@@ -45,7 +45,7 @@ namespace Telnyx.NET.Models
         /// The user-friendly name of the messaging profile.
         /// </summary>
         [JsonPropertyName("name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         /// <summary>
         /// The primary webhook URL for the messaging profile.
@@ -135,7 +135,7 @@ namespace Telnyx.NET.Models
     public class UrlShortenerSettings
     {
         [JsonPropertyName("domain")]
-        public string Domain { get; set; }
+        public string Domain { get; set; } = string.Empty;
 
         [JsonPropertyName("prefix")]
         public string? Prefix { get; set; }
