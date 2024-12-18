@@ -2,12 +2,8 @@
 
   <PropertyGroup>
     <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
-   	<Version>1.2.3.4</Version>
-   	<AssemblyVersion>1.2.3.4</AssemblyVersion>
-   	<FileVersion>1.2.3.4</FileVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <LangVersion>preview</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
