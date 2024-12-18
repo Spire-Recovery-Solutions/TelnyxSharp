@@ -464,7 +464,7 @@ namespace Telnyx.NET
                 cancellationToken);
         }
 
-         /// <inheritdoc />
+        /// <inheritdoc />
         public async Task<MessagingProfilesResponse?> GetMessagingProfiles(MessagingProfilesRequest request, CancellationToken cancellationToken = default)
         {
             var query = new QueryBuilder()
@@ -473,6 +473,15 @@ namespace Telnyx.NET
 
             var req = new RestRequest($"messaging_profiles?{query}");
             return await _policies[typeof(MessagingProfilesRequest)].ExecuteAsync(token => ExecuteAsync<MessagingProfilesResponse>(req, token), cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<CreateMessagingProfileResponse?> CreateMessagingProfile(CreateMessagingProfileRequest request, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest("messaging_profiles", Method.Post);
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[typeof(CreateMessagingProfileResponse)].ExecuteAsync(token => ExecuteAsync<CreateMessagingProfileResponse>(req, token), cancellationToken);
         }
 
         /// <inheritdoc />
