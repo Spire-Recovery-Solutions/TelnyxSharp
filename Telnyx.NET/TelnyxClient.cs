@@ -147,6 +147,15 @@ namespace Telnyx.NET
             return response;
         }
 
+         /// <inheritdoc />
+        public async Task<RetrieveMessagingProfileResponse?> RetrieveMessagingProfile(string id, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"messaging_profiles/{id}");
+            return await _policies[typeof(RetrieveMessagingProfileRequest)].ExecuteAsync(
+                token => ExecuteAsync<RetrieveMessagingProfileResponse>(req, token),
+                cancellationToken);
+        }
+
         /// <inheritdoc />
         public async Task<GetNumberOrderResponse?> GetNumberOrder(string numberOrderId, CancellationToken cancellationToken = default)
         {
