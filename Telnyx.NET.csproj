@@ -7,12 +7,16 @@
    	<FileVersion>1.2.3.4</FileVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <LangVersion>preview</LangVersion>
+    <LangVersion>preview</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Polly" Version="8.5.0" />
     <PackageReference Include="RestSharp" Version="112.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Telnyx.NET.Tests\Telnyx.NET.Tests.csproj" />
   </ItemGroup>
 
 </Project>

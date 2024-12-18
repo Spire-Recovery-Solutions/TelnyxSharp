@@ -25,7 +25,7 @@ jobs:
 
     - name: Test
       run: |
-        dotnet test
+        dotnet test Telnyx.NET.Tests/Telnyx.NET.Tests.csproj
       env:
         API_KEY: ${{ secrets.API_KEY }}
         API_PIN: ${{ secrets.API_PIN }}
