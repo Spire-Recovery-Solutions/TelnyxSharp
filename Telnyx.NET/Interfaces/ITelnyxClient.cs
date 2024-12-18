@@ -210,5 +210,13 @@ namespace Telnyx.NET.Interfaces
         /// <param name="cancellationToken">A token to observe for cancellation requests.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains the response with messaging profiles or null if the operation fails.</returns>
         Task<MessagingProfilesResponse?> GetMessagingProfiles(MessagingProfilesRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Creates a new messaging profile based on the provided request.
+        /// </summary>
+        /// <param name="request">The request object containing the details needed to create the messaging profile.</param>
+        /// <param name="cancellationToken">A token to cancel the asynchronous operation. Default is `CancellationToken.None`.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the response of type `CreateMessagingProfileResponse` if the operation is successful, or `null` if it fails.</returns>
+        Task<CreateMessagingProfileResponse?> CreateMessagingProfile(CreateMessagingProfileRequest request, CancellationToken cancellationToken = default);
     }
 }

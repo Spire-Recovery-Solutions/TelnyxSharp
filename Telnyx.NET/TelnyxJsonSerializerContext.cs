@@ -143,6 +143,10 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(UrlShortenerSettings))]
     [JsonSerializable(typeof(MessagingProfilesMeta))]
 
+    [JsonSerializable(typeof(CreateMessagingProfileRequest))]
+    [JsonSerializable(typeof(CreateMessagingProfileResponse))]
+    [JsonSerializable(typeof(MessagingProfileData))]
+
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,
