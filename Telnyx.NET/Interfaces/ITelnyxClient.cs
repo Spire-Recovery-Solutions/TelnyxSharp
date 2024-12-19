@@ -218,5 +218,17 @@ namespace Telnyx.NET.Interfaces
         /// <param name="cancellationToken">A token to cancel the asynchronous operation. Default is `CancellationToken.None`.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains the response of type `CreateMessagingProfileResponse` if the operation is successful, or `null` if it fails.</returns>
         Task<CreateMessagingProfileResponse?> CreateMessagingProfile(CreateMessagingProfileRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves a messaging profile by its unique identifier from the Telnyx API.
+        /// </summary>
+        /// <param name="id">The unique identifier (UUID) of the messaging profile to retrieve.</param>
+        /// <param name="cancellationToken">
+        /// An optional <see cref="CancellationToken"/> to cancel the request if needed.
+        /// </param>
+        /// <returns>
+        /// A task representing the asynchronous operation.
+        /// </returns>
+        Task<RetrieveMessagingProfileResponse?> RetrieveMessagingProfile(string id, CancellationToken cancellationToken = default);
     }
 }
