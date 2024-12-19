@@ -66,9 +66,9 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(PhoneNumbersRequest))]
     [JsonSerializable(typeof(SendMessageRequest))]
     [JsonSerializable(typeof(SendMessageResponse))]
-    [JsonSerializable(typeof(Data))]
+    [JsonSerializable(typeof(SendMessageData))]
     [JsonSerializable(typeof(Cost))]
-    [JsonSerializable(typeof(From))]
+    [JsonSerializable(typeof(FromTo))]
     [JsonSerializable(typeof(Media))]
     [JsonSerializable(typeof(TelnyxRateLimitConfiguration))]
     [JsonSerializable(typeof(UpdateNumberConfigurationRequest))]
@@ -186,6 +186,10 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(MessagingProfileMetricsResponse))]
     [JsonSerializable(typeof(MessagingProfileMetricsData))]
     [JsonSerializable(typeof(MessagingProfileMetricsMeta))]
+
+    [JsonSerializable(typeof(LongCodeMessageRequest))]
+    [JsonSerializable(typeof(LongCodeMessageResponse))]
+    [JsonSerializable(typeof(LongCodeMessageData))]
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,

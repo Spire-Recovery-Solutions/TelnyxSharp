@@ -569,6 +569,17 @@ namespace Telnyx.NET
         }
 
         /// <inheritdoc />
+        public async Task<LongCodeMessageResponse?> SendLongCodeMessage(LongCodeMessageRequest request, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest("messages/long_code", Method.Post);
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[request.GetType()].ExecuteAsync(
+                token => ExecuteAsync<LongCodeMessageResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
         private async Task<T1?> ExecuteAsync<T1>(RestRequest request, CancellationToken cancellationToken = default)
             where T1 : ITelnyxResponse
         {
