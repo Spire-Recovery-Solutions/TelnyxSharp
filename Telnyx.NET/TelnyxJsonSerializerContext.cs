@@ -190,6 +190,10 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(LongCodeMessageRequest))]
     [JsonSerializable(typeof(LongCodeMessageResponse))]
     [JsonSerializable(typeof(LongCodeMessageData))]
+
+    [JsonSerializable(typeof(NumberPoolMessageRequest))]
+    [JsonSerializable(typeof(NumberPoolMessageResponse))]
+    [JsonSerializable(typeof(NumberPoolMessageData))]
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,

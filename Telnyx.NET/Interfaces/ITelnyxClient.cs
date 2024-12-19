@@ -316,5 +316,17 @@ namespace Telnyx.NET.Interfaces
         /// with details about the sent message or <c>null</c> if the request fails.
         /// </returns>
         Task<LongCodeMessageResponse?> SendLongCodeMessage(LongCodeMessageRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Sends a message using a number pool.
+        /// </summary>
+        /// <param name="request">The request containing the details of the message to be sent.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation if necessary.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation.
+        /// The task result contains the response from the API,
+        /// which includes message data and any errors that occurred.
+        /// </returns>
+        Task<NumberPoolMessageResponse?> SendMessageUsingNumberPoolAsync(NumberPoolMessageRequest request, CancellationToken cancellationToken = default);
     }
 }

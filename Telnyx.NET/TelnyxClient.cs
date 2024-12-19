@@ -569,6 +569,17 @@ namespace Telnyx.NET
         }
 
         /// <inheritdoc />
+        public async Task<NumberPoolMessageResponse?> SendMessageUsingNumberPoolAsync(NumberPoolMessageRequest request, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest("messages/number_pool", Method.Post);
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[request.GetType()].ExecuteAsync(
+                token => ExecuteAsync<NumberPoolMessageResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
         public async Task<LongCodeMessageResponse?> SendLongCodeMessage(LongCodeMessageRequest request, CancellationToken cancellationToken = default)
         {
             var req = new RestRequest("messages/long_code", Method.Post);
