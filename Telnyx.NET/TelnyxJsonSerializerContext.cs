@@ -167,6 +167,11 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(MessagingPhoneNumberFeatures))]
     [JsonSerializable(typeof(MessagingFeature))]
     [JsonSerializable(typeof(MessagingProfilePhoneNumberMeta))]
+
+    [JsonSerializable(typeof(MessagingProfileShortCodeRequest))]
+    [JsonSerializable(typeof(MessagingProfileShortCodeResponse))]
+    [JsonSerializable(typeof(MessagingProfileShortCode))]
+    [JsonSerializable(typeof(MessagingProfileShortCodeMeta))]
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,
