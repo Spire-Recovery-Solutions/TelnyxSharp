@@ -1,16 +1,29 @@
-﻿
-using System.Text.Json.Serialization;
-
+﻿using System.Text.Json.Serialization;
 using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
 {
+    /// <summary>
+    /// Represents the response returned after sending a message via the Telnyx API.
+    /// </summary>
     public partial class SendMessageResponse : ITelnyxResponse
     {
+        /// <summary>
+        /// Contains the data associated with the sent message.
+        /// </summary>
         [JsonPropertyName("data")]
         public Data Data { get; set; }
+
+        /// <summary>
+        /// Represents any errors encountered during the message sending process.
+        /// </summary>
+        [JsonPropertyName("errors")]
+        public TelnyxError[]? Errors { get; set; }
     }
 
+    /// <summary>
+    /// Contains detailed information about a sent message.
+    /// </summary>
     public partial class Data
     {
         [JsonPropertyName("record_type")]
@@ -32,10 +45,10 @@ namespace Telnyx.NET.Models
         public Guid? MessagingProfileId { get; set; }
 
         [JsonPropertyName("from")]
-        public From From { get; set; }
+        public FromTo From { get; set; }
 
         [JsonPropertyName("to")]
-        public List<From> To { get; set; }
+        public List<FromTo> To { get; set; }
 
         [JsonPropertyName("cc")]
         public List<string> Cc { get; set; }
@@ -80,22 +93,25 @@ namespace Telnyx.NET.Models
         public DateTimeOffset? ValidUntil { get; set; }
 
         [JsonPropertyName("errors")]
-        public List<string> Errors { get; set; }
-
-        [JsonPropertyName("original_text")]
-        public string? OriginalText { get; set; }
+        public List<Error>? Errors { get; set; }
     }
 
+    /// <summary>
+    /// Represents the cost associated with sending a message.
+    /// </summary>
     public partial class Cost
     {
-        [JsonPropertyName("cost")]
-        public string? CostCost { get; set; }
+        [JsonPropertyName("amount")]
+        public decimal? Amount { get; set; }
 
         [JsonPropertyName("currency")]
         public string? Currency { get; set; }
     }
 
-    public partial class From
+    /// <summary>
+    /// Represents the sender or recipient of a message.
+    /// </summary>
+    public partial class FromTo
     {
         [JsonPropertyName("phone_number")]
         public string? PhoneNumber { get; set; }
@@ -110,6 +126,9 @@ namespace Telnyx.NET.Models
         public string? Status { get; set; }
     }
 
+    /// <summary>
+    /// Represents a media file associated with a message.
+    /// </summary>
     public partial class Media
     {
         [JsonPropertyName("url")]
@@ -123,5 +142,26 @@ namespace Telnyx.NET.Models
 
         [JsonPropertyName("size")]
         public int Size { get; set; }
+    }
+
+    /// <summary>
+    /// Represents an error encountered during the message processing.
+    /// </summary>
+    public class Error
+    {
+        [JsonPropertyName("code")]
+        public int Code { get; set; }
+
+        [JsonPropertyName("title")]
+        public string Title { get; set; } = string.Empty;
+
+        [JsonPropertyName("detail")]
+        public string Detail { get; set; } = string.Empty;
+
+        [JsonPropertyName("source")]
+        public ErrorSource? Source { get; set; }
+
+        [JsonPropertyName("meta")]
+        public object Meta { get; set; }
     }
 }
