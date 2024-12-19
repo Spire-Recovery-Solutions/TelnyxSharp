@@ -288,5 +288,18 @@ namespace Telnyx.NET.Interfaces
         /// <see cref="MessagingProfileMetricsResponse"/> if the request is successful; otherwise, null.
         /// </returns>
         Task<RetrieveMessagingProfileMetricsResponse?> RetrieveMessagingProfileMetrics(string id, RetrieveMessagingProfileMetricsRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves a list of messaging profile metrics based on the specified request parameters.
+        /// </summary>
+        /// <param name="request">The request containing filter and pagination parameters for retrieving messaging profile metrics.</param>
+        /// <param name="cancellationToken">
+        /// A <see cref="CancellationToken"/> to observe while waiting for the task to complete.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task"/> representing the asynchronous operation, containing a 
+        /// <see cref="MessagingProfileMetricsResponse"/> if successful, or <c>null</c> if no response is available.
+        /// </returns>
+        Task<MessagingProfileMetricsResponse?> ListMessagingProfileMetrics(MessagingProfileMetricsRequest request, CancellationToken cancellationToken = default);
     }
 }

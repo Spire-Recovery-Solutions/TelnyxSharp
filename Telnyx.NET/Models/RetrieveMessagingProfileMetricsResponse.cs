@@ -12,7 +12,7 @@ namespace Telnyx.NET.Models
         /// Gets or sets the metrics data for the messaging profile.
         /// </summary>
         [JsonPropertyName("data")]
-        public MessagingProfileMetricsData? Data { get; set; }
+        public RetrieveMessagingProfileMetricsData? Data { get; set; }
 
         /// <summary>
         /// Gets or sets any errors that occurred during the API request.
@@ -24,7 +24,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the metrics data for a messaging profile.
     /// </summary>
-    public class MessagingProfileMetricsData
+    public class RetrieveMessagingProfileMetricsData
     {
         /// <summary>
         /// Gets or sets the detailed metrics.
