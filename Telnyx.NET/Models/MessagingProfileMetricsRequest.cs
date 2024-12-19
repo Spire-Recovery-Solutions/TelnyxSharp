@@ -21,7 +21,7 @@ namespace Telnyx.NET.Models
         /// The ID of the messaging profile(s) to retrieve.
         /// </summary>
         [JsonPropertyName("id")]
-        public Guid MessagingProfileId { get; set; }
+        public string MessagingProfileId { get; set; } = string.Empty;
 
         /// <summary>
         /// The timeframe for which you'd like to retrieve metrics.

@@ -31,7 +31,7 @@ namespace Telnyx.NET.Models
         public string? CustomerReference { get; set; }
 
         [JsonPropertyName("messaging_profile_id")]
-        public Guid? MessagingProfileId { get; set; }
+        public string? MessagingProfileId { get; set; }
 
         [JsonPropertyName("updated_at")]
         public DateTimeOffset? UpdatedAt { get; set; }

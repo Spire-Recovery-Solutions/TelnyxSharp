@@ -7,7 +7,7 @@ namespace Telnyx.NET.Models
         public int? PageNumber { get; set; } = 1;
         public int? PageSize { get; set; }
         public string? PortingOrderId { get; set; }
-        public List<Guid>? PortingOrderIds { get; set; }
+        public List<string>? PortingOrderIds { get; set; }
         public string? SupportKeyEq { get; set; }
         public List<string>? SupportKeyIn { get; set; }
         public string? PhoneNumber { get; set; }

@@ -43,7 +43,7 @@ namespace Telnyx.NET.Models
         /// Unique identifier for the message.
         /// </summary>
         [JsonPropertyName("id")]
-        public Guid Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>
         /// The type of message (e.g., "sms" or "mms").
@@ -61,7 +61,7 @@ namespace Telnyx.NET.Models
         /// Identifier for the organization associated with the message.
         /// </summary>
         [JsonPropertyName("organization_id")]
-        public Guid OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
 
         /// <summary>
         /// Details about the sender of the message.
