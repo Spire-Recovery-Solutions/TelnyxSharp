@@ -301,5 +301,20 @@ namespace Telnyx.NET.Interfaces
         /// <see cref="MessagingProfileMetricsResponse"/> if successful, or <c>null</c> if no response is available.
         /// </returns>
         Task<MessagingProfileMetricsResponse?> ListMessagingProfileMetrics(MessagingProfileMetricsRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Sends a long code message asynchronously.
+        /// </summary>
+        /// <param name="request">
+        /// The request containing details for the long code message to be sent.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// An optional cancellation token that can be used to cancel the operation.
+        /// </param>
+        /// <returns>
+        /// A task representing the asynchronous operation. The task result contains the response
+        /// with details about the sent message or <c>null</c> if the request fails.
+        /// </returns>
+        Task<LongCodeMessageResponse?> SendLongCodeMessage(LongCodeMessageRequest request, CancellationToken cancellationToken = default);
     }
 }

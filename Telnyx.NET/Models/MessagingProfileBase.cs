@@ -17,7 +17,7 @@ namespace Telnyx.NET.Models
         /// Gets or sets the unique identifier for the messaging profile.
         /// </summary>
         [JsonPropertyName("id")]
-        public Guid Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the messaging profile.
