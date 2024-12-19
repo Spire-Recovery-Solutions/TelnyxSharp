@@ -1,5 +1,5 @@
-﻿using Telnyx.NET.Models;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Models;
 
 namespace Telnyx.NET
 {
@@ -151,10 +151,14 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(RetrieveMessagingProfileRequest))]
     [JsonSerializable(typeof(RetrieveMessagingProfileResponse))]
     [JsonSerializable(typeof(RetrieveMessagingProfileData))]
-       
+
     [JsonSerializable(typeof(UpdateMessagingProfileRequest))]
     [JsonSerializable(typeof(UpdateMessagingProfileResponse))]
     [JsonSerializable(typeof(UpdateMessagingProfileData))]
+
+    [JsonSerializable(typeof(DeleteMessagingProfileRequest))]
+    [JsonSerializable(typeof(DeleteMessagingProfileResponse))]
+    [JsonSerializable(typeof(DeleteMessagingProfileData))]
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,
