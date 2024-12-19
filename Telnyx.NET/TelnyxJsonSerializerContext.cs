@@ -159,6 +159,14 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(DeleteMessagingProfileRequest))]
     [JsonSerializable(typeof(DeleteMessagingProfileResponse))]
     [JsonSerializable(typeof(DeleteMessagingProfileData))]
+
+    [JsonSerializable(typeof(MessagingProfilePhoneNumberRequest))]
+    [JsonSerializable(typeof(MessagingProfilePhoneNumberResponse))]
+    [JsonSerializable(typeof(MessagingProfilePhoneNumberData))]
+    [JsonSerializable(typeof(MessagingPhoneNumberHealth))]
+    [JsonSerializable(typeof(MessagingPhoneNumberFeatures))]
+    [JsonSerializable(typeof(MessagingFeature))]
+    [JsonSerializable(typeof(MessagingProfilePhoneNumberMeta))]
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,
