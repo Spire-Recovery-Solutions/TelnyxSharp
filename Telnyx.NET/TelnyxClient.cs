@@ -554,6 +554,21 @@ namespace Telnyx.NET
         }
 
         /// <inheritdoc />
+        public async Task<MessagingProfileMetricsResponse?> ListMessagingProfileMetrics(MessagingProfileMetricsRequest request, CancellationToken cancellationToken = default)
+        {
+            var query = new QueryBuilder()
+                .AddPagination(request.PageNumber, request.PageSize)
+                .AddFilter("id", request.MessagingProfileId.ToString())
+                .AddFilter("time_frame", request.TimeFrame);
+
+            var req = new RestRequest($"messaging_profile_metrics?{query}");
+
+            return await _policies[request.GetType()].ExecuteAsync(
+                token => ExecuteAsync<MessagingProfileMetricsResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
         private async Task<T1?> ExecuteAsync<T1>(RestRequest request, CancellationToken cancellationToken = default)
             where T1 : ITelnyxResponse
         {
