@@ -253,7 +253,7 @@ namespace Telnyx.NET.Interfaces
         /// </returns>
         Task<DeleteMessagingProfileResponse?> DeleteMessagingProfile(string id, CancellationToken cancellationToken = default);
 
-         /// <summary>
+        /// <summary>
         /// Retrieves a list of phone numbers associated with a specific messaging profile.
         /// </summary>
         /// <param name="id">The unique identifier of the messaging profile.</param>
@@ -263,7 +263,7 @@ namespace Telnyx.NET.Interfaces
         /// A task that represents the asynchronous operation. The task result contains a 
         /// <see cref="MessagingProfilePhoneNumberResponse"/> if the request is successful; otherwise, null.
         /// </returns>
-        Task<MessagingProfilePhoneNumberResponse?> ListMessagingProfilePhoneNumbers(string id,  MessagingProfilePhoneNumberRequest request, CancellationToken cancellationToken = default);
+        Task<MessagingProfilePhoneNumberResponse?> ListMessagingProfilePhoneNumbers(string id, MessagingProfilePhoneNumberRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Retrieves a list of short codes associated with a specific messaging profile.
@@ -276,5 +276,17 @@ namespace Telnyx.NET.Interfaces
         /// <see cref="MessagingProfileShortCodeResponse"/> if the request is successful; otherwise, null.
         /// </returns>
         Task<MessagingProfileShortCodeResponse?> ListMessagingProfileShortCodes(string id, MessagingProfileShortCodeRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves metrics for a specific messaging profile based on the provided criteria.
+        /// </summary>
+        /// <param name="id">The unique identifier of the messaging profile.</param>
+        /// <param name="request">The request object containing filtering and metric-related options.</param>
+        /// <param name="cancellationToken">An optional token to cancel the operation.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains a 
+        /// <see cref="MessagingProfileMetricsResponse"/> if the request is successful; otherwise, null.
+        /// </returns>
+        Task<RetrieveMessagingProfileMetricsResponse?> RetrieveMessagingProfileMetrics(string id, RetrieveMessagingProfileMetricsRequest request, CancellationToken cancellationToken = default);
     }
 }
