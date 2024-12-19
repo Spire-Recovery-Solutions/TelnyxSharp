@@ -230,5 +230,17 @@ namespace Telnyx.NET.Interfaces
         /// A task representing the asynchronous operation.
         /// </returns>
         Task<RetrieveMessagingProfileResponse?> RetrieveMessagingProfile(string id, CancellationToken cancellationToken = default);
+
+         /// <summary>
+        /// Updates an existing messaging profile with the provided data.
+        /// </summary>
+        /// <param name="id">The unique identifier of the messaging profile to update.</param>
+        /// <param name="request">The request object containing updated messaging profile details.</param>
+        /// <param name="cancellationToken">An optional token to cancel the operation.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains
+        /// </returns>
+        Task<UpdateMessagingProfileResponse?> UpdateMessagingProfile(string id, UpdateMessagingProfileRequest request, CancellationToken cancellationToken = default);
+    
     }
 }

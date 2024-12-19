@@ -137,6 +137,7 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(TransferCallResponse))]
     [JsonSerializable(typeof(TransferCallResponseData))]
 
+    [JsonSerializable(typeof(MessagingProfileBase))]
     [JsonSerializable(typeof(MessagingProfilesRequest))]
     [JsonSerializable(typeof(MessagingProfilesResponse))]
     [JsonSerializable(typeof(MessagingProfile))]
@@ -145,12 +146,15 @@ namespace Telnyx.NET
 
     [JsonSerializable(typeof(CreateMessagingProfileRequest))]
     [JsonSerializable(typeof(CreateMessagingProfileResponse))]
-    [JsonSerializable(typeof(MessagingProfileData))]
+    [JsonSerializable(typeof(CreateMessagingProfileData))]
 
-     
     [JsonSerializable(typeof(RetrieveMessagingProfileRequest))]
     [JsonSerializable(typeof(RetrieveMessagingProfileResponse))]
     [JsonSerializable(typeof(RetrieveMessagingProfileData))]
+       
+    [JsonSerializable(typeof(UpdateMessagingProfileRequest))]
+    [JsonSerializable(typeof(UpdateMessagingProfileResponse))]
+    [JsonSerializable(typeof(UpdateMessagingProfileData))]
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,

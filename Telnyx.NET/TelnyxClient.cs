@@ -493,6 +493,17 @@ namespace Telnyx.NET
             return await _policies[request.GetType()].ExecuteAsync(token => ExecuteAsync<CreateMessagingProfileResponse>(req, token), cancellationToken);
         }
 
+         /// <inheritdoc />
+        public async Task<UpdateMessagingProfileResponse?> UpdateMessagingProfile(string id, UpdateMessagingProfileRequest request, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"messaging_profiles/{id}", Method.Patch);
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[typeof(UpdateMessagingProfileRequest)].ExecuteAsync(
+                token => ExecuteAsync<UpdateMessagingProfileResponse>(req, token),
+                cancellationToken);
+        }
+
         /// <inheritdoc />
         private async Task<T1?> ExecuteAsync<T1>(RestRequest request, CancellationToken cancellationToken = default)
             where T1 : ITelnyxResponse
