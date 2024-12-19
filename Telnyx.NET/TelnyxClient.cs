@@ -147,7 +147,7 @@ namespace Telnyx.NET
             return response;
         }
 
-         /// <inheritdoc />
+        /// <inheritdoc />
         public async Task<RetrieveMessagingProfileResponse?> RetrieveMessagingProfile(string id, CancellationToken cancellationToken = default)
         {
             var req = new RestRequest($"messaging_profiles/{id}");
@@ -490,10 +490,10 @@ namespace Telnyx.NET
             var req = new RestRequest("messaging_profiles", Method.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-            return await _policies[typeof(CreateMessagingProfileResponse)].ExecuteAsync(token => ExecuteAsync<CreateMessagingProfileResponse>(req, token), cancellationToken);
+            return await _policies[typeof(CreateMessagingProfileRequest)].ExecuteAsync(token => ExecuteAsync<CreateMessagingProfileResponse>(req, token), cancellationToken);
         }
 
-         /// <inheritdoc />
+        /// <inheritdoc />
         public async Task<UpdateMessagingProfileResponse?> UpdateMessagingProfile(string id, UpdateMessagingProfileRequest request, CancellationToken cancellationToken = default)
         {
             var req = new RestRequest($"messaging_profiles/{id}", Method.Patch);
@@ -504,8 +504,23 @@ namespace Telnyx.NET
                 cancellationToken);
         }
 
-         /// <inheritdoc />
-        public async Task<DeleteMessagingProfileResponse?> DeleteMessagingProfile(string id,  CancellationToken cancellationToken = default)
+        /// <inheritdoc />
+        public async Task<MessagingProfilePhoneNumberResponse?> ListMessagingProfilePhoneNumbers(
+            string id,
+            MessagingProfilePhoneNumberRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            var query = new QueryBuilder()
+                .AddPagination(request.PageNumber, request.PageSize);
+
+            var req = new RestRequest($"messaging_profiles/{id}/phone_numbers?{query}");
+            return await _policies[typeof(MessagingProfilePhoneNumberRequest)].ExecuteAsync(
+                token => ExecuteAsync<MessagingProfilePhoneNumberResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<DeleteMessagingProfileResponse?> DeleteMessagingProfile(string id, CancellationToken cancellationToken = default)
         {
             var req = new RestRequest($"messaging_profiles/{id}", Method.Delete);
 
