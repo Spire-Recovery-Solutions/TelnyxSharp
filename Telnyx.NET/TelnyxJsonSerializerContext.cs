@@ -175,12 +175,17 @@ namespace Telnyx.NET
 
     [JsonSerializable(typeof(RetrieveMessagingProfileMetricsRequest))]
     [JsonSerializable(typeof(RetrieveMessagingProfileMetricsResponse))]
-    [JsonSerializable(typeof(MessagingProfileMetricsData))]
+    [JsonSerializable(typeof(RetrieveMessagingProfileMetricsData))]
     [JsonSerializable(typeof(MessagingProfileMetricsOverview))]
     [JsonSerializable(typeof(MessagingProfileDetailedMetric))]
     [JsonSerializable(typeof(MessagingProfileMetricDetail))]
     [JsonSerializable(typeof(MessagingProfileOutboundMetrics))]
     [JsonSerializable(typeof(MessagingProfileInboundMetrics))]
+
+    [JsonSerializable(typeof(MessagingProfileMetricsRequest))]
+    [JsonSerializable(typeof(MessagingProfileMetricsResponse))]
+    [JsonSerializable(typeof(MessagingProfileMetricsData))]
+    [JsonSerializable(typeof(MessagingProfileMetricsMeta))]
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,
