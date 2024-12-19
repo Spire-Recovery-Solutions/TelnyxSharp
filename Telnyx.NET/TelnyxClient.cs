@@ -481,7 +481,7 @@ namespace Telnyx.NET
                 .AddFilter("name", request.NameFilter);
 
             var req = new RestRequest($"messaging_profiles?{query}");
-            return await _policies[typeof(MessagingProfilesRequest)].ExecuteAsync(token => ExecuteAsync<MessagingProfilesResponse>(req, token), cancellationToken);
+            return await _policies[request.GetType()].ExecuteAsync(token => ExecuteAsync<MessagingProfilesResponse>(req, token), cancellationToken);
         }
 
         /// <inheritdoc />
@@ -490,7 +490,7 @@ namespace Telnyx.NET
             var req = new RestRequest("messaging_profiles", Method.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-            return await _policies[typeof(CreateMessagingProfileResponse)].ExecuteAsync(token => ExecuteAsync<CreateMessagingProfileResponse>(req, token), cancellationToken);
+            return await _policies[request.GetType()].ExecuteAsync(token => ExecuteAsync<CreateMessagingProfileResponse>(req, token), cancellationToken);
         }
 
          /// <inheritdoc />
