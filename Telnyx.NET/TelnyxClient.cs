@@ -530,6 +530,18 @@ namespace Telnyx.NET
         }
 
         /// <inheritdoc />
+        public async Task<MessagingProfileShortCodeResponse?> ListMessagingProfileShortCodes(string id, MessagingProfileShortCodeRequest request, CancellationToken cancellationToken = default)
+        {
+            var query = new QueryBuilder()
+                .AddPagination(request.PageNumber, request.PageSize);
+
+            var req = new RestRequest($"messaging_profiles/{id}/short_codes?{query}");
+            return await _policies[typeof(MessagingProfileShortCodeRequest)].ExecuteAsync(
+                token => ExecuteAsync<MessagingProfileShortCodeResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
         private async Task<T1?> ExecuteAsync<T1>(RestRequest request, CancellationToken cancellationToken = default)
             where T1 : ITelnyxResponse
         {
