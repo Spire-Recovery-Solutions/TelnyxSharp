@@ -36,7 +36,7 @@ namespace Telnyx.NET.Models
         /// The unique identifier of the messaging profile.
         /// </summary>
         [JsonPropertyName("messaging_profile_id")]
-        public Guid MessagingProfileId { get; set; }
+        public string? MessagingProfileId { get; set; }
 
         /// <summary>
         /// The number of phone numbers associated with the messaging profile.

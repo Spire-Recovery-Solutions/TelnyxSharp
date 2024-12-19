@@ -66,7 +66,7 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(PhoneNumbersRequest))]
     [JsonSerializable(typeof(SendMessageRequest))]
     [JsonSerializable(typeof(SendMessageResponse))]
-    [JsonSerializable(typeof(Data))]
+    [JsonSerializable(typeof(SendMessageData))]
     [JsonSerializable(typeof(Cost))]
     [JsonSerializable(typeof(FromTo))]
     [JsonSerializable(typeof(Media))]

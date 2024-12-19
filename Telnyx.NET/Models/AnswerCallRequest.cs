@@ -14,7 +14,7 @@ public class AnswerCallRequest : ITelnyxRequest
     /// Must be a valid and existing Billing Group ID.
     /// </summary>
     [JsonPropertyName("billing_group_id")]
-    public Guid? BillingGroupId { get; set; }
+    public string? BillingGroupId { get; set; }
 
     /// <summary>
     /// Use this field to add state to every subsequent webhook.

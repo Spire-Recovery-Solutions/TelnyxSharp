@@ -12,7 +12,7 @@ namespace Telnyx.NET.Models
         /// Contains the data associated with the sent message.
         /// </summary>
         [JsonPropertyName("data")]
-        public Data Data { get; set; }
+        public SendMessageData Data { get; set; }
 
         /// <summary>
         /// Represents any errors encountered during the message sending process.
@@ -24,7 +24,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Contains detailed information about a sent message.
     /// </summary>
-    public partial class Data
+    public partial class SendMessageData
     {
         [JsonPropertyName("record_type")]
         public string? RecordType { get; set; }
@@ -33,16 +33,16 @@ namespace Telnyx.NET.Models
         public string? Direction { get; set; }
 
         [JsonPropertyName("id")]
-        public Guid? Id { get; set; }
+        public string? Id { get; set; }
 
         [JsonPropertyName("type")]
         public string? Type { get; set; }
 
         [JsonPropertyName("organization_id")]
-        public Guid? OrganizationId { get; set; }
+        public string? OrganizationId { get; set; }
 
         [JsonPropertyName("messaging_profile_id")]
-        public Guid? MessagingProfileId { get; set; }
+        public string? MessagingProfileId { get; set; }
 
         [JsonPropertyName("from")]
         public FromTo From { get; set; }
