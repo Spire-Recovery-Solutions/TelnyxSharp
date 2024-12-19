@@ -231,7 +231,7 @@ namespace Telnyx.NET.Interfaces
         /// </returns>
         Task<RetrieveMessagingProfileResponse?> RetrieveMessagingProfile(string id, CancellationToken cancellationToken = default);
 
-         /// <summary>
+        /// <summary>
         /// Updates an existing messaging profile with the provided data.
         /// </summary>
         /// <param name="id">The unique identifier of the messaging profile to update.</param>
@@ -241,6 +241,17 @@ namespace Telnyx.NET.Interfaces
         /// A task that represents the asynchronous operation. The task result contains
         /// </returns>
         Task<UpdateMessagingProfileResponse?> UpdateMessagingProfile(string id, UpdateMessagingProfileRequest request, CancellationToken cancellationToken = default);
-    
+
+        /// <summary>
+        /// Deletes a messaging profile by its unique identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier of the messaging profile to delete.</param>
+        /// <param name="cancellationToken">Optional. A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation.
+        /// The task result contains a <see cref="DeleteMessagingProfileResponse"/> if the operation is successful; otherwise, <c>null</c>.
+        /// </returns>
+        Task<DeleteMessagingProfileResponse?> DeleteMessagingProfile(string id, CancellationToken cancellationToken = default);
+
     }
 }

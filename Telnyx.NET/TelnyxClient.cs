@@ -504,6 +504,16 @@ namespace Telnyx.NET
                 cancellationToken);
         }
 
+         /// <inheritdoc />
+        public async Task<DeleteMessagingProfileResponse?> DeleteMessagingProfile(string id,  CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"messaging_profiles/{id}", Method.Delete);
+
+            return await _policies[typeof(DeleteMessagingProfileRequest)].ExecuteAsync(
+                token => ExecuteAsync<DeleteMessagingProfileResponse>(req, token),
+                cancellationToken);
+        }
+
         /// <inheritdoc />
         private async Task<T1?> ExecuteAsync<T1>(RestRequest request, CancellationToken cancellationToken = default)
             where T1 : ITelnyxResponse
