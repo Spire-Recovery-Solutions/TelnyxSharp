@@ -481,7 +481,7 @@ namespace Telnyx.NET
                 .AddFilter("name", request.NameFilter);
 
             var req = new RestRequest($"messaging_profiles?{query}");
-            return await _policies[typeof(MessagingProfilesRequest)].ExecuteAsync(token => ExecuteAsync<MessagingProfilesResponse>(req, token), cancellationToken);
+            return await _policies[request.GetType()].ExecuteAsync(token => ExecuteAsync<MessagingProfilesResponse>(req, token), cancellationToken);
         }
 
         /// <inheritdoc />
