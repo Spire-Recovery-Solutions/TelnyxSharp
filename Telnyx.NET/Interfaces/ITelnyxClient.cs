@@ -264,5 +264,17 @@ namespace Telnyx.NET.Interfaces
         /// <see cref="MessagingProfilePhoneNumberResponse"/> if the request is successful; otherwise, null.
         /// </returns>
         Task<MessagingProfilePhoneNumberResponse?> ListMessagingProfilePhoneNumbers(string id,  MessagingProfilePhoneNumberRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves a list of short codes associated with a specific messaging profile.
+        /// </summary>
+        /// <param name="id">The unique identifier of the messaging profile.</param>
+        /// <param name="request">The request object containing pagination details.</param>
+        /// <param name="cancellationToken">An optional token to cancel the operation.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains a 
+        /// <see cref="MessagingProfileShortCodeResponse"/> if the request is successful; otherwise, null.
+        /// </returns>
+        Task<MessagingProfileShortCodeResponse?> ListMessagingProfileShortCodes(string id, MessagingProfileShortCodeRequest request, CancellationToken cancellationToken = default);
     }
 }
