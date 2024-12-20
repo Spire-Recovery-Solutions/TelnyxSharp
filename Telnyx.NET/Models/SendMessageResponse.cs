@@ -24,7 +24,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Contains detailed information about a sent message.
     /// </summary>
-    public partial class SendMessageData
+    public partial class SendMessageData : MessageBaseResponse
     {
         [JsonPropertyName("record_type")]
         public string? RecordType { get; set; }

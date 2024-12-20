@@ -187,6 +187,9 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(MessagingProfileMetricsData))]
     [JsonSerializable(typeof(MessagingProfileMetricsMeta))]
 
+    [JsonSerializable(typeof(MessageBaseRequest))]
+    [JsonSerializable(typeof(MessageBaseResponse))]
+
     [JsonSerializable(typeof(LongCodeMessageRequest))]
     [JsonSerializable(typeof(LongCodeMessageResponse))]
     [JsonSerializable(typeof(LongCodeMessageData))]
