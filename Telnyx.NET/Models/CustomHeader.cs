@@ -19,5 +19,5 @@ public class CustomHeader
     /// The value associated with the custom header. This field is required.
     /// </summary>
     [JsonPropertyName("value")]
-    public required string Value { get; set; };
+    public required string Value { get; set; }
 }
