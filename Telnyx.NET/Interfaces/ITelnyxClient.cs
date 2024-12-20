@@ -343,5 +343,19 @@ namespace Telnyx.NET.Interfaces
         /// <see cref="ShortCodeMessageResponse"/> containing the response details if the operation is successful.
         /// </returns>
         Task<ShortCodeMessageResponse?> SendShortCodeMessageAsync(ShortCodeMessageRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Sends a group MMS message asynchronously.
+        /// </summary>
+        /// <param name="request">The request containing message details, including recipients and media content.</param>
+        /// <param name="cancellationToken">
+        /// A cancellation token that can be used to cancel the operation.
+        /// Defaults to <see cref="CancellationToken.None"/>.
+        /// </param>
+        /// <returns>
+        /// A task representing the asynchronous operation. Upon completion, returns a <see cref="GroupMmsMessageResponse"/>
+        /// containing the response details, or <c>null</c> if the operation fails.
+        /// </returns>
+        Task<GroupMmsMessageResponse?> SendGroupMmsMessageAsync(GroupMmsMessageRequest request, CancellationToken cancellationToken = default);
     }
 }

@@ -25,6 +25,6 @@ namespace Telnyx.NET.Models
         /// Gets or sets the sender's short code or phone number.
         /// </summary>
         [JsonPropertyName("from")]
-        public string From { get; set; } = string.Empty;
+        public required string From { get; set; }
     }
 }

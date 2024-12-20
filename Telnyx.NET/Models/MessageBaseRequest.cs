@@ -8,7 +8,7 @@ namespace Telnyx.NET.Models
         /// The phone number the message will be sent to.
         /// </summary>
         [JsonPropertyName("to")]
-        public string To { get; set; } = string.Empty;
+        public required string To { get; set; }
 
         /// <summary>
         /// The text content of the message.
