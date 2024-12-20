@@ -13,11 +13,11 @@ public class CustomHeader
     /// The name of the custom header. This field is required.
     /// </summary>
     [JsonPropertyName("name")]
-    public string Name { get; set; } = string.Empty;
+    public required string Name { get; set; }
 
     /// <summary>
     /// The value associated with the custom header. This field is required.
     /// </summary>
     [JsonPropertyName("value")]
-    public string Value { get; set; } = string.Empty;
+    public required string Value { get; set; }
 }

@@ -13,13 +13,13 @@ public class DialRequest : ITelnyxRequest
     /// The destination phone number to be dialed, provided in E.164 format.
     /// </summary>
     [JsonPropertyName("to")]
-    public string To { get; set; } = string.Empty;
+    public required string To { get; set; }
 
     /// <summary>
     /// The caller's phone number (caller ID), provided in E.164 format.
     /// </summary>
     [JsonPropertyName("from")]
-    public string From { get; set; } = string.Empty;
+    public required string From { get; set; }
 
     /// <summary>
     /// Optional display name for the 'From' caller ID, visible to the recipient.
@@ -32,7 +32,7 @@ public class DialRequest : ITelnyxRequest
     /// It associates the call with a specific Telnyx connection.
     /// </summary>
     [JsonPropertyName("connection_id")]
-    public string ConnectionId { get; set; } = string.Empty;
+    public required string ConnectionId { get; set; }
 
     /// <summary>
     /// Optional URL of the audio file to be played when the call is answered.
