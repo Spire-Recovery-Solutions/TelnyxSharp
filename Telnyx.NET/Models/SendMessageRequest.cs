@@ -17,5 +17,17 @@ namespace Telnyx.NET.Models
         /// </summary>
         [JsonPropertyName("messaging_profile_id")] 
         public string? MessagingProfileId { get; set; }
+        
+        /// <summary>
+        /// The type of message being sent (e.g., "sms", "mms").
+        /// </summary>
+        [JsonPropertyName("type")]
+        public string? Type { get; set; }
+
+        /// <summary>
+        /// Indicates whether to automatically detect the message type.
+        /// </summary>
+        [JsonPropertyName("auto_detect")]
+        public bool? AutoDetect { get; set; }
     }
 }

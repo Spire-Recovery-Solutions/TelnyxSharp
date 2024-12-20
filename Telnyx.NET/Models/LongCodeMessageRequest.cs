@@ -9,6 +9,19 @@ namespace Telnyx.NET.Models
     /// </summary>
     public class LongCodeMessageRequest : MessageBaseRequest, ITelnyxRequest
     {
+        
+        /// <summary>
+        /// The type of message being sent (e.g., "sms", "mms").
+        /// </summary>
+        [JsonPropertyName("type")]
+        public string? Type { get; set; }
+
+        /// <summary>
+        /// Indicates whether to automatically detect the message type.
+        /// </summary>
+        [JsonPropertyName("auto_detect")]
+        public bool? AutoDetect { get; set; }
+        
         /// <summary>
         /// The phone number the message will be sent from.
         /// This is a required field and should be a valid long code number.
