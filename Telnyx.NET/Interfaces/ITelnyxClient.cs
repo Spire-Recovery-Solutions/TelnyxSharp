@@ -357,5 +357,16 @@ namespace Telnyx.NET.Interfaces
         /// containing the response details, or <c>null</c> if the operation fails.
         /// </returns>
         Task<GroupMmsMessageResponse?> SendGroupMmsMessageAsync(GroupMmsMessageRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves a message by its unique identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier of the message to retrieve.</param>
+        /// <param name="cancellationToken">An optional cancellation token to cancel the operation.</param>
+        /// <returns>
+        /// A task representing the asynchronous operation. The task result contains an instance 
+        /// of <see cref="RetrieveMessageResponse"/> if the message is found, or <c>null</c> if no message is found.
+        /// </returns>
+        Task<RetrieveMessageResponse?> RetrieveMessageAsync(string id, CancellationToken cancellationToken = default);
     }
 }
