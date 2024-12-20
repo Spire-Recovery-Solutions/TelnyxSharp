@@ -45,7 +45,7 @@ namespace Telnyx.NET.Models
         public string? MessagingProfileId { get; set; }
 
         [JsonPropertyName("from")]
-        public FromTo From { get; set; }
+        public FromTo? From { get; set; }
 
         [JsonPropertyName("to")]
         public List<FromTo> To { get; set; }
