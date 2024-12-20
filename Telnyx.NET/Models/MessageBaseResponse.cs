@@ -59,7 +59,7 @@ namespace Telnyx.NET.Models
         /// Gets or sets the text content of the message.
         /// </summary>
         [JsonPropertyName("text")]
-        public string? Text { get; set; }
+        public string Text { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the subject of the message, applicable for certain message types.

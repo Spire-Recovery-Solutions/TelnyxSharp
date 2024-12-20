@@ -601,6 +601,17 @@ namespace Telnyx.NET
                 cancellationToken);
         }
 
+         /// <inheritdoc />
+        public async Task<GroupMmsMessageResponse?> SendGroupMmsMessageAsync(GroupMmsMessageRequest request, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest("messages/group_mms", Method.Post);
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[request.GetType()].ExecuteAsync(
+                token => ExecuteAsync<GroupMmsMessageResponse>(req, token),
+                cancellationToken);
+        }
+
         /// <inheritdoc />
         private async Task<T1?> ExecuteAsync<T1>(RestRequest request, CancellationToken cancellationToken = default)
             where T1 : ITelnyxResponse
