@@ -12,7 +12,7 @@ namespace Telnyx.NET.Models
         /// Unique identifier for a messaging profile. This field is required.
         /// </summary>
         [JsonPropertyName("messaging_profile_id")]
-        public string MessagingProfileId { get; set; } = string.Empty;
+        public required string MessagingProfileId { get; set; }
 
         /// <summary>
         /// The type of message being sent (e.g., "sms", "mms").

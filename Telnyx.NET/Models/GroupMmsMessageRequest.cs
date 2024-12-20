@@ -12,6 +12,6 @@ namespace Telnyx.NET.Models
         /// The phone number used to send the message.
         /// </summary>
         [JsonPropertyName("from")]
-        public string From { get; set; } = string.Empty;
+        public required string From { get; set; }
     }
 }

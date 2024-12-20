@@ -10,7 +10,7 @@ namespace Telnyx.NET.Models
         /// The phone number the message will be sent from.
         /// </summary>
         [JsonPropertyName("from")]
-        public string From { get; set; } = string.Empty;
+        public required string From { get; set; }
 
         /// <summary>
         /// Id of the messaging profile settings to use
