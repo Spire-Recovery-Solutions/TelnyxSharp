@@ -194,6 +194,10 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(NumberPoolMessageRequest))]
     [JsonSerializable(typeof(NumberPoolMessageResponse))]
     [JsonSerializable(typeof(NumberPoolMessageData))]
+
+    [JsonSerializable(typeof(ShortCodeMessageData))]
+    [JsonSerializable(typeof(ShortCodeMessageRequest))]
+    [JsonSerializable(typeof(ShortCodeMessageResponse))]
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,
