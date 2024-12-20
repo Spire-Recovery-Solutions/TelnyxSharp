@@ -368,5 +368,13 @@ namespace Telnyx.NET.Interfaces
         /// of <see cref="RetrieveMessageResponse"/> if the message is found, or <c>null</c> if no message is found.
         /// </returns>
         Task<RetrieveMessageResponse?> RetrieveMessageAsync(string id, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Asynchronously retrieves a list of messaging URL domains based on the provided request.
+        /// </summary>
+        /// <param name="request">The request containing the parameters to filter the messaging URL domains.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests. Default is <see cref="CancellationToken.None"/>.</param>
+        /// <returns>A task representing the asynchronous operation, containing the response with the list of messaging URL domains.</returns>
+        Task<ListMessagingUrlDomainsResponse?> ListMessagingUrlDomainsAsync(ListMessagingUrlDomainsRequest request, CancellationToken cancellationToken = default);
     }
 }
