@@ -403,5 +403,56 @@ namespace Telnyx.NET.Interfaces
         /// <returns>A response object containing the updated short code details or null if the operation fails.</returns>
         /// <exception cref="ApiException">Thrown if an error occurs during the API call.</exception>
         Task<UpdateShortCodeResponse?> UpdateShortCodeAsync(string shortCodeId, UpdateShortCodeRequest request, CancellationToken cancellationToken = default);
+
+         /// <summary>
+        /// Retrieves a list of phone numbers with their messaging settings.
+        /// </summary>
+        /// <param name="request">The request containing pagination details.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation if needed.</param>
+        /// <returns>
+        /// A task representing the asynchronous operation, containing a list of phone numbers with messaging settings.
+        /// </returns>
+        Task<ListPhoneMessageSettingsResponse?> ListPhoneNumbersWithMessagingSettingsAsync(ListPhoneMessageSettingsRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves details about a specific phone number with messaging settings.
+        /// </summary>
+        /// <param name="id">The unique identifier of the phone number.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation if needed.</param>
+        /// <returns>
+        /// A task representing the asynchronous operation, containing the phone number details with messaging settings.
+        /// </returns>
+        Task<RetrievePhoneMessageSettingsResponse?> GetPhoneNumberWithMessagingSettingsAsync(string id, CancellationToken cancellationToken = default);
+
+         /// <summary>
+        /// Updates the messaging profile and/or messaging product of a phone number.
+        /// </summary>
+        /// <param name="id">The unique identifier of the phone number to update.</param>
+        /// <param name="request">The request containing the new messaging profile and/or product configuration.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation if needed.</param>
+        /// <returns>
+        /// A task representing the asynchronous operation, containing the updated phone number details with messaging settings.
+        /// </returns>
+        Task<UpdatePhoneNumberMessagingResponse?> UpdatePhoneNumberMessagingSettingsAsync(string id, UpdatePhoneNumberMessagingRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Updates the messaging profile of multiple phone numbers.
+        /// </summary>
+        /// <param name="request">The request containing the messaging profile and the list of phone numbers to update.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation if needed.</param>
+        /// <returns>
+        /// A task representing the asynchronous operation, containing the bulk update status details.
+        /// </returns>
+        Task<UpdateNumbersMessagingBulkResponse?> UpdateMessagingProfileForMultipleNumbersAsync(UpdateNumbersMessagingBulkRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves the status of a bulk update operation for messaging profiles.
+        /// </summary>
+        /// <param name="orderId">The unique identifier of the bulk update order.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation if needed.</param>
+        /// <returns>
+        /// A task representing the asynchronous operation, containing the bulk update status details.
+        /// </returns>
+        Task<RetrieveBulkUpdateStatusResponse?> RetrieveBulkUpdateStatusAsync(string orderId, CancellationToken cancellationToken = default);
     }
 }

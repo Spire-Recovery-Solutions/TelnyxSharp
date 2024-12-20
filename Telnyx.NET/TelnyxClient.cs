@@ -666,6 +666,63 @@ namespace Telnyx.NET
         }
 
         /// <inheritdoc />
+        public async Task<ListPhoneMessageSettingsResponse?> ListPhoneNumbersWithMessagingSettingsAsync(ListPhoneMessageSettingsRequest request, CancellationToken cancellationToken = default)
+        {
+            var query = new QueryBuilder()
+                .AddPagination(request.PageNumber, request.PageSize);
+
+            var req = new RestRequest($"phone_numbers/messaging?{query}");
+
+            return await _policies[request.GetType()].ExecuteAsync(
+                token => ExecuteAsync<ListPhoneMessageSettingsResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<RetrievePhoneMessageSettingsResponse?> GetPhoneNumberWithMessagingSettingsAsync(string id, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"phone_numbers/{id}/messaging");
+
+            return await _policies[typeof(RetrievePhoneMessageSettingsRequest)].ExecuteAsync(
+                token => ExecuteAsync<RetrievePhoneMessageSettingsResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<UpdatePhoneNumberMessagingResponse?> UpdatePhoneNumberMessagingSettingsAsync(string id, UpdatePhoneNumberMessagingRequest request, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"phone_numbers/{id}/messaging", Method.Patch);
+
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[request.GetType()].ExecuteAsync(
+                token => ExecuteAsync<UpdatePhoneNumberMessagingResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<UpdateNumbersMessagingBulkResponse?> UpdateMessagingProfileForMultipleNumbersAsync(UpdateNumbersMessagingBulkRequest request, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest("messaging_numbers_bulk_updates", Method.Post);
+           
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[request.GetType()].ExecuteAsync(
+                token => ExecuteAsync<UpdateNumbersMessagingBulkResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<RetrieveBulkUpdateStatusResponse?> RetrieveBulkUpdateStatusAsync(string orderId, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"messaging_numbers_bulk_updates/{orderId}");
+
+            return await _policies[typeof(RetrieveBulkUpdateStatusRequest)].ExecuteAsync(
+                token => ExecuteAsync<RetrieveBulkUpdateStatusResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
         private async Task<T1?> ExecuteAsync<T1>(RestRequest request, CancellationToken cancellationToken = default)
             where T1 : ITelnyxResponse
         {
