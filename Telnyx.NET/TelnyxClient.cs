@@ -601,7 +601,7 @@ namespace Telnyx.NET
                 cancellationToken);
         }
 
-         /// <inheritdoc />
+        /// <inheritdoc />
         public async Task<GroupMmsMessageResponse?> SendGroupMmsMessageAsync(GroupMmsMessageRequest request, CancellationToken cancellationToken = default)
         {
             var req = new RestRequest("messages/group_mms", Method.Post);
@@ -612,7 +612,7 @@ namespace Telnyx.NET
                 cancellationToken);
         }
 
-         /// <inheritdoc />
+        /// <inheritdoc />
         public async Task<RetrieveMessageResponse?> RetrieveMessageAsync(string id, CancellationToken cancellationToken = default)
         {
             var req = new RestRequest($"messages/{id}");
@@ -620,6 +620,18 @@ namespace Telnyx.NET
             return await _policies[typeof(RetrieveMessageRequest)].ExecuteAsync(
                 token => ExecuteAsync<RetrieveMessageResponse>(req, token),
                 cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<ListMessagingUrlDomainsResponse?> ListMessagingUrlDomainsAsync(ListMessagingUrlDomainsRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            var query = new QueryBuilder()
+                .AddPagination(request.PageNumber, request.PageSize);
+
+            var req = new RestRequest($"messaging_url_domains?{query}");
+
+            return await _policies[typeof(ListMessagingUrlDomainsRequest)].ExecuteAsync(token => ExecuteAsync<ListMessagingUrlDomainsResponse>(req, token),cancellationToken);
         }
 
         /// <inheritdoc />
