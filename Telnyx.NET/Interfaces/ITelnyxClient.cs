@@ -328,5 +328,20 @@ namespace Telnyx.NET.Interfaces
         /// which includes message data and any errors that occurred.
         /// </returns>
         Task<NumberPoolMessageResponse?> SendMessageUsingNumberPoolAsync(NumberPoolMessageRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Sends a short code message asynchronously.
+        /// </summary>
+        /// <param name="request">
+        /// The <see cref="ShortCodeMessageRequest"/> containing the details of the message to send.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// A <see cref="CancellationToken"/> that can be used to cancel the request.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task"/> representing the asynchronous operation, with a result of type 
+        /// <see cref="ShortCodeMessageResponse"/> containing the response details if the operation is successful.
+        /// </returns>
+        Task<ShortCodeMessageResponse?> SendShortCodeMessageAsync(ShortCodeMessageRequest request, CancellationToken cancellationToken = default);
     }
 }
