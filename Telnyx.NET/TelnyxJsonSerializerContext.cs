@@ -205,6 +205,10 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(GroupMmsMessageRequest))]
     [JsonSerializable(typeof(GroupMmsMessageResponse))]
     [JsonSerializable(typeof(GroupMmsMessageData))]
+
+    [JsonSerializable(typeof(RetrieveMessageRequest))]
+    [JsonSerializable(typeof(RetrieveMessageResponse))]
+    [JsonSerializable(typeof(RetrieveMessageData))]
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,
