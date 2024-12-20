@@ -645,13 +645,24 @@ namespace Telnyx.NET
 
             return await _policies[request.GetType()].ExecuteAsync(token => ExecuteAsync<ListShortCodesResponse>(req, token), cancellationToken);
         }
-        
+
         /// <inheritdoc />
         public async Task<RetrieveShortCodeResponse?> RetrieveShortCodeAsync(string shortCodeId, CancellationToken cancellationToken = default)
         {
             var req = new RestRequest($"short_codes/{shortCodeId}");
 
             return await _policies[typeof(RetrieveShortCodeRequest)].ExecuteAsync(token => ExecuteAsync<RetrieveShortCodeResponse>(req, token), cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<UpdateShortCodeResponse?> UpdateShortCodeAsync(string shortCodeId, UpdateShortCodeRequest request, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"short_codes/{shortCodeId}", Method.Patch);
+
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[request.GetType()].ExecuteAsync(
+                token => ExecuteAsync<UpdateShortCodeResponse>(req, token), cancellationToken);
         }
 
         /// <inheritdoc />
