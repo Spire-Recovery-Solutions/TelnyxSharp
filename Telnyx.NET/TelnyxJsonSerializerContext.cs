@@ -219,15 +219,36 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(ListShortCodesResponse))]
     [JsonSerializable(typeof(ShortCode))]
     [JsonSerializable(typeof(ListShortCodesMeta))]
-    
+
     [JsonSerializable(typeof(RetrieveShortCodeRequest))]
     [JsonSerializable(typeof(RetrieveShortCodeResponse))]
     [JsonSerializable(typeof(ShortCodeDetail))]
 
-    
+
     [JsonSerializable(typeof(UpdateShortCodeRequest))]
     [JsonSerializable(typeof(UpdateShortCodeResponse))]
     [JsonSerializable(typeof(ShortCodeDetail))]
+
+    [JsonSerializable(typeof(ListPhoneMessageSettingsRequest))]
+    [JsonSerializable(typeof(ListPhoneMessageSettingsResponse))]
+    [JsonSerializable(typeof(PhoneNumberMessagingSettings))]
+    [JsonSerializable(typeof(ListPhoneMessageSettingsMeta))]
+
+    [JsonSerializable(typeof(RetrievePhoneMessageSettingsRequest))]
+    [JsonSerializable(typeof(RetrievePhoneMessageSettingsResponse))]
+    [JsonSerializable(typeof(RetrievePhoneMessageSettings))]
+
+    [JsonSerializable(typeof(UpdatePhoneNumberMessagingRequest))]
+    [JsonSerializable(typeof(UpdatePhoneNumberMessagingResponse))]
+    [JsonSerializable(typeof(UpdatePhoneNumberMessaging))]
+
+    [JsonSerializable(typeof(UpdateNumbersMessagingBulkRequest))]
+    [JsonSerializable(typeof(UpdateNumbersMessagingBulkResponse))]
+    [JsonSerializable(typeof(UpdateNumbersMessagingBulk))]
+
+    [JsonSerializable(typeof(RetrieveBulkUpdateStatusRequest))]
+    [JsonSerializable(typeof(RetrieveBulkUpdateStatusResponse))]
+    [JsonSerializable(typeof(RetrieveBulkUpdateStatus))]
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,
