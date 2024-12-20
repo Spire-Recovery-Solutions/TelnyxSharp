@@ -612,6 +612,16 @@ namespace Telnyx.NET
                 cancellationToken);
         }
 
+         /// <inheritdoc />
+        public async Task<RetrieveMessageResponse?> RetrieveMessageAsync(string id, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"messages/{id}");
+
+            return await _policies[typeof(RetrieveMessageRequest)].ExecuteAsync(
+                token => ExecuteAsync<RetrieveMessageResponse>(req, token),
+                cancellationToken);
+        }
+
         /// <inheritdoc />
         private async Task<T1?> ExecuteAsync<T1>(RestRequest request, CancellationToken cancellationToken = default)
             where T1 : ITelnyxResponse
