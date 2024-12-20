@@ -31,6 +31,6 @@ namespace Telnyx.NET.Models
         /// Only for Inbound Messages.
         /// </summary>
         [JsonPropertyName("cc")]
-        public List<FromTo> Cc { get; set; }
+        public List<FromTo>? Cc { get; set; }
     }
 }
