@@ -219,6 +219,11 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(ListShortCodesResponse))]
     [JsonSerializable(typeof(ShortCode))]
     [JsonSerializable(typeof(ListShortCodesMeta))]
+
+    
+    [JsonSerializable(typeof(RetrieveShortCodeRequest))]
+    [JsonSerializable(typeof(RetrieveShortCodeResponse))]
+    [JsonSerializable(typeof(ShortCodeDetail))]
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,

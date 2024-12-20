@@ -645,6 +645,14 @@ namespace Telnyx.NET
 
             return await _policies[request.GetType()].ExecuteAsync(token => ExecuteAsync<ListShortCodesResponse>(req, token), cancellationToken);
         }
+        
+        /// <inheritdoc />
+        public async Task<RetrieveShortCodeResponse?> RetrieveShortCodeAsync(string shortCodeId, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"short_codes/{shortCodeId}");
+
+            return await _policies[typeof(RetrieveShortCodeRequest)].ExecuteAsync(token => ExecuteAsync<RetrieveShortCodeResponse>(req, token), cancellationToken);
+        }
 
         /// <inheritdoc />
         private async Task<T1?> ExecuteAsync<T1>(RestRequest request, CancellationToken cancellationToken = default)
