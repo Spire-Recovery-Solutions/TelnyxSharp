@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     public class CreateMessagingProfileRequest : ITelnyxRequest
     {
         [JsonPropertyName("name")]
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
         [JsonPropertyName("enabled")]
         public bool Enabled { get; set; } = true;
@@ -27,6 +27,6 @@ namespace Telnyx.NET.Models
         public UrlShortenerSettings? UrlShortenerSettings { get; set; }
 
         [JsonPropertyName("whitelisted_destinations")]
-        public List<string> WhitelistedDestinations { get; set; } = new();
+        public required List<string> WhitelistedDestinations { get; set; }
     }
 }
