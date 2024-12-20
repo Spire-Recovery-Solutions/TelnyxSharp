@@ -27,6 +27,6 @@ namespace Telnyx.NET.Models
         /// This is a required field and should be a valid long code number.
         /// </summary>
         [JsonPropertyName("from")]
-        public string From { get; set; } = string.Empty;
+        public required string From { get; set; }
     }
 }

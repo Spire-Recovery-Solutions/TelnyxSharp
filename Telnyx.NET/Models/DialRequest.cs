@@ -19,7 +19,7 @@ public class DialRequest : ITelnyxRequest
     /// The caller's phone number (caller ID), provided in E.164 format.
     /// </summary>
     [JsonPropertyName("from")]
-    public string From { get; set; } = string.Empty;
+    public required string From { get; set; }
 
     /// <summary>
     /// Optional display name for the 'From' caller ID, visible to the recipient.
