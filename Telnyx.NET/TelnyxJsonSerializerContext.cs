@@ -209,6 +209,11 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(RetrieveMessageRequest))]
     [JsonSerializable(typeof(RetrieveMessageResponse))]
     [JsonSerializable(typeof(RetrieveMessageData))]
+
+    [JsonSerializable(typeof(ListMessagingUrlDomainsRequest))]
+    [JsonSerializable(typeof(ListMessagingUrlDomainsResponse))]
+    [JsonSerializable(typeof(ListMessagingUrlDomainsMeta))]
+    [JsonSerializable(typeof(MessagingUrlDomain))]
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,
