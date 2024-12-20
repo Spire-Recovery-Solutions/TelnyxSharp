@@ -631,7 +631,19 @@ namespace Telnyx.NET
 
             var req = new RestRequest($"messaging_url_domains?{query}");
 
-            return await _policies[typeof(ListMessagingUrlDomainsRequest)].ExecuteAsync(token => ExecuteAsync<ListMessagingUrlDomainsResponse>(req, token),cancellationToken);
+            return await _policies[typeof(ListMessagingUrlDomainsRequest)].ExecuteAsync(token => ExecuteAsync<ListMessagingUrlDomainsResponse>(req, token), cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<ListShortCodesResponse?> ListShortCodesAsync(ListShortCodesRequest request, CancellationToken cancellationToken = default)
+        {
+            var query = new QueryBuilder()
+                .AddPagination(request.PageNumber, request.PageSize)
+                .AddFilter("filter[messaging_profile_id]", request.MessagingProfileId);
+
+            var req = new RestRequest($"short_codes?{query}");
+
+            return await _policies[request.GetType()].ExecuteAsync(token => ExecuteAsync<ListShortCodesResponse>(req, token), cancellationToken);
         }
 
         /// <inheritdoc />

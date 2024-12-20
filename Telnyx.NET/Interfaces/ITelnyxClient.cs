@@ -376,5 +376,13 @@ namespace Telnyx.NET.Interfaces
         /// <param name="cancellationToken">A token to monitor for cancellation requests. Default is <see cref="CancellationToken.None"/>.</param>
         /// <returns>A task representing the asynchronous operation, containing the response with the list of messaging URL domains.</returns>
         Task<ListMessagingUrlDomainsResponse?> ListMessagingUrlDomainsAsync(ListMessagingUrlDomainsRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves a list of short codes based on the specified request parameters.
+        /// </summary>
+        /// <param name="request">The request parameters for listing short codes.</param>
+        /// <param name="cancellationToken">Optional cancellation token for canceling the operation.</param>
+        /// <returns>A task representing the asynchronous operation. Returns a response containing the list of short codes.</returns>
+        Task<ListShortCodesResponse?> ListShortCodesAsync(ListShortCodesRequest request, CancellationToken cancellationToken = default);
     }
 }
