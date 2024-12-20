@@ -384,5 +384,13 @@ namespace Telnyx.NET.Interfaces
         /// <param name="cancellationToken">Optional cancellation token for canceling the operation.</param>
         /// <returns>A task representing the asynchronous operation. Returns a response containing the list of short codes.</returns>
         Task<ListShortCodesResponse?> ListShortCodesAsync(ListShortCodesRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves details about a specific short code by its unique identifier.
+        /// </summary>
+        /// <param name="shortCodeId">The unique identifier of the short code.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation if needed.</param>
+        /// <returns>A task representing the asynchronous operation, containing the short code details upon completion.</returns>
+        Task<RetrieveShortCodeResponse?> RetrieveShortCodeAsync(string shortCodeId, CancellationToken cancellationToken = default);
     }
 }
