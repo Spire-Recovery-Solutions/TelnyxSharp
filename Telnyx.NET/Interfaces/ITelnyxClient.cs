@@ -392,5 +392,16 @@ namespace Telnyx.NET.Interfaces
         /// <param name="cancellationToken">A cancellation token to cancel the operation if needed.</param>
         /// <returns>A task representing the asynchronous operation, containing the short code details upon completion.</returns>
         Task<RetrieveShortCodeResponse?> RetrieveShortCodeAsync(string shortCodeId, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Updates a short code resource in the Telnyx system.
+        /// This method allows modification of an existing short code's properties such as its messaging profile.
+        /// </summary>
+        /// <param name="shortCodeId">The unique identifier for the short code to be updated.</param>
+        /// <param name="request">The request object containing the updated short code information.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation if needed.</param>
+        /// <returns>A response object containing the updated short code details or null if the operation fails.</returns>
+        /// <exception cref="ApiException">Thrown if an error occurs during the API call.</exception>
+        Task<UpdateShortCodeResponse?> UpdateShortCodeAsync(string shortCodeId, UpdateShortCodeRequest request, CancellationToken cancellationToken = default);
     }
 }
