@@ -13,7 +13,7 @@ namespace Telnyx.NET.Models
         /// Gets or sets the destination number (DID or SIP URI) to dial out to. This is a required field.
         /// </summary>
         [JsonPropertyName("to")]
-        public string To { get; set; } = string.Empty;
+        public required string To { get; set; }
 
         /// <summary>
         /// Gets or sets the caller ID number presented to the destination (to number).

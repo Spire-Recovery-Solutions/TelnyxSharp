@@ -15,7 +15,7 @@ namespace Telnyx.NET.Models
         /// This field is required and has a 3,000 character limit.
         /// </summary>
         [JsonPropertyName("payload")]
-        public string Payload { get; set; } = string.Empty; // Required, the text or SSML to convert to speech.
+        public required string Payload { get; set; }
 
         /// <summary>
         /// Gets or sets the type of the provided payload.
@@ -46,7 +46,7 @@ namespace Telnyx.NET.Models
         /// This field is required.
         /// </summary>
         [JsonPropertyName("voice")]
-        public string Voice { get; set; } = string.Empty; // Required, specifies the voice gender or Amazon Polly voice.
+        public required string Voice { get; set; }
 
         /// <summary>
         /// Gets or sets the language for the speech.
