@@ -13,13 +13,13 @@ namespace Telnyx.NET.Models
         /// such as "To", "From", "Call-ID", etc.
         /// </summary>
         [JsonPropertyName("name")]
-        public string Name { get; set; } = string.Empty;
+        public required string Name { get; set; }
 
         /// <summary>
         /// The value associated with the SIP header. This field contains the data 
         /// that corresponds to the specified header name.
         /// </summary>
         [JsonPropertyName("value")]
-        public string Value { get; set; } = string.Empty;
+        public required string Value { get; set; }
     }
 }
