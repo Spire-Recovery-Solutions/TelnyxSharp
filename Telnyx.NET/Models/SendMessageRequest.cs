@@ -6,11 +6,11 @@ namespace Telnyx.NET.Models
 {
     public sealed class SendMessageRequest :  MessageBaseRequest, ITelnyxRequest
     {
-           /// <summary>
+         /// <summary>
         /// The phone number the message will be sent from.
         /// </summary>
         [JsonPropertyName("from")]
-        public required string From { get; set; }
+        public string? From { get; set; }
 
         /// <summary>
         /// Id of the messaging profile settings to use

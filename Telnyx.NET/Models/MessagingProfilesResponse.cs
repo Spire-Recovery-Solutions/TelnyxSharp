@@ -37,13 +37,13 @@ namespace Telnyx.NET.Models
     public class NumberPoolSettings
     {
         [JsonPropertyName("toll_free_weight")]
-        public int TollFreeWeight { get; set; }
+        public required int TollFreeWeight { get; set; }
 
         [JsonPropertyName("long_code_weight")]
-        public int LongCodeWeight { get; set; }
+        public required int LongCodeWeight { get; set; }
 
         [JsonPropertyName("skip_unhealthy")]
-        public bool SkipUnhealthy { get; set; }
+        public required bool SkipUnhealthy { get; set; }
 
         [JsonPropertyName("sticky_sender")]
         public bool StickySender { get; set; }
@@ -58,7 +58,7 @@ namespace Telnyx.NET.Models
     public class UrlShortenerSettings
     {
         [JsonPropertyName("domain")]
-        public string Domain { get; set; } = string.Empty;
+        public required string Domain { get; set; }
 
         [JsonPropertyName("prefix")]
         public string? Prefix { get; set; }

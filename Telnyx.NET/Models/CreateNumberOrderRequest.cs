@@ -28,7 +28,7 @@ namespace Telnyx.NET.Models
     public class CreateNumberOrderPhoneNumber
     {
         [JsonPropertyName("phone_number")]
-        public string? PhoneNumber { get; set; }
+        public required string PhoneNumber { get; set; }
 
         [JsonPropertyName("regulatory_requirements")]
         public List<CreateNumberOrderRegulatoryRequirement> RegulatoryRequirements { get; set; }
