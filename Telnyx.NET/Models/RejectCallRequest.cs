@@ -26,7 +26,7 @@ namespace Telnyx.NET.Models
         /// </summary>
         [JsonPropertyName("cause")]
         [JsonConverter(typeof(JsonStringEnumConverter<RejectCallCause>))]
-        public RejectCallCause Cause { get; set; }
+        public required RejectCallCause Cause { get; set; }
     }
 
     /// <summary>

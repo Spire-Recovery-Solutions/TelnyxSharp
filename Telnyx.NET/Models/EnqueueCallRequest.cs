@@ -14,7 +14,7 @@ namespace Telnyx.NET.Models
         /// If a queue with the given name doesn't exist yet, it will be created.
         /// </summary>
         [JsonPropertyName("queue_name")]
-        public string? QueueName { get; set; }
+        public required string QueueName { get; set; }
 
         /// <summary>
         /// Gets or sets the client state to add state to every subsequent webhook.
