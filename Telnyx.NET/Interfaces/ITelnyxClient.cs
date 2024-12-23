@@ -512,5 +512,51 @@ namespace Telnyx.NET.Interfaces
         /// with details about the uploaded files or any errors encountered during the process.
         /// </returns>
         Task<UploadFileHostedNumberOrderResponse?> UploadFileRequiredForHostedNumberOrderAsync(string id, UploadFileHostedNumberOrderRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves a list of auto-response settings for a given messaging profile.
+        /// </summary>
+        /// <param name="profileId">The unique identifier of the messaging profile.</param>
+        /// <param name="request">The request parameters for the auto-response settings query.</param>
+        /// <param name="cancellationToken">An optional token to cancel the operation.</param>
+        /// <returns>A task that represents the asynchronous operation, with a response containing the list of auto-response settings.</returns>
+        Task<ListAutoResponseSettingsResponse?> ListAutoResponseSettingsAsync(string profileId, ListAutoResponseSettingsRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Creates a new auto-response setting for the given messaging profile in the Telnyx API.
+        /// </summary>
+        /// <param name="profileId">The unique identifier of the messaging profile where the auto-response setting will be created.</param>
+        /// <param name="request">The request object containing the details of the auto-response setting to be created.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation if needed.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result is the response from the Telnyx API containing the details of the created auto-response setting.</returns>
+        Task<CreateAutoResponseSettingResponse?> CreateAutoResponseSettingAsync(string profileId, CreateAutoResponseSettingRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves an auto-response setting for the given messaging profile and auto-response configuration ID.
+        /// </summary>
+        /// <param name="profileId">The unique identifier of the messaging profile for which the auto-response setting is being retrieved.</param>
+        /// <param name="autorespCfgId">The unique identifier of the auto-response configuration to retrieve.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation if needed.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result is the response from the Telnyx API containing the details of the requested auto-response setting.</returns>
+        Task<GetAutoResponseSettingResponse?> GetAutoResponseSettingAsync(string profileId, string autorespCfgId, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Updates an existing Auto Response Setting configuration for a specified profile.
+        /// </summary>
+        /// <param name="profileId">The unique identifier for the messaging profile.</param>
+        /// <param name="autorespCfgId">The unique identifier for the auto-response configuration to be updated.</param>
+        /// <param name="request">The request containing the data to update the auto-response configuration.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests. Defaults to <c>default</c>.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result is an <see cref="UpdateAutoResponseSettingResponse"/> representing the updated configuration.</returns>
+        Task<UpdateAutoResponseSettingResponse?> UpdateAutoResponseSettingAsync(string profileId, string autorespCfgId, UpdateAutoResponseSettingRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Deletes an existing Auto Response Setting configuration for a specified profile.
+        /// </summary>
+        /// <param name="profileId">The unique identifier for the messaging profile.</param>
+        /// <param name="autorespCfgId">The unique identifier for the auto-response configuration to be deleted.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests. Defaults to <c>default</c>.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result is a <see cref="DeleteAutoResponseSettingResponse"/> representing the result of the delete operation.</returns>
+        Task<DeleteAutoResponseSettingResponse?> DeleteAutoResponseSettingAsync(string profileId, string autorespCfgId, CancellationToken cancellationToken = default);
     }
 }

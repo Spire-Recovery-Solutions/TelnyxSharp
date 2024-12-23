@@ -735,8 +735,8 @@ namespace Telnyx.NET
         /// <inheritdoc />
         public async Task<GetHostedNumberOrderResponse?> ListHostedNumberOrdersAsync(GetHostedNumberOrderRequest request, CancellationToken cancellationToken = default)
         {
-             var query = new QueryBuilder()
-                .AddPagination(request.PageNumber, request.PageSize);
+            var query = new QueryBuilder()
+               .AddPagination(request.PageNumber, request.PageSize);
 
             var req = new RestRequest($"messaging_hosted_number_orders?{query}");
 
@@ -774,6 +774,73 @@ namespace Telnyx.NET
 
             return await _policies[typeof(UploadFileHostedNumberOrderRequest)].ExecuteAsync(
                 token => ExecuteAsync<UploadFileHostedNumberOrderResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<ListAutoResponseSettingsResponse?> ListAutoResponseSettingsAsync(string profileId, ListAutoResponseSettingsRequest request, CancellationToken cancellationToken = default)
+        {
+            string? createdAtGteFormatted = request.CreatedAtGte?.ToString("yyyy-MM-ddTHH:mm:ss.ffffffzzz");
+            string? createdAtLteFormatted = request.CreatedAtLte?.ToString("yyyy-MM-ddTHH:mm:ss.ffffffzzz");
+            string? updatedAtGteFormatted = request.UpdatedAtGte?.ToString("yyyy-MM-ddTHH:mm:ss.ffffffzzz");
+            string? updatedAtLteFormatted = request.UpdatedAtLte?.ToString("yyyy-MM-ddTHH:mm:ss.ffffffzzz");
+
+            var query = new QueryBuilder()
+                               .AddFilter("country_code", request.CountryCode)
+                               .AddFilter("created_at[gte]", createdAtGteFormatted)
+                               .AddFilter("created_at[lte]", createdAtLteFormatted)
+                               .AddFilter("updated_at[gte]", updatedAtGteFormatted)
+                               .AddFilter("updated_at[lte]", updatedAtLteFormatted);
+
+            var req = new RestRequest($"messaging_profiles/{profileId}/autoresp_configs?{query}");
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[typeof(ListAutoResponseSettingsRequest)].ExecuteAsync(
+                token => ExecuteAsync<ListAutoResponseSettingsResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<CreateAutoResponseSettingResponse?> CreateAutoResponseSettingAsync(string profileId, CreateAutoResponseSettingRequest request, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"messaging_profiles/{profileId}/autoresp_configs", Method.Post);
+
+            req.AddJsonBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[typeof(CreateAutoResponseSettingRequest)].ExecuteAsync(
+                token => ExecuteAsync<CreateAutoResponseSettingResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<GetAutoResponseSettingResponse?> GetAutoResponseSettingAsync(string profileId, string autorespCfgId, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"messaging_profiles/{profileId}/autoresp_configs/{autorespCfgId}");
+
+            return await _policies[typeof(GetAutoResponseSettingRequest)].ExecuteAsync(
+                token => ExecuteAsync<GetAutoResponseSettingResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<UpdateAutoResponseSettingResponse?> UpdateAutoResponseSettingAsync(string profileId, string autorespCfgId, UpdateAutoResponseSettingRequest request, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"messaging_profiles/{profileId}/autoresp_configs/{autorespCfgId}", Method.Put);
+
+            req.AddJsonBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[typeof(UpdateAutoResponseSettingRequest)].ExecuteAsync(
+                token => ExecuteAsync<UpdateAutoResponseSettingResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<DeleteAutoResponseSettingResponse?> DeleteAutoResponseSettingAsync(string profileId, string autorespCfgId, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"messaging_profiles/{profileId}/autoresp_configs/{autorespCfgId}", Method.Delete);
+
+            return await _policies[typeof(DeleteAutoResponseSettingRequest)].ExecuteAsync(
+                token => ExecuteAsync<DeleteAutoResponseSettingResponse>(req, token),
                 cancellationToken);
         }
 
