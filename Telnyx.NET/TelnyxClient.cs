@@ -845,6 +845,67 @@ namespace Telnyx.NET
         }
 
         /// <inheritdoc />
+        public async Task<ListVerificationRequestsResponse?> ListVerificationRequestsAsync(ListVerificationRequestsRequest request, CancellationToken cancellationToken = default)
+        {
+            var query = new QueryBuilder()
+                            .AddPagination(request.Page, request.PageSize)
+                            .AddFilter("date_start", request.DateStart?.ToString("yyyy-MM-ddTHH:mm:ss.ffffffzzz"))
+                            .AddFilter("date_end", request.DateEnd?.ToString("yyyy-MM-ddTHH:mm:ss.ffffffzzz"))
+                            .AddFilter("status", request.Status?.ToString())
+                            .AddFilter("phone_number", request.PhoneNumber);
+
+            var req = new RestRequest($"messaging_tollfree/verification/requests?{query}");
+
+            return await _policies[typeof(ListVerificationRequestsRequest)].ExecuteAsync(
+                token => ExecuteAsync<ListVerificationRequestsResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<SubmitVerificationRequestResponse?> SubmitVerificationRequestAsync(SubmitVerificationRequestRequest request, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest("messaging_tollfree/verification/requests", Method.Post);
+
+            req.AddJsonBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[typeof(SubmitVerificationRequestRequest)].ExecuteAsync(
+                token => ExecuteAsync<SubmitVerificationRequestResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<GetVerificationRequestResponse?> GetVerificationRequestAsync(string id, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"messaging_tollfree/verification/requests/{id}");
+
+            return await _policies[typeof(GetVerificationRequestRequest)].ExecuteAsync(
+                token => ExecuteAsync<GetVerificationRequestResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<DeleteVerificationRequestResponse?> DeleteVerificationRequestAsync(string id, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"messaging_tollfree/verification/requests/{id}", Method.Delete);
+
+            return await _policies[typeof(DeleteVerificationRequestRequest)].ExecuteAsync(
+                token => ExecuteAsync<DeleteVerificationRequestResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<UpdateVerificationRequestResponse?> UpdateVerificationRequestAsync(string id, UpdateVerificationRequestRequest request,CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"messaging_tollfree/verification/requests/{id}", Method.Patch);
+                                
+            req.AddJsonBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[typeof(UpdateVerificationRequestRequest)].ExecuteAsync(
+                token => ExecuteAsync<UpdateVerificationRequestResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
         private async Task<T1?> ExecuteAsync<T1>(RestRequest request, CancellationToken cancellationToken = default)
             where T1 : ITelnyxResponse
         {

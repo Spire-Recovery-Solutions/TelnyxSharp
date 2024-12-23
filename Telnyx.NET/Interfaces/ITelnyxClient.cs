@@ -558,5 +558,48 @@ namespace Telnyx.NET.Interfaces
         /// <param name="cancellationToken">A token to monitor for cancellation requests. Defaults to <c>default</c>.</param>
         /// <returns>A task that represents the asynchronous operation. The task result is a <see cref="DeleteAutoResponseSettingResponse"/> representing the result of the delete operation.</returns>
         Task<DeleteAutoResponseSettingResponse?> DeleteAutoResponseSettingAsync(string profileId, string autorespCfgId, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves a paginated list of verification requests based on the specified filters.
+        /// </summary>
+        /// <param name="request">The request object containing pagination and filter parameters.</param>
+        /// <param name="cancellationToken">A token to cancel the operation if needed.</param>
+        /// <returns>
+        /// A <see cref="ListVerificationRequestsResponse"/> containing the list of verification requests and additional metadata,
+        /// or <c>null</c> if the request fails.
+        /// </returns>
+        Task<ListVerificationRequestsResponse?> ListVerificationRequestsAsync(ListVerificationRequestsRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Submits a new verification request for processing.
+        /// </summary>
+        /// <param name="request">The verification request details to be submitted.</param>
+        /// <param name="cancellationToken">A token to cancel the operation if necessary.</param>
+        /// <returns>
+        /// A <see cref="SubmitVerificationRequestResponse"/> containing the result of the submission,
+        /// or <c>null</c> if the request fails.
+        /// </returns>
+        Task<SubmitVerificationRequestResponse?> SubmitVerificationRequestAsync(SubmitVerificationRequestRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves a verification request by its unique identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier of the verification request to retrieve.</param>
+        /// <param name="cancellationToken">An optional cancellation token to cancel the operation.</param>
+        /// <returns>
+        /// A <see cref="Task"/> that represents the asynchronous operation, containing a <see cref="GetVerificationRequestResponse"/> if found, or <c>null</c> if the request does not exist.
+        /// </returns>
+        Task<GetVerificationRequestResponse?> GetVerificationRequestAsync(string id, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Updates an existing verification request with the specified details.
+        /// </summary>
+        /// <param name="id">The unique identifier of the verification request to update.</param>
+        /// <param name="request">The details of the update to apply to the verification request.</param>
+        /// <param name="cancellationToken">An optional cancellation token to cancel the operation.</param>
+        /// <returns>
+        /// A <see cref="Task"/> that represents the asynchronous operation, containing a <see cref="UpdateVerificationRequestResponse"/> with the updated information, or <c>null</c> if the request does not exist.
+        /// </returns>
+        Task<UpdateVerificationRequestResponse?> UpdateVerificationRequestAsync(string id, UpdateVerificationRequestRequest request, CancellationToken cancellationToken = default);
     }
 }
