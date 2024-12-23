@@ -249,6 +249,30 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(RetrieveBulkUpdateStatusRequest))]
     [JsonSerializable(typeof(RetrieveBulkUpdateStatusResponse))]
     [JsonSerializable(typeof(RetrieveBulkUpdateStatus))]
+
+    [JsonSerializable(typeof(BaseHostedNumberOrderData))]
+
+    [JsonSerializable(typeof(DeleteHostedNumberRequest))]
+    [JsonSerializable(typeof(DeleteHostedNumberResponse))]
+    [JsonSerializable(typeof(DeleteHostedNumberData))]
+
+    [JsonSerializable(typeof(GetHostedNumberOrderRequest))]
+    [JsonSerializable(typeof(GetHostedNumberOrderResponse))]
+    [JsonSerializable(typeof(HostedNumberOrderData))]
+    [JsonSerializable(typeof(HostedPhoneNumber))]
+    [JsonSerializable(typeof(HostedNumberOrderMeta))]
+
+    [JsonSerializable(typeof(CreateHostedNumberOrderRequest))]
+    [JsonSerializable(typeof(CreateHostedNumberOrderResponse))]
+    [JsonSerializable(typeof(CreateHostedNumberOrder))]
+
+    [JsonSerializable(typeof(RetrieveHostedNumberOrderRequest))]
+    [JsonSerializable(typeof(RetrieveHostedNumberOrderResponse))]
+    [JsonSerializable(typeof(RetrieveHostedNumberOrderData))]
+
+    [JsonSerializable(typeof(UploadFileHostedNumberOrderRequest))]
+    [JsonSerializable(typeof(UploadFileHostedNumberOrderResponse))]
+    [JsonSerializable(typeof(UploadFileHostedNumberOrderData))]
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,
