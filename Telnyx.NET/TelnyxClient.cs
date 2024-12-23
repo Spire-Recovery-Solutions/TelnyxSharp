@@ -704,7 +704,7 @@ namespace Telnyx.NET
         public async Task<UpdateNumbersMessagingBulkResponse?> UpdateMessagingProfileForMultipleNumbersAsync(UpdateNumbersMessagingBulkRequest request, CancellationToken cancellationToken = default)
         {
             var req = new RestRequest("messaging_numbers_bulk_updates", Method.Post);
-           
+
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await _policies[request.GetType()].ExecuteAsync(
@@ -719,6 +719,61 @@ namespace Telnyx.NET
 
             return await _policies[typeof(RetrieveBulkUpdateStatusRequest)].ExecuteAsync(
                 token => ExecuteAsync<RetrieveBulkUpdateStatusResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<DeleteHostedNumberResponse?> DeleteHostedNumberAsync(string id, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"messaging_hosted_numbers/{id}", Method.Delete);
+
+            return await _policies[typeof(DeleteHostedNumberRequest)].ExecuteAsync(
+                token => ExecuteAsync<DeleteHostedNumberResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<GetHostedNumberOrderResponse?> ListHostedNumberOrdersAsync(GetHostedNumberOrderRequest request, CancellationToken cancellationToken = default)
+        {
+             var query = new QueryBuilder()
+                .AddPagination(request.PageNumber, request.PageSize);
+
+            var req = new RestRequest($"messaging_hosted_number_orders?{query}");
+
+            return await _policies[typeof(GetHostedNumberOrderRequest)].ExecuteAsync(
+                token => ExecuteAsync<GetHostedNumberOrderResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<CreateHostedNumberOrderResponse?> CreateHostedNumberOrderAsync(CreateHostedNumberOrderRequest request, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest("messaging_hosted_number_orders", Method.Post);
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[typeof(CreateHostedNumberOrderRequest)].ExecuteAsync(
+                token => ExecuteAsync<CreateHostedNumberOrderResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<RetrieveHostedNumberOrderResponse?> RetrieveHostedNumberOrderAsync(string id, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"messaging_hosted_number_orders/{id}");
+
+            return await _policies[typeof(RetrieveHostedNumberOrderRequest)].ExecuteAsync(
+                token => ExecuteAsync<RetrieveHostedNumberOrderResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<UploadFileHostedNumberOrderResponse?> UploadFileRequiredForHostedNumberOrderAsync(string id, UploadFileHostedNumberOrderRequest request, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"messaging_hosted_number_orders/{id}/actions/file_upload", Method.Post);
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[typeof(UploadFileHostedNumberOrderRequest)].ExecuteAsync(
+                token => ExecuteAsync<UploadFileHostedNumberOrderResponse>(req, token),
                 cancellationToken);
         }
 

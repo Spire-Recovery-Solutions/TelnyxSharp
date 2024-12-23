@@ -404,7 +404,7 @@ namespace Telnyx.NET.Interfaces
         /// <exception cref="ApiException">Thrown if an error occurs during the API call.</exception>
         Task<UpdateShortCodeResponse?> UpdateShortCodeAsync(string shortCodeId, UpdateShortCodeRequest request, CancellationToken cancellationToken = default);
 
-         /// <summary>
+        /// <summary>
         /// Retrieves a list of phone numbers with their messaging settings.
         /// </summary>
         /// <param name="request">The request containing pagination details.</param>
@@ -424,7 +424,7 @@ namespace Telnyx.NET.Interfaces
         /// </returns>
         Task<RetrievePhoneMessageSettingsResponse?> GetPhoneNumberWithMessagingSettingsAsync(string id, CancellationToken cancellationToken = default);
 
-         /// <summary>
+        /// <summary>
         /// Updates the messaging profile and/or messaging product of a phone number.
         /// </summary>
         /// <param name="id">The unique identifier of the phone number to update.</param>
@@ -454,5 +454,63 @@ namespace Telnyx.NET.Interfaces
         /// A task representing the asynchronous operation, containing the bulk update status details.
         /// </returns>
         Task<RetrieveBulkUpdateStatusResponse?> RetrieveBulkUpdateStatusAsync(string orderId, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Deletes a messaging hosted number.
+        /// </summary>
+        /// <param name="id">The unique identifier of the messaging hosted number to delete.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation if needed.</param>
+        /// <returns>
+        /// A task representing the asynchronous operation, containing the status of the delete operation.
+        /// </returns>
+        Task<DeleteHostedNumberResponse?> DeleteHostedNumberAsync(string id, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves a list of hosted number orders with pagination support.
+        /// </summary>
+        /// <param name="request">
+        /// The request containing parameters for retrieving hosted number orders, such as page number and page size.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// An optional token for cancelling the asynchronous operation.
+        /// </param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. 
+        /// The task result contains a response with the list of hosted number orders.
+        /// </returns>
+        Task<GetHostedNumberOrderResponse?> ListHostedNumberOrdersAsync(GetHostedNumberOrderRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Creates a new hosted number order.
+        /// </summary>
+        /// <param name="request">The request payload containing details for the hosted number order.</param>
+        /// <param name="cancellationToken">A token to observe for cancellation of the asynchronous operation.</param>
+        /// <returns>
+        /// A task representing the asynchronous operation. 
+        /// The task result contains the response of the hosted number order creation.
+        /// </returns>
+        Task<CreateHostedNumberOrderResponse?> CreateHostedNumberOrderAsync(CreateHostedNumberOrderRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves a messaging hosted number order by its unique identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier of the messaging hosted number order.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation if needed.</param>
+        /// <returns>
+        /// A task representing the asynchronous operation, containing details about the messaging hosted number order.
+        /// </returns>
+        Task<RetrieveHostedNumberOrderResponse?> RetrieveHostedNumberOrderAsync(string id, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Uploads the required files (e.g., Letter of Authorization and bill) for a specified hosted number order.
+        /// </summary>
+        /// <param name="id">The unique identifier of the hosted number order.</param>
+        /// <param name="request">The request payload containing the files to be uploaded.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the response 
+        /// with details about the uploaded files or any errors encountered during the process.
+        /// </returns>
+        Task<UploadFileHostedNumberOrderResponse?> UploadFileRequiredForHostedNumberOrderAsync(string id, UploadFileHostedNumberOrderRequest request, CancellationToken cancellationToken = default);
     }
 }
