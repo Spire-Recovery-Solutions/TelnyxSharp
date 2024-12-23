@@ -273,6 +273,28 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(UploadFileHostedNumberOrderRequest))]
     [JsonSerializable(typeof(UploadFileHostedNumberOrderResponse))]
     [JsonSerializable(typeof(UploadFileHostedNumberOrderData))]
+
+    [JsonSerializable(typeof(BaseAutoResponseSetting))]
+
+    [JsonSerializable(typeof(ListAutoResponseSettingsRequest))]
+    [JsonSerializable(typeof(ListAutoResponseSettingsResponse))]
+    [JsonSerializable(typeof(AutoResponseSetting))]
+    [JsonSerializable(typeof(AutoResponseSettingsMeta))]
+
+    [JsonSerializable(typeof(CreateAutoResponseSettingRequest))]
+    [JsonSerializable(typeof(CreateAutoResponseSettingResponse))]
+    [JsonSerializable(typeof(CreateAutoResponseSetting))]
+
+    [JsonSerializable(typeof(GetAutoResponseSettingRequest))]
+    [JsonSerializable(typeof(GetAutoResponseSettingResponse))]
+    [JsonSerializable(typeof(GetAutoResponseSetting))]
+
+    [JsonSerializable(typeof(UpdateAutoResponseSettingRequest))]
+    [JsonSerializable(typeof(UpdateAutoResponseSettingResponse))]
+    [JsonSerializable(typeof(UpdateAutoResponseSetting))]
+
+    [JsonSerializable(typeof(DeleteAutoResponseSettingRequest))]
+    [JsonSerializable(typeof(DeleteAutoResponseSettingResponse))]
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,
