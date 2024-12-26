@@ -805,7 +805,7 @@ namespace Telnyx.NET
         {
             var req = new RestRequest($"messaging_profiles/{profileId}/autoresp_configs", Method.Post);
 
-            req.AddJsonBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await _policies[typeof(CreateAutoResponseSettingRequest)].ExecuteAsync(
                 token => ExecuteAsync<CreateAutoResponseSettingResponse>(req, token),
@@ -827,7 +827,7 @@ namespace Telnyx.NET
         {
             var req = new RestRequest($"messaging_profiles/{profileId}/autoresp_configs/{autorespCfgId}", Method.Put);
 
-            req.AddJsonBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await _policies[typeof(UpdateAutoResponseSettingRequest)].ExecuteAsync(
                 token => ExecuteAsync<UpdateAutoResponseSettingResponse>(req, token),
@@ -866,7 +866,7 @@ namespace Telnyx.NET
         {
             var req = new RestRequest("messaging_tollfree/verification/requests", Method.Post);
 
-            req.AddJsonBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await _policies[typeof(SubmitVerificationRequestRequest)].ExecuteAsync(
                 token => ExecuteAsync<SubmitVerificationRequestResponse>(req, token),
@@ -898,7 +898,7 @@ namespace Telnyx.NET
         {
             var req = new RestRequest($"messaging_tollfree/verification/requests/{id}", Method.Patch);
                                 
-            req.AddJsonBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await _policies[typeof(UpdateVerificationRequestRequest)].ExecuteAsync(
                 token => ExecuteAsync<UpdateVerificationRequestResponse>(req, token),
