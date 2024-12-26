@@ -601,5 +601,122 @@ namespace Telnyx.NET.Interfaces
         /// A <see cref="Task"/> that represents the asynchronous operation, containing a <see cref="UpdateVerificationRequestResponse"/> with the updated information, or <c>null</c> if the request does not exist.
         /// </returns>
         Task<UpdateVerificationRequestResponse?> UpdateVerificationRequestAsync(string id, UpdateVerificationRequestRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Asynchronously lists all brands.
+        /// </summary>
+        /// <param name="request">The request containing filtering or pagination details for listing brands.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+        /// <returns>A <see cref="ListBrandsResponse"/> containing the list of brands, or null if the operation fails.</returns>
+        Task<ListBrandsResponse?> ListBrandsAsync(ListBrandsRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Asynchronously creates a new brand.
+        /// </summary>
+        /// <param name="request">The request containing details for the new brand.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+        /// <returns>A <see cref="CreateBrandResponse"/> containing the response data, or null if the operation fails.</returns>
+        Task<CreateBrandResponse?> CreateBrandAsync(CreateBrandRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves a brand's details asynchronously using the brand ID.
+        /// </summary>
+        /// <param name="brandId">The unique identifier of the brand to retrieve.</param>
+        /// <param name="cancellationToken">An optional token to cancel the asynchronous operation.</param>
+        /// <returns>
+        /// A task representing the asynchronous operation. The task result contains 
+        /// a <see cref="GetBrandResponse"/> object with the brand details if found; otherwise, null.
+        /// </returns>
+        Task<GetBrandResponse?> GetBrandAsync(string brandId, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Updates a 10DLC brand.
+        /// </summary>
+        /// <param name="brandId">The ID of the brand to update.</param>
+        /// <param name="request">The updated brand details.</param>
+        /// <param name="cancellationToken">Optional token to cancel the operation.</param>
+        /// <returns>
+        /// A task that returns the updated brand details or <c>null</c> if the update fails.
+        /// </returns>
+        Task<UpdateBrandResponse?> UpdateBrandAsync(string brandId, UpdateBrandRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Deletes a brand by its unique identifier.
+        /// </summary>
+        /// <param name="brandId">The unique identifier of the brand to be deleted.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the response
+        /// of the delete operation, or <c>null</c> if no response is received.
+        /// </returns>
+        Task<DeleteBrandResponse?> DeleteBrandAsync(string brandId, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Resends the two-factor authentication (2FA) email for a specified brand.
+        /// </summary>
+        /// <param name="brandId">The unique identifier of the brand for which the 2FA email should be resent.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the response
+        /// of the resend operation, or <c>null</c> if no response is received.
+        /// </returns>
+        Task<ResendBrand2FAEmailResponse?> ResendBrand2FAEmailAsync(string brandId, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Reverts the changes made to a specified brand, restoring it to a previous state.
+        /// </summary>
+        /// <param name="brandId">The unique identifier of the brand to revert.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the response
+        /// of the revert operation, or <c>null</c> if no response is received.
+        /// </returns>
+        Task<RevetBrandResponse?> RevetBrandAsync(string brandId, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves a list of external vetting information associated with a specified brand.
+        /// </summary>
+        /// <param name="brandId">The unique identifier of the brand whose external vetting information is to be retrieved.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the response
+        /// with external vetting information, or <c>null</c> if no response is received.
+        /// </returns>
+        Task<ListExternalVettingResponse?> ListExternalVettingAsync(string brandId, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Imports an external vetting record for the specified brand.
+        /// </summary>
+        /// <param name="brandId">The unique identifier of the brand for which the external vetting record is to be imported.</param>
+        /// <param name="request">The request object containing the details of the external vetting record to be imported.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the response
+        /// indicating the status of the import operation, or <c>null</c> if no response is received.
+        /// </returns>
+        Task<ImportExternalVettingResponse?> ImportExternalVettingRecordAsync(string brandId, ImportExternalVettingRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Places an order for external vetting for the specified brand.
+        /// </summary>
+        /// <param name="brandId">The unique identifier of the brand for which external vetting is to be ordered.</param>
+        /// <param name="request">The request object containing the details of the external vetting order.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the response
+        /// indicating the status of the external vetting order, or <c>null</c> if no response is received.
+        /// </returns>
+        Task<OrderExternalVettingResponse?> OrderExternalVettingAsync(string brandId, OrderExternalVettingRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves feedback for the specified brand.
+        /// </summary>
+        /// <param name="brandId">The unique identifier of the brand for which feedback is to be retrieved.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the response
+        /// with the feedback details for the specified brand, or <c>null</c> if no response is received.
+        /// </returns>
+        Task<GetBrandFeedbackResponse?> GetBrandFeedbackAsync(string brandId, CancellationToken cancellationToken = default);
     }
 }

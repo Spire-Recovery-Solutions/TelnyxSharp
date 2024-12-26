@@ -315,6 +315,46 @@ namespace Telnyx.NET
 
     [JsonSerializable(typeof(UpdateVerificationRequestRequest))]
     [JsonSerializable(typeof(UpdateVerificationRequestResponse))]
+
+    [JsonSerializable(typeof(ValidationErrorDetail))]
+    [JsonSerializable(typeof(BaseBrandResponse))]
+
+    [JsonSerializable(typeof(ListBrandsRequest))]
+    [JsonSerializable(typeof(ListBrandsResponse))]
+    [JsonSerializable(typeof(BrandRecord))]
+
+    [JsonSerializable(typeof(CreateBrandRequest))]
+    [JsonSerializable(typeof(CreateBrandResponse))]
+    [JsonSerializable(typeof(OptionalAttributes))]
+
+    [JsonSerializable(typeof(GetBrandRequest))]
+    [JsonSerializable(typeof(GetBrandResponse))]
+
+    [JsonSerializable(typeof(UpdateBrandRequest))]
+    [JsonSerializable(typeof(UpdateBrandResponse))]
+
+    [JsonSerializable(typeof(DeleteBrandRequest))]
+    [JsonSerializable(typeof(DeleteBrandResponse))]
+
+    [JsonSerializable(typeof(ResendBrand2FAEmailRequest))]
+    [JsonSerializable(typeof(ResendBrand2FAEmailResponse))]
+
+    [JsonSerializable(typeof(RevetBrandRequest))]
+    [JsonSerializable(typeof(RevetBrandResponse))]
+
+    [JsonSerializable(typeof(ListExternalVettingRequest))]
+    [JsonSerializable(typeof(ListExternalVettingResponse))]
+
+    [JsonSerializable(typeof(ImportExternalVettingRequest))]
+    [JsonSerializable(typeof(ImportExternalVettingResponse))]
+
+    [JsonSerializable(typeof(OrderExternalVettingRequest))]
+    [JsonSerializable(typeof(OrderExternalVettingResponse))]
+
+    [JsonSerializable(typeof(GetBrandFeedbackRequest))]
+    [JsonSerializable(typeof(GetBrandFeedbackResponse))]
+    [JsonSerializable(typeof(Category))]
+
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,

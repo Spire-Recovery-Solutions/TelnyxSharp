@@ -894,14 +894,142 @@ namespace Telnyx.NET
         }
 
         /// <inheritdoc />
-        public async Task<UpdateVerificationRequestResponse?> UpdateVerificationRequestAsync(string id, UpdateVerificationRequestRequest request,CancellationToken cancellationToken = default)
+        public async Task<UpdateVerificationRequestResponse?> UpdateVerificationRequestAsync(string id, UpdateVerificationRequestRequest request, CancellationToken cancellationToken = default)
         {
             var req = new RestRequest($"messaging_tollfree/verification/requests/{id}", Method.Patch);
-                                
+
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await _policies[typeof(UpdateVerificationRequestRequest)].ExecuteAsync(
                 token => ExecuteAsync<UpdateVerificationRequestResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<ListBrandsResponse?> ListBrandsAsync(ListBrandsRequest request, CancellationToken cancellationToken = default)
+        {
+            var query = new QueryBuilder()
+                .AddPagination(request.Page, request.RecordsPerPage)
+                .AddFilter("sort", request.Sort.ToString())
+                .AddFilter("displayName", request.DisplayName)
+                .AddFilter("entityType", request.EntityType)
+                .AddFilter("state", request.State)
+                .AddFilter("country", request.Country)
+                .AddFilter("brandId", request.BrandId)
+                .AddFilter("tcrBrandId", request.TcrBrandId);
+
+            var req = new RestRequest($"10dlc/brand?{query}");
+
+            return await _policies[typeof(ListBrandsRequest)].ExecuteAsync(
+                token => ExecuteAsync<ListBrandsResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<CreateBrandResponse?> CreateBrandAsync(CreateBrandRequest request, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest("10dlc/brand", Method.Post);
+
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[request.GetType()].ExecuteAsync(
+                token => ExecuteAsync<CreateBrandResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<GetBrandResponse?> GetBrandAsync(string brandId, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"10dlc/brand/{brandId}");
+
+            return await _policies[typeof(GetBrandRequest)].ExecuteAsync(
+                token => ExecuteAsync<GetBrandResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<UpdateBrandResponse?> UpdateBrandAsync(string brandId, UpdateBrandRequest request, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"10dlc/brand/{brandId}", Method.Put);
+
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[typeof(UpdateBrandRequest)].ExecuteAsync(
+                token => ExecuteAsync<UpdateBrandResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<DeleteBrandResponse?> DeleteBrandAsync(string brandId, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"10dlc/brand/{brandId}", Method.Delete);
+
+            return await _policies[typeof(DeleteBrandRequest)].ExecuteAsync(
+                token => ExecuteAsync<DeleteBrandResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<ResendBrand2FAEmailResponse?> ResendBrand2FAEmailAsync(string brandId, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"10dlc/brand/{brandId}/2faEmail", Method.Post);
+
+            return await _policies[typeof(ResendBrand2FAEmailRequest)].ExecuteAsync(
+                token => ExecuteAsync<ResendBrand2FAEmailResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<RevetBrandResponse?> RevetBrandAsync(string brandId, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"10dlc/brand/{brandId}/revet", Method.Put);
+
+            return await _policies[typeof(RevetBrandRequest)].ExecuteAsync(
+                token => ExecuteAsync<RevetBrandResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<ListExternalVettingResponse?> ListExternalVettingAsync(string brandId, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"10dlc/brand/{brandId}/externalVetting");
+
+            return await _policies[typeof(ListExternalVettingRequest)].ExecuteAsync(
+                token => ExecuteAsync<ListExternalVettingResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<ImportExternalVettingResponse?> ImportExternalVettingRecordAsync(string brandId, ImportExternalVettingRequest request, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"10dlc/brand/{brandId}/externalVetting", Method.Put);
+
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[typeof(ImportExternalVettingRequest)].ExecuteAsync(
+                token => ExecuteAsync<ImportExternalVettingResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<OrderExternalVettingResponse?> OrderExternalVettingAsync(string brandId, OrderExternalVettingRequest request, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"10dlc/brand/{brandId}/externalVetting", Method.Post);
+
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[typeof(OrderExternalVettingRequest)].ExecuteAsync(
+                token => ExecuteAsync<OrderExternalVettingResponse>(req, token),
+                cancellationToken);
+        }
+        
+        /// <inheritdoc />
+        public async Task<GetBrandFeedbackResponse?> GetBrandFeedbackAsync(string brandId, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"10dlc/brand/feedback/{brandId}");
+
+            return await _policies[typeof(GetBrandFeedbackRequest)].ExecuteAsync(
+                token => ExecuteAsync<GetBrandFeedbackResponse>(req, token),
                 cancellationToken);
         }
 
