@@ -295,6 +295,26 @@ namespace Telnyx.NET
 
     [JsonSerializable(typeof(DeleteAutoResponseSettingRequest))]
     [JsonSerializable(typeof(DeleteAutoResponseSettingResponse))]
+
+    [JsonSerializable(typeof(BaseVerificationRequestResponse))]
+
+    [JsonSerializable(typeof(ListVerificationRequestsRequest))]
+    [JsonSerializable(typeof(ListVerificationRequestsResponse))]
+    [JsonSerializable(typeof(VerificationRequestRecord))]
+    [JsonSerializable(typeof(PhoneNumber))]
+    [JsonSerializable(typeof(OptInWorkflowImage))]
+
+    [JsonSerializable(typeof(SubmitVerificationRequestRequest))]
+    [JsonSerializable(typeof(SubmitVerificationRequestResponse))]
+
+    [JsonSerializable(typeof(GetVerificationRequestRequest))]
+    [JsonSerializable(typeof(GetVerificationRequestResponse))]
+
+    [JsonSerializable(typeof(DeleteVerificationRequestRequest))]
+    [JsonSerializable(typeof(DeleteVerificationRequestResponse))]
+
+    [JsonSerializable(typeof(UpdateVerificationRequestRequest))]
+    [JsonSerializable(typeof(UpdateVerificationRequestResponse))]
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,
