@@ -830,5 +830,61 @@ namespace Telnyx.NET.Interfaces
         /// with the MNO metadata of the specified campaign, or <c>null</c> if no response is received.
         /// </returns>
         Task<GetCampaignMnoMetadataResponse?> GetCampaignMnoMetadataAsync(string campaignId, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves phone number campaigns based on the specified criteria.
+        /// </summary>
+        /// <param name="request">The request object containing filter and pagination details.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the response
+        /// with the list of phone number campaigns matching the criteria, or <c>null</c> if no response is received.
+        /// </returns>
+        Task<RetrievePhoneNumberCampaignsResponse?> RetrievePhoneNumberCampaignsAsync(RetrievePhoneNumberCampaignsRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Creates a new phone number campaign.
+        /// </summary>
+        /// <param name="request">The request object containing the phone number and campaign ID details.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the response
+        /// with the details of the created phone number campaign, or <c>null</c> if no response is received.
+        /// </returns>
+        Task<CreatePhoneNumberCampaignResponse?> CreatePhoneNumberCampaignAsync(CreatePhoneNumberCampaignRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves a specific phone number campaign by its phone number.
+        /// </summary>
+        /// <param name="phoneNumber">The phone number associated with the campaign.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the response
+        /// with the details of the phone number campaign, or <c>null</c> if no response is received.
+        /// </returns>
+        Task<GetPhoneNumberCampaignResponse?> GetPhoneNumberCampaignAsync(string phoneNumber, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Updates an existing phone number campaign.
+        /// </summary>
+        /// <param name="phoneNumber">The phone number associated with the campaign to update.</param>
+        /// <param name="request">The request object containing the updated details for the campaign.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the response
+        /// with the details of the updated phone number campaign, or <c>null</c> if no response is received.
+        /// </returns>
+        Task<UpdatePhoneNumberCampaignResponse?> UpdatePhoneNumberCampaignAsync(string phoneNumber, UpdatePhoneNumberCampaignRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Deletes an existing phone number campaign.
+        /// </summary>
+        /// <param name="phoneNumber">The phone number associated with the campaign to delete.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the response
+        /// confirming the deletion of the phone number campaign, or <c>null</c> if no response is received.
+        /// </returns>
+        Task<DeletePhoneNumberCampaignResponse?> DeletePhoneNumberCampaignAsync(string phoneNumber, CancellationToken cancellationToken = default);
     }
 }
