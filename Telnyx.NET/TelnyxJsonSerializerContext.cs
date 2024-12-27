@@ -355,6 +355,44 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(GetBrandFeedbackResponse))]
     [JsonSerializable(typeof(Category))]
 
+    [JsonSerializable(typeof(ListCampaignsRequest))]
+    [JsonSerializable(typeof(ListCampaignsResponse))]
+    [JsonSerializable(typeof(CampaignRecord))]
+
+    [JsonSerializable(typeof(GetCampaignRequest))]
+    [JsonSerializable(typeof(GetCampaignResponse))]
+
+    [JsonSerializable(typeof(UpdateCampaignRequest))]
+    [JsonSerializable(typeof(UpdateCampaignResponse))]
+
+    [JsonSerializable(typeof(DeactivateCampaignRequest))]
+    [JsonSerializable(typeof(DeactivateCampaignResponse))]
+
+    [JsonSerializable(typeof(GetCampaignOperationStatusRequest))]
+    [JsonSerializable(typeof(GetCampaignOperationStatusResponse))]
+
+    [JsonSerializable(typeof(GetCampaignOsrAttributesRequest))]
+    [JsonSerializable(typeof(GetCampaignOsrAttributesResponse))]
+
+    [JsonSerializable(typeof(GetCampaignCostRequest))]
+    [JsonSerializable(typeof(GetCampaignCostResponse))]
+
+    [JsonSerializable(typeof(SubmitCampaignRequest))]
+    [JsonSerializable(typeof(SubmitCampaignResponse))]
+
+    [JsonSerializable(typeof(QualifyCampaignByUsecaseRequest))]
+    [JsonSerializable(typeof(QualifyCampaignByUsecaseResponse))]
+
+    [JsonSerializable(typeof(AcceptSharedCampaignRequest))]
+    [JsonSerializable(typeof(AcceptSharedCampaignResponse))]
+
+    [JsonSerializable(typeof(GetCampaignMnoMetadataRequest))]
+    [JsonSerializable(typeof(GetCampaignMnoMetadataResponse))]
+    [JsonSerializable(typeof(MnoMetadataDetail))]
+
+    [JsonSerializable(typeof(GetCampaignSharingStatusResponse))]
+    [JsonSerializable(typeof(GetCampaignSharingStatusRequest))]
+    [JsonSerializable(typeof(SharingStatusDetail))]
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,
