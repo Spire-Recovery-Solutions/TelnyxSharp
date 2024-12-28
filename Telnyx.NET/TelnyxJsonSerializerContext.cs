@@ -393,6 +393,22 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(GetCampaignSharingStatusResponse))]
     [JsonSerializable(typeof(GetCampaignSharingStatusRequest))]
     [JsonSerializable(typeof(SharingStatusDetail))]
+
+    [JsonSerializable(typeof(RetrievePhoneNumberCampaignsRequest))]
+    [JsonSerializable(typeof(RetrievePhoneNumberCampaignsResponse))]
+    [JsonSerializable(typeof(RetrievePhoneNumberCampaign))]
+
+    [JsonSerializable(typeof(CreatePhoneNumberCampaignRequest))]
+    [JsonSerializable(typeof(CreatePhoneNumberCampaignResponse))]
+
+    [JsonSerializable(typeof(GetPhoneNumberCampaignRequest))]
+    [JsonSerializable(typeof(GetPhoneNumberCampaignResponse))]
+
+    [JsonSerializable(typeof(UpdatePhoneNumberCampaignRequest))]
+    [JsonSerializable(typeof(UpdatePhoneNumberCampaignResponse))]
+    
+    [JsonSerializable(typeof(DeletePhoneNumberCampaignRequest))]
+    [JsonSerializable(typeof(DeletePhoneNumberCampaignResponse))]
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,
