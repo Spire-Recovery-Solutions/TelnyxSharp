@@ -718,5 +718,117 @@ namespace Telnyx.NET.Interfaces
         /// with the feedback details for the specified brand, or <c>null</c> if no response is received.
         /// </returns>
         Task<GetBrandFeedbackResponse?> GetBrandFeedbackAsync(string brandId, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Asynchronously retrieves a list of campaigns based on the provided request parameters.
+        /// </summary>
+        /// <param name="request">The request object containing the necessary parameters for listing campaigns.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests (optional).</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the response
+        /// with a list of campaigns, or <c>null</c> if no response is received.
+        /// </returns>
+        Task<ListCampaignsResponse?> ListCampaignsAsync(ListCampaignsRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Asynchronously retrieves a specific campaign based on its unique identifier.
+        /// </summary>
+        /// <param name="campaignId">The unique identifier of the campaign to retrieve.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests (optional).</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the response
+        /// with the details of the specified campaign, or <c>null</c> if no response is received.
+        /// </returns>
+        Task<GetCampaignResponse?> GetCampaignAsync(string campaignId, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Asynchronously updates a specific campaign with the provided update request details.
+        /// </summary>
+        /// <param name="campaignId">The unique identifier of the campaign to update.</param>
+        /// <param name="request">The request object containing the updated campaign details.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests (optional).</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the response
+        /// confirming the update of the campaign, or <c>null</c> if no response is received.
+        /// </returns>
+        Task<UpdateCampaignResponse?> UpdateCampaignAsync(string campaignId, UpdateCampaignRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Asynchronously deactivates a specific campaign by its identifier.
+        /// </summary>
+        /// <param name="campaignId">The unique identifier of the campaign to deactivate.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests (optional).</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the response
+        /// confirming the deactivation of the campaign, or <c>null</c> if no response is received.
+        /// </returns>
+        Task<DeactivateCampaignResponse?> DeactivateCampaignAsync(string campaignId, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Asynchronously retrieves the status of a campaign's operation.
+        /// </summary>
+        /// <param name="campaignId">The unique identifier of the campaign to check the operation status.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests (optional).</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the response
+        /// with the campaign operation status, or <c>null</c> if no response is received.
+        /// </returns>
+        Task<GetCampaignOperationStatusResponse?> GetCampaignOperationStatusAsync(string campaignId, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Asynchronously retrieves the OSR (Onboarding Status Report) attributes for a specific campaign.
+        /// </summary>
+        /// <param name="campaignId">The unique identifier of the campaign to retrieve OSR attributes.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests (optional).</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the response
+        /// with the OSR attributes of the specified campaign, or <c>null</c> if no response is received.
+        /// </returns>
+        Task<GetCampaignOsrAttributesResponse?> GetCampaignOsrAttributesAsync(string campaignId, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Asynchronously retrieves the cost details for a specific campaign based on the provided request.
+        /// </summary>
+        /// <param name="request">The request object containing the campaign cost details to retrieve.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests (optional).</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the response
+        /// with the cost details of the specified campaign, or <c>null</c> if no response is received.
+        /// </returns>
+        Task<GetCampaignCostResponse?> GetCampaignCostAsync(GetCampaignCostRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Asynchronously submits a new campaign based on the provided submission request details.
+        /// </summary>
+        /// <param name="request">The request object containing the details of the campaign to submit.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests (optional).</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the response
+        /// confirming the submission of the campaign, or <c>null</c> if no response is received.
+        /// </returns>
+        Task<SubmitCampaignResponse?> SubmitCampaignAsync(SubmitCampaignRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Asynchronously qualifies a campaign based on a specific use case and brand identifier.
+        /// </summary>
+        /// <param name="brandId">The unique identifier of the brand for which the campaign is qualified.</param>
+        /// <param name="usecase">The specific use case to qualify the campaign for.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests (optional).</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the response
+        /// confirming the qualification of the campaign, or <c>null</c> if no response is received.
+        /// </returns>
+        Task<QualifyCampaignByUsecaseResponse?> QualifyCampaignByUsecaseAsync(string brandId, string usecase, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Asynchronously retrieves the MNO (Mobile Network Operator) metadata for a specific campaign.
+        /// </summary>
+        /// <param name="campaignId">The unique identifier of the campaign to retrieve MNO metadata.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests (optional).</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains the response
+        /// with the MNO metadata of the specified campaign, or <c>null</c> if no response is received.
+        /// </returns>
+        Task<GetCampaignMnoMetadataResponse?> GetCampaignMnoMetadataAsync(string campaignId, CancellationToken cancellationToken = default);
     }
 }
