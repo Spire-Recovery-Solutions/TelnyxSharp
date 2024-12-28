@@ -639,7 +639,7 @@ namespace Telnyx.NET
         {
             var query = new QueryBuilder()
                 .AddPagination(request.PageNumber, request.PageSize)
-                .AddFilter("filter[messaging_profile_id]", request.MessagingProfileId);
+                .AddFilter("messaging_profile_id", request.MessagingProfileId);
 
             var req = new RestRequest($"short_codes?{query}");
 
@@ -1140,6 +1140,67 @@ namespace Telnyx.NET
 
             return await _policies[typeof(GetCampaignMnoMetadataRequest)].ExecuteAsync(
                 token => ExecuteAsync<GetCampaignMnoMetadataResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<RetrievePhoneNumberCampaignsResponse?> RetrievePhoneNumberCampaignsAsync(RetrievePhoneNumberCampaignsRequest request, CancellationToken cancellationToken = default)
+        {
+            var query = new QueryBuilder()
+                .AddFilter("telnyx_campaign_id", request.FilterTelnyxCampaignId)
+                .AddFilter("telnyx_brand_id", request.FilterTelnyxBrandId)
+                .AddFilter("tcr_campaign_id", request.FilterTcrCampaignId)
+                .AddFilter("tcr_brand_id", request.FilterTcrBrandId)
+                .AddFilter("sort", request.Sort)
+                .AddPagination(request.Page, request.RecordsPerPage);
+
+            var req = new RestRequest($"10dlc/phone_number_campaigns?{query}");
+
+            return await _policies[typeof(RetrievePhoneNumberCampaignsRequest)].ExecuteAsync(
+                token => ExecuteAsync<RetrievePhoneNumberCampaignsResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<CreatePhoneNumberCampaignResponse?> CreatePhoneNumberCampaignAsync(CreatePhoneNumberCampaignRequest request, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest("10dlc/phone_number_campaigns", Method.Post);
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[typeof(CreatePhoneNumberCampaignRequest)].ExecuteAsync(
+                token => ExecuteAsync<CreatePhoneNumberCampaignResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<GetPhoneNumberCampaignResponse?> GetPhoneNumberCampaignAsync(string phoneNumber, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"10dlc/phone_number_campaigns/{phoneNumber}");
+
+            return await _policies[typeof(GetPhoneNumberCampaignRequest)].ExecuteAsync(
+                token => ExecuteAsync<GetPhoneNumberCampaignResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<UpdatePhoneNumberCampaignResponse?> UpdatePhoneNumberCampaignAsync(string phoneNumber, UpdatePhoneNumberCampaignRequest request, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"10dlc/phone_number_campaigns/{phoneNumber}", Method.Put);
+
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[typeof(UpdatePhoneNumberCampaignRequest)].ExecuteAsync(
+                token => ExecuteAsync<UpdatePhoneNumberCampaignResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<DeletePhoneNumberCampaignResponse?> DeletePhoneNumberCampaignAsync(string phoneNumber, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"10dlc/phone_number_campaigns/{phoneNumber}", Method.Delete);
+
+            return await _policies[typeof(DeletePhoneNumberCampaignRequest)].ExecuteAsync(
+                token => ExecuteAsync<DeletePhoneNumberCampaignResponse>(req, token),
                 cancellationToken);
         }
 
