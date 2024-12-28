@@ -1022,7 +1022,7 @@ namespace Telnyx.NET
                 token => ExecuteAsync<OrderExternalVettingResponse>(req, token),
                 cancellationToken);
         }
-        
+
         /// <inheritdoc />
         public async Task<GetBrandFeedbackResponse?> GetBrandFeedbackAsync(string brandId, CancellationToken cancellationToken = default)
         {
@@ -1030,6 +1030,116 @@ namespace Telnyx.NET
 
             return await _policies[typeof(GetBrandFeedbackRequest)].ExecuteAsync(
                 token => ExecuteAsync<GetBrandFeedbackResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<ListCampaignsResponse?> ListCampaignsAsync(ListCampaignsRequest request, CancellationToken cancellationToken = default)
+        {
+            var query = new QueryBuilder()
+                .AddPagination(request.Page, request.RecordsPerPage)
+                .AddFilter("sort", request.Sort)
+                .AddFilter("brandId", request.BrandId);
+
+            var req = new RestRequest($"10dlc/campaign?{query}");
+            return await _policies[typeof(ListCampaignsRequest)].ExecuteAsync(
+                token => ExecuteAsync<ListCampaignsResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<GetCampaignResponse?> GetCampaignAsync(string campaignId, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"10dlc/campaign/{campaignId}");
+
+            return await _policies[typeof(GetCampaignResponse)].ExecuteAsync(
+                token => ExecuteAsync<GetCampaignResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<UpdateCampaignResponse?> UpdateCampaignAsync(string campaignId, UpdateCampaignRequest request, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"10dlc/campaign/{campaignId}", Method.Put);
+
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[request.GetType()].ExecuteAsync(
+                token => ExecuteAsync<UpdateCampaignResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<DeactivateCampaignResponse?> DeactivateCampaignAsync(string campaignId, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"10dlc/campaign/{campaignId}", Method.Delete);
+
+            return await _policies[typeof(DeactivateCampaignRequest)].ExecuteAsync(
+                token => ExecuteAsync<DeactivateCampaignResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<GetCampaignOperationStatusResponse?> GetCampaignOperationStatusAsync(string campaignId, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"10dlc/campaign/{campaignId}/operationStatus");
+
+            return await _policies[typeof(GetCampaignOperationStatusRequest)].ExecuteAsync(
+                token => ExecuteAsync<GetCampaignOperationStatusResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<GetCampaignOsrAttributesResponse?> GetCampaignOsrAttributesAsync(string campaignId, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"10dlc/campaign/{campaignId}/osr/attributes");
+
+            return await _policies[typeof(GetCampaignOsrAttributesRequest)].ExecuteAsync(
+                token => ExecuteAsync<GetCampaignOsrAttributesResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<GetCampaignCostResponse?> GetCampaignCostAsync(GetCampaignCostRequest request, CancellationToken cancellationToken = default)
+        {
+            var query = new QueryBuilder()
+                .AddFilter("usecase", request.UseCase);
+
+            var req = new RestRequest($"10dlc/campaign/usecase/cost?{query}");
+
+            return await _policies[typeof(GetCampaignCostRequest)].ExecuteAsync(
+                token => ExecuteAsync<GetCampaignCostResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<SubmitCampaignResponse?> SubmitCampaignAsync(SubmitCampaignRequest request, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest("10dlc/campaignBuilder", Method.Post);
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[typeof(SubmitCampaignRequest)].ExecuteAsync(
+                token => ExecuteAsync<SubmitCampaignResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<QualifyCampaignByUsecaseResponse?> QualifyCampaignByUsecaseAsync(string brandId, string usecase, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"10dlc/campaignBuilder/brand/{brandId}/usecase/{usecase}");
+
+            return await _policies[typeof(QualifyCampaignByUsecaseRequest)].ExecuteAsync(
+                token => ExecuteAsync<QualifyCampaignByUsecaseResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<GetCampaignMnoMetadataResponse?> GetCampaignMnoMetadataAsync(string campaignId, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"10dlc/campaign/{campaignId}/mnoMetadata");
+
+            return await _policies[typeof(GetCampaignMnoMetadataRequest)].ExecuteAsync(
+                token => ExecuteAsync<GetCampaignMnoMetadataResponse>(req, token),
                 cancellationToken);
         }
 
