@@ -438,6 +438,9 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(GetPartnerCampaignsSharedByUserRequest))]
     [JsonSerializable(typeof(GetPartnerCampaignsSharedByUserResponse))]
     [JsonSerializable(typeof(PartnerCampaignsSharedByUser))]
+
+    [JsonSerializable(typeof(GetEnumRequest))]
+    [JsonSerializable(typeof(GetEnumResponse))]
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,
