@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Enums;
 using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
@@ -37,7 +38,7 @@ namespace Telnyx.NET.Models
         /// Gets or sets the record type for the short code.
         /// </summary>
         [JsonPropertyName("record_type")]
-        public string RecordType { get; set; } = string.Empty;
+        public MessageRecordType RecordType { get; set; } = MessageRecordType.Unknown;
 
         /// <summary>
         /// Gets or sets the unique identifier for the short code.

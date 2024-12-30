@@ -4,6 +4,7 @@ using Polly.Wrap;
 using RestSharp;
 using RestSharp.Authenticators;
 using System.Text.Json;
+using Telnyx.NET.Enums;
 using Telnyx.NET.Interfaces;
 using Telnyx.NET.Models;
 
@@ -910,7 +911,7 @@ namespace Telnyx.NET
         {
             var query = new QueryBuilder()
                 .AddPagination(request.Page, request.RecordsPerPage)
-                .AddFilter("sort", request.Sort.ToString())
+                .AddFilter("sort", request.Sort)
                 .AddFilter("displayName", request.DisplayName)
                 .AddFilter("entityType", request.EntityType)
                 .AddFilter("state", request.State)

@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Enums;
 
 namespace Telnyx.NET.Models
 {
@@ -13,7 +14,7 @@ namespace Telnyx.NET.Models
         /// The type of entity the brand represents.
         /// </summary>
         [JsonPropertyName("entityType")]
-        public string EntityType { get; set; } = string.Empty;
+        public EntityType EntityType { get; set; } = EntityType.Unknown;
 
         /// <summary>
         /// The CSP (Communication Service Provider) ID associated with the brand.
@@ -115,7 +116,7 @@ namespace Telnyx.NET.Models
         /// The stock exchange where the company is listed (if applicable).
         /// </summary>
         [JsonPropertyName("stockExchange")]
-        public string? StockExchange { get; set; }
+        public StockExchange? StockExchange { get; set; }
 
         /// <summary>
         /// The IP address associated with the brand.
@@ -133,13 +134,13 @@ namespace Telnyx.NET.Models
         /// The relationship of the brand to the associated entity.
         /// </summary>
         [JsonPropertyName("brandRelationship")]
-        public string BrandRelationShip { get; set; } = string.Empty;
+        public BrandRelationship BrandRelationShip { get; set; } = BrandRelationship.Unknown;
 
         /// <summary>
         /// The vertical or industry of the brand.
         /// </summary>
         [JsonPropertyName("vertical")]
-        public string Vertical { get; set; } = string.Empty;
+        public Vertical Vertical { get; set; } = Vertical.Unknown;
 
         /// <summary>
         /// An alternative business identifier for the brand.
@@ -151,7 +152,7 @@ namespace Telnyx.NET.Models
         /// The type of the alternative business identifier.
         /// </summary>
         [JsonPropertyName("altBusinessIdType")]
-        public string? AltBusinessIdType { get; set; }
+        public AltBusinessIdType? AltBusinessIdType { get; set; }
 
         /// <summary>
         /// A universal EIN (if applicable).
@@ -169,7 +170,7 @@ namespace Telnyx.NET.Models
         /// The identity verification status of the brand.
         /// </summary>
         [JsonPropertyName("identityStatus")]
-        public string? IdentityStatus { get; set; }
+        public BrandIdentityStatus? IdentityStatus { get; set; }
 
         /// <summary>
         /// Optional additional attributes for the brand.
