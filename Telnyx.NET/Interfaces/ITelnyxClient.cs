@@ -961,5 +961,7 @@ namespace Telnyx.NET.Interfaces
         /// <param name="cancellationToken">Cancellation token to cancel the operation, if needed.</param>
         /// <returns>A task representing the asynchronous operation, with a list of campaigns shared by the user.</returns>
         Task<GetPartnerCampaignsSharedByUserResponse?> GetPartnerCampaignsSharedByUserAsync(GetPartnerCampaignsSharedByUserRequest request, CancellationToken cancellationToken = default);
+
+        Task<GetEnumResponse?> GetEnumAsync(EnumEndpoint endpoint, CancellationToken cancellationToken = default);
     }
 }
