@@ -1,5 +1,6 @@
 ﻿
 using System.Text.Json.Serialization;
+using Telnyx.NET.Enums;
 using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
@@ -22,7 +23,7 @@ namespace Telnyx.NET.Models
         /// The type of message being sent (e.g., "sms", "mms").
         /// </summary>
         [JsonPropertyName("type")]
-        public string? Type { get; set; }
+        public MessageType? Type { get; set; }
 
         /// <summary>
         /// Indicates whether to automatically detect the message type.

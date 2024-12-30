@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Enums;
 using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
@@ -21,6 +22,6 @@ namespace Telnyx.NET.Models
         /// Gets or sets the sorting order for the results. Defaults to sorting by created date in descending order.
         /// </summary>
         [JsonPropertyName("sort")]
-        public string Sort { get; set; } = "-createdAt";
+        public Sort Sort { get; set; } = Sort.CreatedAt;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Enums;
 using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
@@ -79,7 +80,7 @@ namespace Telnyx.NET.Models
         /// Gets or sets the type of phone number (e.g., mobile, landline).
         /// </summary>
         [JsonPropertyName("type")]
-        public string Type { get; set; } = string.Empty;
+        public MessageType Type { get; set; } = MessageType.Unknown;
 
         /// <summary>
         /// Gets or sets the health statistics for the phone number.

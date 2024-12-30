@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Enums;
 using Telnyx.NET.Models;
 
 namespace Telnyx.NET
@@ -441,6 +442,26 @@ namespace Telnyx.NET
 
     [JsonSerializable(typeof(GetEnumRequest))]
     [JsonSerializable(typeof(GetEnumResponse))]
+
+
+    //Enums
+    [JsonSerializable(typeof(AltBusinessIdType))]
+    [JsonSerializable(typeof(BrandIdentityStatus))]
+    [JsonSerializable(typeof(BrandRelationship))]
+    [JsonSerializable(typeof(CampaignStatus))]
+    [JsonSerializable(typeof(EntityType))]
+    [JsonSerializable(typeof(MessageDirection))]
+    [JsonSerializable(typeof(MessageRecordType))]
+    [JsonSerializable(typeof(MessageType))]
+    [JsonSerializable(typeof(MessageVolume))]
+    [JsonSerializable(typeof(OperationType))]
+    [JsonSerializable(typeof(Sort))]
+    [JsonSerializable(typeof(Status))]
+    [JsonSerializable(typeof(StockExchange))]
+    [JsonSerializable(typeof(TimeFrame))]
+    [JsonSerializable(typeof(UseCaseCategories))]
+    [JsonSerializable(typeof(VerificationStatus))]
+    [JsonSerializable(typeof(Vertical))]
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,

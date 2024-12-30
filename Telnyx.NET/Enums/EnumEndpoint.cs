@@ -1,4 +1,4 @@
-﻿namespace Telnyx.NET.Models
+﻿namespace Telnyx.NET.Enums
 {
     /// <summary>
     /// Represents the various endpoints used within the Telnyx.NET system.

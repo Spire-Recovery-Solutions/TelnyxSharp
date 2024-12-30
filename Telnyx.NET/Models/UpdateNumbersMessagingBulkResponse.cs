@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Enums;
 using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
@@ -24,7 +25,7 @@ namespace Telnyx.NET.Models
         /// The type of the resource.
         /// </summary>
         [JsonPropertyName("record_type")]
-        public string RecordType { get; set; } = string.Empty;
+        public MessageRecordType RecordType { get; set; } = MessageRecordType.Unknown;
 
         /// <summary>
         /// The order ID to verify the bulk update status.

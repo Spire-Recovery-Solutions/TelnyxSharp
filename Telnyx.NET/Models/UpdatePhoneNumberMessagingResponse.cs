@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Enums;
 using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
@@ -30,7 +31,7 @@ namespace Telnyx.NET.Models
         /// The type of record, usually a descriptor of the resource type.
         /// </summary>
         [JsonPropertyName("record_type")]
-        public string RecordType { get; set; } = string.Empty;
+        public MessageRecordType RecordType { get; set; } = MessageRecordType.Unknown;
 
         /// <summary>
         /// The unique identifier for the phone number resource.
@@ -72,7 +73,7 @@ namespace Telnyx.NET.Models
         /// The type of phone number, such as mobile, landline, or VoIP.
         /// </summary>
         [JsonPropertyName("type")]
-        public string Type { get; set; } = string.Empty;
+        public MessageType Type { get; set; } = MessageType.Unknown;
 
         /// <summary>
         /// The health status of the phone number for messaging purposes.
