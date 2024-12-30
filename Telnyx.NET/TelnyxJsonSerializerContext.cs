@@ -419,6 +419,25 @@ namespace Telnyx.NET
 
     [JsonSerializable(typeof(GetAssignmentTaskStatusResponse))]
     [JsonSerializable(typeof(GetAssignmentTaskStatusRequest))]
+
+    [JsonSerializable(typeof(BaseSharedCampaigns))]
+
+    [JsonSerializable(typeof(ListSharedCampaignsRequest))]
+    [JsonSerializable(typeof(ListSharedCampaignsResponse))]
+    [JsonSerializable(typeof(SharedCampaignRecord))]
+
+    [JsonSerializable(typeof(GetSharedCampaignRecordResponse))]
+    [JsonSerializable(typeof(GetSharedCampaignRecordRequest))]
+
+    [JsonSerializable(typeof(UpdateSingleSharedCampaignRequest))]
+    [JsonSerializable(typeof(UpdateSingleSharedCampaignResponse))]
+
+    [JsonSerializable(typeof(GetSharingStatusRequest))]
+    [JsonSerializable(typeof(GetSharingStatusResponse))]
+
+    [JsonSerializable(typeof(GetPartnerCampaignsSharedByUserRequest))]
+    [JsonSerializable(typeof(GetPartnerCampaignsSharedByUserResponse))]
+    [JsonSerializable(typeof(PartnerCampaignsSharedByUser))]
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,
