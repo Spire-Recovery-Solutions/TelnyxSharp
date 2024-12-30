@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Enums;
 using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
@@ -12,7 +13,7 @@ namespace Telnyx.NET.Models
         /// The type of entity the brand represents.
         /// </summary>
         [JsonPropertyName("entityType")]
-        public required string EntityType { get; set; }
+        public required EntityType EntityType { get; set; } = EntityType.Unknown;
 
         /// <summary>
         /// The display name of the brand.
@@ -96,7 +97,7 @@ namespace Telnyx.NET.Models
         /// The stock exchange where the company is listed (if applicable).
         /// </summary>
         [JsonPropertyName("stockExchange")]
-        public string? StockExchange { get; set; }
+        public StockExchange? StockExchange { get; set; }
 
         /// <summary>
         /// The IP address associated with the brand.
@@ -114,7 +115,7 @@ namespace Telnyx.NET.Models
         /// The vertical or industry of the brand.
         /// </summary>
         [JsonPropertyName("vertical")]
-        public required string Vertical { get; set; }
+        public required Vertical Vertical { get; set; }
 
         /// <summary>
         /// An alternative business identifier for the brand.

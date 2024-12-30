@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Enums;
 using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
@@ -13,7 +14,7 @@ namespace Telnyx.NET.Models
         /// Required: true.
         /// </summary>
         [JsonPropertyName("entityType")]
-        public required string EntityType { get; set; }
+        public required EntityType EntityType { get; set; } = EntityType.Unknown;
 
         /// <summary>
         /// Display name, marketing name, or DBA name of the brand.
@@ -100,7 +101,7 @@ namespace Telnyx.NET.Models
         /// Stock exchange. Required for public companies.
         /// </summary>
         [JsonPropertyName("stockExchange")]
-        public string? StockExchange { get; set; }
+        public StockExchange? StockExchange { get; set; }
 
         /// <summary>
         /// IP address of the browser requesting to create brand identity.
@@ -119,7 +120,7 @@ namespace Telnyx.NET.Models
         /// Required: true.
         /// </summary>
         [JsonPropertyName("vertical")]
-        public required string Vertical { get; set; }
+        public required Vertical Vertical { get; set; }
 
         /// <summary>
         /// Indicates whether this brand is a reseller.

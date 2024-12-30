@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Enums;
 
 namespace Telnyx.NET.Models
 {
@@ -29,7 +30,7 @@ namespace Telnyx.NET.Models
         /// The current status of the campaign.
         /// </summary>
         [JsonPropertyName("campaignStatus")]
-        public string? CampaignStatus { get; set; }
+        public CampaignStatus? CampaignStatus { get; set; }
 
         /// <summary>
         /// The description of the campaign.

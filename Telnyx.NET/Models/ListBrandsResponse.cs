@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Enums;
 using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
@@ -54,7 +55,7 @@ namespace Telnyx.NET.Models
         /// Gets or sets the type of entity for the brand (e.g., individual, company).
         /// </summary>
         [JsonPropertyName("entityType")]
-        public string? EntityType { get; set; }
+        public EntityType? EntityType { get; set; }
 
         /// <summary>
         /// Gets or sets the identity status of the brand.

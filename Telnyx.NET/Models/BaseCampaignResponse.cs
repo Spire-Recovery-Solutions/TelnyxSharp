@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Enums;
 using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
@@ -282,7 +283,7 @@ namespace Telnyx.NET.Models
         /// The overall status of the campaign.
         /// </summary>
         [JsonPropertyName("campaignStatus")]
-        public string? CampaignStatus { get; set; }
+        public CampaignStatus? CampaignStatus { get; set; }
 
         /// <summary>
         /// The link to the campaign's privacy policy.

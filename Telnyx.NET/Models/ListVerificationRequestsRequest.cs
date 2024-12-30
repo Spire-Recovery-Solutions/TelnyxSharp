@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Enums;
 using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
@@ -36,7 +37,7 @@ namespace Telnyx.NET.Models
         /// Gets or sets the status filter for verification requests. This property is optional.
         /// </summary>
         [JsonPropertyName("status")]
-        public string? Status { get; set; }
+        public Status? Status { get; set; }
 
         /// <summary>
         /// Gets or sets the phone number filter for verification requests. This property is optional.

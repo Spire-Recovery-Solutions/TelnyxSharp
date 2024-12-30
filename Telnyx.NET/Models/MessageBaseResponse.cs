@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Enums;
 
 namespace Telnyx.NET.Models
 {
@@ -11,13 +12,13 @@ namespace Telnyx.NET.Models
         /// Gets or sets the record type, representing the type of the message record.
         /// </summary>
         [JsonPropertyName("record_type")]
-        public string RecordType { get; set; } = string.Empty;
+        public MessageRecordType RecordType { get; set; } = MessageRecordType.Unknown;
 
         /// <summary>
         /// Gets or sets the direction of the message, indicating whether it is inbound or outbound.
         /// </summary>
         [JsonPropertyName("direction")]
-        public string Direction { get; set; } = string.Empty;
+        public MessageDirection Direction { get; set; } = MessageDirection.Unknown;
 
         /// <summary>
         /// Gets or sets the unique identifier for the message.
@@ -29,7 +30,7 @@ namespace Telnyx.NET.Models
         /// Gets or sets the type of message, such as SMS, MMS, or short code.
         /// </summary>
         [JsonPropertyName("type")]
-        public string Type { get; set; } = string.Empty;
+        public MessageType Type { get; set; } = MessageType.Unknown;
 
         /// <summary>
         /// Gets or sets the ID of the messaging profile associated with the message.

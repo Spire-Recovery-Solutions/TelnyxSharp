@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Enums;
 
 namespace Telnyx.NET.Models
 {
@@ -11,7 +12,7 @@ namespace Telnyx.NET.Models
         /// The operation type for the auto-response setting, indicating the action.
         /// </summary>
         [JsonPropertyName("op")]
-        public string Op { get; set; } = string.Empty;
+        public OperationType Op { get; set; } = OperationType.Unknown;
 
         /// <summary>
         /// A list of keywords that trigger the auto-response setting.
