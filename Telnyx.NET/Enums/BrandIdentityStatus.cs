@@ -2,12 +2,18 @@
 
 namespace Telnyx.NET.Enums
 {
-    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum BrandIdentityStatus
     {
-        VERIFIED,
-        UNVERIFIED,
-        SELF_DECLARED,
-        VETTED_VERIFIED
+        [JsonPropertyName("VERIFIED")]
+        Verified,
+
+        [JsonPropertyName("UNVERIFIED")]
+        Unverified,
+
+        [JsonPropertyName("SELF_DECLARED")]
+        SelfDeclared,
+
+        [JsonPropertyName("VETTED_VERIFIED")]
+        VettedVerified
     }
 }

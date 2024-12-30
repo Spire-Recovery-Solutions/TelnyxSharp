@@ -2,14 +2,24 @@
 
 namespace Telnyx.NET.Enums
 {
-    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum BrandRelationship
     {
+        [JsonPropertyName("UNKNOWN")]
         Unknown,
-        BASIC_ACCOUNT,
-        SMALL_ACCOUNT,
-        MEDIUM_ACCOUNT,
-        LARGE_ACCOUNT,
-        KEY_ACCOUNT
+
+        [JsonPropertyName("BASIC_ACCOUNT")]
+        BasicAccount,
+
+        [JsonPropertyName("SMALL_ACCOUNT")]
+        SmallAccount,
+
+        [JsonPropertyName("MEDIUM_ACCOUNT")]
+        MediumAccount,
+
+        [JsonPropertyName("LARGE_ACCOUNT")]
+        LargeAccount,
+
+        [JsonPropertyName("KEY_ACCOUNT")]
+        KeyAccount
     }
 }

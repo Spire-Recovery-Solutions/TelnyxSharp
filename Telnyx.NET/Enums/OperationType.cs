@@ -9,8 +9,10 @@ namespace Telnyx.NET.Enums
 
         [JsonPropertyName("start")]
         Start,
+
         [JsonPropertyName("stop")]
         Stop,
+
         [JsonPropertyName("info")]
         Info
     }

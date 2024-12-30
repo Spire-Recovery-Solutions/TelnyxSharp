@@ -9,25 +9,25 @@ namespace Telnyx.NET.Enums
         Unknown,
 
         [JsonPropertyName("long-code")]
-        LongCode, // Corresponds to "long-code"
+        LongCode,
 
         [JsonPropertyName("toll-free")]
-        TollFree, // Corresponds to "toll-free"
+        TollFree,
 
         [JsonPropertyName("short-code")]
-        ShortCode, // Corresponds to "short-code"
+        ShortCode,
 
         [JsonPropertyName("longcode")]
-        Longcode, // Corresponds to "longcode"
+        Longcode,
 
         [JsonPropertyName("tollfree")]
-        Tollfree, // Corresponds to "tollfree"
+        Tollfree,
 
         [JsonPropertyName("shortcode")]
         Shortcode,
 
         [JsonPropertyName("SMS")]
-        Sms, // Corresponds to "tollfree"
+        Sms,
 
         [JsonPropertyName("MMS")]
         Mms
