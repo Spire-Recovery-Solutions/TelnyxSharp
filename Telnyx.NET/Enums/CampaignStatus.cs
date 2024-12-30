@@ -2,6 +2,7 @@
 
 namespace Telnyx.NET.Enums
 {
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum CampaignStatus
     {
         [JsonPropertyName("TCR_PENDING")]
