@@ -8,16 +8,16 @@ namespace Telnyx.NET.Enums
         Unknown,
 
         [JsonPropertyName("deleted")]
-        Deleted, // Corresponds to "deleted"
+        Deleted,
 
         [JsonPropertyName("failed")]
-        Failed, // Corresponds to "failed"
+        Failed,
 
         [JsonPropertyName("pending")]
-        Pending, // Corresponds to "pending"
+        Pending,
 
         [JsonPropertyName("successful")]
-        Successful, // Corresponds to "successful"
+        Successful,
 
         [JsonPropertyName("Verified")]
         Verified,

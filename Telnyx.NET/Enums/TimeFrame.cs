@@ -7,21 +7,21 @@ namespace Telnyx.NET.Enums
     public enum TimeFrame
     {
         [JsonPropertyName("1h")]
-        OneHour, // Corresponds to "1h"
+        OneHour,
 
         [JsonPropertyName("3h")]
-        ThreeHours, // Corresponds to "3h"
+        ThreeHours,
 
         [JsonPropertyName("24h")]
-        TwentyFourHours, // Corresponds to "24h"
+        TwentyFourHours,
 
         [JsonPropertyName("3d")]
-        ThreeDays, // Corresponds to "3d"
+        ThreeDays,
 
         [JsonPropertyName("7d")]
-        SevenDays, // Corresponds to "7d"
+        SevenDays,
 
         [JsonPropertyName("30d")]
-        ThirtyDays // Corresponds to "30d"
+        ThirtyDays
     }
 }

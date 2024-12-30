@@ -2,12 +2,18 @@
 
 namespace Telnyx.NET.Enums
 {
-    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum AltBusinessIdType
     {
-        NONE,
-        DUNS,
-        GIIN,
-        LEI
+        [JsonPropertyName("NONE")]
+        None,
+
+        [JsonPropertyName("DUNS")]
+        Duns,
+
+        [JsonPropertyName("GIIN")]
+        Giin,
+
+        [JsonPropertyName("LEI")]
+        Lei
     }
 }
