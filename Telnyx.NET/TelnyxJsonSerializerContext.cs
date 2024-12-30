@@ -406,9 +406,19 @@ namespace Telnyx.NET
 
     [JsonSerializable(typeof(UpdatePhoneNumberCampaignRequest))]
     [JsonSerializable(typeof(UpdatePhoneNumberCampaignResponse))]
-    
+
     [JsonSerializable(typeof(DeletePhoneNumberCampaignRequest))]
     [JsonSerializable(typeof(DeletePhoneNumberCampaignResponse))]
+
+    [JsonSerializable(typeof(AssignMessagingProfileToCampaignRequest))]
+    [JsonSerializable(typeof(AssignMessagingProfileToCampaignResponse))]
+
+    [JsonSerializable(typeof(GetPhoneNumberStatusResponse))]
+    [JsonSerializable(typeof(PhoneNumberStatusRecord))]
+    [JsonSerializable(typeof(GetPhoneNumberStatusRequest))]
+
+    [JsonSerializable(typeof(GetAssignmentTaskStatusResponse))]
+    [JsonSerializable(typeof(GetAssignmentTaskStatusRequest))]
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,
