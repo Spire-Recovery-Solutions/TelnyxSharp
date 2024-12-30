@@ -1284,7 +1284,7 @@ namespace Telnyx.NET
                 cancellationToken);
         }
 
-         /// <inheritdoc />
+        /// <inheritdoc />
         public async Task<GetPartnerCampaignsSharedByUserResponse?> GetPartnerCampaignsSharedByUserAsync(GetPartnerCampaignsSharedByUserRequest request, CancellationToken cancellationToken = default)
         {
             var query = new QueryBuilder()
@@ -1294,6 +1294,16 @@ namespace Telnyx.NET
 
             return await _policies[typeof(GetPartnerCampaignsSharedByUserRequest)].ExecuteAsync(
                 token => ExecuteAsync<GetPartnerCampaignsSharedByUserResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<GetEnumResponse?> GetEnumAsync(EnumEndpoint endpoint, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"10dlc/enum/{endpoint.ToString().ToLower()}");
+            
+            return await _policies[typeof(GetEnumRequest)].ExecuteAsync(
+                token => ExecuteAsync<GetEnumResponse>(req, token),
                 cancellationToken);
         }
 
