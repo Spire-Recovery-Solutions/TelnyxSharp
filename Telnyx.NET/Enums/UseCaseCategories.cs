@@ -2,10 +2,11 @@
 
 namespace Telnyx.NET.Enums
 {
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum UseCaseCategories
     {
         Unknown,
-        
+
         [JsonPropertyName("2FA")]
         TwoFactorAuthentication,
 
