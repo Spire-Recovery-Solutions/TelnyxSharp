@@ -1239,6 +1239,63 @@ namespace Telnyx.NET
                 cancellationToken);
         }
 
+        /// <inheritdoc />
+        public async Task<ListSharedCampaignsResponse?> ListSharedCampaignsAsync(ListSharedCampaignsRequest request, CancellationToken cancellationToken = default)
+        {
+            var query = new QueryBuilder()
+                .AddPagination(request.Page, request.RecordsPerPage)
+                .AddFilter("sort", request.Sort);
+
+            var req = new RestRequest($"10dlc/partner_campaigns?{query}");
+
+            return await _policies[typeof(ListSharedCampaignsRequest)].ExecuteAsync(
+                token => ExecuteAsync<ListSharedCampaignsResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<GetSharedCampaignRecordResponse?> GetSingleSharedCampaignAsync(string campaignId, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"10dlc/partner_campaigns/{campaignId}");
+
+            return await _policies[typeof(GetSharedCampaignRecordRequest)].ExecuteAsync(
+                token => ExecuteAsync<GetSharedCampaignRecordResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<UpdateSingleSharedCampaignResponse?> UpdateSingleSharedCampaignAsync(string campaignId, UpdateSingleSharedCampaignRequest request, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"10dlc/partner_campaigns/{campaignId}", Method.Patch);
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[typeof(UpdateSingleSharedCampaignRequest)].ExecuteAsync(
+                token => ExecuteAsync<UpdateSingleSharedCampaignResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<GetSharingStatusResponse?> GetSharingStatusAsync(string campaignId, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"10dlc/partnerCampaign/{campaignId}/sharing");
+
+            return await _policies[typeof(GetSharingStatusRequest)].ExecuteAsync(
+                token => ExecuteAsync<GetSharingStatusResponse>(req, token),
+                cancellationToken);
+        }
+
+         /// <inheritdoc />
+        public async Task<GetPartnerCampaignsSharedByUserResponse?> GetPartnerCampaignsSharedByUserAsync(GetPartnerCampaignsSharedByUserRequest request, CancellationToken cancellationToken = default)
+        {
+            var query = new QueryBuilder()
+                .AddPagination(request.Page, request.RecordsPerPage);
+
+            var req = new RestRequest($"10dlc/partnerCampaign/sharedByMe?{query}");
+
+            return await _policies[typeof(GetPartnerCampaignsSharedByUserRequest)].ExecuteAsync(
+                token => ExecuteAsync<GetPartnerCampaignsSharedByUserResponse>(req, token),
+                cancellationToken);
+        }
 
         /// <inheritdoc />
         private async Task<T1?> ExecuteAsync<T1>(RestRequest request, CancellationToken cancellationToken = default)

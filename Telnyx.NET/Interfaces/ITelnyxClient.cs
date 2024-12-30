@@ -920,5 +920,46 @@ namespace Telnyx.NET.Interfaces
         /// for the phone number status or <c>null</c> if the operation fails.
         /// </returns>
         Task<GetPhoneNumberStatusResponse?> GetPhoneNumberStatusAsync(string taskId, GetPhoneNumberStatusRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves a list of shared campaigns.
+        /// </summary>
+        /// <param name="request">The request object containing the criteria for listing shared campaigns.</param>
+        /// <param name="cancellationToken">Cancellation token to cancel the operation, if needed.</param>
+        /// <returns>A task representing the asynchronous operation, with a list of shared campaigns.</returns>
+        Task<ListSharedCampaignsResponse?> ListSharedCampaignsAsync(ListSharedCampaignsRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves a single shared campaign by its ID.
+        /// </summary>
+        /// <param name="campaignId">The unique identifier of the campaign to retrieve.</param>
+        /// <param name="cancellationToken">Cancellation token to cancel the operation, if needed.</param>
+        /// <returns>A task representing the asynchronous operation, with the details of the requested campaign.</returns>
+        Task<GetSharedCampaignRecordResponse?> GetSingleSharedCampaignAsync(string campaignId, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Updates a shared campaign by its ID.
+        /// </summary>
+        /// <param name="campaignId">The unique identifier of the campaign to update.</param>
+        /// <param name="request">The request object containing the updated information for the campaign.</param>
+        /// <param name="cancellationToken">Cancellation token to cancel the operation, if needed.</param>
+        /// <returns>A task representing the asynchronous operation, with the result of the update operation.</returns>
+        Task<UpdateSingleSharedCampaignResponse?> UpdateSingleSharedCampaignAsync(string campaignId, UpdateSingleSharedCampaignRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves the sharing status of a specific campaign.
+        /// </summary>
+        /// <param name="campaignId">The unique identifier of the campaign to check the sharing status.</param>
+        /// <param name="cancellationToken">Cancellation token to cancel the operation, if needed.</param>
+        /// <returns>A task representing the asynchronous operation, with the sharing status of the campaign.</returns>
+        Task<GetSharingStatusResponse?> GetSharingStatusAsync(string campaignId, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves a list of campaigns shared by a user with their partners.
+        /// </summary>
+        /// <param name="request">The request object containing the criteria for listing campaigns shared by the user.</param>
+        /// <param name="cancellationToken">Cancellation token to cancel the operation, if needed.</param>
+        /// <returns>A task representing the asynchronous operation, with a list of campaigns shared by the user.</returns>
+        Task<GetPartnerCampaignsSharedByUserResponse?> GetPartnerCampaignsSharedByUserAsync(GetPartnerCampaignsSharedByUserRequest request, CancellationToken cancellationToken = default);
     }
 }
