@@ -886,5 +886,39 @@ namespace Telnyx.NET.Interfaces
         /// confirming the deletion of the phone number campaign, or <c>null</c> if no response is received.
         /// </returns>
         Task<DeletePhoneNumberCampaignResponse?> DeletePhoneNumberCampaignAsync(string phoneNumber, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Assigns a messaging profile to a campaign asynchronously.
+        /// </summary>
+        /// <param name="request">The request object containing the details of the messaging profile assignment.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+        /// <returns>
+        /// A task representing the asynchronous operation. The task result contains the response 
+        /// for the messaging profile assignment or <c>null</c> if the operation fails.
+        /// </returns>
+        Task<AssignMessagingProfileToCampaignResponse?> AssignMessagingProfileToCampaignAsync(AssignMessagingProfileToCampaignRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves the status of a task assignment asynchronously.
+        /// </summary>
+        /// <param name="taskId">The unique identifier of the task.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+        /// <returns>
+        /// A task representing the asynchronous operation. The task result contains the status
+        /// of the assignment task or <c>null</c> if the operation fails.
+        /// </returns>
+        Task<GetAssignmentTaskStatusResponse?> GetAssignmentTaskStatusAsync(string taskId, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Retrieves the status of phone numbers associated with a specific task asynchronously.
+        /// </summary>
+        /// <param name="taskId">The unique identifier of the task.</param>
+        /// <param name="request">The request object containing query parameters for the operation.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+        /// <returns>
+        /// A task representing the asynchronous operation. The task result contains the response 
+        /// for the phone number status or <c>null</c> if the operation fails.
+        /// </returns>
+        Task<GetPhoneNumberStatusResponse?> GetPhoneNumberStatusAsync(string taskId, GetPhoneNumberStatusRequest request, CancellationToken cancellationToken = default);
     }
 }
