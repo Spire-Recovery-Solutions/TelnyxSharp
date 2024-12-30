@@ -1,0 +1,23 @@
+﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Interfaces;
+
+namespace Telnyx.NET.Models
+{
+    /// <summary>
+    /// Represents the response for retrieving enumeration values.
+    /// </summary>
+    public class GetEnumResponse : ITelnyxResponse
+    {
+        /// <summary>
+        /// Gets or sets the list of enumeration values.
+        /// </summary>
+        [JsonPropertyName("enum")]
+        public List<string>? EnumValues { get; set; }
+
+        /// <summary>
+        /// List of errors, if any occurred during the API call.
+        /// </summary>
+        [JsonPropertyName("errors")]
+        public TelnyxError[]? Errors { get; set; }
+    }
+}
