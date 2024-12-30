@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Enums;
 using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
@@ -26,7 +27,7 @@ namespace Telnyx.NET.Models
         /// Gets or sets the sorting order for the results. Defaults to sorting by created date in descending order.
         /// </summary>
         [JsonPropertyName("sort")]
-        public string Sort { get; set; } = "-createdAt";
+        public Sort Sort { get; set; } = Sort.CreatedAt;
 
         /// <summary>
         /// Gets or sets the display name of the brand to filter by. Defaults to an empty string, meaning no filtering by display name.
@@ -38,7 +39,7 @@ namespace Telnyx.NET.Models
         /// Gets or sets the entity type to filter by. Defaults to an empty string, meaning no filtering by entity type.
         /// </summary>
         [JsonPropertyName("entityType")]
-        public string EntityType { get; set; } = string.Empty;
+        public EntityType EntityType { get; set; } = EntityType.Unknown;
 
         /// <summary>
         /// Gets or sets the state to filter by. Defaults to an empty string, meaning no filtering by state.

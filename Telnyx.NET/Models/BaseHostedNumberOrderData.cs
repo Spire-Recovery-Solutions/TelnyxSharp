@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Enums;
 
 namespace Telnyx.NET.Models
 {
@@ -29,7 +30,7 @@ namespace Telnyx.NET.Models
         /// Gets or sets the current status of the hosted number order (e.g., pending, completed, etc.).
         /// </summary>
         [JsonPropertyName("status")]
-        public string Status { get; set; } = string.Empty;
+        public Status Status { get; set; } = Status.Unknown;
 
         /// <summary>
         /// Gets or sets the list of phone numbers associated with the hosted number order.
@@ -62,6 +63,6 @@ namespace Telnyx.NET.Models
         /// The status of the phone number.
         /// </summary>
         [JsonPropertyName("status")]
-        public string Status { get; set; } = string.Empty;
+        public Status Status { get; set; } = Status.Unknown;
     }
 }

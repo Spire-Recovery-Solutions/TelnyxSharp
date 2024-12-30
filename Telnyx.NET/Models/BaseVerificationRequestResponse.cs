@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Enums;
 using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
@@ -79,7 +80,7 @@ namespace Telnyx.NET.Models
         /// Gets or sets the message volume associated with the verification request.
         /// </summary>
         [JsonPropertyName("messageVolume")]
-        public string MessageVolume { get; set; } = string.Empty;
+        public MessageVolume MessageVolume { get; set; } = MessageVolume.Unknown;
 
         /// <summary>
         /// Gets or sets the list of phone numbers included in the verification request.
@@ -91,7 +92,7 @@ namespace Telnyx.NET.Models
         /// Gets or sets the use case associated with the verification request.
         /// </summary>
         [JsonPropertyName("useCase")]
-        public string UseCase { get; set; } = string.Empty;
+        public UseCaseCategories UseCase { get; set; } = UseCaseCategories.Unknown;
 
         /// <summary>
         /// Gets or sets a summary of the use case for the verification request.
@@ -145,7 +146,7 @@ namespace Telnyx.NET.Models
         /// Gets or sets the verification status of the request.
         /// </summary>
         [JsonPropertyName("verificationStatus")]
-        public string VerificationStatus { get; set; } = string.Empty;
+        public VerificationStatus VerificationStatus { get; set; } = VerificationStatus.Unknown;
 
         /// <summary>
         /// Gets or sets the reason for the verification status, if applicable.

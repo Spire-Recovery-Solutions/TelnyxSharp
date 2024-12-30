@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Enums;
 using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
@@ -39,13 +40,13 @@ namespace Telnyx.NET.Models
         public required string BusinessContactPhone { get; set; }
 
         [JsonPropertyName("messageVolume")]
-        public required string MessageVolume { get; set; }
+        public required MessageVolume MessageVolume { get; set; }
 
         [JsonPropertyName("phoneNumbers")]
         public required List<PhoneNumber> PhoneNumbers { get; set; }
 
         [JsonPropertyName("useCase")]
-        public required string UseCase { get; set; }
+        public required UseCaseCategories UseCase { get; set; }
 
         [JsonPropertyName("useCaseSummary")]
         public required string UseCaseSummary { get; set; }
