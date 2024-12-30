@@ -962,6 +962,19 @@ namespace Telnyx.NET.Interfaces
         /// <returns>A task representing the asynchronous operation, with a list of campaigns shared by the user.</returns>
         Task<GetPartnerCampaignsSharedByUserResponse?> GetPartnerCampaignsSharedByUserAsync(GetPartnerCampaignsSharedByUserRequest request, CancellationToken cancellationToken = default);
 
+        /// <summary>
+        /// Asynchronously retrieves enumeration values based on the specified endpoint.
+        /// </summary>
+        /// <param name="endpoint">
+        /// The <see cref="EnumEndpoint"/> specifying the target endpoint from which to retrieve enumeration values.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// An optional <see cref="CancellationToken"/> to cancel the operation.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task"/> representing the asynchronous operation.
+        /// </returns>
         Task<GetEnumResponse?> GetEnumAsync(EnumEndpoint endpoint, CancellationToken cancellationToken = default);
+
     }
 }
