@@ -1205,6 +1205,42 @@ namespace Telnyx.NET
         }
 
         /// <inheritdoc />
+        public async Task<AssignMessagingProfileToCampaignResponse?> AssignMessagingProfileToCampaignAsync(AssignMessagingProfileToCampaignRequest request, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest("10dlc/phoneNumberAssignmentByProfile", Method.Post);
+            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+
+            return await _policies[typeof(AssignMessagingProfileToCampaignRequest)].ExecuteAsync(
+                token => ExecuteAsync<AssignMessagingProfileToCampaignResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<GetAssignmentTaskStatusResponse?> GetAssignmentTaskStatusAsync(string taskId, CancellationToken cancellationToken = default)
+        {
+            var req = new RestRequest($"10dlc/phoneNumberAssignmentByProfile/{taskId}");
+
+            return await _policies[typeof(GetAssignmentTaskStatusRequest)].ExecuteAsync(
+                token => ExecuteAsync<GetAssignmentTaskStatusResponse>(req, token),
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<GetPhoneNumberStatusResponse?> GetPhoneNumberStatusAsync(string taskId, GetPhoneNumberStatusRequest request, CancellationToken cancellationToken = default)
+        {
+
+            var query = new QueryBuilder()
+                .AddPagination(request.Page, request.RecordsPerPage);
+
+            var req = new RestRequest($"10dlc/phoneNumberAssignmentByProfile/{taskId}/phoneNumbers?{query}");
+
+            return await _policies[typeof(GetPhoneNumberStatusRequest)].ExecuteAsync(
+                token => ExecuteAsync<GetPhoneNumberStatusResponse>(req, token),
+                cancellationToken);
+        }
+
+
+        /// <inheritdoc />
         private async Task<T1?> ExecuteAsync<T1>(RestRequest request, CancellationToken cancellationToken = default)
             where T1 : ITelnyxResponse
         {
