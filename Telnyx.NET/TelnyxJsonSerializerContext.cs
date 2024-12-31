@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using Telnyx.NET.Enums;
 using Telnyx.NET.Models;
+using Telnyx.NET.Models.Events;
 
 namespace Telnyx.NET
 {
@@ -462,6 +463,18 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(UseCaseCategories))]
     [JsonSerializable(typeof(VerificationStatus))]
     [JsonSerializable(typeof(Vertical))]
+
+    //Events
+    [JsonSerializable(typeof(InboundMessage))]
+    [JsonSerializable(typeof(InboundMessageData))]
+    [JsonSerializable(typeof(InboundMessagePayload))]
+    [JsonSerializable(typeof(WebhookMedia))]
+
+    [JsonSerializable(typeof(DeliveryUpdate))]
+    [JsonSerializable(typeof(DeliveryUpdateData))]
+    [JsonSerializable(typeof(DeliveryUpdatePayload))]
+
+    [JsonSerializable(typeof(ReplacedLinkClick))]
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,
