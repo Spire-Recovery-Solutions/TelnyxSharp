@@ -26,12 +26,6 @@ namespace Telnyx.NET.Models.Events
         /// </summary>
         [JsonPropertyName("payload")]
         public DeliveryUpdatePayload Payload { get; set; }
-
-        /// <summary>
-        /// Gets or sets the metadata associated with the webhook.
-        /// </summary>
-        [JsonPropertyName("meta")]
-        public WebhookMeta Meta { get; set; }
     }
 
     /// <summary>
@@ -48,23 +42,5 @@ namespace Telnyx.NET.Models.Events
             Direction = MessageDirection.Outbound;
             RecordType = MessageRecordType.Message;
         }
-    }
-
-    /// <summary>
-    /// Represents metadata associated with the webhook for a delivery update.
-    /// </summary>
-    public class WebhookMeta
-    {
-        /// <summary>
-        /// Gets or sets the attempt count of the webhook delivery.
-        /// </summary>
-        [JsonPropertyName("attempt")]
-        public int Attempt { get; set; }
-
-        /// <summary>
-        /// Gets or sets the recipient address where the delivery was attempted.
-        /// </summary>
-        [JsonPropertyName("delivered_to")]
-        public string? DeliveredTo { get; set; }
     }
 }
