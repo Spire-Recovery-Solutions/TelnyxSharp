@@ -2,8 +2,6 @@ using System.Text.Json.Serialization;
 
 namespace Telnyx.NET.Models.Events
 {
-
-
     /// <summary>
     /// Represents an event for a message received from Telnyx.
     /// Inherits from the base event class and contains the payload
