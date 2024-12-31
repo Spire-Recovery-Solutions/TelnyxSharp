@@ -11,7 +11,7 @@ namespace Telnyx.NET.Models.Events
         /// Gets or sets the data associated with the received message event.
         /// </summary>
         [JsonPropertyName("data")]
-        public MessageReceivedEventData data { get; set; }
+        public MessageReceivedEventData Data { get; set; }
     }
 
     /// <summary>
