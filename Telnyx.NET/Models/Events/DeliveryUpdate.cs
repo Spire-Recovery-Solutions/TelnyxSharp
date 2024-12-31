@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models.Events
     /// <summary>
     /// Represents a delivery update event.
     /// </summary>
-    public class DeliveryUpdate
+    public class DeliveryUpdate  : TelnyxEvent
     {
         /// <summary>
         /// Gets or sets the data associated with the delivery update event.
@@ -18,31 +18,8 @@ namespace Telnyx.NET.Models.Events
     /// <summary>
     /// Represents the data details of a delivery update event.
     /// </summary>
-    public class DeliveryUpdateData
+    public class DeliveryUpdateData : BaseEvent
     {
-        /// <summary>
-        /// Gets or sets the type of the record, typically "event".
-        /// </summary>
-        [JsonPropertyName("record_type")]
-        public string? RecordType { get; set; } = "event";
-
-        /// <summary>
-        /// Gets or sets the unique identifier of the delivery update event.
-        /// </summary>
-        [JsonPropertyName("id")]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets the type of event associated with the delivery update.
-        /// </summary>
-        [JsonPropertyName("event_type")]
-        public string? EventType { get; set; }
-
-        /// <summary>
-        /// Gets or sets the timestamp when the event occurred.
-        /// </summary>
-        [JsonPropertyName("occurred_at")]
-        public DateTimeOffset OccurredAt { get; set; }
 
         /// <summary>
         /// Gets or sets the payload containing delivery update details.
