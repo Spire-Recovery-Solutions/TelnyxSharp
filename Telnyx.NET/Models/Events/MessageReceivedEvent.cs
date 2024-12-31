@@ -2,24 +2,14 @@ using System.Text.Json.Serialization;
 
 namespace Telnyx.NET.Models.Events
 {
-    /// <summary>
-    /// Represents an event that occurs when a message is received.
-    /// </summary>
-    public class MessageReceivedEvent
-    {
-        /// <summary>
-        /// Gets or sets the data associated with the received message event.
-        /// </summary>
-        [JsonPropertyName("data")]
-        public MessageReceivedEventData Data { get; set; }
-    }
+
 
     /// <summary>
     /// Represents an event for a message received from Telnyx.
     /// Inherits from the base event class and contains the payload
     /// for the received message details.
     /// </summary>
-    public class MessageReceivedEventData : BaseEvent
+    public class MessageReceivedEvent : BaseEvent
     {
         /// <summary>
         /// Gets or sets the payload containing details about the received message.
