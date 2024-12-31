@@ -15,13 +15,13 @@ namespace Telnyx.NET.Models
         /// Gets or sets the page number for pagination. Defaults to 1.
         /// </summary>
         [JsonPropertyName("page")]
-        public int Page { get; set; } = 1;
+        public int PageNumber { get; set; } = 1;
 
         /// <summary>
         /// Gets or sets the number of records per page for pagination. Defaults to 10.
         /// </summary>
         [JsonPropertyName("recordsPerPage")]
-        public int RecordsPerPage { get; set; } = 10;
+        public int PageSize  { get; set; } = 10;
 
         /// <summary>
         /// Gets or sets the sorting order for the results. Defaults to sorting by created date in descending order.

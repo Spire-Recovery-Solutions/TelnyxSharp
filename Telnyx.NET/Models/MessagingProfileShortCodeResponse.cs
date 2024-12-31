@@ -19,7 +19,7 @@ namespace Telnyx.NET.Models
         /// Gets or sets metadata about the response, such as pagination information.
         /// </summary>
         [JsonPropertyName("meta")]
-        public MessagingProfileShortCodeMeta? Meta { get; set; }
+        public PaginationMeta? Meta { get; set; }
 
         /// <summary>
         /// Gets or sets any errors that occurred during the API request.
@@ -77,34 +77,6 @@ namespace Telnyx.NET.Models
         public DateTime UpdatedAt { get; set; }
     }
 
-    /// <summary>
-    /// Represents metadata about the messaging profile short code response, such as pagination details.
-    /// </summary>
-    public class MessagingProfileShortCodeMeta
-    {
-        /// <summary>
-        /// Gets or sets the total number of pages available in the response.
-        /// </summary>
-        [JsonPropertyName("total_pages")]
-        public int TotalPages { get; set; }
-
-        /// <summary>
-        /// Gets or sets the total number of results available.
-        /// </summary>
-        [JsonPropertyName("total_results")]
-        public int TotalResults { get; set; }
-
-        /// <summary>
-        /// Gets or sets the current page number in the response.
-        /// </summary>
-        [JsonPropertyName("page_number")]
-        public int PageNumber { get; set; }
-
-        /// <summary>
-        /// Gets or sets the size of the page (number of items per page).
-        /// </summary>
-        [JsonPropertyName("page_size")]
-        public int PageSize { get; set; }
-    }
+  
 
 }

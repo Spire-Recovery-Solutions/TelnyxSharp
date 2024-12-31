@@ -19,7 +19,7 @@ namespace Telnyx.NET.Models
         /// Gets or sets metadata about the response, such as pagination information.
         /// </summary>
         [JsonPropertyName("meta")]
-        public MessagingProfilePhoneNumberMeta? Meta { get; set; }
+        public PaginationMeta? Meta { get; set; }
         
         /// <summary>
         /// Gets or sets any errors that occurred during the API request.
@@ -185,33 +185,5 @@ namespace Telnyx.NET.Models
         public bool InternationalOutbound { get; set; }
     }
 
-    /// <summary>
-    /// Represents metadata about the messaging profile phone number response, such as pagination details.
-    /// </summary>
-    public class MessagingProfilePhoneNumberMeta
-    {
-        /// <summary>
-        /// Gets or sets the total number of pages available in the response.
-        /// </summary>
-        [JsonPropertyName("total_pages")]
-        public int TotalPages { get; set; }
-
-        /// <summary>
-        /// Gets or sets the total number of results available.
-        /// </summary>
-        [JsonPropertyName("total_results")]
-        public int TotalResults { get; set; }
-
-        /// <summary>
-        /// Gets or sets the current page number in the response.
-        /// </summary>
-        [JsonPropertyName("page_number")]
-        public int PageNumber { get; set; }
-
-        /// <summary>
-        /// Gets or sets the size of the page (number of items per page).
-        /// </summary>
-        [JsonPropertyName("page_size")]
-        public int PageSize { get; set; }
-    }
+ 
 }

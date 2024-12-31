@@ -27,12 +27,10 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(GetNumberOrderResponse))]
     [JsonSerializable(typeof(ListNumberOrdersResponse))]
     [JsonSerializable(typeof(NumberOrdersPhoneNumber))]
-    [JsonSerializable(typeof(ListNumberOrdersMeta))]
     [JsonSerializable(typeof(ListNumberOrdersRequest))]
     [JsonSerializable(typeof(ListNumbersRequest))]
     [JsonSerializable(typeof(ListNumbersResponse))]
     [JsonSerializable(typeof(ListNumbersDatum))]
-    [JsonSerializable(typeof(ListNumbersMeta))]
     [JsonSerializable(typeof(ListPortingOrdersRequest))]
     [JsonSerializable(typeof(PortingOrdersRequest))]
     [JsonSerializable(typeof(ListPortingOrdersResponse))]
@@ -48,12 +46,10 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(ListPortingOrdersStatus))]
     [JsonSerializable(typeof(ListPortingOrdersDetail))]
     [JsonSerializable(typeof(ListPortingOrdersUserFeedback))]
-    [JsonSerializable(typeof(ListPortingOrdersMeta))]
 
     [JsonSerializable(typeof(ListPortingPhoneNumbersRequest))]
     [JsonSerializable(typeof(ListPortingPhoneNumbersResponse))]
     [JsonSerializable(typeof(ListPortingPhoneNumbersDatum))]
-    [JsonSerializable(typeof(ListPortingPhoneNumbersMeta))]
 
 
     [JsonSerializable(typeof(NumberLookupRequest))]
@@ -145,7 +141,6 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(MessagingProfilesResponse))]
     [JsonSerializable(typeof(MessagingProfile))]
     [JsonSerializable(typeof(UrlShortenerSettings))]
-    [JsonSerializable(typeof(MessagingProfilesMeta))]
 
     [JsonSerializable(typeof(CreateMessagingProfileRequest))]
     [JsonSerializable(typeof(CreateMessagingProfileResponse))]
@@ -169,12 +164,10 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(MessagingPhoneNumberHealth))]
     [JsonSerializable(typeof(MessagingPhoneNumberFeatures))]
     [JsonSerializable(typeof(MessagingFeature))]
-    [JsonSerializable(typeof(MessagingProfilePhoneNumberMeta))]
 
     [JsonSerializable(typeof(MessagingProfileShortCodeRequest))]
     [JsonSerializable(typeof(MessagingProfileShortCodeResponse))]
     [JsonSerializable(typeof(MessagingProfileShortCode))]
-    [JsonSerializable(typeof(MessagingProfileShortCodeMeta))]
 
     [JsonSerializable(typeof(RetrieveMessagingProfileMetricsRequest))]
     [JsonSerializable(typeof(RetrieveMessagingProfileMetricsResponse))]
@@ -188,7 +181,6 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(MessagingProfileMetricsRequest))]
     [JsonSerializable(typeof(MessagingProfileMetricsResponse))]
     [JsonSerializable(typeof(MessagingProfileMetricsData))]
-    [JsonSerializable(typeof(MessagingProfileMetricsMeta))]
 
     [JsonSerializable(typeof(MessageBaseRequest))]
     [JsonSerializable(typeof(MessageBaseResponse))]
@@ -215,13 +207,11 @@ namespace Telnyx.NET
 
     [JsonSerializable(typeof(ListMessagingUrlDomainsRequest))]
     [JsonSerializable(typeof(ListMessagingUrlDomainsResponse))]
-    [JsonSerializable(typeof(ListMessagingUrlDomainsMeta))]
     [JsonSerializable(typeof(MessagingUrlDomain))]
 
     [JsonSerializable(typeof(ListShortCodesRequest))]
     [JsonSerializable(typeof(ListShortCodesResponse))]
     [JsonSerializable(typeof(ShortCode))]
-    [JsonSerializable(typeof(ListShortCodesMeta))]
 
     [JsonSerializable(typeof(RetrieveShortCodeRequest))]
     [JsonSerializable(typeof(RetrieveShortCodeResponse))]
@@ -235,7 +225,6 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(ListPhoneMessageSettingsRequest))]
     [JsonSerializable(typeof(ListPhoneMessageSettingsResponse))]
     [JsonSerializable(typeof(PhoneNumberMessagingSettings))]
-    [JsonSerializable(typeof(ListPhoneMessageSettingsMeta))]
 
     [JsonSerializable(typeof(RetrievePhoneMessageSettingsRequest))]
     [JsonSerializable(typeof(RetrievePhoneMessageSettingsResponse))]
@@ -263,7 +252,6 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(GetHostedNumberOrderResponse))]
     [JsonSerializable(typeof(HostedNumberOrderData))]
     [JsonSerializable(typeof(HostedPhoneNumber))]
-    [JsonSerializable(typeof(HostedNumberOrderMeta))]
 
     [JsonSerializable(typeof(CreateHostedNumberOrderRequest))]
     [JsonSerializable(typeof(CreateHostedNumberOrderResponse))]
@@ -282,7 +270,6 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(ListAutoResponseSettingsRequest))]
     [JsonSerializable(typeof(ListAutoResponseSettingsResponse))]
     [JsonSerializable(typeof(AutoResponseSetting))]
-    [JsonSerializable(typeof(AutoResponseSettingsMeta))]
 
     [JsonSerializable(typeof(CreateAutoResponseSettingRequest))]
     [JsonSerializable(typeof(CreateAutoResponseSettingResponse))]

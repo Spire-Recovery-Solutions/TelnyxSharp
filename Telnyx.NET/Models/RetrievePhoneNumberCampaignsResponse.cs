@@ -18,7 +18,7 @@ namespace Telnyx.NET.Models
         /// Gets or sets the current page number of the retrieved results.
         /// </summary>
         [JsonPropertyName("page")]
-        public int Page { get; set; }
+        public int PageNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the total number of records available across all pages.

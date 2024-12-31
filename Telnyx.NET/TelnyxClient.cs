@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections;
+using System.Text;
 using Polly;
 using Polly.RateLimit;
 using Polly.Wrap;
@@ -169,7 +170,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
             .AddFilter("customer_reference", request.CustomerReference)
             .AddFilter("phone_numbers_count", request.PhoneNumberCount?.ToString())
             .AddFilter("requirements_met", request.RequirementsMet.ToString())
-            .AddPagination(request.PageNumber, request.PageSize);
+            .AddPagination(request.PageSize);
 
         var req = new RestRequest("number_orders?" + query);
         var response = await _policies[request.GetType().BaseType!]
@@ -276,29 +277,13 @@ public class TelnyxClient : ITelnyxClient, IDisposable
             .AddFilter("emergency_address_id", request.EmergencyAddressId)
             .AddFilter("customer_reference", request.CustomerReference)
             .AddFilter("sort", request.Sort)
-            .AddPagination(request.PageNumber, request.PageSize)
+            .AddPagination(request.PageSize)
             .ToString();
 
         var req = new RestRequest("phone_numbers?" + query);
-        var response = await _policies[request.GetType().BaseType!]
+
+        return await _policies[typeof(PhoneNumbersRequest)]
             .ExecuteAsync(token => ExecuteAsync<ListNumbersResponse>(req, token), cancellationToken);
-
-        if (response == null) return response;
-
-        var innerResults = new List<ListNumbersDatum>(response.Data);
-
-        while (response!.Meta.PageNumber < response.Meta.TotalPages)
-        {
-            request.PageNumber++;
-            req = new RestRequest("phone_numbers?" + query);
-            response = await _policies[request.GetType().BaseType!]
-                .ExecuteAsync(token => ExecuteAsync<ListNumbersResponse>(req, token), cancellationToken);
-            if (response != null) innerResults.AddRange(response.Data);
-        }
-
-        response.Data = innerResults;
-
-        return response;
     }
 
     /// <inheritdoc />
@@ -310,7 +295,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
             .AddFilter("include_phone_numbers", request.IncludePhoneNumbers.ToString())
             .AddFilter("customer_reference", request.CustomerReference)
             .AddFilter("sort", request.Sort)
-            .AddPagination(request.PageNumber, request.PageSize);
+            .AddPagination(request.PageSize);
 
         var req = new RestRequest("porting_orders?" + query);
         var response = await _policies[request.GetType().BaseType!]
@@ -348,7 +333,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
             .AddFilter("porting_order_status", request.PortingOrderStatus)
             .AddFilter("activation_status", request.ActivationStatus)
             .AddFilter("portability_status", request.PortabilityStatus)
-            .AddPagination(request.PageNumber, request.PageSize);
+            .AddPagination(request.PageSize);
 
         var req = new RestRequest($"porting_phone_numbers?{query}");
         var response = await _policies[request.GetType().BaseType!]
@@ -544,7 +529,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         CancellationToken cancellationToken = default)
     {
         var query = new QueryBuilder()
-            .AddPagination(request.PageNumber, request.PageSize)
+            .AddPagination(request.PageSize)
             .AddFilter("name", request.NameFilter);
 
         var req = new RestRequest($"messaging_profiles?{query}");
@@ -582,7 +567,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         CancellationToken cancellationToken = default)
     {
         var query = new QueryBuilder()
-            .AddPagination(request.PageNumber, request.PageSize);
+            .AddPagination(request.PageSize);
 
         var req = new RestRequest($"messaging_profiles/{id}/phone_numbers?{query}");
         return await _policies[request.GetType()].ExecuteAsync(
@@ -606,7 +591,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         MessagingProfileShortCodeRequest request, CancellationToken cancellationToken = default)
     {
         var query = new QueryBuilder()
-            .AddPagination(request.PageNumber, request.PageSize);
+            .AddPagination(request.PageSize);
 
         var req = new RestRequest($"messaging_profiles/{id}/short_codes?{query}");
         return await _policies[typeof(MessagingProfileShortCodeRequest)].ExecuteAsync(
@@ -632,7 +617,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         MessagingProfileMetricsRequest request, CancellationToken cancellationToken = default)
     {
         var query = new QueryBuilder()
-            .AddPagination(request.PageNumber, request.PageSize)
+            .AddPagination(request.PageSize)
             .AddFilter("id", request.MessagingProfileId.ToString())
             .AddFilter("time_frame", request.TimeFrame);
 
@@ -708,7 +693,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         CancellationToken cancellationToken = default)
     {
         var query = new QueryBuilder()
-            .AddPagination(request.PageNumber, request.PageSize);
+            .AddPagination(request.PageSize);
 
         var req = new RestRequest($"messaging_url_domains?{query}");
 
@@ -721,7 +706,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         CancellationToken cancellationToken = default)
     {
         var query = new QueryBuilder()
-            .AddPagination(request.PageNumber, request.PageSize)
+            .AddPagination(request.PageSize)
             .AddFilter("messaging_profile_id", request.MessagingProfileId);
 
         var req = new RestRequest($"short_codes?{query}");
@@ -757,7 +742,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         ListPhoneMessageSettingsRequest request, CancellationToken cancellationToken = default)
     {
         var query = new QueryBuilder()
-            .AddPagination(request.PageNumber, request.PageSize);
+            .AddPagination(request.PageSize);
 
         var req = new RestRequest($"phone_numbers/messaging?{query}");
 
@@ -830,7 +815,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         GetHostedNumberOrderRequest request, CancellationToken cancellationToken = default)
     {
         var query = new QueryBuilder()
-            .AddPagination(request.PageNumber, request.PageSize);
+            .AddPagination(request.PageSize);
 
         var req = new RestRequest($"messaging_hosted_number_orders?{query}");
 
@@ -953,7 +938,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         ListVerificationRequestsRequest request, CancellationToken cancellationToken = default)
     {
         var query = new QueryBuilder()
-            .AddPagination(request.Page, request.PageSize)
+            .AddPagination(request.PageSize)
             .AddFilter("date_start", request.DateStart?.ToString("yyyy-MM-ddTHH:mm:ss.ffffffzzz"))
             .AddFilter("date_end", request.DateEnd?.ToString("yyyy-MM-ddTHH:mm:ss.ffffffzzz"))
             .AddFilter("status", request.Status?.ToString())
@@ -1019,7 +1004,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         CancellationToken cancellationToken = default)
     {
         var query = new QueryBuilder()
-            .AddPagination(request.Page, request.RecordsPerPage)
+            .AddPagination(request.PageSize)
             .AddFilter("sort", request.Sort)
             .AddFilter("displayName", request.DisplayName)
             .AddFilter("entityType", request.EntityType)
@@ -1158,7 +1143,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         CancellationToken cancellationToken = default)
     {
         var query = new QueryBuilder()
-            .AddPagination(request.Page, request.RecordsPerPage)
+            .AddPagination(request.PageSize)
             .AddFilter("sort", request.Sort)
             .AddFilter("brandId", request.BrandId);
 
@@ -1283,7 +1268,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
             .AddFilter("tcr_campaign_id", request.FilterTcrCampaignId)
             .AddFilter("tcr_brand_id", request.FilterTcrBrandId)
             .AddFilter("sort", request.Sort)
-            .AddPagination(request.Page, request.RecordsPerPage);
+            .AddPagination(request.PageSize);
 
         var req = new RestRequest($"10dlc/phone_number_campaigns?{query}");
 
@@ -1367,7 +1352,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         GetPhoneNumberStatusRequest request, CancellationToken cancellationToken = default)
     {
         var query = new QueryBuilder()
-            .AddPagination(request.Page, request.RecordsPerPage);
+            .AddPagination(request.PageSize);
 
         var req = new RestRequest($"10dlc/phoneNumberAssignmentByProfile/{taskId}/phoneNumbers?{query}");
 
@@ -1381,7 +1366,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         CancellationToken cancellationToken = default)
     {
         var query = new QueryBuilder()
-            .AddPagination(request.Page, request.RecordsPerPage)
+            .AddPagination(request.PageSize)
             .AddFilter("sort", request.Sort);
 
         var req = new RestRequest($"10dlc/partner_campaigns?{query}");
@@ -1430,7 +1415,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         GetPartnerCampaignsSharedByUserRequest request, CancellationToken cancellationToken = default)
     {
         var query = new QueryBuilder()
-            .AddPagination(request.Page, request.RecordsPerPage);
+            .AddPagination(request.PageSize);
 
         var req = new RestRequest($"10dlc/partnerCampaign/sharedByMe?{query}");
 
@@ -1451,34 +1436,69 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     }
 
     /// <inheritdoc />
-    private async Task<T1?> ExecuteAsync<T1>(RestRequest request, CancellationToken cancellationToken = default)
-        where T1 : ITelnyxResponse
+ private async Task<T1?> ExecuteAsync<T1>(RestRequest request, CancellationToken cancellationToken = default)
+    where T1 : ITelnyxResponse
+{
+    var response = await _client.ExecuteAsync(request, cancellationToken);
+
+    if (!response.IsSuccessStatusCode)
     {
-        var response = await _client.ExecuteAsync(request, cancellationToken);
+        Console.WriteLine(
+            $"Request Unsuccessful: ({response.StatusCode}) {response.Content}\n" +
+            $"Request URL: {_client.BuildUri(request)}\n" +
+            $"Request Body: {request.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody)?.Value}");
 
-        if (!response.IsSuccessStatusCode)
-        {
-            Console.WriteLine(
-                $"Request Unsuccessful: ({response.StatusCode}) {response.Content}\n" +
-                $"Request URL: {_client.BuildUri(request)}\n" +
-                $"Request Body: {request.Parameters
-                    .FirstOrDefault(p => p.Type == ParameterType.RequestBody)?.Value}");
-            //if (response is { ContentType: "application/problem+json", Content: not null })
-            //{
-            //    //TODO: Update this to use the final ProblemDetails object being produced by Terminus
-            //    var problemDetails = JsonSerializer.Deserialize<ProblemDetails>(response.Content);
-            //    // Handle the problem details as needed
-            //}
-
-            // You might want to throw an exception or handle the error appropriately here
-            if (response.ErrorException != null)
-                throw response.ErrorException;
-        }
-
-        if (response.Content == null) return default;
-        var result = JsonSerializer.Deserialize<T1>(response.Content, TelnyxJsonSerializerContext.Default.Options);
-        return result;
+        if (response.ErrorException != null)
+            throw response.ErrorException;
     }
+
+    if (response.Content == null) return default;
+    var result = JsonSerializer.Deserialize<T1>(response.Content, TelnyxJsonSerializerContext.Default.Options);
+    
+    // Check if this is a paginated request
+    var pageParam = request.Parameters.FirstOrDefault(p => p.Name == "page[number]");
+    if (pageParam == null || result == null) return result;
+    var metaProperty = typeof(T1).GetProperty("Meta");
+    var dataProperty = typeof(T1).GetProperty("Data");
+
+    if (metaProperty?.GetValue(result) is not PaginationMeta meta || dataProperty == null) return result;
+    if (meta.PageNumber >= meta.TotalPages) return result;
+    
+    // Get the type of items in the Data collection
+    var dataType = dataProperty.PropertyType.GetGenericArguments()[0];
+    var listType = typeof(List<>).MakeGenericType(dataType);
+    var allData = (IList)Activator.CreateInstance(listType);
+
+    if (dataProperty.GetValue(result) is IEnumerable initialData)
+        foreach (var item in initialData)
+            allData.Add(item);
+                
+    while (meta.PageNumber < meta.TotalPages)
+    {
+        request.RemoveParameter(pageParam);
+        request.AddParameter("page[number]", meta.PageNumber + 1);
+                    
+        response = await _client.ExecuteAsync(request, cancellationToken);
+        if (!response.IsSuccessStatusCode || response.Content == null) break;
+                    
+        var nextResult = JsonSerializer.Deserialize<T1>(response.Content, TelnyxJsonSerializerContext.Default.Options);
+        if (nextResult == null) break;
+                    
+        var nextData = dataProperty.GetValue(nextResult);
+        if (nextData is IEnumerable pageData)
+            foreach (var item in pageData)
+                allData.Add(item);
+                        
+        metaProperty.SetValue(result, metaProperty.GetValue(nextResult));
+        meta = (PaginationMeta)metaProperty.GetValue(result);
+        pageParam = request.Parameters.FirstOrDefault(p => p.Name == "page[number]");
+    }
+                
+    dataProperty.SetValue(result, allData);
+
+    return result;
+}
+
 
     /// <inheritdoc />
     public void Dispose()
@@ -1500,7 +1520,8 @@ public class TelnyxLoggingInterceptor(StreamWriter logWriter) : Interceptor
         }
     }
 
-    public override async ValueTask BeforeHttpRequest(HttpRequestMessage requestMessage, CancellationToken cancellationToken)
+    public override async ValueTask BeforeHttpRequest(HttpRequestMessage requestMessage,
+        CancellationToken cancellationToken)
     {
         try
         {
@@ -1540,7 +1561,8 @@ public class TelnyxLoggingInterceptor(StreamWriter logWriter) : Interceptor
         }
     }
 
-    public override async ValueTask AfterHttpRequest(HttpResponseMessage responseMessage, CancellationToken cancellationToken)
+    public override async ValueTask AfterHttpRequest(HttpResponseMessage responseMessage,
+        CancellationToken cancellationToken)
     {
         try
         {

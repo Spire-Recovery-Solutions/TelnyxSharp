@@ -15,7 +15,7 @@ namespace Telnyx.NET.Models
         /// Metadata about the pagination and results.
         /// </summary>
         [JsonPropertyName("meta")]
-        public MessagingProfilesMeta? Meta { get; set; }
+        public PaginationMeta? Meta { get; set; }
 
         /// <summary>
         /// List of errors, if any occurred during the API call.
@@ -70,21 +70,5 @@ namespace Telnyx.NET.Models
         public bool SendWebhooks { get; set; }
     }
 
-    /// <summary>
-    /// Represents metadata related to messaging profiles, including pagination details.
-    /// </summary>
-    public partial class MessagingProfilesMeta
-    {
-        [JsonPropertyName("total_pages")]
-        public int TotalPages { get; set; }
-
-        [JsonPropertyName("total_results")]
-        public int TotalResults { get; set; }
-
-        [JsonPropertyName("page_number")]
-        public int PageNumber { get; set; }
-
-        [JsonPropertyName("page_size")]
-        public int PageSize { get; set; }
-    }
+   
 }

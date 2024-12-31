@@ -49,17 +49,12 @@ namespace Telnyx.NET
             return this;
         }
 
-        public QueryBuilder AddPagination(int? pageNumber, int? pageSize)
+        public QueryBuilder AddPagination(int? pageSize)
         {
-            if (pageNumber.HasValue)
-            {
-                _builder.Append($"&page[number]={pageNumber.Value}");
-            }
-            if (pageSize.HasValue)
-            {
-                var size = Math.Min(pageSize.Value, 250);
-                _builder.Append($"&page[size]={size}");
-            }
+            var size = Math.Min(pageSize ?? 50, 250);
+            _builder.Append($"&page[size]={size}");
+            _builder.Append("&page[number]=1"); // Always start with page 1
+        
             return this;
         }
 

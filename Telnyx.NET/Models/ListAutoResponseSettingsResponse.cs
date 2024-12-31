@@ -18,7 +18,7 @@ namespace Telnyx.NET.Models
         /// Metadata related to the auto-response settings, including pagination info.
         /// </summary>
         [JsonPropertyName("meta")]
-        public AutoResponseSettingsMeta? Meta { get; set; }
+        public PaginationMeta? Meta { get; set; }
 
         /// <summary>
         /// Represents any errors encountered during the API call.
@@ -51,33 +51,5 @@ namespace Telnyx.NET.Models
         public DateTimeOffset UpdatedAt { get; set; }
     }
 
-    /// <summary>
-    /// Represents pagination and metadata for the list of auto-response settings.
-    /// </summary>
-    public class AutoResponseSettingsMeta
-    {
-        /// <summary>
-        /// The current page number in the paginated result.
-        /// </summary>
-        [JsonPropertyName("page_number")]
-        public int PageNumber { get; set; }
-
-        /// <summary>
-        /// The number of results per page in the paginated result.
-        /// </summary>
-        [JsonPropertyName("page_size")]
-        public int PageSize { get; set; }
-
-        /// <summary>
-        /// The total number of pages available in the paginated result.
-        /// </summary>
-        [JsonPropertyName("total_pages")]
-        public int TotalPages { get; set; }
-
-        /// <summary>
-        /// The total number of results available in the paginated result.
-        /// </summary>
-        [JsonPropertyName("total_results")]
-        public int TotalResults { get; set; }
-    }
+  
 }

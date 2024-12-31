@@ -15,7 +15,7 @@ namespace Telnyx.NET.Models
         /// Metadata for pagination and result details.
         /// </summary>
         [JsonPropertyName("meta")]
-        public MessagingProfileMetricsMeta? Meta { get; set; }
+        public PaginationMeta? Meta { get; set; }
 
         /// <summary>
         /// Gets or sets any errors that occurred during the API request.
@@ -57,31 +57,5 @@ namespace Telnyx.NET.Models
         public MessagingProfileInboundMetrics Inbound { get; set; } = new();
     }
 
-    public class MessagingProfileMetricsMeta
-    {
-        /// <summary>
-        /// Total number of pages.
-        /// </summary>
-        [JsonPropertyName("total_pages")]
-        public int TotalPages { get; set; }
-
-        /// <summary>
-        /// Total number of results.
-        /// </summary>
-        [JsonPropertyName("total_results")]
-        public int TotalResults { get; set; }
-
-        /// <summary>
-        /// Current page number.
-        /// </summary>
-        [JsonPropertyName("page_number")]
-        public int PageNumber { get; set; }
-
-        /// <summary>
-        /// Number of results per page.
-        /// </summary>
-        [JsonPropertyName("page_size")]
-        public int PageSize { get; set; }
-    }
 
 }

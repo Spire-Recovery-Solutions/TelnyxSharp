@@ -10,7 +10,7 @@ namespace Telnyx.NET.Models
         public List<ListPortingOrdersDatum> Data { get; set; }
 
         [JsonPropertyName("meta")]
-        public ListPortingOrdersMeta Meta { get; set; }
+        public PaginationMeta Meta { get; set; }
     }
 
     public partial class ListPortingOrdersDatum
@@ -248,20 +248,5 @@ namespace Telnyx.NET.Models
 
         [JsonPropertyName("user_rating")]
         public string? UserRating { get; set; }
-    }
-
-    public partial class ListPortingOrdersMeta
-    {
-        [JsonPropertyName("page_number")]
-        public long PageNumber { get; set; }
-
-        [JsonPropertyName("page_size")]
-        public long PageSize { get; set; }
-
-        [JsonPropertyName("total_pages")]
-        public long TotalPages { get; set; }
-
-        [JsonPropertyName("total_results")]
-        public long TotalResults { get; set; }
     }
 }

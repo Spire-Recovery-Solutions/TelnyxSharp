@@ -18,7 +18,7 @@ namespace Telnyx.NET.Models
         /// Metadata for pagination, including page size, number, total pages, and results.
         /// </summary>
         [JsonPropertyName("meta")]
-        public ListPortingPhoneNumbersMeta Meta { get; set; } = new();
+        public PaginationMeta Meta { get; set; } = new();
     }
 
     /// <summary>
@@ -105,33 +105,5 @@ namespace Telnyx.NET.Models
         public string PortingOrderStatus { get; set; } = string.Empty;
     }
 
-    /// <summary>
-    /// Metadata for pagination details.
-    /// </summary>
-    public class ListPortingPhoneNumbersMeta
-    {
-        /// <summary>
-        /// The number of records per page.
-        /// </summary>
-        [JsonPropertyName("page_size")]
-        public int PageSize { get; set; }
-
-        /// <summary>
-        /// The current page number.
-        /// </summary>
-        [JsonPropertyName("page_number")]
-        public int PageNumber { get; set; }
-
-        /// <summary>
-        /// The total number of pages.
-        /// </summary>
-        [JsonPropertyName("total_pages")]
-        public int TotalPages { get; set; }
-
-        /// <summary>
-        /// The total number of results available.
-        /// </summary>
-        [JsonPropertyName("total_results")]
-        public int TotalResults { get; set; }
-    }
+ 
 }

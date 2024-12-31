@@ -18,7 +18,7 @@ namespace Telnyx.NET.Models
         /// Gets or sets the metadata for the pagination information.
         /// </summary>
         [JsonPropertyName("meta")]
-        public ListMessagingUrlDomainsMeta? Meta { get; set; }
+        public PaginationMeta? Meta { get; set; }
 
         /// <summary>
         /// Represents any errors encountered during the message sending process.
@@ -57,33 +57,4 @@ namespace Telnyx.NET.Models
         public string UseCase { get; set; } = string.Empty;
     }
 
-    /// <summary>
-    /// Represents the metadata for pagination in the response.
-    /// </summary>
-    public class ListMessagingUrlDomainsMeta
-    {
-        /// <summary>
-        /// Gets or sets the total number of pages.
-        /// </summary>
-        [JsonPropertyName("total_pages")]
-        public int TotalPages { get; set; }
-
-        /// <summary>
-        /// Gets or sets the total number of results.
-        /// </summary>
-        [JsonPropertyName("total_results")]
-        public int TotalResults { get; set; }
-
-        /// <summary>
-        /// Gets or sets the current page number.
-        /// </summary>
-        [JsonPropertyName("page_number")]
-        public int PageNumber { get; set; }
-
-        /// <summary>
-        /// Gets or sets the size of the page.
-        /// </summary>
-        [JsonPropertyName("page_size")]
-        public int PageSize { get; set; }
-    }
 }
