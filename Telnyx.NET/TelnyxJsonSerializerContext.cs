@@ -466,9 +466,9 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(Vertical))]
 
     //Events
-    [JsonSerializable(typeof(DeliveryUpdate))]
-    [JsonSerializable(typeof(DeliveryUpdateData))]
-    [JsonSerializable(typeof(DeliveryUpdatePayload))]
+    [JsonSerializable(typeof(DeliveryUpdateMessageProfile))]
+    [JsonSerializable(typeof(DeliveryUpdateMessageProfileData))]
+    [JsonSerializable(typeof(DeliveryUpdateMessageProfilePayload))]
 
     [JsonSerializable(typeof(ReplacedLinkClick))]
 
