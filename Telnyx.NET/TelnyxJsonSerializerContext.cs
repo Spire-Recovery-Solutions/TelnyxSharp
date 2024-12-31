@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using SRS.Data.Telnyx.Models.Events;
+using System.Text.Json.Serialization;
 using Telnyx.NET.Enums;
 using Telnyx.NET.Models;
 using Telnyx.NET.Models.Events;
@@ -465,16 +466,69 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(Vertical))]
 
     //Events
-    [JsonSerializable(typeof(InboundMessage))]
-    [JsonSerializable(typeof(InboundMessageData))]
-    [JsonSerializable(typeof(InboundMessagePayload))]
-    [JsonSerializable(typeof(WebhookMedia))]
-
     [JsonSerializable(typeof(DeliveryUpdate))]
     [JsonSerializable(typeof(DeliveryUpdateData))]
     [JsonSerializable(typeof(DeliveryUpdatePayload))]
 
     [JsonSerializable(typeof(ReplacedLinkClick))]
+
+    [JsonSerializable(typeof(TelnyxEvent))]
+    [JsonSerializable(typeof(List<TelnyxEvent>))]
+    [JsonSerializable(typeof(IEvent))]
+    [JsonSerializable(typeof(BaseEvent))]
+    [JsonSerializable(typeof(TelnyxEventMeta))]
+
+    [JsonSerializable(typeof(CallAnsweredEvent))]
+    [JsonSerializable(typeof(CallBridgedEvent))]
+    // [JsonSerializable(typeof(CallDequeuedEvent))]
+    [JsonSerializable(typeof(CallDtmfReceivedEvent))]
+    [JsonSerializable(typeof(CallEnqueuedEvent))]
+    [JsonSerializable(typeof(CallForkStartedEvent))]
+    [JsonSerializable(typeof(CallForkStoppedEvent))]
+    [JsonSerializable(typeof(CallGatherEndedEvent))]
+    [JsonSerializable(typeof(CallHangupEvent))]
+    [JsonSerializable(typeof(CallInitiatedEvent))]
+    [JsonSerializable(typeof(CallMachineDetectionEndedEvent))]
+    [JsonSerializable(typeof(CallMachineGreetingEndedEvent))]
+    [JsonSerializable(typeof(CallMachinePremiumDetectionEndedEvent))]
+    [JsonSerializable(typeof(CallMachinePremiumGreetingEndedEvent))]
+    [JsonSerializable(typeof(CallPlaybackEndedEvent))]
+    [JsonSerializable(typeof(CallPlaybackStartedEvent))]
+    [JsonSerializable(typeof(CallRecordingErrorEvent))]
+    [JsonSerializable(typeof(CallRecordingSavedEvent))]
+    [JsonSerializable(typeof(CallReferCompletedEvent))]
+    [JsonSerializable(typeof(CallReferFailedEvent))]
+    [JsonSerializable(typeof(CallReferStartedEvent))]
+    [JsonSerializable(typeof(CallSpeakEndedEvent))]
+    [JsonSerializable(typeof(CallSpeakStartedEvent))]
+    // [JsonSerializable(typeof(CallTranscriptionEvent))]
+    [JsonSerializable(typeof(ConferenceCreatedEvent))]
+    [JsonSerializable(typeof(ConferenceEndedEvent))]
+    // [JsonSerializable(typeof(ConferenceFloorChangedEvent))]
+    [JsonSerializable(typeof(ConferenceParticipantJoinedEvent))]
+    [JsonSerializable(typeof(ConferenceParticipantLeftEvent))]
+    [JsonSerializable(typeof(ConferenceParticipantPlaybackEndedEvent))]
+    [JsonSerializable(typeof(ConferenceParticipantPlaybackStartedEvent))]
+    [JsonSerializable(typeof(ConferenceParticipantSpeakEndedEvent))]
+    [JsonSerializable(typeof(ConferenceParticipantSpeakStartedEvent))]
+    [JsonSerializable(typeof(ConferencePlaybackEndedEvent))]
+    [JsonSerializable(typeof(ConferencePlaybackStartedEvent))]
+    [JsonSerializable(typeof(ConferenceRecordingSavedEvent))]
+    [JsonSerializable(typeof(ConferenceSpeakEndedEvent))]
+    [JsonSerializable(typeof(ConferenceSpeakStartedEvent))]
+    [JsonSerializable(typeof(MessageReceivedEvent))]
+    [JsonSerializable(typeof(MessageSentEvent))]
+    [JsonSerializable(typeof(MessageReceivedPayload))]
+    [JsonSerializable(typeof(MessageFrom))]
+    [JsonSerializable(typeof(MessageToCc))]
+    [JsonSerializable(typeof(Cost))]
+    // [JsonSerializable(typeof(StreamingFailedEvent))]
+    // [JsonSerializable(typeof(StreamingStartedEvent))]
+    // [JsonSerializable(typeof(StreamingStoppedEvent))]
+    // [JsonSerializable(typeof(VideoRoomCompositionCompletedEvent))]
+    // [JsonSerializable(typeof(VideoRoomRecordingStartedEvent))]
+    // [JsonSerializable(typeof(VideoRoomSessionEndedEvent))]
+    // [JsonSerializable(typeof(VideoRoomSessionStartedEvent))]
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,
