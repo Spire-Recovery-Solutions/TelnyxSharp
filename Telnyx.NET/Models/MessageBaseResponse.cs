@@ -185,9 +185,6 @@ namespace Telnyx.NET.Models
         [JsonPropertyName("sha256")]
         public string? Sha256 { get; set; }
 
-        [JsonPropertyName("hash_sha256")]
-        public string? HashSha256 { get; set; }
-
         [JsonPropertyName("size")]
         public int Size { get; set; }
     }
