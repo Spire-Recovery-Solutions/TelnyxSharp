@@ -1488,49 +1488,48 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     }
 }
 
-public class TelnyxLoggingInterceptor : Interceptor
+public class TelnyxLoggingInterceptor(StreamWriter logWriter) : Interceptor
 {
-    private readonly StreamWriter _logWriter;
-    private readonly object _logLock = new();
-
-    public TelnyxLoggingInterceptor(StreamWriter logWriter)
-    {
-        _logWriter = logWriter;
-    }
+    private readonly Lock _logLock = new();
 
     private void LogMessage(string message)
     {
         lock (_logLock)
         {
-            _logWriter.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] {message}");
+            logWriter.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] {message}");
         }
     }
 
-    public override ValueTask BeforeRequest(RestRequest request, CancellationToken cancellationToken)
+    public override async ValueTask BeforeHttpRequest(HttpRequestMessage requestMessage, CancellationToken cancellationToken)
     {
         try
         {
             var sb = new StringBuilder();
             sb.AppendLine("=== Telnyx API Request ===");
-            sb.AppendLine($"Method: {request.Method}");
-            sb.AppendLine($"Resource: {request.Resource}");
-
-            // Log request body if present
-            if (request.Parameters.Any(p => p.Type == ParameterType.RequestBody))
-            {
-                var body = request.Parameters.First(p => p.Type == ParameterType.RequestBody).Value;
-                sb.AppendLine("Request Body:");
-                sb.AppendLine(body?.ToString() ?? "null");
-            }
+            sb.AppendLine($"Method: {requestMessage.Method}");
+            sb.AppendLine($"URL: {requestMessage.RequestUri}");
 
             // Log headers (excluding authorization)
             sb.AppendLine("Request Headers:");
-            foreach (var param in request.Parameters.Where(p => p.Type == ParameterType.HttpHeader))
+            foreach (var header in requestMessage.Headers)
             {
-                if (!param.Name?.Equals("Authorization", StringComparison.OrdinalIgnoreCase) ?? false)
+                if (!header.Key.Equals("Authorization", StringComparison.OrdinalIgnoreCase))
                 {
-                    sb.AppendLine($"{param.Name}: {param.Value}");
+                    sb.AppendLine($"{header.Key}: {string.Join(", ", header.Value)}");
                 }
+            }
+
+            if (requestMessage.Content != null)
+            {
+                foreach (var header in requestMessage.Content.Headers)
+                {
+                    sb.AppendLine($"{header.Key}: {string.Join(", ", header.Value)}");
+                }
+
+                // Log raw request body
+                var content = await requestMessage.Content.ReadAsStringAsync(cancellationToken);
+                sb.AppendLine("Request Body:");
+                sb.AppendLine(content);
             }
 
             LogMessage(sb.ToString());
@@ -1539,38 +1538,33 @@ public class TelnyxLoggingInterceptor : Interceptor
         {
             LogMessage($"Error logging request: {ex}");
         }
-
-        return ValueTask.CompletedTask;
     }
 
-    public override ValueTask AfterRequest(RestResponse response, CancellationToken cancellationToken)
+    public override async ValueTask AfterHttpRequest(HttpResponseMessage responseMessage, CancellationToken cancellationToken)
     {
         try
         {
             var sb = new StringBuilder();
             sb.AppendLine("=== Telnyx API Response ===");
-            sb.AppendLine($"Status Code: {response.StatusCode}");
-            sb.AppendLine($"Status Description: {response.StatusDescription}");
+            sb.AppendLine($"Status Code: {(int)responseMessage.StatusCode} {responseMessage.StatusCode}");
+            sb.AppendLine($"Reason: {responseMessage.ReasonPhrase}");
 
             // Log response headers
             sb.AppendLine("Response Headers:");
-            foreach (var header in response.Headers ?? Array.Empty<HeaderParameter>())
+            foreach (var header in responseMessage.Headers)
             {
-                sb.AppendLine($"{header.Name}: {header.Value}");
+                sb.AppendLine($"{header.Key}: {string.Join(", ", header.Value)}");
             }
 
-            // Log response content
-            if (!string.IsNullOrEmpty(response.Content))
+            foreach (var header in responseMessage.Content.Headers)
             {
-                sb.AppendLine("Response Body:");
-                sb.AppendLine(response.Content);
+                sb.AppendLine($"{header.Key}: {string.Join(", ", header.Value)}");
             }
 
-            if (response.ErrorException != null)
-            {
-                sb.AppendLine("Response Error:");
-                sb.AppendLine(response.ErrorException.ToString());
-            }
+            // Log raw response body
+            var content = await responseMessage.Content.ReadAsStringAsync(cancellationToken);
+            sb.AppendLine("Response Body:");
+            sb.AppendLine(content);
 
             LogMessage(sb.ToString());
         }
@@ -1578,7 +1572,5 @@ public class TelnyxLoggingInterceptor : Interceptor
         {
             LogMessage($"Error logging response: {ex}");
         }
-
-        return ValueTask.CompletedTask;
     }
 }
