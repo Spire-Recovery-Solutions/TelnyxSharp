@@ -13,13 +13,13 @@ namespace Telnyx.NET.Models
         /// Gets or sets the number of records to retrieve per page.
         /// </summary>
         [JsonPropertyName("recordsPerPage")]
-        public int? RecordsPerPage { get; set; }
+        public int? PageSize  { get; set; }
 
         /// <summary>
         /// Gets or sets the page number for paginated results.
         /// </summary>
         [JsonPropertyName("page")]
-        public int? Page { get; set; }
+        public int? PageNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the Telnyx campaign ID to filter the campaigns.

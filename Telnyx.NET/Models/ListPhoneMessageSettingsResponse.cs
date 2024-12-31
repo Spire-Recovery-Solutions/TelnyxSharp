@@ -19,7 +19,7 @@ namespace Telnyx.NET.Models
         /// Metadata information for the list of phone numbers, including pagination details.
         /// </summary>
         [JsonPropertyName("meta")]
-        public ListPhoneMessageSettingsMeta Meta { get; set; }
+        public PaginationMeta Meta { get; set; }
 
             /// <summary>
         /// Represents any errors encountered during the message sending process.
@@ -112,34 +112,5 @@ namespace Telnyx.NET.Models
         public MessagingPhoneNumberFeatures? Features { get; set; }
     }
 
-    /// <summary>
-    /// Metadata for the list of phone numbers with messaging settings.
-    /// Includes details about pagination.
-    /// </summary>
-    public class ListPhoneMessageSettingsMeta
-    {
-        /// <summary>
-        /// The total number of pages available.
-        /// </summary>
-        [JsonPropertyName("total_pages")]
-        public int TotalPages { get; set; }
-
-        /// <summary>
-        /// The total number of results available.
-        /// </summary>
-        [JsonPropertyName("total_results")]
-        public int TotalResults { get; set; }
-
-        /// <summary>
-        /// The current page number.
-        /// </summary>
-        [JsonPropertyName("page_number")]
-        public int PageNumber { get; set; }
-
-        /// <summary>
-        /// The number of items per page.
-        /// </summary>
-        [JsonPropertyName("page_size")]
-        public int PageSize { get; set; }
-    }
+    
 }

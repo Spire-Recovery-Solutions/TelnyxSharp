@@ -10,13 +10,13 @@ namespace Telnyx.NET.Models
         /// The number of records to return per page.
         /// </summary>
         [JsonPropertyName("recordsPerPage")]
-        public int? RecordsPerPage { get; set; }
+        public int? PageSize  { get; set; }
 
         /// <summary>
         /// The page number to retrieve.
         /// </summary>
         [JsonPropertyName("page")]
-        public int? Page { get; set; }
+        public int? PageNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the sorting order for the results. Defaults to sorting by created date in descending order.

@@ -19,7 +19,7 @@ namespace Telnyx.NET.Models
         /// Metadata related to the pagination of the short codes list.
         /// </summary>
         [JsonPropertyName("meta")]
-        public ListShortCodesMeta? Meta { get; set; }
+        public PaginationMeta? Meta { get; set; }
 
         /// <summary>
         /// Represents any errors encountered during the message sending process.
@@ -76,33 +76,5 @@ namespace Telnyx.NET.Models
         public DateTime UpdatedAt { get; set; }
     }
 
-    /// <summary>
-    /// Represents metadata for the list of short codes, including pagination details.
-    /// </summary>
-    public class ListShortCodesMeta
-    {
-        /// <summary>
-        /// The total number of pages available.
-        /// </summary>
-        [JsonPropertyName("total_pages")]
-        public int TotalPages { get; set; }
-
-        /// <summary>
-        /// The total number of results available.
-        /// </summary>
-        [JsonPropertyName("total_results")]
-        public int TotalResults { get; set; }
-
-        /// <summary>
-        /// The current page number in the results.
-        /// </summary>
-        [JsonPropertyName("page_number")]
-        public int PageNumber { get; set; }
-
-        /// <summary>
-        /// The number of results per page.
-        /// </summary>
-        [JsonPropertyName("page_size")]
-        public int PageSize { get; set; }
-    }
+ 
 }

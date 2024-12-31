@@ -12,7 +12,7 @@ namespace Telnyx.NET.Models
         /// Gets or sets the current page number in the paginated response.
         /// </summary>
         [JsonPropertyName("page")]
-        public int Page { get; set; }
+        public int PageNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the list of partner campaigns shared by the user.

@@ -13,7 +13,7 @@ namespace Telnyx.NET.Models
         /// Gets or sets the page number for pagination. Default value is 1.
         /// </summary>
         [JsonPropertyName("page")]
-        public required int Page { get; set; } = 1;
+        public required int PageNumber { get; set; } = 1;
 
         /// <summary>
         /// Gets or sets the number of items per page for pagination. Default value is 10.

@@ -5,7 +5,7 @@ namespace Telnyx.NET.Models;
 
 public class ListNumbersResponse : ITelnyxResponse
 {
-    [JsonPropertyName("meta")] public ListNumbersMeta Meta { get; set; }
+    [JsonPropertyName("meta")] public PaginationMeta Meta { get; set; }
 
     [JsonPropertyName("data")] public List<ListNumbersDatum> Data { get; set; }
 }
@@ -71,13 +71,3 @@ public partial class ListNumbersDatum
     [JsonPropertyName("updated_at")] public DateTimeOffset? UpdatedAt { get; set; }
 }
 
-public partial class ListNumbersMeta
-{
-    [JsonPropertyName("total_pages")] public long TotalPages { get; set; }
-
-    [JsonPropertyName("total_results")] public long TotalResults { get; set; }
-
-    [JsonPropertyName("page_number")] public long PageNumber { get; set; }
-
-    [JsonPropertyName("page_size")] public long PageSize { get; set; }
-}
