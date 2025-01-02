@@ -51,7 +51,7 @@ public class TelnyxClientTests : IDisposable
         {
             StatusCode = HttpStatusCode.OK,
             IsSuccessStatusCode = true,
-            Content = JsonSerializer.Serialize(expectedResponse)
+            Content = JsonSerializer.Serialize(expectedResponse, TelnyxJsonSerializerContext.Default.Options)
         };
 
         _sut.MockRestClient
