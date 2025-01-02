@@ -2,10 +2,9 @@
 {
     public sealed class TelnyxRateLimitConfiguration
     {
-        public int Global { get; set; } = 200;
-        // Unauthed number search also possible at 10 per minute but do we care?
-        public int NumberSearch { get; set; } = 1;
-        public int PhoneNumbers { get; set; } = 5;
+        public int Global { get; set; } = 40;
+        public int NumberSearch { get; set; } = 40;
+        public int PhoneNumbers { get; set; } = 60;
         public int Connections { get; set; } = 5;
         public int FQDNConnections { get; set; } = 5;
         public int IPConnections { get; set; } = 5;

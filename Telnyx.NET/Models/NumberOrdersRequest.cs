@@ -1,6 +1,8 @@
-﻿namespace Telnyx.NET.Models;
+﻿using Telnyx.NET.Interfaces;
 
-public class NumberOrdersRequest
+namespace Telnyx.NET.Models;
+
+public class NumberOrdersRequest : ITelnyxRequest
 {
 
 }
