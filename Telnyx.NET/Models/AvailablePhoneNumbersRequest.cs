@@ -28,6 +28,6 @@ public class AvailablePhoneNumbersRequest : ITelnyxRequest
     public bool?  BestEffort { get; set; }
     public bool?  Reservable { get; set; }
     public bool?  ExcludeHeldNumbers { get; set; }
-    //public int? PageNumber { get; set; }
+    //
     //public int? PageSize { get; set; }
 }

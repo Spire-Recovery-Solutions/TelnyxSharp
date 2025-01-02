@@ -4,7 +4,7 @@ namespace Telnyx.NET.Models;
 
 public class ListNumbersRequest : PhoneNumbersRequest, ITelnyxRequest
 {
-    public int? PageNumber { get; set; } = 1;
+    
     public int? PageSize { get; set; }
     public List<string> Tags { get; set; }
     public string? PhoneNumber { get; set; }
