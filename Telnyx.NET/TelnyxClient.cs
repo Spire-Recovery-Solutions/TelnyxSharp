@@ -1,12 +1,12 @@
-﻿using System.Collections;
-using System.Text;
-using Polly;
+﻿using Polly;
 using Polly.RateLimit;
 using Polly.Wrap;
 using RestSharp;
 using RestSharp.Authenticators;
-using System.Text.Json;
 using RestSharp.Interceptors;
+using System.Collections;
+using System.Text;
+using System.Text.Json;
 using Telnyx.NET.Enums;
 using Telnyx.NET.Interfaces;
 using Telnyx.NET.Models;
@@ -173,25 +173,8 @@ public class TelnyxClient : ITelnyxClient, IDisposable
             .AddPagination(request.PageSize);
 
         var req = new RestRequest("number_orders?" + query);
-        var response = await _policies[request.GetType().BaseType!]
+        return await _policies[typeof(ListNumberOrdersRequest)]
             .ExecuteAsync(token => ExecuteAsync<ListNumberOrdersResponse>(req, token), cancellationToken);
-
-        if (response == null) return response;
-
-        var innerResults = new List<NumberOrder>(response.Data);
-
-        while (response!.Meta.PageNumber < response.Meta.TotalPages)
-        {
-            request.PageNumber++;
-            req = new RestRequest("number_orders?" + query);
-            response = await _policies[request.GetType().BaseType!]
-                .ExecuteAsync(token => ExecuteAsync<ListNumberOrdersResponse>(req, token), cancellationToken);
-            if (response != null) innerResults.AddRange(response.Data);
-        }
-
-        response.Data = innerResults;
-
-        return response;
     }
 
     /// <inheritdoc />
@@ -288,7 +271,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
     /// <inheritdoc />
     public async Task<ListPortingOrdersResponse?> ListPortingOrders(ListPortingOrdersRequest request,
-        CancellationToken cancellationToken = default)
+      CancellationToken cancellationToken = default)
     {
         var query = new QueryBuilder()
             .AddFilter("status", request.Status)
@@ -298,25 +281,9 @@ public class TelnyxClient : ITelnyxClient, IDisposable
             .AddPagination(request.PageSize);
 
         var req = new RestRequest("porting_orders?" + query);
-        var response = await _policies[request.GetType().BaseType!]
+
+        return await _policies[typeof(ListPortingOrdersRequest)]
             .ExecuteAsync(token => ExecuteAsync<ListPortingOrdersResponse>(req, token), cancellationToken);
-
-        if (response == null) return response;
-
-        var innerResults = new List<ListPortingOrdersDatum>(response.Data);
-
-        while (response!.Meta.PageNumber < response.Meta.TotalPages)
-        {
-            request.PageNumber++;
-            req = new RestRequest("porting_orders?" + query);
-            response = await _policies[request.GetType().BaseType!]
-                .ExecuteAsync(token => ExecuteAsync<ListPortingOrdersResponse>(req, token), cancellationToken);
-            if (response != null) innerResults.AddRange(response.Data);
-        }
-
-        response.Data = innerResults;
-
-        return response;
     }
 
     /// <inheritdoc />
@@ -336,26 +303,9 @@ public class TelnyxClient : ITelnyxClient, IDisposable
             .AddPagination(request.PageSize);
 
         var req = new RestRequest($"porting_phone_numbers?{query}");
-        var response = await _policies[request.GetType().BaseType!]
+
+        return await _policies[typeof(ListPortingPhoneNumbersRequest)]
             .ExecuteAsync(token => ExecuteAsync<ListPortingPhoneNumbersResponse>(req, token), cancellationToken);
-
-        if (response == null) return response;
-
-        var innerResults = new List<ListPortingPhoneNumbersDatum>(response.Data);
-
-        while (response!.Meta.PageNumber < response.Meta.TotalPages)
-        {
-            request.PageNumber = response.Meta.PageNumber + 1;
-            req = new RestRequest($"porting_phone_numbers?{query}");
-            response = await _policies[request.GetType().BaseType!]
-                .ExecuteAsync(token => ExecuteAsync<ListPortingPhoneNumbersResponse>(req, token),
-                    cancellationToken);
-            if (response != null) innerResults.AddRange(response.Data);
-        }
-
-        response.Data = innerResults;
-
-        return response;
     }
 
     /// <inheritdoc />
@@ -1436,68 +1386,68 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     }
 
     /// <inheritdoc />
- private async Task<T1?> ExecuteAsync<T1>(RestRequest request, CancellationToken cancellationToken = default)
-    where T1 : ITelnyxResponse
-{
-    var response = await _client.ExecuteAsync(request, cancellationToken);
-
-    if (!response.IsSuccessStatusCode)
+    private async Task<T1?> ExecuteAsync<T1>(RestRequest request, CancellationToken cancellationToken = default)
+       where T1 : ITelnyxResponse
     {
-        Console.WriteLine(
-            $"Request Unsuccessful: ({response.StatusCode}) {response.Content}\n" +
-            $"Request URL: {_client.BuildUri(request)}\n" +
-            $"Request Body: {request.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody)?.Value}");
+        var response = await _client.ExecuteAsync(request, cancellationToken);
 
-        if (response.ErrorException != null)
-            throw response.ErrorException;
-    }
+        if (!response.IsSuccessStatusCode)
+        {
+            Console.WriteLine(
+                $"Request Unsuccessful: ({response.StatusCode}) {response.Content}\n" +
+                $"Request URL: {_client.BuildUri(request)}\n" +
+                $"Request Body: {request.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody)?.Value}");
 
-    if (response.Content == null) return default;
-    var result = JsonSerializer.Deserialize<T1>(response.Content, TelnyxJsonSerializerContext.Default.Options);
-    
-    // Check if this is a paginated request
-    var pageParam = request.Parameters.FirstOrDefault(p => p.Name == "page[number]");
-    if (pageParam == null || result == null) return result;
-    var metaProperty = typeof(T1).GetProperty("Meta");
-    var dataProperty = typeof(T1).GetProperty("Data");
+            if (response.ErrorException != null)
+                throw response.ErrorException;
+        }
 
-    if (metaProperty?.GetValue(result) is not PaginationMeta meta || dataProperty == null) return result;
-    if (meta.PageNumber >= meta.TotalPages) return result;
-    
-    // Get the type of items in the Data collection
-    var dataType = dataProperty.PropertyType.GetGenericArguments()[0];
-    var listType = typeof(List<>).MakeGenericType(dataType);
-    var allData = (IList)Activator.CreateInstance(listType);
+        if (response.Content == null) return default;
+        var result = JsonSerializer.Deserialize<T1>(response.Content, TelnyxJsonSerializerContext.Default.Options);
 
-    if (dataProperty.GetValue(result) is IEnumerable initialData)
-        foreach (var item in initialData)
-            allData.Add(item);
-                
-    while (meta.PageNumber < meta.TotalPages)
-    {
-        request.RemoveParameter(pageParam);
-        request.AddParameter("page[number]", meta.PageNumber + 1);
-                    
-        response = await _client.ExecuteAsync(request, cancellationToken);
-        if (!response.IsSuccessStatusCode || response.Content == null) break;
-                    
-        var nextResult = JsonSerializer.Deserialize<T1>(response.Content, TelnyxJsonSerializerContext.Default.Options);
-        if (nextResult == null) break;
-                    
-        var nextData = dataProperty.GetValue(nextResult);
-        if (nextData is IEnumerable pageData)
-            foreach (var item in pageData)
+        // Check if this is a paginated request
+        var pageParam = request.Parameters.FirstOrDefault(p => p.Name == "page[number]");
+        if (pageParam == null || result == null) return result;
+        var metaProperty = typeof(T1).GetProperty("Meta");
+        var dataProperty = typeof(T1).GetProperty("Data");
+
+        if (metaProperty?.GetValue(result) is not PaginationMeta meta || dataProperty == null) return result;
+        if (meta.PageNumber >= meta.TotalPages) return result;
+
+        // Get the type of items in the Data collection
+        var dataType = dataProperty.PropertyType.GetGenericArguments()[0];
+        var listType = typeof(List<>).MakeGenericType(dataType);
+        var allData = (IList)Activator.CreateInstance(listType);
+
+        if (dataProperty.GetValue(result) is IEnumerable initialData)
+            foreach (var item in initialData)
                 allData.Add(item);
-                        
-        metaProperty.SetValue(result, metaProperty.GetValue(nextResult));
-        meta = (PaginationMeta)metaProperty.GetValue(result);
-        pageParam = request.Parameters.FirstOrDefault(p => p.Name == "page[number]");
-    }
-                
-    dataProperty.SetValue(result, allData);
 
-    return result;
-}
+        while (meta.PageNumber < meta.TotalPages)
+        {
+            request.RemoveParameter(pageParam);
+            request.AddParameter("page[number]", meta.PageNumber + 1);
+
+            response = await _client.ExecuteAsync(request, cancellationToken);
+            if (!response.IsSuccessStatusCode || response.Content == null) break;
+
+            var nextResult = JsonSerializer.Deserialize<T1>(response.Content, TelnyxJsonSerializerContext.Default.Options);
+            if (nextResult == null) break;
+
+            var nextData = dataProperty.GetValue(nextResult);
+            if (nextData is IEnumerable pageData)
+                foreach (var item in pageData)
+                    allData.Add(item);
+
+            metaProperty.SetValue(result, metaProperty.GetValue(nextResult));
+            meta = (PaginationMeta)metaProperty.GetValue(result);
+            pageParam = request.Parameters.FirstOrDefault(p => p.Name == "page[number]");
+        }
+
+        dataProperty.SetValue(result, allData);
+
+        return result;
+    }
 
 
     /// <inheritdoc />
