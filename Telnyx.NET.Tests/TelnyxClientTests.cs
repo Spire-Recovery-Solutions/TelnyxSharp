@@ -26,18 +26,13 @@ public class TestTelnyxClient : TelnyxClient
 
 public class TelnyxClientTests : IDisposable
 {
-    private readonly TestTelnyxClient _sut;
-
-    public TelnyxClientTests()
-    {
-        _sut = new TestTelnyxClient();
-    }
+    private readonly TestTelnyxClient _sut = new();
 
     [Fact]
     public async Task GetSharingStatus_Success_ReturnsParsedResponse()
     {
         // Arrange
-        var campaignId = "test_campaign";
+        const string campaignId = "test_campaign";
         var expectedResponse = new GetSharingStatusResponse
         {
             DownstreamCnpId = "CNP123",
