@@ -7,7 +7,7 @@ namespace Telnyx.NET.Tests
     public class QueryBuilderTests
     {
         // Test data
-        public enum TestStatus
+        private enum TestStatus
         {
             [JsonPropertyName("active_status")]
             Active,
@@ -15,7 +15,7 @@ namespace Telnyx.NET.Tests
             Inactive
         }
 
-        public class PaginationTestData : TheoryData<int?, string>
+        private class PaginationTestData : TheoryData<int?, string>
         {
             public PaginationTestData()
             {
@@ -25,12 +25,7 @@ namespace Telnyx.NET.Tests
             }
         }
 
-        private readonly QueryBuilder _sut;
-
-        public QueryBuilderTests()
-        {
-            _sut = new QueryBuilder();
-        }
+        private readonly QueryBuilder _sut = new();
 
         [Fact]
         public void AddFilter_WhenGivenEnum_UsesJsonPropertyName()
