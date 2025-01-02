@@ -16,12 +16,6 @@ namespace Telnyx.NET.Models
         public int? PageSize  { get; set; }
 
         /// <summary>
-        /// Gets or sets the page number for paginated results.
-        /// </summary>
-        [JsonPropertyName("page")]
-        public int? PageNumber { get; set; }
-
-        /// <summary>
         /// Gets or sets the Telnyx campaign ID to filter the campaigns.
         /// </summary>
         [JsonPropertyName("filter[telnyx_campaign_id]")]

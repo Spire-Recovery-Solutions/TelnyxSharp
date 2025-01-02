@@ -11,10 +11,6 @@ namespace Telnyx.NET.Models
         [JsonPropertyName("recordsPerPage")]
         public int? PageSize  { get; set; }
 
-        /// <summary>
-        /// The page number to retrieve.
-        /// </summary>
-        [JsonPropertyName("page")]
-        public int? PageNumber { get; set; }
+        
     }
 }

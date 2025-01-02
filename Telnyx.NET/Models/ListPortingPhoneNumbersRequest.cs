@@ -4,7 +4,7 @@ namespace Telnyx.NET.Models
 {
     public class ListPortingPhoneNumbersRequest : PortingOrdersRequest, ITelnyxRequest
     {
-        public int? PageNumber { get; set; } = 1;
+        
         public int? PageSize { get; set; }
         public string? PortingOrderId { get; set; }
         public List<string>? PortingOrderIds { get; set; }

@@ -34,7 +34,9 @@ public class TelnyxLoggingInterceptor(StreamWriter logWriter) : Interceptor, IDi
         try
         {
             var sb = new StringBuilder();
-            sb.AppendLine("=== Telnyx API Request ===");
+            requestMessage.Headers.TryGetValues("X-Correlation-ID", out var values);
+            var requestId = values?.FirstOrDefault() ?? "";
+            sb.AppendLine($"=== Telnyx API Request [{requestId}]===");
             sb.AppendLine($"Method: {requestMessage.Method}");
             sb.AppendLine($"URL: {requestMessage.RequestUri}");
 
@@ -77,7 +79,13 @@ public class TelnyxLoggingInterceptor(StreamWriter logWriter) : Interceptor, IDi
         try
         {
             var sb = new StringBuilder();
-            sb.AppendLine("=== Telnyx API Response ===");
+            var requestId = "";
+            if (responseMessage.RequestMessage != null)
+            {
+                responseMessage.RequestMessage.Headers.TryGetValues("X-Correlation-ID", out var values);
+                if (values != null) requestId = values.FirstOrDefault();
+            }
+            sb.AppendLine($"=== Telnyx API Response [{requestId}]===");
             sb.AppendLine($"Status Code: {(int)responseMessage.StatusCode} {responseMessage.StatusCode}");
             sb.AppendLine($"Reason: {responseMessage.ReasonPhrase}");
 
