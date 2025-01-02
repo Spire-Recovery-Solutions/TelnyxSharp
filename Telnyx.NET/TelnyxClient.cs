@@ -3,10 +3,11 @@ using Polly.RateLimit;
 using Polly.Wrap;
 using RestSharp;
 using RestSharp.Authenticators;
-using RestSharp.Interceptors;
 using System.Collections;
-using System.Text;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.JavaScript;
 using System.Text.Json;
+using Polly.Retry;
 using Telnyx.NET.Enums;
 using Telnyx.NET.Interfaces;
 using Telnyx.NET.Models;
@@ -15,37 +16,48 @@ namespace Telnyx.NET;
 
 public class TelnyxClient : ITelnyxClient, IDisposable
 {
-    private readonly RestClient _client;
-    private readonly Dictionary<Type, AsyncPolicyWrap> _policies;
+    private readonly TelnyxRateLimitConfiguration _rateLimitConfiguration;
+    private readonly IRestClient? _client;
     private static readonly string DefaultLogPath = Path.Combine(Path.GetTempPath(), "TelnyxSDK", "logs");
     private readonly StreamWriter? _logWriter;
     private readonly FileStream? _logFileStream;
+    private AsyncRetryPolicy _rateLimitRetryPolicy;
+
+    // Constructor chaining for backwards compatibility
 
     public TelnyxClient(string apiKey, TelnyxRateLimitConfiguration? rateLimitConfiguration = null)
     {
-        Directory.CreateDirectory(DefaultLogPath);
-        var logFileName = $"telnyx-debug-{DateTime.Now:yyyy-MM-dd}.log";
-        var logFilePath = Path.Combine(DefaultLogPath, logFileName);
+        _rateLimitConfiguration = rateLimitConfiguration;
+        if (!string.IsNullOrEmpty(apiKey)) // Check if we're in test mode
+        {
+            Directory.CreateDirectory(DefaultLogPath);
+            var logFileName = $"telnyx-debug-{DateTime.Now:yyyy-MM-dd}.log";
+            var logFilePath = Path.Combine(DefaultLogPath, logFileName);
 
-        _logFileStream = new FileStream(logFilePath, FileMode.Append, FileAccess.Write, FileShare.Read);
-        _logWriter = new StreamWriter(_logFileStream) { AutoFlush = true };
+            _logFileStream = new FileStream(logFilePath, FileMode.Append, FileAccess.Write, FileShare.Read);
+            _logWriter = new StreamWriter(_logFileStream) { AutoFlush = true };
 
-        _logWriter.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] TelnyxSDK Debug Log File: {logFilePath}");
-        _logWriter.WriteLine(
-            $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] Session Started: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+            _logWriter.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] TelnyxSDK Debug Log File: {logFilePath}");
+            _logWriter.WriteLine(
+                $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] Session Started: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+        }
 
         var options = new RestClientOptions("https://api.telnyx.com/v2/")
         {
             Authenticator = new JwtAuthenticator(apiKey),
             ThrowOnDeserializationError = false,
-            ThrowOnAnyError = false,
-            Interceptors = [new TelnyxLoggingInterceptor(_logWriter)]
+            ThrowOnAnyError = false
         };
 
-        _client = new RestClient(options);
+        // Only add logging interceptor if not in test mode
+        if (_logWriter != null)
+        {
+            options.Interceptors = [new TelnyxLoggingInterceptor(_logWriter)];
+        }
 
+        _rateLimitConfiguration ??= new TelnyxRateLimitConfiguration();
 
-        var rateLimitRetryPolicy = Policy
+        _rateLimitRetryPolicy = Policy
             .Handle<RateLimitRejectedException>()
             .WaitAndRetryForeverAsync(sleepDurationProvider: (a, b, c) =>
                 {
@@ -54,51 +66,25 @@ public class TelnyxClient : ITelnyxClient, IDisposable
                 },
                 (a, b, c) => Task.CompletedTask);
 
-        rateLimitConfiguration ??= new TelnyxRateLimitConfiguration();
+        _client = new RestClient(options);
+    }
 
-        _policies = new Dictionary<Type, AsyncPolicyWrap>
+    private AsyncPolicyWrap GetPolicy<T>(T requestType)
+    {
+        var rateLimitPerSecond = requestType switch
         {
-            {
-                typeof(NumberLookupRequest),
-                rateLimitRetryPolicy.WrapAsync(Policy.RateLimitAsync(rateLimitConfiguration.NumberLookups,
-                    TimeSpan.FromSeconds(1)))
-            },
-            {
-                typeof(AvailablePhoneNumbersRequest),
-                rateLimitRetryPolicy.WrapAsync(Policy.RateLimitAsync(rateLimitConfiguration.NumberSearch,
-                    TimeSpan.FromSeconds(1)))
-            },
-            {
-                typeof(NumberOrdersRequest),
-                rateLimitRetryPolicy.WrapAsync(Policy.RateLimitAsync(rateLimitConfiguration.NumberOrders,
-                    TimeSpan.FromSeconds(1)))
-            },
-            {
-                typeof(PhoneNumbersRequest),
-                rateLimitRetryPolicy.WrapAsync(Policy.RateLimitAsync(rateLimitConfiguration.PhoneNumbers,
-                    TimeSpan.FromSeconds(1)))
-            },
-            {
-                typeof(NumberReservationRequest),
-                rateLimitRetryPolicy.WrapAsync(Policy.RateLimitAsync(rateLimitConfiguration.NumberReservations,
-                    TimeSpan.FromSeconds(1)))
-            },
-            {
-                typeof(PortingOrdersRequest),
-                rateLimitRetryPolicy.WrapAsync(Policy.RateLimitAsync(rateLimitConfiguration.PortNumbers,
-                    TimeSpan.FromSeconds(1)))
-            },
-            {
-                typeof(SendMessageRequest),
-                rateLimitRetryPolicy.WrapAsync(Policy.RateLimitAsync(rateLimitConfiguration.SendMessage,
-                    TimeSpan.FromSeconds(1)))
-            },
-            {
-                typeof(DialRequest),
-                rateLimitRetryPolicy.WrapAsync(Policy.RateLimitAsync(rateLimitConfiguration.Calls,
-                    TimeSpan.FromSeconds(1)))
-            }
+            NumberLookupRequest => _rateLimitConfiguration.NumberLookups,
+            AvailablePhoneNumbersRequest => _rateLimitConfiguration.NumberSearch,
+            NumberOrdersRequest => _rateLimitConfiguration.NumberOrders,
+            PhoneNumbersRequest => _rateLimitConfiguration.PhoneNumbers,
+            NumberReservationRequest => _rateLimitConfiguration.NumberReservations,
+            PortingOrdersRequest => _rateLimitConfiguration.PortNumbers,
+            SendMessageRequest => _rateLimitConfiguration.SendMessage,
+            DialRequest => _rateLimitConfiguration.Calls,
+            _ => _rateLimitConfiguration.Global
         };
+
+        return _rateLimitRetryPolicy.WrapAsync(Policy.RateLimitAsync(rateLimitPerSecond, TimeSpan.FromSeconds(1)));
     }
 
     /// <inheritdoc />
@@ -116,7 +102,8 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         }
 
         var req = new RestRequest($"number_lookup/{request.PhoneNumber}?{query}");
-        return await _policies[request.GetType()]
+
+        return await GetPolicy(request)
             .ExecuteAsync(token => ExecuteAsync<NumberLookupResponse>(req, token), cancellationToken);
     }
 
@@ -154,7 +141,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         var req = new RestRequest("available_phone_numbers?" + query);
 
-        return await _policies[request.GetType()]
+        return await GetPolicy(request)
             .ExecuteAsync(token => ExecuteAsync<AvailablePhoneNumbersResponse>(req, token), cancellationToken);
     }
 
@@ -173,7 +160,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
             .AddPagination(request.PageSize);
 
         var req = new RestRequest("number_orders?" + query);
-        return await _policies[typeof(ListNumberOrdersRequest)]
+        return await GetPolicy(typeof(ListNumberOrdersRequest))
             .ExecuteAsync(token => ExecuteAsync<ListNumberOrdersResponse>(req, token), cancellationToken);
     }
 
@@ -182,7 +169,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         CancellationToken cancellationToken = default)
     {
         var req = new RestRequest($"messaging_profiles/{id}");
-        return await _policies[typeof(RetrieveMessagingProfileRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(RetrieveMessagingProfileRequest)).ExecuteAsync(
             token => ExecuteAsync<RetrieveMessagingProfileResponse>(req, token),
             cancellationToken);
     }
@@ -192,7 +179,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         CancellationToken cancellationToken = default)
     {
         var req = new RestRequest($"number_orders/{numberOrderId}");
-        return await _policies[typeof(NumberOrdersRequest)]
+        return await GetPolicy(typeof(NumberOrdersRequest))
             .ExecuteAsync(token => ExecuteAsync<GetNumberOrderResponse>(req, token), cancellationToken);
     }
 
@@ -203,7 +190,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         {
             var req = new RestRequest($"number_orders", Method.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
-            var result = await _policies[request.GetType().BaseType!]
+            var result = await GetPolicy(request)
                 .ExecuteAsync(token => ExecuteAsync<CreateNumberOrderResponse>(req, token), cancellationToken);
             return result;
         }
@@ -227,7 +214,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
                 //TODO: Deal with failures!
                 var req = new RestRequest($"phone_numbers/{phoneNumberId}/voice", Method.Patch);
                 req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
-                return await _policies[request.GetType().BaseType!]
+                return await GetPolicy(request)
                     .ExecuteAsync(
                         token => _client.PatchAsync<UpdateNumberVoiceSettingsResponse>(req,
                             cancellationToken: token), cancellationToken);
@@ -265,13 +252,13 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         var req = new RestRequest("phone_numbers?" + query);
 
-        return await _policies[typeof(PhoneNumbersRequest)]
+        return await GetPolicy(typeof(PhoneNumbersRequest))
             .ExecuteAsync(token => ExecuteAsync<ListNumbersResponse>(req, token), cancellationToken);
     }
 
     /// <inheritdoc />
     public async Task<ListPortingOrdersResponse?> ListPortingOrders(ListPortingOrdersRequest request,
-      CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default)
     {
         var query = new QueryBuilder()
             .AddFilter("status", request.Status)
@@ -282,7 +269,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         var req = new RestRequest("porting_orders?" + query);
 
-        return await _policies[typeof(ListPortingOrdersRequest)]
+        return await GetPolicy(typeof(ListPortingOrdersRequest))
             .ExecuteAsync(token => ExecuteAsync<ListPortingOrdersResponse>(req, token), cancellationToken);
     }
 
@@ -304,7 +291,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         var req = new RestRequest($"porting_phone_numbers?{query}");
 
-        return await _policies[typeof(ListPortingPhoneNumbersRequest)]
+        return await GetPolicy(typeof(ListPortingPhoneNumbersRequest))
             .ExecuteAsync(token => ExecuteAsync<ListPortingPhoneNumbersResponse>(req, token), cancellationToken);
     }
 
@@ -316,7 +303,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         {
             var req = new RestRequest($"number_reservations", Method.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
-            return await _policies[request.GetType().BaseType!].ExecuteAsync(async token =>
+            return await GetPolicy(request).ExecuteAsync(async token =>
                 await ExecuteAsync<CreateNumberReservationResponse>(req, token), cancellationToken);
         }
         catch (HttpRequestException ex)
@@ -337,7 +324,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"phone_numbers/{phoneNumberId}", Method.Patch);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
-        return await _policies[request.GetType().BaseType!]
+        return await GetPolicy(request)
             .ExecuteAsync(
                 token => _client.PatchAsync<UpdateNumberConfigurationResponse>(req, cancellationToken: token),
                 cancellationToken);
@@ -348,7 +335,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"phone_numbers/{numberOrObjectId}", Method.Delete);
 
-        var response = await _policies[typeof(PhoneNumbersRequest)]
+        var response = await GetPolicy(typeof(PhoneNumbersRequest))
             .ExecuteAsync(token => _client.DeleteAsync(req, cancellationToken: token), cancellationToken);
 
         return response.IsSuccessful;
@@ -360,7 +347,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest("messages", Method.Post);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
-        var response = await _policies[request.GetType()]
+        var response = await GetPolicy(request)
             .ExecuteAsync(token => ExecuteAsync<SendMessageResponse>(req, token), cancellationToken);
 
         return response;
@@ -371,7 +358,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest("calls", Method.Post);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
-        return await _policies[typeof(DialRequest)]
+        return await GetPolicy(typeof(DialRequest))
             .ExecuteAsync(token => ExecuteAsync<DialResponse>(req, token), cancellationToken);
     }
 
@@ -381,7 +368,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"calls/{callControlId}/actions/answer", Method.Post);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
-        return await _policies[typeof(AnswerCallRequest)]
+        return await GetPolicy(typeof(AnswerCallRequest))
             .ExecuteAsync(token => ExecuteAsync<AnswerCallResponse>(req, token), cancellationToken);
     }
 
@@ -391,7 +378,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"calls/{callControlId}/actions/hangup", Method.Post);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
-        return await _policies[typeof(HangupCallRequest)]
+        return await GetPolicy(typeof(HangupCallRequest))
             .ExecuteAsync(token => ExecuteAsync<HangupCallResponse>(req, token), cancellationToken);
     }
 
@@ -401,7 +388,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"calls/{callControlId}/actions/reject", Method.Post);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
-        return await _policies[typeof(RejectCallRequest)]
+        return await GetPolicy(typeof(RejectCallRequest))
             .ExecuteAsync(token => ExecuteAsync<RejectCallResponse>(req, token), cancellationToken);
     }
 
@@ -412,7 +399,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         var req = new RestRequest($"calls/{callControlId}/actions/speak", Method.Post);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        var response = await _policies[request.GetType()]
+        var response = await GetPolicy(request)
             .ExecuteAsync(token => ExecuteAsync<SpeakTextResponse>(req, token), cancellationToken);
 
         return response;
@@ -425,7 +412,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         var req = new RestRequest($"calls/{callControlId}/actions/playback_start", Method.Post);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[typeof(PlaybackStartRequest)]
+        return await GetPolicy(typeof(PlaybackStartRequest))
             .ExecuteAsync(token => ExecuteAsync<PlaybackStartResponse>(req, token), cancellationToken);
     }
 
@@ -436,7 +423,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         var req = new RestRequest($"calls/{callControlId}/actions/playback_stop", Method.Post);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[typeof(StopAudioPlaybackRequest)]
+        return await GetPolicy(typeof(StopAudioPlaybackRequest))
             .ExecuteAsync(token => ExecuteAsync<StopAudioPlaybackResponse>(req, token), cancellationToken);
     }
 
@@ -446,7 +433,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"calls/{callControlId}/actions/enqueue", Method.Post);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
-        var result = await _policies[request.GetType()]
+        var result = await GetPolicy(request)
             .ExecuteAsync(token => ExecuteAsync<EnqueueCallResponse>(req, token), cancellationToken);
         return result;
     }
@@ -458,7 +445,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         var req = new RestRequest($"calls/{callControlId}/actions/leave_queue", Method.Post);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[request.GetType()]
+        return await GetPolicy(request)
             .ExecuteAsync(token => ExecuteAsync<RemoveCallFromQueueResponse>(req, token), cancellationToken);
     }
 
@@ -469,7 +456,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         var req = new RestRequest($"calls/{callControlId}/actions/transfer", Method.Post);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[typeof(TransferCallRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(TransferCallRequest)).ExecuteAsync(
             token => ExecuteAsync<TransferCallResponse>(req, token),
             cancellationToken);
     }
@@ -483,7 +470,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
             .AddFilter("name", request.NameFilter);
 
         var req = new RestRequest($"messaging_profiles?{query}");
-        return await _policies[request.GetType()]
+        return await GetPolicy(request)
             .ExecuteAsync(token => ExecuteAsync<MessagingProfilesResponse>(req, token), cancellationToken);
     }
 
@@ -494,7 +481,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         var req = new RestRequest("messaging_profiles", Method.Post);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[request.GetType()]
+        return await GetPolicy(request)
             .ExecuteAsync(token => ExecuteAsync<CreateMessagingProfileResponse>(req, token), cancellationToken);
     }
 
@@ -505,7 +492,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         var req = new RestRequest($"messaging_profiles/{id}", Method.Patch);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[request.GetType()].ExecuteAsync(
+        return await GetPolicy(request).ExecuteAsync(
             token => ExecuteAsync<UpdateMessagingProfileResponse>(req, token),
             cancellationToken);
     }
@@ -520,7 +507,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
             .AddPagination(request.PageSize);
 
         var req = new RestRequest($"messaging_profiles/{id}/phone_numbers?{query}");
-        return await _policies[request.GetType()].ExecuteAsync(
+        return await GetPolicy(request).ExecuteAsync(
             token => ExecuteAsync<MessagingProfilePhoneNumberResponse>(req, token),
             cancellationToken);
     }
@@ -531,7 +518,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"messaging_profiles/{id}", Method.Delete);
 
-        return await _policies[typeof(DeleteMessagingProfileRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(DeleteMessagingProfileRequest)).ExecuteAsync(
             token => ExecuteAsync<DeleteMessagingProfileResponse>(req, token),
             cancellationToken);
     }
@@ -544,7 +531,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
             .AddPagination(request.PageSize);
 
         var req = new RestRequest($"messaging_profiles/{id}/short_codes?{query}");
-        return await _policies[typeof(MessagingProfileShortCodeRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(MessagingProfileShortCodeRequest)).ExecuteAsync(
             token => ExecuteAsync<MessagingProfileShortCodeResponse>(req, token),
             cancellationToken);
     }
@@ -557,7 +544,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
             .AddFilter("time_frame", request.TimeFrame);
 
         var req = new RestRequest($"messaging_profiles/{id}/metrics?{query}");
-        return await _policies[request.GetType()].ExecuteAsync(
+        return await GetPolicy(request).ExecuteAsync(
             token => ExecuteAsync<RetrieveMessagingProfileMetricsResponse>(req, token),
             cancellationToken);
     }
@@ -573,7 +560,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         var req = new RestRequest($"messaging_profile_metrics?{query}");
 
-        return await _policies[request.GetType()].ExecuteAsync(
+        return await GetPolicy(request).ExecuteAsync(
             token => ExecuteAsync<MessagingProfileMetricsResponse>(req, token),
             cancellationToken);
     }
@@ -585,7 +572,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         var req = new RestRequest("messages/number_pool", Method.Post);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[request.GetType()].ExecuteAsync(
+        return await GetPolicy(request).ExecuteAsync(
             token => ExecuteAsync<NumberPoolMessageResponse>(req, token),
             cancellationToken);
     }
@@ -597,7 +584,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         var req = new RestRequest("messages/long_code", Method.Post);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[request.GetType()].ExecuteAsync(
+        return await GetPolicy(request).ExecuteAsync(
             token => ExecuteAsync<LongCodeMessageResponse>(req, token),
             cancellationToken);
     }
@@ -609,7 +596,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         var req = new RestRequest("messages/short_code", Method.Post);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[request.GetType()].ExecuteAsync(
+        return await GetPolicy(request).ExecuteAsync(
             token => ExecuteAsync<ShortCodeMessageResponse>(req, token),
             cancellationToken);
     }
@@ -621,7 +608,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         var req = new RestRequest("messages/group_mms", Method.Post);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[request.GetType()].ExecuteAsync(
+        return await GetPolicy(request).ExecuteAsync(
             token => ExecuteAsync<GroupMmsMessageResponse>(req, token),
             cancellationToken);
     }
@@ -632,7 +619,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"messages/{id}");
 
-        return await _policies[typeof(RetrieveMessageRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(RetrieveMessageRequest)).ExecuteAsync(
             token => ExecuteAsync<RetrieveMessageResponse>(req, token),
             cancellationToken);
     }
@@ -647,7 +634,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         var req = new RestRequest($"messaging_url_domains?{query}");
 
-        return await _policies[typeof(ListMessagingUrlDomainsRequest)]
+        return await GetPolicy(typeof(ListMessagingUrlDomainsRequest))
             .ExecuteAsync(token => ExecuteAsync<ListMessagingUrlDomainsResponse>(req, token), cancellationToken);
     }
 
@@ -661,7 +648,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         var req = new RestRequest($"short_codes?{query}");
 
-        return await _policies[request.GetType()]
+        return await GetPolicy(request)
             .ExecuteAsync(token => ExecuteAsync<ListShortCodesResponse>(req, token), cancellationToken);
     }
 
@@ -671,7 +658,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"short_codes/{shortCodeId}");
 
-        return await _policies[typeof(RetrieveShortCodeRequest)]
+        return await GetPolicy(typeof(RetrieveShortCodeRequest))
             .ExecuteAsync(token => ExecuteAsync<RetrieveShortCodeResponse>(req, token), cancellationToken);
     }
 
@@ -683,7 +670,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[request.GetType()].ExecuteAsync(
+        return await GetPolicy(request).ExecuteAsync(
             token => ExecuteAsync<UpdateShortCodeResponse>(req, token), cancellationToken);
     }
 
@@ -696,7 +683,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         var req = new RestRequest($"phone_numbers/messaging?{query}");
 
-        return await _policies[request.GetType()].ExecuteAsync(
+        return await GetPolicy(request).ExecuteAsync(
             token => ExecuteAsync<ListPhoneMessageSettingsResponse>(req, token),
             cancellationToken);
     }
@@ -707,7 +694,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"phone_numbers/{id}/messaging");
 
-        return await _policies[typeof(RetrievePhoneMessageSettingsRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(RetrievePhoneMessageSettingsRequest)).ExecuteAsync(
             token => ExecuteAsync<RetrievePhoneMessageSettingsResponse>(req, token),
             cancellationToken);
     }
@@ -720,7 +707,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[request.GetType()].ExecuteAsync(
+        return await GetPolicy(request).ExecuteAsync(
             token => ExecuteAsync<UpdatePhoneNumberMessagingResponse>(req, token),
             cancellationToken);
     }
@@ -733,7 +720,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[request.GetType()].ExecuteAsync(
+        return await GetPolicy(request).ExecuteAsync(
             token => ExecuteAsync<UpdateNumbersMessagingBulkResponse>(req, token),
             cancellationToken);
     }
@@ -744,7 +731,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"messaging_numbers_bulk_updates/{orderId}");
 
-        return await _policies[typeof(RetrieveBulkUpdateStatusRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(RetrieveBulkUpdateStatusRequest)).ExecuteAsync(
             token => ExecuteAsync<RetrieveBulkUpdateStatusResponse>(req, token),
             cancellationToken);
     }
@@ -755,7 +742,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"messaging_hosted_numbers/{id}", Method.Delete);
 
-        return await _policies[typeof(DeleteHostedNumberRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(DeleteHostedNumberRequest)).ExecuteAsync(
             token => ExecuteAsync<DeleteHostedNumberResponse>(req, token),
             cancellationToken);
     }
@@ -769,7 +756,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         var req = new RestRequest($"messaging_hosted_number_orders?{query}");
 
-        return await _policies[typeof(GetHostedNumberOrderRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(GetHostedNumberOrderRequest)).ExecuteAsync(
             token => ExecuteAsync<GetHostedNumberOrderResponse>(req, token),
             cancellationToken);
     }
@@ -781,7 +768,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         var req = new RestRequest("messaging_hosted_number_orders", Method.Post);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[typeof(CreateHostedNumberOrderRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(CreateHostedNumberOrderRequest)).ExecuteAsync(
             token => ExecuteAsync<CreateHostedNumberOrderResponse>(req, token),
             cancellationToken);
     }
@@ -792,7 +779,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"messaging_hosted_number_orders/{id}");
 
-        return await _policies[typeof(RetrieveHostedNumberOrderRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(RetrieveHostedNumberOrderRequest)).ExecuteAsync(
             token => ExecuteAsync<RetrieveHostedNumberOrderResponse>(req, token),
             cancellationToken);
     }
@@ -804,7 +791,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         var req = new RestRequest($"messaging_hosted_number_orders/{id}/actions/file_upload", Method.Post);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[typeof(UploadFileHostedNumberOrderRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(UploadFileHostedNumberOrderRequest)).ExecuteAsync(
             token => ExecuteAsync<UploadFileHostedNumberOrderResponse>(req, token),
             cancellationToken);
     }
@@ -828,7 +815,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         var req = new RestRequest($"messaging_profiles/{profileId}/autoresp_configs?{query}");
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[typeof(ListAutoResponseSettingsRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(ListAutoResponseSettingsRequest)).ExecuteAsync(
             token => ExecuteAsync<ListAutoResponseSettingsResponse>(req, token),
             cancellationToken);
     }
@@ -841,7 +828,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[typeof(CreateAutoResponseSettingRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(CreateAutoResponseSettingRequest)).ExecuteAsync(
             token => ExecuteAsync<CreateAutoResponseSettingResponse>(req, token),
             cancellationToken);
     }
@@ -852,7 +839,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"messaging_profiles/{profileId}/autoresp_configs/{autorespCfgId}");
 
-        return await _policies[typeof(GetAutoResponseSettingRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(GetAutoResponseSettingRequest)).ExecuteAsync(
             token => ExecuteAsync<GetAutoResponseSettingResponse>(req, token),
             cancellationToken);
     }
@@ -866,7 +853,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[typeof(UpdateAutoResponseSettingRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(UpdateAutoResponseSettingRequest)).ExecuteAsync(
             token => ExecuteAsync<UpdateAutoResponseSettingResponse>(req, token),
             cancellationToken);
     }
@@ -878,7 +865,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         var req = new RestRequest($"messaging_profiles/{profileId}/autoresp_configs/{autorespCfgId}",
             Method.Delete);
 
-        return await _policies[typeof(DeleteAutoResponseSettingRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(DeleteAutoResponseSettingRequest)).ExecuteAsync(
             token => ExecuteAsync<DeleteAutoResponseSettingResponse>(req, token),
             cancellationToken);
     }
@@ -896,7 +883,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         var req = new RestRequest($"messaging_tollfree/verification/requests?{query}");
 
-        return await _policies[typeof(ListVerificationRequestsRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(ListVerificationRequestsRequest)).ExecuteAsync(
             token => ExecuteAsync<ListVerificationRequestsResponse>(req, token),
             cancellationToken);
     }
@@ -909,7 +896,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[typeof(SubmitVerificationRequestRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(SubmitVerificationRequestRequest)).ExecuteAsync(
             token => ExecuteAsync<SubmitVerificationRequestResponse>(req, token),
             cancellationToken);
     }
@@ -920,7 +907,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"messaging_tollfree/verification/requests/{id}");
 
-        return await _policies[typeof(GetVerificationRequestRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(GetVerificationRequestRequest)).ExecuteAsync(
             token => ExecuteAsync<GetVerificationRequestResponse>(req, token),
             cancellationToken);
     }
@@ -931,7 +918,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"messaging_tollfree/verification/requests/{id}", Method.Delete);
 
-        return await _policies[typeof(DeleteVerificationRequestRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(DeleteVerificationRequestRequest)).ExecuteAsync(
             token => ExecuteAsync<DeleteVerificationRequestResponse>(req, token),
             cancellationToken);
     }
@@ -944,7 +931,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[typeof(UpdateVerificationRequestRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(UpdateVerificationRequestRequest)).ExecuteAsync(
             token => ExecuteAsync<UpdateVerificationRequestResponse>(req, token),
             cancellationToken);
     }
@@ -965,7 +952,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         var req = new RestRequest($"10dlc/brand?{query}");
 
-        return await _policies[typeof(ListBrandsRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(ListBrandsRequest)).ExecuteAsync(
             token => ExecuteAsync<ListBrandsResponse>(req, token),
             cancellationToken);
     }
@@ -978,7 +965,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[request.GetType()].ExecuteAsync(
+        return await GetPolicy(request).ExecuteAsync(
             token => ExecuteAsync<CreateBrandResponse>(req, token),
             cancellationToken);
     }
@@ -989,7 +976,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"10dlc/brand/{brandId}");
 
-        return await _policies[typeof(GetBrandRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(GetBrandRequest)).ExecuteAsync(
             token => ExecuteAsync<GetBrandResponse>(req, token),
             cancellationToken);
     }
@@ -1002,7 +989,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[typeof(UpdateBrandRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(UpdateBrandRequest)).ExecuteAsync(
             token => ExecuteAsync<UpdateBrandResponse>(req, token),
             cancellationToken);
     }
@@ -1013,7 +1000,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"10dlc/brand/{brandId}", Method.Delete);
 
-        return await _policies[typeof(DeleteBrandRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(DeleteBrandRequest)).ExecuteAsync(
             token => ExecuteAsync<DeleteBrandResponse>(req, token),
             cancellationToken);
     }
@@ -1024,7 +1011,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"10dlc/brand/{brandId}/2faEmail", Method.Post);
 
-        return await _policies[typeof(ResendBrand2FAEmailRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(ResendBrand2FAEmailRequest)).ExecuteAsync(
             token => ExecuteAsync<ResendBrand2FAEmailResponse>(req, token),
             cancellationToken);
     }
@@ -1035,7 +1022,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"10dlc/brand/{brandId}/revet", Method.Put);
 
-        return await _policies[typeof(RevetBrandRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(RevetBrandRequest)).ExecuteAsync(
             token => ExecuteAsync<RevetBrandResponse>(req, token),
             cancellationToken);
     }
@@ -1046,7 +1033,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"10dlc/brand/{brandId}/externalVetting");
 
-        return await _policies[typeof(ListExternalVettingRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(ListExternalVettingRequest)).ExecuteAsync(
             token => ExecuteAsync<ListExternalVettingResponse>(req, token),
             cancellationToken);
     }
@@ -1059,7 +1046,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[typeof(ImportExternalVettingRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(ImportExternalVettingRequest)).ExecuteAsync(
             token => ExecuteAsync<ImportExternalVettingResponse>(req, token),
             cancellationToken);
     }
@@ -1072,7 +1059,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[typeof(OrderExternalVettingRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(OrderExternalVettingRequest)).ExecuteAsync(
             token => ExecuteAsync<OrderExternalVettingResponse>(req, token),
             cancellationToken);
     }
@@ -1083,7 +1070,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"10dlc/brand/feedback/{brandId}");
 
-        return await _policies[typeof(GetBrandFeedbackRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(GetBrandFeedbackRequest)).ExecuteAsync(
             token => ExecuteAsync<GetBrandFeedbackResponse>(req, token),
             cancellationToken);
     }
@@ -1098,7 +1085,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
             .AddFilter("brandId", request.BrandId);
 
         var req = new RestRequest($"10dlc/campaign?{query}");
-        return await _policies[typeof(ListCampaignsRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(ListCampaignsRequest)).ExecuteAsync(
             token => ExecuteAsync<ListCampaignsResponse>(req, token),
             cancellationToken);
     }
@@ -1109,7 +1096,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"10dlc/campaign/{campaignId}");
 
-        return await _policies[typeof(GetCampaignResponse)].ExecuteAsync(
+        return await GetPolicy(typeof(GetCampaignRequest)).ExecuteAsync(
             token => ExecuteAsync<GetCampaignResponse>(req, token),
             cancellationToken);
     }
@@ -1122,7 +1109,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[request.GetType()].ExecuteAsync(
+        return await GetPolicy(request).ExecuteAsync(
             token => ExecuteAsync<UpdateCampaignResponse>(req, token),
             cancellationToken);
     }
@@ -1133,7 +1120,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"10dlc/campaign/{campaignId}", Method.Delete);
 
-        return await _policies[typeof(DeactivateCampaignRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(DeactivateCampaignRequest)).ExecuteAsync(
             token => ExecuteAsync<DeactivateCampaignResponse>(req, token),
             cancellationToken);
     }
@@ -1144,7 +1131,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"10dlc/campaign/{campaignId}/operationStatus");
 
-        return await _policies[typeof(GetCampaignOperationStatusRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(GetCampaignOperationStatusRequest)).ExecuteAsync(
             token => ExecuteAsync<GetCampaignOperationStatusResponse>(req, token),
             cancellationToken);
     }
@@ -1155,7 +1142,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"10dlc/campaign/{campaignId}/osr/attributes");
 
-        return await _policies[typeof(GetCampaignOsrAttributesRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(GetCampaignOsrAttributesRequest)).ExecuteAsync(
             token => ExecuteAsync<GetCampaignOsrAttributesResponse>(req, token),
             cancellationToken);
     }
@@ -1169,7 +1156,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         var req = new RestRequest($"10dlc/campaign/usecase/cost?{query}");
 
-        return await _policies[typeof(GetCampaignCostRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(GetCampaignCostRequest)).ExecuteAsync(
             token => ExecuteAsync<GetCampaignCostResponse>(req, token),
             cancellationToken);
     }
@@ -1181,7 +1168,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         var req = new RestRequest("10dlc/campaignBuilder", Method.Post);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[typeof(SubmitCampaignRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(SubmitCampaignRequest)).ExecuteAsync(
             token => ExecuteAsync<SubmitCampaignResponse>(req, token),
             cancellationToken);
     }
@@ -1192,7 +1179,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"10dlc/campaignBuilder/brand/{brandId}/usecase/{usecase}");
 
-        return await _policies[typeof(QualifyCampaignByUsecaseRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(QualifyCampaignByUsecaseRequest)).ExecuteAsync(
             token => ExecuteAsync<QualifyCampaignByUsecaseResponse>(req, token),
             cancellationToken);
     }
@@ -1203,7 +1190,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"10dlc/campaign/{campaignId}/mnoMetadata");
 
-        return await _policies[typeof(GetCampaignMnoMetadataRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(GetCampaignMnoMetadataRequest)).ExecuteAsync(
             token => ExecuteAsync<GetCampaignMnoMetadataResponse>(req, token),
             cancellationToken);
     }
@@ -1222,7 +1209,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         var req = new RestRequest($"10dlc/phone_number_campaigns?{query}");
 
-        return await _policies[typeof(RetrievePhoneNumberCampaignsRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(RetrievePhoneNumberCampaignsRequest)).ExecuteAsync(
             token => ExecuteAsync<RetrievePhoneNumberCampaignsResponse>(req, token),
             cancellationToken);
     }
@@ -1234,7 +1221,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         var req = new RestRequest("10dlc/phone_number_campaigns", Method.Post);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[typeof(CreatePhoneNumberCampaignRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(CreatePhoneNumberCampaignRequest)).ExecuteAsync(
             token => ExecuteAsync<CreatePhoneNumberCampaignResponse>(req, token),
             cancellationToken);
     }
@@ -1245,7 +1232,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"10dlc/phone_number_campaigns/{phoneNumber}");
 
-        return await _policies[typeof(GetPhoneNumberCampaignRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(GetPhoneNumberCampaignRequest)).ExecuteAsync(
             token => ExecuteAsync<GetPhoneNumberCampaignResponse>(req, token),
             cancellationToken);
     }
@@ -1258,7 +1245,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[typeof(UpdatePhoneNumberCampaignRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(UpdatePhoneNumberCampaignRequest)).ExecuteAsync(
             token => ExecuteAsync<UpdatePhoneNumberCampaignResponse>(req, token),
             cancellationToken);
     }
@@ -1269,7 +1256,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"10dlc/phone_number_campaigns/{phoneNumber}", Method.Delete);
 
-        return await _policies[typeof(DeletePhoneNumberCampaignRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(DeletePhoneNumberCampaignRequest)).ExecuteAsync(
             token => ExecuteAsync<DeletePhoneNumberCampaignResponse>(req, token),
             cancellationToken);
     }
@@ -1281,7 +1268,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         var req = new RestRequest("10dlc/phoneNumberAssignmentByProfile", Method.Post);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[typeof(AssignMessagingProfileToCampaignRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(AssignMessagingProfileToCampaignRequest)).ExecuteAsync(
             token => ExecuteAsync<AssignMessagingProfileToCampaignResponse>(req, token),
             cancellationToken);
     }
@@ -1292,7 +1279,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"10dlc/phoneNumberAssignmentByProfile/{taskId}");
 
-        return await _policies[typeof(GetAssignmentTaskStatusRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(GetAssignmentTaskStatusRequest)).ExecuteAsync(
             token => ExecuteAsync<GetAssignmentTaskStatusResponse>(req, token),
             cancellationToken);
     }
@@ -1306,7 +1293,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         var req = new RestRequest($"10dlc/phoneNumberAssignmentByProfile/{taskId}/phoneNumbers?{query}");
 
-        return await _policies[typeof(GetPhoneNumberStatusRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(GetPhoneNumberStatusRequest)).ExecuteAsync(
             token => ExecuteAsync<GetPhoneNumberStatusResponse>(req, token),
             cancellationToken);
     }
@@ -1321,7 +1308,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         var req = new RestRequest($"10dlc/partner_campaigns?{query}");
 
-        return await _policies[typeof(ListSharedCampaignsRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(ListSharedCampaignsRequest)).ExecuteAsync(
             token => ExecuteAsync<ListSharedCampaignsResponse>(req, token),
             cancellationToken);
     }
@@ -1332,7 +1319,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"10dlc/partner_campaigns/{campaignId}");
 
-        return await _policies[typeof(GetSharedCampaignRecordRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(GetSharedCampaignRecordRequest)).ExecuteAsync(
             token => ExecuteAsync<GetSharedCampaignRecordResponse>(req, token),
             cancellationToken);
     }
@@ -1344,7 +1331,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         var req = new RestRequest($"10dlc/partner_campaigns/{campaignId}", Method.Patch);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _policies[typeof(UpdateSingleSharedCampaignRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(UpdateSingleSharedCampaignRequest)).ExecuteAsync(
             token => ExecuteAsync<UpdateSingleSharedCampaignResponse>(req, token),
             cancellationToken);
     }
@@ -1355,7 +1342,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"10dlc/partnerCampaign/{campaignId}/sharing");
 
-        return await _policies[typeof(GetSharingStatusRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(GetSharingStatusRequest)).ExecuteAsync(
             token => ExecuteAsync<GetSharingStatusResponse>(req, token),
             cancellationToken);
     }
@@ -1369,7 +1356,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         var req = new RestRequest($"10dlc/partnerCampaign/sharedByMe?{query}");
 
-        return await _policies[typeof(GetPartnerCampaignsSharedByUserRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(GetPartnerCampaignsSharedByUserRequest)).ExecuteAsync(
             token => ExecuteAsync<GetPartnerCampaignsSharedByUserResponse>(req, token),
             cancellationToken);
     }
@@ -1380,14 +1367,14 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"10dlc/enum/{endpoint.ToString().ToLower()}");
 
-        return await _policies[typeof(GetEnumRequest)].ExecuteAsync(
+        return await GetPolicy(typeof(GetEnumRequest)).ExecuteAsync(
             token => ExecuteAsync<GetEnumResponse>(req, token),
             cancellationToken);
     }
 
     /// <inheritdoc />
     private async Task<T1?> ExecuteAsync<T1>(RestRequest request, CancellationToken cancellationToken = default)
-       where T1 : ITelnyxResponse
+        where T1 : ITelnyxResponse
     {
         var response = await _client.ExecuteAsync(request, cancellationToken);
 
@@ -1431,7 +1418,8 @@ public class TelnyxClient : ITelnyxClient, IDisposable
             response = await _client.ExecuteAsync(request, cancellationToken);
             if (!response.IsSuccessStatusCode || response.Content == null) break;
 
-            var nextResult = JsonSerializer.Deserialize<T1>(response.Content, TelnyxJsonSerializerContext.Default.Options);
+            var nextResult =
+                JsonSerializer.Deserialize<T1>(response.Content, TelnyxJsonSerializerContext.Default.Options);
             if (nextResult == null) break;
 
             var nextData = dataProperty.GetValue(nextResult);
@@ -1453,96 +1441,9 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     /// <inheritdoc />
     public void Dispose()
     {
+        _logWriter?.Dispose();
+        _logFileStream?.Dispose();
         _client?.Dispose();
         GC.SuppressFinalize(this);
-    }
-}
-
-public class TelnyxLoggingInterceptor(StreamWriter logWriter) : Interceptor
-{
-    private readonly Lock _logLock = new();
-
-    private void LogMessage(string message)
-    {
-        lock (_logLock)
-        {
-            logWriter.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] {message}");
-        }
-    }
-
-    public override async ValueTask BeforeHttpRequest(HttpRequestMessage requestMessage,
-        CancellationToken cancellationToken)
-    {
-        try
-        {
-            var sb = new StringBuilder();
-            sb.AppendLine("=== Telnyx API Request ===");
-            sb.AppendLine($"Method: {requestMessage.Method}");
-            sb.AppendLine($"URL: {requestMessage.RequestUri}");
-
-            // Log headers (excluding authorization)
-            sb.AppendLine("Request Headers:");
-            foreach (var header in requestMessage.Headers)
-            {
-                if (!header.Key.Equals("Authorization", StringComparison.OrdinalIgnoreCase))
-                {
-                    sb.AppendLine($"{header.Key}: {string.Join(", ", header.Value)}");
-                }
-            }
-
-            if (requestMessage.Content != null)
-            {
-                foreach (var header in requestMessage.Content.Headers)
-                {
-                    sb.AppendLine($"{header.Key}: {string.Join(", ", header.Value)}");
-                }
-
-                // Log raw request body
-                var content = await requestMessage.Content.ReadAsStringAsync(cancellationToken);
-                sb.AppendLine("Request Body:");
-                sb.AppendLine(content);
-            }
-
-            LogMessage(sb.ToString());
-        }
-        catch (Exception ex)
-        {
-            LogMessage($"Error logging request: {ex}");
-        }
-    }
-
-    public override async ValueTask AfterHttpRequest(HttpResponseMessage responseMessage,
-        CancellationToken cancellationToken)
-    {
-        try
-        {
-            var sb = new StringBuilder();
-            sb.AppendLine("=== Telnyx API Response ===");
-            sb.AppendLine($"Status Code: {(int)responseMessage.StatusCode} {responseMessage.StatusCode}");
-            sb.AppendLine($"Reason: {responseMessage.ReasonPhrase}");
-
-            // Log response headers
-            sb.AppendLine("Response Headers:");
-            foreach (var header in responseMessage.Headers)
-            {
-                sb.AppendLine($"{header.Key}: {string.Join(", ", header.Value)}");
-            }
-
-            foreach (var header in responseMessage.Content.Headers)
-            {
-                sb.AppendLine($"{header.Key}: {string.Join(", ", header.Value)}");
-            }
-
-            // Log raw response body
-            var content = await responseMessage.Content.ReadAsStringAsync(cancellationToken);
-            sb.AppendLine("Response Body:");
-            sb.AppendLine(content);
-
-            LogMessage(sb.ToString());
-        }
-        catch (Exception ex)
-        {
-            LogMessage($"Error logging response: {ex}");
-        }
     }
 }
