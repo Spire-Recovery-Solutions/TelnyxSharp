@@ -100,12 +100,12 @@ namespace Telnyx.NET.Interfaces
         Task<UpdateNumberConfigurationResponse> UpdateNumberConfiguration(string phoneNumberId, UpdateNumberConfigurationRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Removes a specified phone number or object by its ID.
+        /// Removes a phone number or associated object by its unique identifier.
         /// </summary>
-        /// <param name="numberOrObjectId">The ID of the number or object to remove.</param>
-        /// <param name="cancellationToken">Optional cancellation token for the operation.</param>
-        /// <returns>A boolean indicating the success of the removal operation.</returns>
-        Task<bool> RemoveNumber(string numberOrObjectId, CancellationToken cancellationToken = default);
+        /// <param name="numberOrObjectId">The unique identifier (ID) of the phone number or object to remove.</param>
+        /// <param name="cancellationToken">An optional cancellation token to monitor and cancel the operation if needed.</param>
+        /// <returns>A task that represents the asynchronous operation, containing the response with the details of the removal operation.</returns>
+        Task<DeletePhoneNumberResponse> RemoveNumber(string numberOrObjectId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Sends a message to a specified recipient.

@@ -239,13 +239,11 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task<bool> RemoveNumber(string numberOrObjectId, CancellationToken cancellationToken = default)
+    public async Task<DeletePhoneNumberResponse> RemoveNumber(string numberOrObjectId, CancellationToken cancellationToken = default)
     {
         var req = new RestRequest($"phone_numbers/{numberOrObjectId}", Method.Delete);
 
-        var response = await _client.DeleteAsync(req, cancellationToken: cancellationToken);
-
-        return response.IsSuccessful;
+        return await ExecuteAsync<DeletePhoneNumberResponse>(req, cancellationToken);
     }
 
     /// <inheritdoc />
@@ -254,9 +252,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest("messages", Method.Post);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
-        var response = await ExecuteAsync<SendMessageResponse>(req, cancellationToken);
-
-        return response;
+        return await ExecuteAsync<SendMessageResponse>(req, cancellationToken);
     }
 
     /// <inheritdoc />
@@ -301,9 +297,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         var req = new RestRequest($"calls/{callControlId}/actions/speak", Method.Post);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        var response = await ExecuteAsync<SpeakTextResponse>(req, cancellationToken);
-
-        return response;
+        return await ExecuteAsync<SpeakTextResponse>(req, cancellationToken);
     }
 
     /// <inheritdoc />
