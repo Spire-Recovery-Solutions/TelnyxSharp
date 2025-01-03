@@ -5,19 +5,8 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response after creating an auto-response setting in the Telnyx API.
     /// </summary>
-    public class CreateAutoResponseSettingResponse : TelnyxResponse
+    public class CreateAutoResponseSettingResponse : TelnyxResponse<CreateAutoResponseSetting>
     {
-        /// <summary>
-        /// Contains the details of the created auto-response setting.
-        /// </summary>
-        [JsonPropertyName("data")]
-        public CreateAutoResponseSetting? Data { get; set; }
-
-        /// <summary>
-        /// Represents any errors encountered during the creation of the auto-response setting.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
     }
 
     /// <summary>

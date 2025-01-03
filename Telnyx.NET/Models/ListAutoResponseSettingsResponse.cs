@@ -5,25 +5,8 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response for listing auto-response settings in the Telnyx API.
     /// </summary>
-    public class ListAutoResponseSettingsResponse : TelnyxResponse
-    { 
-        /// <summary>
-        /// A list of auto-response settings for a messaging profile.
-        /// </summary>
-        [JsonPropertyName("data")]
-        public List<AutoResponseSetting>? Data { get; set; }
-
-        /// <summary>
-        /// Metadata related to the auto-response settings, including pagination info.
-        /// </summary>
-        [JsonPropertyName("meta")]
-        public PaginationMeta? Meta { get; set; }
-
-        /// <summary>
-        /// Represents any errors encountered during the API call.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
+    public class ListAutoResponseSettingsResponse : TelnyxResponse<List<AutoResponseSetting>>
+    {
     }
 
     /// <summary>

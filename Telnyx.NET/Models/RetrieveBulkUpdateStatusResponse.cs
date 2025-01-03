@@ -3,16 +3,8 @@ using Telnyx.NET.Enums;
 
 namespace Telnyx.NET.Models
 {
-    public class RetrieveBulkUpdateStatusResponse : TelnyxResponse
+    public class RetrieveBulkUpdateStatusResponse : TelnyxResponse<RetrieveBulkUpdateStatus>
     {
-        [JsonPropertyName("data")]
-        public RetrieveBulkUpdateStatus Data { get; set; }
-
-        /// <summary>
-        /// Represents any errors encountered during the process of updating phone messaging settings.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
     }
 
     public class RetrieveBulkUpdateStatus

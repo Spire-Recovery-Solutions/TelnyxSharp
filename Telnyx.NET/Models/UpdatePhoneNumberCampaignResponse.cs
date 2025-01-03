@@ -4,10 +4,5 @@ namespace Telnyx.NET.Models
 {
     public class UpdatePhoneNumberCampaignResponse : BasePhoneNumberCampaigns
     {
-        /// <summary>
-        /// List of errors, if any occurred during the API call.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
     }
 }

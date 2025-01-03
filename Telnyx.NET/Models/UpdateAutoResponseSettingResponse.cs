@@ -2,19 +2,8 @@
 
 namespace Telnyx.NET.Models
 {
-    public class UpdateAutoResponseSettingResponse : TelnyxResponse
+    public class UpdateAutoResponseSettingResponse : TelnyxResponse<UpdateAutoResponseSetting>
     {
-        /// <summary>
-        /// The data for the retrieved auto-response setting.
-        /// </summary>
-        [JsonPropertyName("data")]
-        public UpdateAutoResponseSetting? Data { get; set; }
-
-        /// <summary>
-        /// Represents any errors encountered during the retrieval of the auto-response setting.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
     }
 
     /// <summary>

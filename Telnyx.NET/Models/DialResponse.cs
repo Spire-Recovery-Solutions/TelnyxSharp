@@ -7,19 +7,8 @@ namespace Telnyx.NET.Models;
 /// This includes details about the call session, along with potential errors
 /// if the API call was unsuccessful.
 /// </summary>
-public class DialResponse : TelnyxResponse
+public class DialResponse : TelnyxResponse<DialResponseData>
 {
-    /// <summary>
-    /// Contains data about the call session initiated by the Dial request.
-    /// </summary>
-    [JsonPropertyName("data")]
-    public DialResponseData? Data { get; set; }
-
-    /// <summary>
-    /// A list of errors encountered during the API call, if any.
-    /// </summary>
-    [JsonPropertyName("errors")]
-    public TelnyxError[]? Errors { get; set; }
 }
 
 /// <summary>

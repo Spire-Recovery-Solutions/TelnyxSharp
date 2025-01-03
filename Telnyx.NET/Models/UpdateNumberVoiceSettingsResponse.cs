@@ -2,10 +2,8 @@
 
 namespace Telnyx.NET.Models;
 
-public class UpdateNumberVoiceSettingsResponse : TelnyxResponse
+public class UpdateNumberVoiceSettingsResponse : TelnyxResponse<UpdateNumberVoiceSettingsData>
 {
-    [JsonPropertyName("data")]
-    public UpdateNumberVoiceSettingsData Data { get; set; }
 }
 
 public partial class UpdateNumberVoiceSettingsData

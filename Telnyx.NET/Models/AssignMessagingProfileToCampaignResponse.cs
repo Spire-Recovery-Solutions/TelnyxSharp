@@ -30,11 +30,5 @@ namespace Telnyx.NET.Models
         /// </summary>
         [JsonPropertyName("taskId")]
         public string TaskId { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Gets or sets the list of errors, if any, that occurred during the API call.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
     }
 }

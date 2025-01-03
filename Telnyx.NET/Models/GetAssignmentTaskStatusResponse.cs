@@ -30,11 +30,5 @@ namespace Telnyx.NET.Models
         /// </summary>
         [JsonPropertyName("updatedAt")]
         public DateTimeOffset UpdatedAt { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of errors, if any, that occurred during the API call.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
     }
 }

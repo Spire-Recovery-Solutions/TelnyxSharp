@@ -6,26 +6,8 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response containing a list of phone numbers associated with a messaging profile.
     /// </summary>
-    public class MessagingProfilePhoneNumberResponse : TelnyxResponse
+    public class MessagingProfilePhoneNumberResponse : TelnyxResponse<List<MessagingProfilePhoneNumberData>>
     {
-        /// <summary>
-        /// Gets or sets the list of phone numbers associated with the messaging profile.
-        /// </summary>
-        [JsonPropertyName("data")]
-        public List<MessagingProfilePhoneNumberData>? Data { get; set; }
-
-        /// <summary>
-        /// Gets or sets metadata about the response, such as pagination information.
-        /// </summary>
-        [JsonPropertyName("meta")]
-        public PaginationMeta? Meta { get; set; }
-        
-        /// <summary>
-        /// Gets or sets any errors that occurred during the API request.
-        /// This property is nullable to indicate that it may not always be present.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
     }
 
     /// <summary>

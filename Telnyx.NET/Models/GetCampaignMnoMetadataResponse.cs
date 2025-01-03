@@ -12,12 +12,6 @@ namespace Telnyx.NET.Models
         /// </summary>
         [JsonPropertyName("10999")]
         public MnoMetadataDetail? Metadata { get; set; }
-
-        /// <summary>
-        /// List of errors, if any occurred during the API call.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
     }
 
     /// <summary>
