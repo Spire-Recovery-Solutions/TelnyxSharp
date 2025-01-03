@@ -8,7 +8,7 @@ namespace Telnyx.NET.Models
     /// Represents the base response model for a verification request.
     /// This class contains common information related to the verification request and can be extended by other response models.
     /// </summary>
-    public class BaseVerificationRequestResponse : ITelnyxResponse
+    public class BaseVerificationRequestResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the name of the business associated with the verification request.

@@ -2,7 +2,7 @@
 
 namespace Telnyx.NET.Models
 {
-    public class ResendBrand2FAEmailResponse : ITelnyxResponse
+    public class ResendBrand2FAEmailResponse : TelnyxResponse
     {
     }
 }

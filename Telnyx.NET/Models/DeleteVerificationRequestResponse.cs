@@ -3,7 +3,7 @@ using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
 {
-    public class DeleteVerificationRequestResponse : ITelnyxResponse
+    public class DeleteVerificationRequestResponse : TelnyxResponse
     {
         /// <summary>
         /// Represents any errors encountered during the API call.

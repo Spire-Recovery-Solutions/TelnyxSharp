@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models;
-public class NumberLookupResponse :ITelnyxResponse
+public class NumberLookupResponse : TelnyxResponse
 {
     [JsonPropertyName("data")]
     public NumberLookupDatum Data { get; set; }

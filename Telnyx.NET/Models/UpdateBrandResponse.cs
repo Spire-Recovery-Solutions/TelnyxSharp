@@ -3,7 +3,7 @@ using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
 {
-    public class UpdateBrandResponse : BaseBrandResponse, ITelnyxResponse
+    public class UpdateBrandResponse : BaseBrandResponse
     {
 
         /// <summary>

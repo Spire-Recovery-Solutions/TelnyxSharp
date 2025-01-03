@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response received from the Telnyx API when stopping audio playback on a call.
     /// </summary>
-    public class PlaybackStartResponse : ITelnyxResponse
+    public class PlaybackStartResponse : TelnyxResponse
     {
         /// <summary>
         /// The data returned from the API response.

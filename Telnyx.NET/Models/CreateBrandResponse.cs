@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Response model for brand creation.
     /// </summary>
-    public class CreateBrandResponse : BaseBrandResponse, ITelnyxResponse
+    public class CreateBrandResponse : BaseBrandResponse
     {
         
         /// <summary>

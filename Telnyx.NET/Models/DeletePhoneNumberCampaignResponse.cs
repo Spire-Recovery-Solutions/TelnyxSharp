@@ -3,7 +3,7 @@ using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
 {
-    public class DeletePhoneNumberCampaignResponse : BasePhoneNumberCampaigns, ITelnyxResponse
+    public class DeletePhoneNumberCampaignResponse : BasePhoneNumberCampaigns
     {
         /// <summary>
         /// List of errors, if any occurred during the API call.

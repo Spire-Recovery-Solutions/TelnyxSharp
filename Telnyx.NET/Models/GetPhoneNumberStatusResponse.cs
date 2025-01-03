@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response for retrieving the status of phone number assignments.
     /// </summary>
-    public class GetPhoneNumberStatusResponse : ITelnyxResponse
+    public class GetPhoneNumberStatusResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the list of phone number status records.

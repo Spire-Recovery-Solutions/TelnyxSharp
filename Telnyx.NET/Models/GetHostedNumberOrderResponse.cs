@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response for retrieving hosted number orders.
     /// </summary>
-    public class GetHostedNumberOrderResponse : ITelnyxResponse
+    public class GetHostedNumberOrderResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the list of hosted number order data.

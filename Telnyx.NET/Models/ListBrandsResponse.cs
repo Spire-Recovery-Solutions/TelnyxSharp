@@ -7,7 +7,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response containing a list of brand records.
     /// </summary>
-    public class ListBrandsResponse : ITelnyxResponse
+    public class ListBrandsResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the list of brand records.

@@ -3,7 +3,7 @@ using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
 {
-    public class GetCampaignResponse : BaseCampaignResponse, ITelnyxResponse
+    public class GetCampaignResponse : BaseCampaignResponse
     {
         /// <summary>
         /// Represents any errors encountered during the retrieval of the auto-response setting.

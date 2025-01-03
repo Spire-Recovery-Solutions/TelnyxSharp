@@ -7,7 +7,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response for a request to list short codes.
     /// </summary>
-    public class ListShortCodesResponse : ITelnyxResponse
+    public class ListShortCodesResponse : TelnyxResponse
     {
         /// <summary>
         /// The list of short codes returned by the request.

@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response from the Telnyx API when retrieving an auto-response setting.
     /// </summary>
-    public class GetAutoResponseSettingResponse : ITelnyxResponse
+    public class GetAutoResponseSettingResponse : TelnyxResponse
     {
         /// <summary>
         /// The data for the retrieved auto-response setting.

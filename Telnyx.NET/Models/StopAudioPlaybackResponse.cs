@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response received after attempting to stop audio playback on a call.
     /// </summary>
-    public class StopAudioPlaybackResponse : ITelnyxResponse
+    public class StopAudioPlaybackResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the data returned in the response, which contains the result of the stop audio playback action.

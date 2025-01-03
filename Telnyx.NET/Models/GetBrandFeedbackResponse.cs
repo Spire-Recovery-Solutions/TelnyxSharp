@@ -3,7 +3,7 @@ using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
 {
-    public class GetBrandFeedbackResponse : ITelnyxResponse
+    public class GetBrandFeedbackResponse : TelnyxResponse
     {
         /// <summary>
         /// The ID of the brand being queried.
