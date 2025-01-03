@@ -2,7 +2,7 @@
 
 namespace Telnyx.NET.Models;
 
-public class ListNumbersRequest : PhoneNumbersRequest, ITelnyxRequest
+public class ListNumbersRequest : ITelnyxRequest
 {
     
     public int? PageSize { get; set; }
