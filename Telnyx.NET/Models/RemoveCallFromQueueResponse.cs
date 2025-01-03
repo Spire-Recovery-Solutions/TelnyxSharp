@@ -5,7 +5,6 @@ namespace Telnyx.NET.Models
 {
     /// <summary>
     /// Represents the response from the Telnyx API when removing a call from a queue.
-    /// Implements the <see cref="ITelnyxResponse"/> interface for unified response handling.
     /// </summary>
     public class RemoveCallFromQueueResponse : TelnyxResponse
     {
@@ -15,13 +14,7 @@ namespace Telnyx.NET.Models
         /// </summary>
         [JsonPropertyName("data")]
         public RemoveCallFromQueueResponseData? Data { get; set; }
-
-        /// <summary>
-        /// Gets or sets any errors that occurred during the API request.
-        /// This property is nullable to indicate that it may not always be present.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
+        
     }
 
     /// <summary>

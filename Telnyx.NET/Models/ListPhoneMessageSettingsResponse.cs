@@ -7,25 +7,9 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response containing a list of phone numbers with messaging settings.
     /// </summary>
-    public class ListPhoneMessageSettingsResponse : TelnyxResponse
+    public class ListPhoneMessageSettingsResponse : TelnyxResponse<List<PhoneNumberMessagingSettings>>
     {
-        /// <summary>
-        /// A collection of phone numbers with their associated messaging settings.
-        /// </summary>
-        [JsonPropertyName("data")]
-        public List<PhoneNumberMessagingSettings>? Data { get; set; }
-
-        /// <summary>
-        /// Metadata information for the list of phone numbers, including pagination details.
-        /// </summary>
-        [JsonPropertyName("meta")]
-        public PaginationMeta Meta { get; set; }
-
-            /// <summary>
-        /// Represents any errors encountered during the message sending process.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
+        
     }
 
     /// <summary>
@@ -111,6 +95,4 @@ namespace Telnyx.NET.Models
         [JsonPropertyName("features")]
         public MessagingPhoneNumberFeatures? Features { get; set; }
     }
-
-    
 }
