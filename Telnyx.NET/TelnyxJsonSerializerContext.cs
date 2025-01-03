@@ -1,6 +1,7 @@
 ﻿using SRS.Data.Telnyx.Models.Events;
 using System.Text.Json.Serialization;
 using Telnyx.NET.Enums;
+using Telnyx.NET.Interfaces;
 using Telnyx.NET.Models;
 using Telnyx.NET.Models.Events;
 
@@ -95,8 +96,7 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(SoundModifications))]
     [JsonSerializable(typeof(TranscriptionConfig))]
 
-    [JsonSerializable(typeof(TelnyxError))]
-    [JsonSerializable(typeof(ErrorSource))]
+
     [JsonSerializable(typeof(AnswerCallResponse))]
     [JsonSerializable(typeof(AnswerCallResponseData))]
     [JsonSerializable(typeof(AnswerCallRequest))]
@@ -510,6 +510,16 @@ namespace Telnyx.NET
     // [JsonSerializable(typeof(VideoRoomRecordingStartedEvent))]
     // [JsonSerializable(typeof(VideoRoomSessionEndedEvent))]
     // [JsonSerializable(typeof(VideoRoomSessionStartedEvent))]
+    
+    
+    [JsonSerializable(typeof(ITelnyxResponse))]
+    [JsonSerializable(typeof(TelnyxResponse))]
+    [JsonSerializable(typeof(TelnyxError))]
+    [JsonSerializable(typeof(ErrorSource))]
+    [JsonSerializable(typeof(TelnyxError[]))]
+    [JsonSerializable(typeof(PaginationMeta))]
+    [JsonSerializable(typeof(ValidationErrorDetail))]
+    
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,
