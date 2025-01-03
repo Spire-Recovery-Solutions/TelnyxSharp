@@ -1,11 +1,11 @@
-﻿using Polly;
+using Polly;
 using Polly.RateLimit;
+using Polly.Retry;
 using RestSharp;
 using RestSharp.Authenticators;
 using System.Collections;
 using System.Net;
 using System.Text.Json;
-using Polly.Retry;
 using Telnyx.NET.Enums;
 using Telnyx.NET.Interfaces;
 using Telnyx.NET.Models;
@@ -149,44 +149,19 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     public async Task<CreateNumberOrderResponse> CreateNumberOrder(CreateNumberOrderRequest request,
         CancellationToken cancellationToken = default)
     {
-        try
-        {
-            var req = new RestRequest($"number_orders", Method.Post);
-            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
-            var result = await ExecuteAsync<CreateNumberOrderResponse>(req, cancellationToken);
-            return result;
-        }
-        catch (Exception ex)
-        {
-            return null;
-        }
+        var req = new RestRequest("number_orders", Method.Post);
+        req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+        return await ExecuteAsync<CreateNumberOrderResponse>(req, cancellationToken);
     }
 
     /// <inheritdoc />
     public async Task<UpdateNumberVoiceSettingsResponse> UpdateNumberVoiceSettings(string phoneNumberId,
         UpdateNumberVoiceSettingsRequest request, CancellationToken cancellationToken = default)
     {
-        var success = false;
-        var tries = 0;
-        while (!success && tries < 5)
-        {
-            try
-            {
-                tries++;
-                //TODO: Deal with failures!
-                var req = new RestRequest($"phone_numbers/{phoneNumberId}/voice", Method.Patch);
-                req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
-                return await _client.PatchAsync<UpdateNumberVoiceSettingsResponse>(req,
-                    cancellationToken: cancellationToken);
-            }
-            catch (Exception)
-            {
-                //TODO: Make this better...
-                //Ignore
-            }
-        }
+        var req = new RestRequest($"phone_numbers/{phoneNumberId}/voice", Method.Patch);
+        req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return null;
+        return await ExecuteAsync<UpdateNumberVoiceSettingsResponse>(req, cancellationToken);
     }
 
     /// <inheritdoc />
@@ -248,22 +223,9 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     public async Task<CreateNumberReservationResponse> CreateNumberReservation(
         CreateNumberReservationRequest request, CancellationToken cancellationToken = default)
     {
-        try
-        {
-            var req = new RestRequest($"number_reservations", Method.Post);
-            req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
-            return await ExecuteAsync<CreateNumberReservationResponse>(req, cancellationToken);
-        }
-        catch (HttpRequestException ex)
-        {
-            if (ex.StatusCode == System.Net.HttpStatusCode.UnprocessableEntity)
-            {
-                //Fack
-                return null;
-            }
-
-            return null;
-        }
+        var req = new RestRequest($"number_reservations", Method.Post);
+        req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
+        return await ExecuteAsync<CreateNumberReservationResponse>(req, cancellationToken);
     }
 
     /// <inheritdoc />
@@ -272,11 +234,8 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     {
         var req = new RestRequest($"phone_numbers/{phoneNumberId}", Method.Patch);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
-        return await _rateLimitRetryPolicy
-            .ExecuteAsync(
-                token => _client.PatchAsync<UpdateNumberConfigurationResponse>(req,
-                    cancellationToken: cancellationToken),
-                cancellationToken);
+
+        return await ExecuteAsync<UpdateNumberConfigurationResponse>(req, cancellationToken);
     }
 
     /// <inheritdoc />
@@ -1152,12 +1111,12 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         // If we have content and the request was successful, try to deserialize
         if (response is not { IsSuccessful: true, Content: not null }) return result;
-        
+
         var deserializedResult =
             JsonSerializer.Deserialize<T1>(response.Content, TelnyxJsonSerializerContext.Default.Options);
-            
+
         if (deserializedResult == null) return result;
-            
+
         result = deserializedResult;
         result.StatusCode = response.StatusCode;
         result.IsSuccessful = response.IsSuccessful;
@@ -1170,7 +1129,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
         if (metaProperty?.GetValue(result) is not PaginationMeta meta || dataProperty == null ||
             meta.PageNumber >= meta.TotalPages) return result;
-        
+
         var dataType = dataProperty.PropertyType.GetGenericArguments()[0];
         var listType = typeof(List<>).MakeGenericType(dataType);
         var allData = (IList)Activator.CreateInstance(listType);
