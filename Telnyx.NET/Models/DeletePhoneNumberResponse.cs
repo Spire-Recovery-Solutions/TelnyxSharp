@@ -42,7 +42,7 @@ namespace Telnyx.NET.Models
         /// Gets or sets the list of user-assigned tags for the phone number.
         /// </summary>
         [JsonPropertyName("tags")]
-        public List<string> Tags { get; set; } = new List<string>();
+        public List<string> Tags { get; set; } = new();
 
         /// <summary>
         /// Gets or sets the external PIN for porting the phone number, if any.
@@ -145,12 +145,6 @@ namespace Telnyx.NET.Models
         /// </summary>
         [JsonPropertyName("updated_at")]
         public string UpdatedAt { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Gets or sets the routing configuration for the phone number. Currently only "disabled" is supported.
-        /// </summary>
-        [JsonPropertyName("number_level_routing")]
-        public string NumberLevelRouting { get; set; } = "disabled"; // Deprecated value
 
         /// <summary>
         /// Gets or sets the type of the phone number (e.g., local, toll_free, mobile, etc.).
