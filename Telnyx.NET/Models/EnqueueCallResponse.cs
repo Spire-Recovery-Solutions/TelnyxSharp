@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response from the Enqueue Call API.
     /// </summary>
-    public class EnqueueCallResponse : ITelnyxResponse
+    public class EnqueueCallResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the data returned from the API, containing the result of the enqueue operation.

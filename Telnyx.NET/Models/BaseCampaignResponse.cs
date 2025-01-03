@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the base response for a campaign, including its details, settings, and status.
     /// </summary>
-    public abstract class BaseCampaignResponse
+    public abstract class BaseCampaignResponse : TelnyxResponse
     {
         /// <summary>
         /// Indicates whether age-gating is enabled for the campaign.

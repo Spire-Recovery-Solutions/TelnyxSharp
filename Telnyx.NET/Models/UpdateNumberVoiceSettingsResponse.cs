@@ -3,7 +3,7 @@ using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models;
 
-public class UpdateNumberVoiceSettingsResponse : ITelnyxResponse
+public class UpdateNumberVoiceSettingsResponse : TelnyxResponse
 {
     [JsonPropertyName("data")]
     public UpdateNumberVoiceSettingsData Data { get; set; }

@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the base properties shared by campaigns in the Telnyx system.
     /// </summary>
-    public abstract class BaseSharedCampaigns
+    public abstract class BaseSharedCampaigns : TelnyxResponse
     {
         /// <summary>
         /// Indicates whether age gating is enabled for the campaign.

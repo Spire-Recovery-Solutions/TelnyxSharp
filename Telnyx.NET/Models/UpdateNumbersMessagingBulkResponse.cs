@@ -4,7 +4,7 @@ using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
 {
-    public class UpdateNumbersMessagingBulkResponse : ITelnyxResponse
+    public class UpdateNumbersMessagingBulkResponse : TelnyxResponse
     {
         /// <summary>
         /// Represents the response after updating the messaging profile for multiple phone numbers.

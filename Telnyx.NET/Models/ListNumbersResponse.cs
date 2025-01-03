@@ -3,7 +3,7 @@ using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models;
 
-public class ListNumbersResponse : ITelnyxResponse
+public class ListNumbersResponse : TelnyxResponse
 {
     [JsonPropertyName("meta")] public PaginationMeta Meta { get; set; }
 

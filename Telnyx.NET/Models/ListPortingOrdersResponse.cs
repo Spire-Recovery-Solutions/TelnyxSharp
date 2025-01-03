@@ -4,7 +4,7 @@ using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
 {
-    public partial class ListPortingOrdersResponse : ITelnyxResponse
+    public partial class ListPortingOrdersResponse : TelnyxResponse
     {
         [JsonPropertyName("data")]
         public List<ListPortingOrdersDatum> Data { get; set; }

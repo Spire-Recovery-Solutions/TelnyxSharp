@@ -5,7 +5,7 @@ namespace Telnyx.NET.Models
     using System.Collections.Generic;
     using Telnyx.NET.Interfaces;
 
-    public partial class AvailablePhoneNumbersResponse : ITelnyxResponse
+    public partial class AvailablePhoneNumbersResponse : TelnyxResponse
     {
         [JsonPropertyName("data")]
         public List<AvailablePhoneNumbersDatum> Data { get; set; }

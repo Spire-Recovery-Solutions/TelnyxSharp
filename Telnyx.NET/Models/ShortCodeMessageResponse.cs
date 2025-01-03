@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response for a short code message sent through the Telnyx API.
     /// </summary>
-    public class ShortCodeMessageResponse : ITelnyxResponse
+    public class ShortCodeMessageResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the data associated with the short code message response.

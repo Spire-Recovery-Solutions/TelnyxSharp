@@ -5,7 +5,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the base model for phone number campaigns, containing common properties that all campaigns share.
     /// </summary>
-    public abstract class BasePhoneNumberCampaigns
+    public abstract class BasePhoneNumberCampaigns : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the phone number associated with the campaign.

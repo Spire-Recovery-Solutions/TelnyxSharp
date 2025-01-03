@@ -7,7 +7,7 @@ namespace Telnyx.NET.Models
     /// Represents the response to a request for campaign sharing status, including details about sharing
     /// status both from and with the current user, and any validation errors encountered.
     /// </summary>
-    public class GetCampaignSharingStatusResponse : ITelnyxResponse
+    public class GetCampaignSharingStatusResponse : TelnyxResponse
     {
         /// <summary>
         /// Details about the sharing status when shared by the current user.

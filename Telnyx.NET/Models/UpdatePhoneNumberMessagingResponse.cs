@@ -7,7 +7,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response returned after updating the messaging settings for a phone number.
     /// </summary>
-    public class UpdatePhoneNumberMessagingResponse : ITelnyxResponse
+    public class UpdatePhoneNumberMessagingResponse : TelnyxResponse
     {
         /// <summary>
         /// The updated messaging settings for the phone number.

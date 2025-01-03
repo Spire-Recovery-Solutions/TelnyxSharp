@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response containing cost details for a campaign based on its use case.
     /// </summary>
-    public class GetCampaignCostResponse : ITelnyxResponse
+    public class GetCampaignCostResponse : TelnyxResponse
     {
         /// <summary>
         /// Specifies the use case for the campaign, defining its purpose or type.

@@ -3,7 +3,7 @@ using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
 {
-    public class GetSharingStatusResponse : ITelnyxResponse
+    public class GetSharingStatusResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the ID of the downstream campaign number provider.

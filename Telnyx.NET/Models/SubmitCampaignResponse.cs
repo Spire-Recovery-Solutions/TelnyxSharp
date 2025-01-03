@@ -3,7 +3,7 @@ using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
 {
-    public class SubmitCampaignResponse : ITelnyxResponse
+    public class SubmitCampaignResponse : TelnyxResponse
     {
         
         /// <summary>

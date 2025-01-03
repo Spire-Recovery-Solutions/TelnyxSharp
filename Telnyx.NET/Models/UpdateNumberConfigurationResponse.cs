@@ -7,7 +7,7 @@ namespace Telnyx.NET.Models
     using System.Collections.Generic;
     
 
-    public partial class UpdateNumberConfigurationResponse : ITelnyxResponse
+    public partial class UpdateNumberConfigurationResponse : TelnyxResponse
     {
         [JsonPropertyName("data")]
         public UpdateNumberConfigurationResponseData? Data { get; set; }

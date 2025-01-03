@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response for listing auto-response settings in the Telnyx API.
     /// </summary>
-    public class ListAutoResponseSettingsResponse : ITelnyxResponse
+    public class ListAutoResponseSettingsResponse : TelnyxResponse
     { 
         /// <summary>
         /// A list of auto-response settings for a messaging profile.

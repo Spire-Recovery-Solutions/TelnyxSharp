@@ -4,7 +4,7 @@ using Telnyx.NET.Interfaces;
 namespace Telnyx.NET.Models
 {
 
-    public class ImportExternalVettingResponse : ITelnyxResponse
+    public class ImportExternalVettingResponse : TelnyxResponse
     {
         /// <summary>
         /// External vetting provider ID for the brand.

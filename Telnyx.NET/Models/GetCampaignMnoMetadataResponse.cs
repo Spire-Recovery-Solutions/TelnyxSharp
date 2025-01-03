@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response containing metadata for a campaign's Mobile Network Operator (MNO).
     /// </summary>
-    public class GetCampaignMnoMetadataResponse : ITelnyxResponse
+    public class GetCampaignMnoMetadataResponse : TelnyxResponse
     {
         /// <summary>
         /// Metadata details associated with the specified MNO ID.

@@ -7,7 +7,7 @@ namespace Telnyx.NET.Models
     /// Represents the response from the Telnyx API when removing a call from a queue.
     /// Implements the <see cref="ITelnyxResponse"/> interface for unified response handling.
     /// </summary>
-    public class RemoveCallFromQueueResponse : ITelnyxResponse
+    public class RemoveCallFromQueueResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the result of the remove call operation.

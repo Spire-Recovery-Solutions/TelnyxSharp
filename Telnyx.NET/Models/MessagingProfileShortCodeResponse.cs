@@ -7,7 +7,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response containing a list of short codes associated with a messaging profile.
     /// </summary>
-    public class MessagingProfileShortCodeResponse : ITelnyxResponse
+    public class MessagingProfileShortCodeResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the list of short codes associated with the messaging profile.
