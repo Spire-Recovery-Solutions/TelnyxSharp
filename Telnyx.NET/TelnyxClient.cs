@@ -162,7 +162,9 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         var req = new RestRequest($"phone_numbers/{phoneNumberId}/voice", Method.Patch);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await ExecuteAsync<UpdateNumberVoiceSettingsResponse>(req, cancellationToken);
+        return await _rateLimitRetryPolicy.ExecuteAsync(
+            token => ExecuteAsync<UpdateNumberVoiceSettingsResponse>(req, token),
+            cancellationToken);
     }
 
     /// <inheritdoc />
