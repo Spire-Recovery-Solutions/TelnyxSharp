@@ -2,11 +2,8 @@
 
 namespace Telnyx.NET.Models;
 
-public class ListNumbersResponse : TelnyxResponse
+public class ListNumbersResponse : TelnyxResponse<List<ListNumbersDatum>>
 {
-    [JsonPropertyName("meta")] public PaginationMeta Meta { get; set; }
-
-    [JsonPropertyName("data")] public List<ListNumbersDatum> Data { get; set; }
 }
 
 public partial class ListNumbersDatum

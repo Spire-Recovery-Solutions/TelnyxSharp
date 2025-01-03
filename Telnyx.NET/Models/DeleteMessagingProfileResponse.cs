@@ -2,19 +2,8 @@
 
 namespace Telnyx.NET.Models
 {
-    public class DeleteMessagingProfileResponse : TelnyxResponse
+    public class DeleteMessagingProfileResponse : TelnyxResponse<DeleteMessagingProfileData>
     {
-        /// <summary>
-        /// Gets or sets the data for the updated messaging profile.
-        /// </summary>
-        [JsonPropertyName("data")]
-        public DeleteMessagingProfileData Data { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of errors, if any occurred during the API call.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
     }
 
     /// <summary>

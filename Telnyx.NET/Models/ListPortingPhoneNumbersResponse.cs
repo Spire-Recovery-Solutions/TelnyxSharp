@@ -5,19 +5,8 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Response object for retrieving a list of porting phone numbers.
     /// </summary>
-    public class ListPortingPhoneNumbersResponse : TelnyxResponse
+    public class ListPortingPhoneNumbersResponse : TelnyxResponse<List<ListPortingPhoneNumbersDatum>>
     {
-        /// <summary>
-        /// A list containing the data of each porting phone number.
-        /// </summary>
-        [JsonPropertyName("data")]
-        public List<ListPortingPhoneNumbersDatum> Data { get; set; } = new();
-
-        /// <summary>
-        /// Metadata for pagination, including page size, number, total pages, and results.
-        /// </summary>
-        [JsonPropertyName("meta")]
-        public PaginationMeta Meta { get; set; } = new();
     }
 
     /// <summary>

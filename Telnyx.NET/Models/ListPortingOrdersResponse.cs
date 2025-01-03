@@ -3,13 +3,8 @@ using System.Text.Json.Serialization;
 
 namespace Telnyx.NET.Models
 {
-    public partial class ListPortingOrdersResponse : TelnyxResponse
+    public partial class ListPortingOrdersResponse : TelnyxResponse<List<ListPortingOrdersDatum>>
     {
-        [JsonPropertyName("data")]
-        public List<ListPortingOrdersDatum> Data { get; set; }
-
-        [JsonPropertyName("meta")]
-        public PaginationMeta Meta { get; set; }
     }
 
     public partial class ListPortingOrdersDatum

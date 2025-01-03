@@ -6,26 +6,8 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response containing a list of short codes associated with a messaging profile.
     /// </summary>
-    public class MessagingProfileShortCodeResponse : TelnyxResponse
+    public class MessagingProfileShortCodeResponse : TelnyxResponse<List<MessagingProfileShortCode>>
     {
-        /// <summary>
-        /// Gets or sets the list of short codes associated with the messaging profile.
-        /// </summary>
-        [JsonPropertyName("data")]
-        public List<MessagingProfileShortCode>? Data { get; set; }
-
-        /// <summary>
-        /// Gets or sets metadata about the response, such as pagination information.
-        /// </summary>
-        [JsonPropertyName("meta")]
-        public PaginationMeta? Meta { get; set; }
-
-        /// <summary>
-        /// Gets or sets any errors that occurred during the API request.
-        /// This property is nullable to indicate that it may not always be present.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
     }
 
     /// <summary>

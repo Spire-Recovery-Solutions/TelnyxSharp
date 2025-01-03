@@ -6,25 +6,8 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response for a request to list short codes.
     /// </summary>
-    public class ListShortCodesResponse : TelnyxResponse
+    public class ListShortCodesResponse : TelnyxResponse<List<ShortCode>>
     {
-        /// <summary>
-        /// The list of short codes returned by the request.
-        /// </summary>
-        [JsonPropertyName("data")]
-        public List<ShortCode>? Data { get; set; }
-
-        /// <summary>
-        /// Metadata related to the pagination of the short codes list.
-        /// </summary>
-        [JsonPropertyName("meta")]
-        public PaginationMeta? Meta { get; set; }
-
-        /// <summary>
-        /// Represents any errors encountered during the message sending process.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
     }
 
     /// <summary>

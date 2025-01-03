@@ -2,25 +2,8 @@
 
 namespace Telnyx.NET.Models
 {
-    public class MessagingProfileMetricsResponse : TelnyxResponse
+    public class MessagingProfileMetricsResponse : TelnyxResponse<List<MessagingProfileMetricsData>>
     {
-        /// <summary>
-        /// List of metrics for messaging profiles.
-        /// </summary>
-        [JsonPropertyName("data")]
-        public List<MessagingProfileMetricsData>? Data { get; set; }
-
-        /// <summary>
-        /// Metadata for pagination and result details.
-        /// </summary>
-        [JsonPropertyName("meta")]
-        public PaginationMeta? Meta { get; set; }
-
-        /// <summary>
-        /// Gets or sets any errors that occurred during the API request.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
     }
 
     public class MessagingProfileMetricsData

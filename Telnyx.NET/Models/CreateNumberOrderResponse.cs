@@ -2,14 +2,9 @@
 
 namespace Telnyx.NET.Models
 {
-    using System;
-    using System.Collections.Generic;
-    
-
-    public class CreateNumberOrderResponse : TelnyxResponse
+ 
+    public class CreateNumberOrderResponse : TelnyxResponse<CreateNumberOrderResponseData>
     {
-        [JsonPropertyName("data")]
-        public CreateNumberOrderResponseData Data { get; set; }
     }
 
     public class CreateNumberOrderResponseData
