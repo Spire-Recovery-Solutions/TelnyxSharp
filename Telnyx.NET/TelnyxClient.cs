@@ -14,7 +14,7 @@ namespace Telnyx.NET;
 
 public class TelnyxClient : ITelnyxClient, IDisposable
 {
-    private readonly IRestClient? _client;
+    private readonly IRestClient _client;
     private static readonly string DefaultLogPath = Path.Combine(Path.GetTempPath(), "TelnyxSDK", "logs");
     private readonly StreamWriter? _logWriter;
     private readonly FileStream? _logFileStream;
