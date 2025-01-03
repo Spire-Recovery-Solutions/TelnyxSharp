@@ -35,13 +35,14 @@ namespace Telnyx.NET
             return attribute?.Name ?? value.ToString();
         }
 
-        public static RestRequest AddFilterList(this RestRequest request, string key, List<string> values)
+        public static RestRequest AddFilterList(this RestRequest request, string key, List<string>? values)
         {
-            if (!values.Any()) return request;
+            if (values is null or { Count: 0 }) return request;
             foreach (var value in values.Where(v => !string.IsNullOrEmpty(v)))
             {
                 request.AddParameter($"{key}[]", value, ParameterType.QueryString);
             }
+
             return request;
         }
 
