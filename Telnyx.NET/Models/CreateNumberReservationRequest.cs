@@ -3,7 +3,7 @@ using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models;
 
-public class CreateNumberReservationRequest : NumberReservationRequest, ITelnyxRequest
+public class CreateNumberReservationRequest : ITelnyxRequest
 {
     [JsonPropertyName("customer_reference")]
     public string? CustomerReference { get; set; }

@@ -7,7 +7,7 @@ namespace Telnyx.NET.Models
     using System.Collections.Generic;
     
 
-    public class CreateNumberOrderRequest : NumberOrdersRequest, ITelnyxRequest
+    public class CreateNumberOrderRequest : ITelnyxRequest
     {
         [JsonPropertyName("phone_numbers")]
         public List<CreateNumberOrderPhoneNumber> PhoneNumbers { get; set; } = new List<CreateNumberOrderPhoneNumber>();

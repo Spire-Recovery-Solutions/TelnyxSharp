@@ -61,9 +61,6 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(NumberLookupPortability))]
     [JsonSerializable(typeof(NumberLookupType))]
     [JsonSerializable(typeof(NumberOrder))]
-    [JsonSerializable(typeof(NumberOrdersRequest))]
-    [JsonSerializable(typeof(NumberReservationRequest))]
-    [JsonSerializable(typeof(PhoneNumbersRequest))]
     [JsonSerializable(typeof(SendMessageRequest))]
     [JsonSerializable(typeof(SendMessageResponse))]
     [JsonSerializable(typeof(SendMessageData))]
@@ -146,7 +143,6 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(CreateMessagingProfileResponse))]
     [JsonSerializable(typeof(CreateMessagingProfileData))]
 
-    [JsonSerializable(typeof(RetrieveMessagingProfileRequest))]
     [JsonSerializable(typeof(RetrieveMessagingProfileResponse))]
     [JsonSerializable(typeof(RetrieveMessagingProfileData))]
 
@@ -154,7 +150,6 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(UpdateMessagingProfileResponse))]
     [JsonSerializable(typeof(UpdateMessagingProfileData))]
 
-    [JsonSerializable(typeof(DeleteMessagingProfileRequest))]
     [JsonSerializable(typeof(DeleteMessagingProfileResponse))]
     [JsonSerializable(typeof(DeleteMessagingProfileData))]
 
@@ -201,7 +196,6 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(GroupMmsMessageResponse))]
     [JsonSerializable(typeof(GroupMmsMessageData))]
 
-    [JsonSerializable(typeof(RetrieveMessageRequest))]
     [JsonSerializable(typeof(RetrieveMessageResponse))]
     [JsonSerializable(typeof(RetrieveMessageData))]
 
@@ -213,7 +207,6 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(ListShortCodesResponse))]
     [JsonSerializable(typeof(ShortCode))]
 
-    [JsonSerializable(typeof(RetrieveShortCodeRequest))]
     [JsonSerializable(typeof(RetrieveShortCodeResponse))]
     [JsonSerializable(typeof(ShortCodeDetail))]
 
@@ -226,7 +219,6 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(ListPhoneMessageSettingsResponse))]
     [JsonSerializable(typeof(PhoneNumberMessagingSettings))]
 
-    [JsonSerializable(typeof(RetrievePhoneMessageSettingsRequest))]
     [JsonSerializable(typeof(RetrievePhoneMessageSettingsResponse))]
     [JsonSerializable(typeof(RetrievePhoneMessageSettings))]
 
@@ -238,13 +230,11 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(UpdateNumbersMessagingBulkResponse))]
     [JsonSerializable(typeof(UpdateNumbersMessagingBulk))]
 
-    [JsonSerializable(typeof(RetrieveBulkUpdateStatusRequest))]
     [JsonSerializable(typeof(RetrieveBulkUpdateStatusResponse))]
     [JsonSerializable(typeof(RetrieveBulkUpdateStatus))]
 
     [JsonSerializable(typeof(BaseHostedNumberOrderData))]
 
-    [JsonSerializable(typeof(DeleteHostedNumberRequest))]
     [JsonSerializable(typeof(DeleteHostedNumberResponse))]
     [JsonSerializable(typeof(DeleteHostedNumberData))]
 
@@ -257,7 +247,6 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(CreateHostedNumberOrderResponse))]
     [JsonSerializable(typeof(CreateHostedNumberOrder))]
 
-    [JsonSerializable(typeof(RetrieveHostedNumberOrderRequest))]
     [JsonSerializable(typeof(RetrieveHostedNumberOrderResponse))]
     [JsonSerializable(typeof(RetrieveHostedNumberOrderData))]
 
@@ -275,7 +264,6 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(CreateAutoResponseSettingResponse))]
     [JsonSerializable(typeof(CreateAutoResponseSetting))]
 
-    [JsonSerializable(typeof(GetAutoResponseSettingRequest))]
     [JsonSerializable(typeof(GetAutoResponseSettingResponse))]
     [JsonSerializable(typeof(GetAutoResponseSetting))]
 
@@ -283,7 +271,6 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(UpdateAutoResponseSettingResponse))]
     [JsonSerializable(typeof(UpdateAutoResponseSetting))]
 
-    [JsonSerializable(typeof(DeleteAutoResponseSettingRequest))]
     [JsonSerializable(typeof(DeleteAutoResponseSettingResponse))]
 
     [JsonSerializable(typeof(BaseVerificationRequestResponse))]
@@ -297,10 +284,8 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(SubmitVerificationRequestRequest))]
     [JsonSerializable(typeof(SubmitVerificationRequestResponse))]
 
-    [JsonSerializable(typeof(GetVerificationRequestRequest))]
     [JsonSerializable(typeof(GetVerificationRequestResponse))]
 
-    [JsonSerializable(typeof(DeleteVerificationRequestRequest))]
     [JsonSerializable(typeof(DeleteVerificationRequestResponse))]
 
     [JsonSerializable(typeof(UpdateVerificationRequestRequest))]
@@ -317,22 +302,17 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(CreateBrandResponse))]
     [JsonSerializable(typeof(OptionalAttributes))]
 
-    [JsonSerializable(typeof(GetBrandRequest))]
     [JsonSerializable(typeof(GetBrandResponse))]
 
     [JsonSerializable(typeof(UpdateBrandRequest))]
     [JsonSerializable(typeof(UpdateBrandResponse))]
 
-    [JsonSerializable(typeof(DeleteBrandRequest))]
     [JsonSerializable(typeof(DeleteBrandResponse))]
 
-    [JsonSerializable(typeof(ResendBrand2FAEmailRequest))]
     [JsonSerializable(typeof(ResendBrand2FAEmailResponse))]
 
-    [JsonSerializable(typeof(RevetBrandRequest))]
     [JsonSerializable(typeof(RevetBrandResponse))]
 
-    [JsonSerializable(typeof(ListExternalVettingRequest))]
     [JsonSerializable(typeof(ListExternalVettingResponse))]
 
     [JsonSerializable(typeof(ImportExternalVettingRequest))]
@@ -341,7 +321,6 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(OrderExternalVettingRequest))]
     [JsonSerializable(typeof(OrderExternalVettingResponse))]
 
-    [JsonSerializable(typeof(GetBrandFeedbackRequest))]
     [JsonSerializable(typeof(GetBrandFeedbackResponse))]
     [JsonSerializable(typeof(Category))]
 
@@ -349,19 +328,15 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(ListCampaignsResponse))]
     [JsonSerializable(typeof(CampaignRecord))]
 
-    [JsonSerializable(typeof(GetCampaignRequest))]
     [JsonSerializable(typeof(GetCampaignResponse))]
 
     [JsonSerializable(typeof(UpdateCampaignRequest))]
     [JsonSerializable(typeof(UpdateCampaignResponse))]
 
-    [JsonSerializable(typeof(DeactivateCampaignRequest))]
     [JsonSerializable(typeof(DeactivateCampaignResponse))]
 
-    [JsonSerializable(typeof(GetCampaignOperationStatusRequest))]
     [JsonSerializable(typeof(GetCampaignOperationStatusResponse))]
 
-    [JsonSerializable(typeof(GetCampaignOsrAttributesRequest))]
     [JsonSerializable(typeof(GetCampaignOsrAttributesResponse))]
 
     [JsonSerializable(typeof(GetCampaignCostRequest))]
@@ -373,15 +348,12 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(QualifyCampaignByUsecaseRequest))]
     [JsonSerializable(typeof(QualifyCampaignByUsecaseResponse))]
 
-    [JsonSerializable(typeof(AcceptSharedCampaignRequest))]
     [JsonSerializable(typeof(AcceptSharedCampaignResponse))]
 
-    [JsonSerializable(typeof(GetCampaignMnoMetadataRequest))]
     [JsonSerializable(typeof(GetCampaignMnoMetadataResponse))]
     [JsonSerializable(typeof(MnoMetadataDetail))]
 
     [JsonSerializable(typeof(GetCampaignSharingStatusResponse))]
-    [JsonSerializable(typeof(GetCampaignSharingStatusRequest))]
     [JsonSerializable(typeof(SharingStatusDetail))]
 
     [JsonSerializable(typeof(RetrievePhoneNumberCampaignsRequest))]
@@ -391,13 +363,11 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(CreatePhoneNumberCampaignRequest))]
     [JsonSerializable(typeof(CreatePhoneNumberCampaignResponse))]
 
-    [JsonSerializable(typeof(GetPhoneNumberCampaignRequest))]
     [JsonSerializable(typeof(GetPhoneNumberCampaignResponse))]
 
     [JsonSerializable(typeof(UpdatePhoneNumberCampaignRequest))]
     [JsonSerializable(typeof(UpdatePhoneNumberCampaignResponse))]
 
-    [JsonSerializable(typeof(DeletePhoneNumberCampaignRequest))]
     [JsonSerializable(typeof(DeletePhoneNumberCampaignResponse))]
 
     [JsonSerializable(typeof(AssignMessagingProfileToCampaignRequest))]
@@ -408,7 +378,6 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(GetPhoneNumberStatusRequest))]
 
     [JsonSerializable(typeof(GetAssignmentTaskStatusResponse))]
-    [JsonSerializable(typeof(GetAssignmentTaskStatusRequest))]
 
     [JsonSerializable(typeof(BaseSharedCampaigns))]
 
@@ -417,19 +386,16 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(SharedCampaignRecord))]
 
     [JsonSerializable(typeof(GetSharedCampaignRecordResponse))]
-    [JsonSerializable(typeof(GetSharedCampaignRecordRequest))]
 
     [JsonSerializable(typeof(UpdateSingleSharedCampaignRequest))]
     [JsonSerializable(typeof(UpdateSingleSharedCampaignResponse))]
 
-    [JsonSerializable(typeof(GetSharingStatusRequest))]
     [JsonSerializable(typeof(GetSharingStatusResponse))]
 
     [JsonSerializable(typeof(GetPartnerCampaignsSharedByUserRequest))]
     [JsonSerializable(typeof(GetPartnerCampaignsSharedByUserResponse))]
     [JsonSerializable(typeof(PartnerCampaignsSharedByUser))]
 
-    [JsonSerializable(typeof(GetEnumRequest))]
     [JsonSerializable(typeof(GetEnumResponse))]
 
 
