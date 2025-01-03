@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response for a message retrieval request.
     /// </summary>
-    public class RetrieveMessageResponse : ITelnyxResponse
+    public class RetrieveMessageResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the data associated with the retrieved message.

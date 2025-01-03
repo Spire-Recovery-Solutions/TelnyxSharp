@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response received after uploading files for a hosted number order.
     /// </summary>
-    public class UploadFileHostedNumberOrderResponse : ITelnyxResponse
+    public class UploadFileHostedNumberOrderResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the data associated with the uploaded hosted number order files.

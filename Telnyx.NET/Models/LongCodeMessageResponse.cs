@@ -7,7 +7,7 @@ namespace Telnyx.NET.Models
     /// Represents the response received from the Telnyx API after sending a long code message.
     /// Includes data about the message and any errors encountered during the API call.
     /// </summary>
-    public class LongCodeMessageResponse : ITelnyxResponse
+    public class LongCodeMessageResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the detailed message data returned by the API.

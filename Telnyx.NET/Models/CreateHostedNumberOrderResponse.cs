@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response for creating a messaging hosted number order.
     /// </summary>
-    public class CreateHostedNumberOrderResponse : ITelnyxResponse
+    public class CreateHostedNumberOrderResponse : TelnyxResponse
     {
         [JsonPropertyName("data")]
         public CreateHostedNumberOrder? Data { get; set; }

@@ -7,7 +7,7 @@ namespace Telnyx.NET.Models
     /// Represents the response for qualifying a campaign based on its use case.
     /// This includes details about fees, sub-usecase constraints, and metadata.
     /// </summary>
-    public class QualifyCampaignByUsecaseResponse : ITelnyxResponse
+    public class QualifyCampaignByUsecaseResponse : TelnyxResponse
     {
         /// <summary>
         /// The annual fee associated with the campaign's use case.

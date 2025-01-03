@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response for listing shared campaigns.
     /// </summary>
-    public class ListSharedCampaignsResponse : ITelnyxResponse
+    public class ListSharedCampaignsResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the list of shared campaign records.

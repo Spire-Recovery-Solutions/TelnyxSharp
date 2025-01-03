@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response for a list of verification requests.
     /// </summary>
-    public class ListVerificationRequestsResponse : ITelnyxResponse
+    public class ListVerificationRequestsResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the collection of verification request records.

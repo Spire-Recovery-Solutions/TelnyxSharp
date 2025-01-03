@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response for retrieving the status of an assignment task.
     /// </summary>
-    public class GetAssignmentTaskStatusResponse : ITelnyxResponse
+    public class GetAssignmentTaskStatusResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the task ID associated with the assignment task.

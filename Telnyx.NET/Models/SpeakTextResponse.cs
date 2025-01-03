@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response from the Speak Text API call.
     /// </summary>
-    public class SpeakTextResponse : ITelnyxResponse
+    public class SpeakTextResponse : TelnyxResponse
     {
         /// <summary>
         /// The data object containing the result of the Speak Text API call.

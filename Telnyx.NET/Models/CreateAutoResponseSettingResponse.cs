@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response after creating an auto-response setting in the Telnyx API.
     /// </summary>
-    public class CreateAutoResponseSettingResponse : ITelnyxResponse
+    public class CreateAutoResponseSettingResponse : TelnyxResponse
     {
         /// <summary>
         /// Contains the details of the created auto-response setting.

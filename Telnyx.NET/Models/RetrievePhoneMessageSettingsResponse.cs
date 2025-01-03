@@ -7,7 +7,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response for retrieving messaging settings of a specific phone number.
     /// </summary>
-    public class RetrievePhoneMessageSettingsResponse : ITelnyxResponse
+    public class RetrievePhoneMessageSettingsResponse : TelnyxResponse
     {
         /// <summary>
         /// The messaging settings for the requested phone number.

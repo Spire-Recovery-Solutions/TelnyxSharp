@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response returned after sending a message via the Telnyx API.
     /// </summary>
-    public partial class SendMessageResponse : ITelnyxResponse
+    public partial class SendMessageResponse : TelnyxResponse
     {
         /// <summary>
         /// Contains the data associated with the sent message.

@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response after deleting a messaging hosted number.
     /// </summary>
-    public class DeleteHostedNumberResponse : ITelnyxResponse
+    public class DeleteHostedNumberResponse : TelnyxResponse
     {
         [JsonPropertyName("data")]
         public DeleteHostedNumberData? Data { get; set; }

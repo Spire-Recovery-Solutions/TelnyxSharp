@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response containing metrics for a messaging profile.
     /// </summary>
-    public class RetrieveMessagingProfileMetricsResponse : ITelnyxResponse
+    public class RetrieveMessagingProfileMetricsResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the metrics data for the messaging profile.
