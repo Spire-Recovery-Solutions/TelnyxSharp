@@ -67,7 +67,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task<NumberLookupResponse?> NumberLookup(NumberLookupRequest request,
+    public async Task<NumberLookupResponse> NumberLookup(NumberLookupRequest request,
         CancellationToken cancellationToken = default)
     {
         var req = new RestRequest($"number_lookup/{request.PhoneNumber}");
@@ -91,7 +91,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task<AvailablePhoneNumbersResponse?> AvailablePhoneNumbers(AvailablePhoneNumbersRequest request,
+    public async Task<AvailablePhoneNumbersResponse> AvailablePhoneNumbers(AvailablePhoneNumbersRequest request,
         CancellationToken cancellationToken = default)
     {
         var req = new RestRequest("available_phone_numbers")
@@ -116,7 +116,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
 
     /// <inheritdoc />
-    public async Task<ListNumberOrdersResponse?> ListNumberOrders(ListNumberOrdersRequest request,
+    public async Task<ListNumberOrdersResponse> ListNumberOrders(ListNumberOrdersRequest request,
         CancellationToken cancellationToken = default)
     {
         var req = new RestRequest("number_orders")
@@ -131,7 +131,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task<RetrieveMessagingProfileResponse?> RetrieveMessagingProfile(string id,
+    public async Task<RetrieveMessagingProfileResponse> RetrieveMessagingProfile(string id,
         CancellationToken cancellationToken = default)
     {
         var req = new RestRequest($"messaging_profiles/{id}");
@@ -139,14 +139,14 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task<GetNumberOrderResponse?> GetNumberOrder(string numberOrderId,
+    public async Task<GetNumberOrderResponse> GetNumberOrder(string numberOrderId,
         CancellationToken cancellationToken = default)
     {
         var req = new RestRequest($"number_orders/{numberOrderId}");
         return await ExecuteAsync<GetNumberOrderResponse>(req, cancellationToken);
     }
 
-    public async Task<CreateNumberOrderResponse?> CreateNumberOrder(CreateNumberOrderRequest request,
+    public async Task<CreateNumberOrderResponse> CreateNumberOrder(CreateNumberOrderRequest request,
         CancellationToken cancellationToken = default)
     {
         try
@@ -163,7 +163,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task<UpdateNumberVoiceSettingsResponse?> UpdateNumberVoiceSettings(string phoneNumberId,
+    public async Task<UpdateNumberVoiceSettingsResponse> UpdateNumberVoiceSettings(string phoneNumberId,
         UpdateNumberVoiceSettingsRequest request, CancellationToken cancellationToken = default)
     {
         var success = false;
@@ -190,7 +190,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task<ListNumbersResponse?> ListNumbers(ListNumbersRequest request,
+    public async Task<ListNumbersResponse> ListNumbers(ListNumbersRequest request,
         CancellationToken cancellationToken = default)
     {
         var req = new RestRequest("phone_numbers").AddFilterList("tag", request.Tags)
@@ -212,7 +212,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task<ListPortingOrdersResponse?> ListPortingOrders(ListPortingOrdersRequest request,
+    public async Task<ListPortingOrdersResponse> ListPortingOrders(ListPortingOrdersRequest request,
         CancellationToken cancellationToken = default)
     {
         var req = new RestRequest("porting_orders")
@@ -226,7 +226,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task<ListPortingPhoneNumbersResponse?> ListPortingPhoneNumbers(
+    public async Task<ListPortingPhoneNumbersResponse> ListPortingPhoneNumbers(
         ListPortingPhoneNumbersRequest request, CancellationToken cancellationToken = default)
     {
         var req = new RestRequest($"porting_phone_numbers")
@@ -245,7 +245,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task<CreateNumberReservationResponse?> CreateNumberReservation(
+    public async Task<CreateNumberReservationResponse> CreateNumberReservation(
         CreateNumberReservationRequest request, CancellationToken cancellationToken = default)
     {
         try
@@ -267,7 +267,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task<UpdateNumberConfigurationResponse?> UpdateNumberConfiguration(string phoneNumberId,
+    public async Task<UpdateNumberConfigurationResponse> UpdateNumberConfiguration(string phoneNumberId,
         UpdateNumberConfigurationRequest request, CancellationToken cancellationToken = default)
     {
         var req = new RestRequest($"phone_numbers/{phoneNumberId}", Method.Patch);
@@ -290,7 +290,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task<SendMessageResponse?> SendMessage(SendMessageRequest request,
+    public async Task<SendMessageResponse> SendMessage(SendMessageRequest request,
         CancellationToken cancellationToken = default)
     {
         var req = new RestRequest("messages", Method.Post);
@@ -301,7 +301,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task<DialResponse?> Dial(DialRequest request, CancellationToken cancellationToken = default)
+    public async Task<DialResponse> Dial(DialRequest request, CancellationToken cancellationToken = default)
     {
         var req = new RestRequest("calls", Method.Post);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
@@ -309,7 +309,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task<AnswerCallResponse?> AnswerCall(string callControlId, AnswerCallRequest request,
+    public async Task<AnswerCallResponse> AnswerCall(string callControlId, AnswerCallRequest request,
         CancellationToken cancellationToken = default)
     {
         var req = new RestRequest($"calls/{callControlId}/actions/answer", Method.Post);
@@ -318,7 +318,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task<HangupCallResponse?> HangupCall(string callControlId, HangupCallRequest request,
+    public async Task<HangupCallResponse> HangupCall(string callControlId, HangupCallRequest request,
         CancellationToken cancellationToken = default)
     {
         var req = new RestRequest($"calls/{callControlId}/actions/hangup", Method.Post);
@@ -327,7 +327,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task<RejectCallResponse?> RejectCall(string callControlId, RejectCallRequest request,
+    public async Task<RejectCallResponse> RejectCall(string callControlId, RejectCallRequest request,
         CancellationToken cancellationToken = default)
     {
         var req = new RestRequest($"calls/{callControlId}/actions/reject", Method.Post);

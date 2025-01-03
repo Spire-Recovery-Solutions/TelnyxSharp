@@ -15,7 +15,7 @@ namespace Telnyx.NET.Interfaces
         /// <param name="request">The request containing the phone number to look up.</param>
         /// <param name="cancellationToken">Optional cancellation token for the operation.</param>
         /// <returns>A <see cref="NumberLookupResponse"/> containing the result of the lookup.</returns>
-        Task<NumberLookupResponse?> NumberLookup(NumberLookupRequest request, CancellationToken cancellationToken = default);
+        Task<NumberLookupResponse> NumberLookup(NumberLookupRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Retrieves a list of available phone numbers based on specified criteria.
@@ -23,7 +23,7 @@ namespace Telnyx.NET.Interfaces
         /// <param name="request">The request specifying the criteria for available numbers.</param>
         /// <param name="cancellationToken">Optional cancellation token for the operation.</param>
         /// <returns>A <see cref="AvailablePhoneNumbersResponse"/> containing the available phone numbers.</returns>
-        Task<AvailablePhoneNumbersResponse?> AvailablePhoneNumbers(AvailablePhoneNumbersRequest request, CancellationToken cancellationToken = default);
+        Task<AvailablePhoneNumbersResponse> AvailablePhoneNumbers(AvailablePhoneNumbersRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists all number orders made by the user.
@@ -31,7 +31,7 @@ namespace Telnyx.NET.Interfaces
         /// <param name="request">The request containing filters for listing number orders.</param>
         /// <param name="cancellationToken">Optional cancellation token for the operation.</param>
         /// <returns>A <see cref="ListNumberOrdersResponse"/> containing the list of number orders.</returns>
-        Task<ListNumberOrdersResponse?> ListNumberOrders(ListNumberOrdersRequest request, CancellationToken cancellationToken = default);
+        Task<ListNumberOrdersResponse> ListNumberOrders(ListNumberOrdersRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Retrieves details of a specific number order by its ID.
@@ -39,7 +39,7 @@ namespace Telnyx.NET.Interfaces
         /// <param name="numberOrderId">The ID of the number order to retrieve.</param>
         /// <param name="cancellationToken">Optional cancellation token for the operation.</param>
         /// <returns>A <see cref="GetNumberOrderResponse"/> containing details of the specified number order.</returns>
-        Task<GetNumberOrderResponse?> GetNumberOrder(string numberOrderId, CancellationToken cancellationToken = default);
+        Task<GetNumberOrderResponse> GetNumberOrder(string numberOrderId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new number order based on the provided request.
@@ -47,7 +47,7 @@ namespace Telnyx.NET.Interfaces
         /// <param name="request">The request containing details for creating the number order.</param>
         /// <param name="cancellationToken">Optional cancellation token for the operation.</param>
         /// <returns>A <see cref="CreateNumberOrderResponse"/> containing the result of the creation.</returns>
-        Task<CreateNumberOrderResponse?> CreateNumberOrder(CreateNumberOrderRequest request, CancellationToken cancellationToken = default);
+        Task<CreateNumberOrderResponse> CreateNumberOrder(CreateNumberOrderRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates the voice settings for a specified phone number.
@@ -56,7 +56,7 @@ namespace Telnyx.NET.Interfaces
         /// <param name="request">The request containing the new voice settings.</param>
         /// <param name="cancellationToken">Optional cancellation token for the operation.</param>
         /// <returns>A <see cref="UpdateNumberVoiceSettingsResponse"/> containing the result of the update.</returns>
-        Task<UpdateNumberVoiceSettingsResponse?> UpdateNumberVoiceSettings(string phoneNumberId, UpdateNumberVoiceSettingsRequest request, CancellationToken cancellationToken = default);
+        Task<UpdateNumberVoiceSettingsResponse> UpdateNumberVoiceSettings(string phoneNumberId, UpdateNumberVoiceSettingsRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists all phone numbers associated with the user's account.
@@ -64,7 +64,7 @@ namespace Telnyx.NET.Interfaces
         /// <param name="request">The request containing filters for listing phone numbers.</param>
         /// <param name="cancellationToken">Optional cancellation token for the operation.</param>
         /// <returns>A <see cref="ListNumbersResponse"/> containing the list of phone numbers.</returns>
-        Task<ListNumbersResponse?> ListNumbers(ListNumbersRequest request, CancellationToken cancellationToken = default);
+        Task<ListNumbersResponse> ListNumbers(ListNumbersRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists all porting orders made by the user.
@@ -72,7 +72,7 @@ namespace Telnyx.NET.Interfaces
         /// <param name="request">The request containing filters for listing porting orders.</param>
         /// <param name="cancellationToken">Optional cancellation token for the operation.</param>
         /// <returns>A <see cref="ListPortingOrdersResponse"/> containing the list of porting orders.</returns>
-        Task<ListPortingOrdersResponse?> ListPortingOrders(ListPortingOrdersRequest request, CancellationToken cancellationToken = default);
+        Task<ListPortingOrdersResponse> ListPortingOrders(ListPortingOrdersRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists all phone numbers associated with porting orders.
@@ -80,7 +80,7 @@ namespace Telnyx.NET.Interfaces
         /// <param name="request">The request containing filters for listing porting phone numbers.</param>
         /// <param name="cancellationToken">Optional cancellation token for the operation.</param>
         /// <returns>A <see cref="ListPortingPhoneNumbersResponse"/> containing the list of porting phone numbers.</returns>
-        Task<ListPortingPhoneNumbersResponse?> ListPortingPhoneNumbers(ListPortingPhoneNumbersRequest request, CancellationToken cancellationToken = default);
+        Task<ListPortingPhoneNumbersResponse> ListPortingPhoneNumbers(ListPortingPhoneNumbersRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new number reservation based on the provided request.
@@ -88,7 +88,7 @@ namespace Telnyx.NET.Interfaces
         /// <param name="request">The request containing details for creating the number reservation.</param>
         /// <param name="cancellationToken">Optional cancellation token for the operation.</param>
         /// <returns>A <see cref="CreateNumberReservationResponse"/> containing the result of the creation.</returns>
-        Task<CreateNumberReservationResponse?> CreateNumberReservation(CreateNumberReservationRequest request, CancellationToken cancellationToken = default);
+        Task<CreateNumberReservationResponse> CreateNumberReservation(CreateNumberReservationRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates the configuration for a specified phone number.
@@ -97,7 +97,7 @@ namespace Telnyx.NET.Interfaces
         /// <param name="request">The request containing the new configuration settings.</param>
         /// <param name="cancellationToken">Optional cancellation token for the operation.</param>
         /// <returns>A <see cref="UpdateNumberConfigurationResponse"/> containing the result of the update.</returns>
-        Task<UpdateNumberConfigurationResponse?> UpdateNumberConfiguration(string phoneNumberId, UpdateNumberConfigurationRequest request, CancellationToken cancellationToken = default);
+        Task<UpdateNumberConfigurationResponse> UpdateNumberConfiguration(string phoneNumberId, UpdateNumberConfigurationRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Removes a specified phone number or object by its ID.
@@ -113,7 +113,7 @@ namespace Telnyx.NET.Interfaces
         /// <param name="request">The request containing the message details.</param>
         /// <param name="cancellationToken">Optional cancellation token for the operation.</param>
         /// <returns>A <see cref="SendMessageResponse"/> containing the result of the send operation.</returns>
-        Task<SendMessageResponse?> SendMessage(SendMessageRequest request, CancellationToken cancellationToken = default);
+        Task<SendMessageResponse> SendMessage(SendMessageRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Initiates a call based on the provided request details.
@@ -121,7 +121,7 @@ namespace Telnyx.NET.Interfaces
         /// <param name="request">The request containing the call details.</param>
         /// <param name="cancellationToken">Optional cancellation token for the operation.</param>
         /// <returns>A <see cref="DialResponse"/> containing the result of the dial operation.</returns>
-        Task<DialResponse?> Dial(DialRequest request, CancellationToken cancellationToken = default);
+        Task<DialResponse> Dial(DialRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Answers an incoming call based on the provided call control ID.
@@ -130,7 +130,7 @@ namespace Telnyx.NET.Interfaces
         /// <param name="request">The request containing details for answering the call.</param>
         /// <param name="cancellationToken">Optional cancellation token for the operation.</param>
         /// <returns>A <see cref="AnswerCallResponse"/> containing the result of the answer operation.</returns>
-        Task<AnswerCallResponse?> AnswerCall(string callControlId, AnswerCallRequest request, CancellationToken cancellationToken = default);
+        Task<AnswerCallResponse> AnswerCall(string callControlId, AnswerCallRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Hangs up a call based on the provided call control ID.
@@ -139,7 +139,7 @@ namespace Telnyx.NET.Interfaces
         /// <param name="request">The request containing details for hanging up the call.</param>
         /// <param name="cancellationToken">Optional cancellation token for the operation.</param>
         /// <returns>A <see cref="HangupCallResponse"/> containing the result of the hangup operation.</returns>
-        Task<HangupCallResponse?> HangupCall(string callControlId, HangupCallRequest request, CancellationToken cancellationToken = default);
+        Task<HangupCallResponse> HangupCall(string callControlId, HangupCallRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Rejects an incoming call based on the provided call control ID.
