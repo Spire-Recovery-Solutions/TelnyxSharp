@@ -48,7 +48,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         // Only add logging interceptor if not in test mode
         if (_logWriter != null)
         {
-            options.Interceptors = [new TelnyxLoggingInterceptor(_logWriter)];
+            options.Interceptors = [new TelnyxAsyncLoggingInterceptor(_logWriter)];
         }
 
         _rateLimitRetryPolicy = Policy

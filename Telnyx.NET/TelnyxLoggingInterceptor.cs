@@ -5,33 +5,89 @@ using RestSharp.Interceptors;
 namespace Telnyx.NET;
 
 /// <summary>
-/// Interceptor for logging Telnyx API requests and responses
+/// Interceptor for asynchronously logging Telnyx API requests and responses
 /// </summary>
-public class TelnyxLoggingInterceptor(StreamWriter logWriter) : Interceptor, IDisposable
+public class TelnyxAsyncLoggingInterceptor : Interceptor, IDisposable
 {
-    private readonly StreamWriter _logWriter = logWriter ?? throw new ArgumentNullException(nameof(logWriter));
-    private readonly Lock _logLock = new();
+    private readonly StreamWriter _logWriter;
+    private readonly ConcurrentQueue<string> _logQueue;
+    private readonly CancellationTokenSource _cancellationSource;
+    private readonly Task _processTask;
+    private readonly TimeSpan _flushInterval;
     private bool _disposed;
-    
-    // Use ConcurrentDictionary instead of HashSet for thread safety
-    private readonly ConcurrentDictionary<string, byte> _processedRequests = new();
-    private readonly ConcurrentDictionary<string, byte> _processedResponses = new();
 
-    private void LogMessage(string message)
+    // Track processed requests/responses to avoid duplicates
+    private readonly ConcurrentDictionary<string, byte> _processedRequests;
+    private readonly ConcurrentDictionary<string, byte> _processedResponses;
+
+    public TelnyxAsyncLoggingInterceptor(StreamWriter logWriter, TimeSpan? flushInterval = null)
     {
-        if (_disposed) return;
+        _logWriter = logWriter ?? throw new ArgumentNullException(nameof(logWriter));
+        _logQueue = new ConcurrentQueue<string>();
+        _cancellationSource = new CancellationTokenSource();
+        _flushInterval = flushInterval ?? TimeSpan.FromSeconds(1);
+        _processedRequests = new ConcurrentDictionary<string, byte>();
+        _processedResponses = new ConcurrentDictionary<string, byte>();
 
-        lock (_logLock)
+        // Start background processing task
+        _processTask = ProcessLogsAsync(_cancellationSource.Token);
+    }
+
+    private async Task ProcessLogsAsync(CancellationToken cancellationToken)
+    {
+        while (!cancellationToken.IsCancellationRequested)
         {
             try
             {
-                _logWriter.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] {message}");
-                _logWriter.Flush(); // Ensure writes are flushed
+                // Process all currently queued messages
+                while (_logQueue.TryDequeue(out var message))
+                {
+                    await _logWriter.WriteLineAsync(message);
+                }
+
+                await _logWriter.FlushAsync(cancellationToken);
+                await Task.Delay(_flushInterval, cancellationToken);
             }
-            catch (ObjectDisposedException)
+            catch (OperationCanceledException)
             {
-                // Log writer was disposed, ignore
+                break;
             }
+            catch (Exception ex)
+            {
+                // Log processing error - in a production environment, 
+                // you might want to emit this to a different error log
+                try
+                {
+                    await _logWriter.WriteLineAsync($"Error processing logs: {ex}");
+                    await _logWriter.FlushAsync(cancellationToken);
+                }
+                catch
+                {
+                    // Ignore errors during error logging
+                }
+            }
+        }
+
+        // Final flush on shutdown
+        try
+        {
+            while (_logQueue.TryDequeue(out var message))
+            {
+                await _logWriter.WriteLineAsync(message);
+            }
+            await _logWriter.FlushAsync(cancellationToken);
+        }
+        catch
+        {
+            // Ignore errors during shutdown
+        }
+    }
+
+    private void EnqueueMessage(string message)
+    {
+        if (!_disposed)
+        {
+            _logQueue.Enqueue($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] {message}");
         }
     }
 
@@ -79,11 +135,11 @@ public class TelnyxLoggingInterceptor(StreamWriter logWriter) : Interceptor, IDi
                 }
             }
 
-            LogMessage(sb.ToString());
+            EnqueueMessage(sb.ToString());
         }
         catch (Exception ex)
         {
-            LogMessage($"Error logging request: {ex}");
+            EnqueueMessage($"Error logging request: {ex}");
         }
     }
 
@@ -129,11 +185,11 @@ public class TelnyxLoggingInterceptor(StreamWriter logWriter) : Interceptor, IDi
                 sb.AppendLine(content);
             }
 
-            LogMessage(sb.ToString());
+            EnqueueMessage(sb.ToString());
         }
         catch (Exception ex)
         {
-            LogMessage($"Error logging response: {ex}");
+            EnqueueMessage($"Error logging response: {ex}");
         }
     }
 
@@ -142,20 +198,49 @@ public class TelnyxLoggingInterceptor(StreamWriter logWriter) : Interceptor, IDi
         if (_disposed) return;
 
         _disposed = true;
+
         try
         {
-            lock (_logLock)
+            // Signal the processing task to stop
+            _cancellationSource.Cancel();
+            
+            // Wait for the processing task to complete (with timeout)
+            if (!_processTask.Wait(TimeSpan.FromSeconds(5)))
             {
-                _logWriter?.Flush();
+                // If task didn't complete in time, force a final flush
+                while (_logQueue.TryDequeue(out var message))
+                {
+                    _logWriter.WriteLine(message);
+                }
+                _logWriter.Flush();
             }
         }
         catch
         {
-            // Ignore disposal errors
+            // If async wait failed, attempt one final synchronous flush
+            try
+            {
+                while (_logQueue.TryDequeue(out var message))
+                {
+                    _logWriter.WriteLine(message);
+                }
+                _logWriter.Flush();
+            }
+            catch
+            {
+                // Ignore final flush errors
+            }
         }
-
-        // Clear the tracking collections
-        _processedRequests.Clear();
-        _processedResponses.Clear();
+        finally
+        {
+            _cancellationSource.Dispose();
+            
+            // Clear the tracking collections
+            _processedRequests.Clear();
+            _processedResponses.Clear();
+            
+            // Clear any remaining items in queue (should be empty at this point)
+            while (_logQueue.TryDequeue(out _)) { }
+        }
     }
 }
