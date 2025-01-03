@@ -5,7 +5,7 @@ using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models;
 
-public class UpdateNumberConfigurationRequest : PhoneNumbersRequest, ITelnyxRequest
+public class UpdateNumberConfigurationRequest : ITelnyxRequest
 {
     [JsonPropertyName("tags")]
     public List<string>? Tags { get; set; }

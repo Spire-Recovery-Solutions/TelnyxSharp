@@ -2,7 +2,7 @@
 
 namespace Telnyx.NET.Models;
 
-public class ListNumberOrdersRequest : NumberOrdersRequest, ITelnyxRequest
+public class ListNumberOrdersRequest : ITelnyxRequest
 {
     public string?  Status { get; set; }
     public string?  CreatedAfter { get; set; }
