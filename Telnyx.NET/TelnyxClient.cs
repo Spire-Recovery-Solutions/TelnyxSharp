@@ -24,7 +24,15 @@ public class TelnyxClient : ITelnyxClient, IDisposable
 
     public TelnyxClient(string apiKey)
     {
-        if (!string.IsNullOrEmpty(apiKey)) // Check if we're in test mode
+        var options = new RestClientOptions("https://api.telnyx.com/v2/")
+        {
+            Authenticator = new JwtAuthenticator(apiKey),
+            ThrowOnDeserializationError = false,
+            ThrowOnAnyError = false,
+        };
+        
+        const bool debugMode = false;
+        if (debugMode)
         {
             Directory.CreateDirectory(DefaultLogPath);
             var logFileName = $"telnyx-debug-{DateTime.Now:yyyy-MM-dd}.log";
@@ -36,19 +44,10 @@ public class TelnyxClient : ITelnyxClient, IDisposable
             _logWriter.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] TelnyxSDK Debug Log File: {logFilePath}");
             _logWriter.WriteLine(
                 $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] Session Started: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
-        }
 
-        var options = new RestClientOptions("https://api.telnyx.com/v2/")
-        {
-            Authenticator = new JwtAuthenticator(apiKey),
-            ThrowOnDeserializationError = false,
-            ThrowOnAnyError = false,
-        };
-
-        // Only add logging interceptor if not in test mode
-        if (_logWriter != null)
-        {
             options.Interceptors = [new TelnyxAsyncLoggingInterceptor(_logWriter)];
+            options.ThrowOnAnyError = debugMode;
+            options.ThrowOnDeserializationError = debugMode;
         }
 
         _rateLimitRetryPolicy = Policy
