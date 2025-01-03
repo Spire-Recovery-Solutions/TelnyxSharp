@@ -9,6 +9,7 @@ using System.Text.Json;
 using Telnyx.NET.Enums;
 using Telnyx.NET.Interfaces;
 using Telnyx.NET.Models;
+using Telnyx.NET.Models.Events;
 
 namespace Telnyx.NET;
 

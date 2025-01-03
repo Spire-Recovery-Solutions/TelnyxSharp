@@ -3,7 +3,7 @@ using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models;
 
-public class UpdateNumberVoiceSettingsRequest : PhoneNumbersRequest, ITelnyxRequest
+public class UpdateNumberVoiceSettingsRequest : ITelnyxRequest
 {
     [JsonPropertyName("tech_prefix_enabled")]
     public bool? TechPrefixEnabled { get; set; }
