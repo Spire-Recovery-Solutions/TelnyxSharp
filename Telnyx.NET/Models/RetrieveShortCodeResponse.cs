@@ -6,19 +6,8 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response for retrieving a specific short code.
     /// </summary>
-    public class RetrieveShortCodeResponse : TelnyxResponse
+    public class RetrieveShortCodeResponse : TelnyxResponse<ShortCodeDetail>
     {
-        /// <summary>
-        /// The payload containing details of the retrieved short code.
-        /// </summary>
-        [JsonPropertyName("data")]
-        public ShortCodeDetail? Data { get; set; }
-
-        /// <summary>
-        /// Represents any errors encountered during the message sending process.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
     }
 
     /// <summary>

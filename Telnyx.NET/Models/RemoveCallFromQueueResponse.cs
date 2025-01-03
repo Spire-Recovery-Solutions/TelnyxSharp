@@ -5,14 +5,8 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response from the Telnyx API when removing a call from a queue.
     /// </summary>
-    public class RemoveCallFromQueueResponse : TelnyxResponse
+    public class RemoveCallFromQueueResponse : TelnyxResponse<RemoveCallFromQueueResponseData>
     {
-        /// <summary>
-        /// Gets or sets the result of the remove call operation.
-        /// This property contains information about the outcome of the API request.
-        /// </summary>
-        [JsonPropertyName("data")]
-        public RemoveCallFromQueueResponseData? Data { get; set; }
         
     }
 

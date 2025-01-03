@@ -5,19 +5,8 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response for a message retrieval request.
     /// </summary>
-    public class RetrieveMessageResponse : TelnyxResponse
+    public class RetrieveMessageResponse : TelnyxResponse<RetrieveMessageData>
     {
-        /// <summary>
-        /// Gets or sets the data associated with the retrieved message.
-        /// </summary>
-        [JsonPropertyName("data")]
-        public RetrieveMessageData? Data { get; set; }
-
-        /// <summary>
-        /// Represents any errors encountered during the message sending process.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
     }
 
     /// <summary>

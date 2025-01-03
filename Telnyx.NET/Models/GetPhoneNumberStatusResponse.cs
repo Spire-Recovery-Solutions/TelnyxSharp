@@ -12,12 +12,6 @@ namespace Telnyx.NET.Models
         /// </summary>
         [JsonPropertyName("records")]
         public List<PhoneNumberStatusRecord>? Records { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of errors, if any, that occurred during the API call.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
     }
 
     /// <summary>

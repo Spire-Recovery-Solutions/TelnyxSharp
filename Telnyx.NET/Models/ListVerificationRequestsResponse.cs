@@ -18,12 +18,6 @@ namespace Telnyx.NET.Models
         /// </summary>
         [JsonPropertyName("total_records")]
         public int? TotalRecords { get; set; }
-
-        /// <summary>
-        /// Represents any errors encountered during the API call.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
     }
 
     /// <summary>

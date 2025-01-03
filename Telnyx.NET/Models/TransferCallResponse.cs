@@ -5,19 +5,8 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response from the Transfer Call API.
     /// </summary>
-    public class TransferCallResponse : TelnyxResponse
+    public class TransferCallResponse : TelnyxResponse<TransferCallResponseData>
     {
-        /// <summary>
-        /// Gets or sets the data object containing the result of the Transfer Call operation.
-        /// </summary>
-        [JsonPropertyName("data")]
-        public TransferCallResponseData? Data { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of errors encountered during the API call, if any.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
     }
 
     /// <summary>

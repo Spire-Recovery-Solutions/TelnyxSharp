@@ -8,11 +8,5 @@ namespace Telnyx.NET.Models
     /// </summary>
     public class DeleteAutoResponseSettingResponse : TelnyxResponse
     {
-        /// <summary>
-        /// Gets or sets the array of errors encountered during the deletion process.
-        /// If the deletion is successful, this property will be null or empty.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
     }
 }
