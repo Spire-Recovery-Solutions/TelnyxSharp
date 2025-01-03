@@ -239,7 +239,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task<DeletePhoneNumberResponse> RemoveNumber(string numberOrObjectId, CancellationToken cancellationToken = default)
+    public async Task<DeletePhoneNumberResponse> DeletePhoneNumber(string numberOrObjectId, CancellationToken cancellationToken = default)
     {
         var req = new RestRequest($"phone_numbers/{numberOrObjectId}", Method.Delete);
 

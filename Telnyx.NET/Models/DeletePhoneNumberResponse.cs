@@ -5,14 +5,14 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response from the Telnyx API when a phone number is deleted.
     /// </summary>
-    public class DeletePhoneNumberResponse : TelnyxResponse<PhoneNumberData>
+    public class DeletePhoneNumberResponse : TelnyxResponse<DeletePhoneNumberData>
     {
     }
 
     /// <summary>
     /// Represents the details of a phone number, including metadata about the phone number.
     /// </summary>
-    public class PhoneNumberData
+    public class DeletePhoneNumberData
     {
         /// <summary>
         /// Gets or sets the unique identifier for the phone number.
