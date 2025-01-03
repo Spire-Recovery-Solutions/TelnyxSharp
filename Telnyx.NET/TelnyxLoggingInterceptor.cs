@@ -1,12 +1,21 @@
-﻿using System.Text;
+﻿using System.Collections.Concurrent;
+using System.Text;
 using RestSharp.Interceptors;
 
 namespace Telnyx.NET;
 
+/// <summary>
+/// Interceptor for logging Telnyx API requests and responses
+/// </summary>
 public class TelnyxLoggingInterceptor(StreamWriter logWriter) : Interceptor, IDisposable
 {
+    private readonly StreamWriter _logWriter = logWriter ?? throw new ArgumentNullException(nameof(logWriter));
     private readonly Lock _logLock = new();
     private bool _disposed;
+    
+    // Use ConcurrentDictionary instead of HashSet for thread safety
+    private readonly ConcurrentDictionary<string, byte> _processedRequests = new();
+    private readonly ConcurrentDictionary<string, byte> _processedResponses = new();
 
     private void LogMessage(string message)
     {
@@ -16,8 +25,8 @@ public class TelnyxLoggingInterceptor(StreamWriter logWriter) : Interceptor, IDi
         {
             try
             {
-                logWriter.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] {message}");
-                logWriter.Flush(); // Ensure writes are flushed
+                _logWriter.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] {message}");
+                _logWriter.Flush(); // Ensure writes are flushed
             }
             catch (ObjectDisposedException)
             {
@@ -33,9 +42,13 @@ public class TelnyxLoggingInterceptor(StreamWriter logWriter) : Interceptor, IDi
 
         try
         {
-            var sb = new StringBuilder();
             requestMessage.Headers.TryGetValues("X-Correlation-ID", out var values);
             var requestId = values?.FirstOrDefault() ?? "";
+
+            // Skip if we've already processed this request ID
+            if (!_processedRequests.TryAdd(requestId, 1)) return;
+
+            var sb = new StringBuilder();
             sb.AppendLine($"=== Telnyx API Request [{requestId}]===");
             sb.AppendLine($"Method: {requestMessage.Method}");
             sb.AppendLine($"URL: {requestMessage.RequestUri}");
@@ -59,8 +72,11 @@ public class TelnyxLoggingInterceptor(StreamWriter logWriter) : Interceptor, IDi
 
                 // Log raw request body
                 var content = await requestMessage.Content.ReadAsStringAsync(cancellationToken);
-                sb.AppendLine("Request Body:");
-                sb.AppendLine(content);
+                if (!string.IsNullOrEmpty(content))
+                {
+                    sb.AppendLine("Request Body:");
+                    sb.AppendLine(content);
+                }
             }
 
             LogMessage(sb.ToString());
@@ -78,13 +94,17 @@ public class TelnyxLoggingInterceptor(StreamWriter logWriter) : Interceptor, IDi
 
         try
         {
-            var sb = new StringBuilder();
             var requestId = "";
             if (responseMessage.RequestMessage != null)
             {
                 responseMessage.RequestMessage.Headers.TryGetValues("X-Correlation-ID", out var values);
-                if (values != null) requestId = values.FirstOrDefault();
+                requestId = values?.FirstOrDefault() ?? "";
             }
+
+            // Skip if we've already processed this response ID
+            if (!_processedResponses.TryAdd(requestId, 1)) return;
+
+            var sb = new StringBuilder();
             sb.AppendLine($"=== Telnyx API Response [{requestId}]===");
             sb.AppendLine($"Status Code: {(int)responseMessage.StatusCode} {responseMessage.StatusCode}");
             sb.AppendLine($"Reason: {responseMessage.ReasonPhrase}");
@@ -103,8 +123,11 @@ public class TelnyxLoggingInterceptor(StreamWriter logWriter) : Interceptor, IDi
 
             // Log raw response body
             var content = await responseMessage.Content.ReadAsStringAsync(cancellationToken);
-            sb.AppendLine("Response Body:");
-            sb.AppendLine(content);
+            if (!string.IsNullOrEmpty(content))
+            {
+                sb.AppendLine("Response Body:");
+                sb.AppendLine(content);
+            }
 
             LogMessage(sb.ToString());
         }
@@ -123,12 +146,16 @@ public class TelnyxLoggingInterceptor(StreamWriter logWriter) : Interceptor, IDi
         {
             lock (_logLock)
             {
-                logWriter?.Flush();
+                _logWriter?.Flush();
             }
         }
         catch
         {
             // Ignore disposal errors
         }
+
+        // Clear the tracking collections
+        _processedRequests.Clear();
+        _processedResponses.Clear();
     }
 }

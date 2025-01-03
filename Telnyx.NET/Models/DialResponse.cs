@@ -1,4 +1,3 @@
-using Telnyx.NET.Interfaces;
 using System.Text.Json.Serialization;
 
 namespace Telnyx.NET.Models;
