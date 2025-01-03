@@ -162,9 +162,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
         var req = new RestRequest($"phone_numbers/{phoneNumberId}/voice", Method.Patch);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-        return await _rateLimitRetryPolicy.ExecuteAsync(
-            token => ExecuteAsync<UpdateNumberVoiceSettingsResponse>(req, token),
-            cancellationToken);
+        return await ExecuteAsync<UpdateNumberVoiceSettingsResponse>(req, cancellationToken);
     }
 
     /// <inheritdoc />
@@ -232,16 +230,13 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task<UpdateNumberConfigurationResponse?> UpdateNumberConfiguration(string phoneNumberId,
-        UpdateNumberConfigurationRequest request, CancellationToken cancellationToken = default)
+    public async Task<UpdateNumberConfigurationResponse?> UpdateNumberConfiguration(
+        string phoneNumberId, UpdateNumberConfigurationRequest request, CancellationToken cancellationToken = default)
     {
         var req = new RestRequest($"phone_numbers/{phoneNumberId}", Method.Patch);
         req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
-        return await _rateLimitRetryPolicy
-            .ExecuteAsync(
-                token => _client.PatchAsync<UpdateNumberConfigurationResponse>(req,
-                    cancellationToken: cancellationToken),
-                cancellationToken);
+
+        return await ExecuteAsync<UpdateNumberConfigurationResponse>(req, cancellationToken);
     }
 
     /// <inheritdoc />
