@@ -239,7 +239,8 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task<DeletePhoneNumberResponse> DeletePhoneNumber(string numberOrObjectId, CancellationToken cancellationToken = default)
+    public async Task<DeletePhoneNumberResponse> DeletePhoneNumber(string numberOrObjectId,
+        CancellationToken cancellationToken = default)
     {
         var req = new RestRequest($"phone_numbers/{numberOrObjectId}", Method.Delete);
 
@@ -1078,107 +1079,104 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     private async Task<T1> ExecuteAsync<T1>(RestRequest request, CancellationToken cancellationToken = default)
         where T1 : ITelnyxResponse, new()
     {
-        request.AddOrUpdateHeader("X-Correlation-ID", Guid.NewGuid());
-        var response = await _client.ExecuteAsync(request, cancellationToken);
-
-        var result = new T1
-        {
-            StatusCode = response.StatusCode,
-            IsSuccessful = response.IsSuccessful,
-            ErrorMessage = response.ErrorMessage
-        };
-
-        // Handle rate limiting
-        if (response.StatusCode == HttpStatusCode.TooManyRequests)
-        {
-            var resetSeconds = response.Headers?
-                .FirstOrDefault(h => h.Name.Equals("x-ratelimit-reset", StringComparison.OrdinalIgnoreCase))?
-                .Value?.ToString();
-
-            if (int.TryParse(resetSeconds, out var delay))
-            {
-                throw new RateLimitRejectedException(TimeSpan.FromSeconds(delay));
-            }
-
-            throw new RateLimitRejectedException(TimeSpan.FromSeconds(1));
-        }
-
-        // If we have content and the request was successful, try to deserialize
-        if (response is not { IsSuccessful: true, Content: not null }) return result;
-
-        var deserializedResult =
-            JsonSerializer.Deserialize<T1>(response.Content, TelnyxJsonSerializerContext.Default.Options);
-
-        if (deserializedResult == null) return result;
-
-        result = deserializedResult;
-        result.StatusCode = response.StatusCode;
-        result.IsSuccessful = response.IsSuccessful;
-        result.ErrorMessage = response.ErrorMessage;
-
-        // Handle pagination if necessary
-        var pageParam = request.Parameters.FirstOrDefault(p => p.Name == "page[number]");
-        var metaProperty = typeof(T1).GetProperty("Meta");
-        var dataProperty = typeof(T1).GetProperty("Data");
-
-        if (metaProperty?.GetValue(result) is not PaginationMeta meta || dataProperty == null ||
-            meta.PageNumber >= meta.TotalPages) return result;
-
-        var dataType = dataProperty.PropertyType.GetGenericArguments()[0];
-        var listType = typeof(List<>).MakeGenericType(dataType);
-        var allData = (IList)Activator.CreateInstance(listType);
-
-        if (dataProperty.GetValue(result) is IEnumerable initialData)
-            foreach (var item in initialData)
-                allData.Add(item);
-
-        while (meta.PageNumber < meta.TotalPages)
+        return await _rateLimitRetryPolicy.ExecuteAsync(async () =>
         {
             request.AddOrUpdateHeader("X-Correlation-ID", Guid.NewGuid());
-            request.RemoveParameter(pageParam);
-            request.AddParameter("page[number]", meta.PageNumber + 1);
-            response = await _client.ExecuteAsync(request, cancellationToken);
+            var response = await _client.ExecuteAsync(request, cancellationToken);
 
+            var result = new T1
+            {
+                StatusCode = response.StatusCode,
+                IsSuccessful = response.IsSuccessful,
+                ErrorMessage = response.ErrorMessage
+            };
+
+            // Handle rate limiting
             if (response.StatusCode == HttpStatusCode.TooManyRequests)
             {
                 var resetSeconds = response.Headers?
-                    .FirstOrDefault(h =>
-                        h.Name.Equals("x-ratelimit-reset", StringComparison.OrdinalIgnoreCase))?
+                    .FirstOrDefault(h => h.Name.Equals("x-ratelimit-reset", StringComparison.OrdinalIgnoreCase))?
                     .Value?.ToString();
 
-                if (int.TryParse(resetSeconds, out var delay))
-                {
-                    throw new RateLimitRejectedException(TimeSpan.FromSeconds(delay));
-                }
-
-                throw new RateLimitRejectedException(TimeSpan.FromSeconds(1));
+                var delay = int.TryParse(resetSeconds, out var parsedDelay) ? parsedDelay : 1;
+                throw new RateLimitRejectedException(TimeSpan.FromSeconds(delay));
             }
 
-            if (!response.IsSuccessful || response.Content == null)
-            {
-                result.IsSuccessful = false;
-                result.StatusCode = response.StatusCode;
-                result.ErrorMessage = response.ErrorMessage;
-                break;
-            }
+            // If we have content and the request was successful, try to deserialize
+            if (response is not { IsSuccessful: true, Content: not null }) return result;
 
-            var nextResult = JsonSerializer.Deserialize<T1>(response.Content,
-                TelnyxJsonSerializerContext.Default.Options);
-            if (nextResult == null) break;
+            var deserializedResult =
+                JsonSerializer.Deserialize<T1>(response.Content, TelnyxJsonSerializerContext.Default.Options);
 
-            var nextData = dataProperty.GetValue(nextResult);
-            if (nextData is IEnumerable pageData)
-                foreach (var item in pageData)
+            if (deserializedResult == null) return result;
+
+            result = deserializedResult;
+            result.StatusCode = response.StatusCode;
+            result.IsSuccessful = response.IsSuccessful;
+            result.ErrorMessage = response.ErrorMessage;
+
+            // Handle pagination if necessary
+            var pageParam = request.Parameters.FirstOrDefault(p => p.Name == "page[number]");
+            var metaProperty = typeof(T1).GetProperty("Meta");
+            var dataProperty = typeof(T1).GetProperty("Data");
+
+            if (metaProperty?.GetValue(result) is not PaginationMeta meta || dataProperty == null ||
+                meta.PageNumber >= meta.TotalPages) return result;
+
+            var dataType = dataProperty.PropertyType.GetGenericArguments()[0];
+            var listType = typeof(List<>).MakeGenericType(dataType);
+            var allData = (IList)Activator.CreateInstance(listType);
+
+            if (dataProperty.GetValue(result) is IEnumerable initialData)
+                foreach (var item in initialData)
                     allData.Add(item);
 
-            metaProperty.SetValue(result, metaProperty.GetValue(nextResult));
-            meta = (PaginationMeta)metaProperty.GetValue(result);
-            pageParam = request.Parameters.FirstOrDefault(p => p.Name == "page[number]");
-        }
+            while (meta.PageNumber < meta.TotalPages)
+            {
+                await _rateLimitRetryPolicy.ExecuteAsync(async () =>
+                {
+                    request.AddOrUpdateHeader("X-Correlation-ID", Guid.NewGuid());
+                    request.RemoveParameter(pageParam);
+                    request.AddParameter("page[number]", meta.PageNumber + 1);
+                    response = await _client.ExecuteAsync(request, cancellationToken);
 
-        dataProperty.SetValue(result, allData);
+                    if (response.StatusCode != HttpStatusCode.TooManyRequests) return Task.CompletedTask;
+                    
+                    var resetSeconds = response.Headers?
+                        .FirstOrDefault(h =>
+                            h.Name.Equals("x-ratelimit-reset", StringComparison.OrdinalIgnoreCase))?
+                        .Value?.ToString();
 
-        return result;
+                    var delay = int.TryParse(resetSeconds, out var parsedDelay) ? parsedDelay : 1;
+                    throw new RateLimitRejectedException(TimeSpan.FromSeconds(delay));
+                });
+
+                if (!response.IsSuccessful || response.Content == null)
+                {
+                    result.IsSuccessful = false;
+                    result.StatusCode = response.StatusCode;
+                    result.ErrorMessage = response.ErrorMessage;
+                    break;
+                }
+
+                var nextResult = JsonSerializer.Deserialize<T1>(response.Content,
+                    TelnyxJsonSerializerContext.Default.Options);
+                if (nextResult == null) break;
+
+                var nextData = dataProperty.GetValue(nextResult);
+                if (nextData is IEnumerable pageData)
+                    foreach (var item in pageData)
+                        allData.Add(item);
+
+                metaProperty.SetValue(result, metaProperty.GetValue(nextResult));
+                meta = (PaginationMeta)metaProperty.GetValue(result);
+                pageParam = request.Parameters.FirstOrDefault(p => p.Name == "page[number]");
+            }
+
+            dataProperty.SetValue(result, allData);
+
+            return result;
+        });
     }
 
     /// <inheritdoc />

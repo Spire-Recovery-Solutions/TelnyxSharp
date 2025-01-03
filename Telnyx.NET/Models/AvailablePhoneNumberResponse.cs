@@ -3,7 +3,6 @@
 namespace Telnyx.NET.Models
 {
     using System.Collections.Generic;
-    using Telnyx.NET.Interfaces;
 
     public partial class AvailablePhoneNumbersResponse : TelnyxResponse
     {
