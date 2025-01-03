@@ -1,4 +1,4 @@
-﻿namespace Telnyx.NET.Models.Events;
+﻿namespace Telnyx.NET.Models;
 
 public enum NumberLookupType
 {

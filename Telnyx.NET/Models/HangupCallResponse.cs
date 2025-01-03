@@ -5,19 +5,8 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response from the Telnyx API for the Hangup Call command.
     /// </summary>
-    public class HangupCallResponse : TelnyxResponse
+    public class HangupCallResponse : TelnyxResponse<HangupCallResponseData>
     {
-        /// <summary>
-        /// The data object containing the result of the API call.
-        /// </summary>
-        [JsonPropertyName("data")]
-        public HangupCallResponseData? Data { get; set; }
-
-        /// <summary>
-        /// List of errors, if any occurred during the API call.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
     }
 
     /// <summary>

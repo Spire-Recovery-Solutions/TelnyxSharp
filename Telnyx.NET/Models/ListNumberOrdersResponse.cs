@@ -2,13 +2,8 @@
 
 namespace Telnyx.NET.Models
 {
-    public class ListNumberOrdersResponse : TelnyxResponse
+    public class ListNumberOrdersResponse : TelnyxResponse<List<NumberOrder>>
     {
-        [JsonPropertyName("data")]
-        public List<NumberOrder> Data { get; set; }
-
-        [JsonPropertyName("meta")]
-        public PaginationMeta Meta { get; set; }
     }
 
     public partial class NumberOrdersPhoneNumber

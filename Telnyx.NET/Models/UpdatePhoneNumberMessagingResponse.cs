@@ -6,19 +6,8 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response returned after updating the messaging settings for a phone number.
     /// </summary>
-    public class UpdatePhoneNumberMessagingResponse : TelnyxResponse
+    public class UpdatePhoneNumberMessagingResponse : TelnyxResponse<UpdatePhoneNumberMessaging>
     {
-        /// <summary>
-        /// The updated messaging settings for the phone number.
-        /// </summary>
-        [JsonPropertyName("data")]
-        public UpdatePhoneNumberMessaging? Data { get; set; }
-
-        /// <summary>
-        /// Represents any errors encountered during the process of updating phone messaging settings.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
     }
 
     /// <summary>

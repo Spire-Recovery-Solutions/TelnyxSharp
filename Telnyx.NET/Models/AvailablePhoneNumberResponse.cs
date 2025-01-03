@@ -4,11 +4,8 @@ namespace Telnyx.NET.Models
 {
     using System.Collections.Generic;
 
-    public partial class AvailablePhoneNumbersResponse : TelnyxResponse
+    public partial class AvailablePhoneNumbersResponse : TelnyxResponse<List<AvailablePhoneNumbersDatum>>
     {
-        [JsonPropertyName("data")]
-        public List<AvailablePhoneNumbersDatum> Data { get; set; }
-
         [JsonPropertyName("meta")]
         public AvailablePhoneNumbersMeta Meta { get; set; }
 

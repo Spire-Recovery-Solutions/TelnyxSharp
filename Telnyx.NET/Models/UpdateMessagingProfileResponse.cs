@@ -5,19 +5,8 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response received when updating a messaging profile using the Telnyx API.
     /// </summary>
-    public class UpdateMessagingProfileResponse : TelnyxResponse
+    public class UpdateMessagingProfileResponse : TelnyxResponse<UpdateMessagingProfileData>
     {
-        /// <summary>
-        /// Gets or sets the data for the updated messaging profile.
-        /// </summary>
-        [JsonPropertyName("data")]
-        public UpdateMessagingProfileData Data { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of errors, if any occurred during the API call.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
     }
 
     /// <summary>

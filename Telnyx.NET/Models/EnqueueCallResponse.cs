@@ -5,20 +5,8 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response from the Enqueue Call API.
     /// </summary>
-    public class EnqueueCallResponse : TelnyxResponse
+    public class EnqueueCallResponse : TelnyxResponse<EnqueueCallResponseData>
     {
-        /// <summary>
-        /// Gets or sets the data returned from the API, containing the result of the enqueue operation.
-        /// </summary>
-        [JsonPropertyName("data")]
-        public EnqueueCallResponseData? Data { get; set; }
-
-        /// <summary>
-        /// Gets or sets any errors that occurred during the API request.
-        /// This property is nullable to indicate that it may not always be present.
-        /// </summary>
-        [JsonPropertyName("errors")]
-        public TelnyxError[]? Errors { get; set; }
     }
 
     /// <summary>

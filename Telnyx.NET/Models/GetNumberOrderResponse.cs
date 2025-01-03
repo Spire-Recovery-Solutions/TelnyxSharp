@@ -4,10 +4,8 @@ namespace Telnyx.NET.Models
 {
     
 
-    public partial class GetNumberOrderResponse : TelnyxResponse
+    public partial class GetNumberOrderResponse : TelnyxResponse<NumberOrder>
     {
-        [JsonPropertyName("data")]
-        public NumberOrder Data { get; set; }
     }
 
 }

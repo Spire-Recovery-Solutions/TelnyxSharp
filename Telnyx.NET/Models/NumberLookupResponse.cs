@@ -2,10 +2,8 @@
 using System.Text.Json.Serialization;
 
 namespace Telnyx.NET.Models;
-public class NumberLookupResponse : TelnyxResponse
+public class NumberLookupResponse : TelnyxResponse<NumberLookupDatum>
 {
-    [JsonPropertyName("data")]
-    public NumberLookupDatum Data { get; set; }
 }
 
 public partial class NumberLookupDatum
