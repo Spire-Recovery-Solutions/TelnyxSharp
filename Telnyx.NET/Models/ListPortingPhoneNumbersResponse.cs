@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Response object for retrieving a list of porting phone numbers.
     /// </summary>
-    public class ListPortingPhoneNumbersResponse : ITelnyxResponse
+    public class ListPortingPhoneNumbersResponse : TelnyxResponse
     {
         /// <summary>
         /// A list containing the data of each porting phone number.

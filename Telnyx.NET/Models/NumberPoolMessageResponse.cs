@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response received after sending a message using a number pool.
     /// </summary>
-    public class NumberPoolMessageResponse : ITelnyxResponse
+    public class NumberPoolMessageResponse : TelnyxResponse
     {
         /// <summary>
         /// Contains the data about the message sent through the number pool.

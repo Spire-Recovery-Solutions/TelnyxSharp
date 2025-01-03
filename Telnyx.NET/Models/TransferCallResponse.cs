@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response from the Transfer Call API.
     /// </summary>
-    public class TransferCallResponse : ITelnyxResponse
+    public class TransferCallResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the data object containing the result of the Transfer Call operation.

@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response model for listing campaigns associated with a specific brand.
     /// </summary>
-    public class ListCampaignsResponse : ITelnyxResponse
+    public class ListCampaignsResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the list of campaign records returned in the response.

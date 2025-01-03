@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response returned after sending a group MMS message.
     /// </summary>
-    public class GroupMmsMessageResponse : ITelnyxResponse
+    public class GroupMmsMessageResponse : TelnyxResponse
     {
         /// <summary>
         /// Contains the detailed data of the group MMS message response.

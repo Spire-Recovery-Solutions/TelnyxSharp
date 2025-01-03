@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response from the Telnyx API for the Reject Call command.
     /// </summary>
-    public class RejectCallResponse : ITelnyxResponse
+    public class RejectCallResponse : TelnyxResponse
     {
         /// <summary>
         /// The data object containing the result of the API call.

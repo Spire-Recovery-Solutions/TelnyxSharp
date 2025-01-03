@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response from the Telnyx API for the Answer Call command.
     /// </summary>
-    public class AnswerCallResponse : ITelnyxResponse
+    public class AnswerCallResponse : TelnyxResponse
     {
         /// <summary>
         /// The data object containing the result of the API call.

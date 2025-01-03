@@ -4,7 +4,7 @@ using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
 {
-    public class RetrieveBulkUpdateStatusResponse : ITelnyxResponse
+    public class RetrieveBulkUpdateStatusResponse : TelnyxResponse
     {
         [JsonPropertyName("data")]
         public RetrieveBulkUpdateStatus Data { get; set; }

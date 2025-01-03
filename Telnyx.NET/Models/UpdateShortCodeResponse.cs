@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response received after updating a short code.
     /// </summary>
-    public class UpdateShortCodeResponse : ITelnyxResponse
+    public class UpdateShortCodeResponse : TelnyxResponse
     {
         /// <summary>
         /// The resource type identifier.

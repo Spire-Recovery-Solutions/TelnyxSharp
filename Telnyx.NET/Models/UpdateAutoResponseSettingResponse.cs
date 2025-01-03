@@ -3,7 +3,7 @@ using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
 {
-    public class UpdateAutoResponseSettingResponse : ITelnyxResponse
+    public class UpdateAutoResponseSettingResponse : TelnyxResponse
     {
         /// <summary>
         /// The data for the retrieved auto-response setting.

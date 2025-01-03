@@ -7,7 +7,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response for retrieving a specific short code.
     /// </summary>
-    public class RetrieveShortCodeResponse : ITelnyxResponse
+    public class RetrieveShortCodeResponse : TelnyxResponse
     {
         /// <summary>
         /// The payload containing details of the retrieved short code.

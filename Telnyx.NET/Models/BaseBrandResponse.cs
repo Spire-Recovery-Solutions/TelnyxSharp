@@ -8,7 +8,7 @@ namespace Telnyx.NET.Models
     /// This class maps to the JSON structure returned by the API and contains
     /// information such as brand identifiers, contact information, and status.
     /// </summary>
-    public class BaseBrandResponse
+    public class BaseBrandResponse : TelnyxResponse
     {
         /// <summary>
         /// The type of entity the brand represents.

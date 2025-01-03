@@ -7,7 +7,7 @@ namespace Telnyx.NET.Models
     /// Represents the response model for a submitted verification request.
     /// This class encapsulates the response data for a verification request submission.
     /// </summary>
-    public class SubmitVerificationRequestResponse : BaseVerificationRequestResponse, ITelnyxResponse
+    public class SubmitVerificationRequestResponse : BaseVerificationRequestResponse
     {
         /// <summary>
         /// Gets or sets the unique identifier for the verification request.

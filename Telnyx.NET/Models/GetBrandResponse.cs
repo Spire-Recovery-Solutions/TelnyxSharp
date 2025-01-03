@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Response model for retrieving a brand by brandId.
     /// </summary>
-    public class GetBrandResponse : BaseBrandResponse, ITelnyxResponse
+    public class GetBrandResponse : BaseBrandResponse
     {
         [JsonPropertyName("assignedCampaignsCount")]
         public int? AssignedCampaignsCount { get; set; }

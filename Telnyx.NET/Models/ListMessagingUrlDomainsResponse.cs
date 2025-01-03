@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response for the "List messaging URL domains" API.
     /// </summary>
-    public class ListMessagingUrlDomainsResponse : ITelnyxResponse
+    public class ListMessagingUrlDomainsResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the list of messaging URL domain data.

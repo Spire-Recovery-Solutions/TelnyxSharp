@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response from the Telnyx API for the Hangup Call command.
     /// </summary>
-    public class HangupCallResponse : ITelnyxResponse
+    public class HangupCallResponse : TelnyxResponse
     {
         /// <summary>
         /// The data object containing the result of the API call.

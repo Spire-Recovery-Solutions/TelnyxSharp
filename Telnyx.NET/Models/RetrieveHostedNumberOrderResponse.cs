@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response model for retrieving a hosted number order.
     /// </summary>
-    public class RetrieveHostedNumberOrderResponse : ITelnyxResponse
+    public class RetrieveHostedNumberOrderResponse : TelnyxResponse
     {
 
         /// <summary>

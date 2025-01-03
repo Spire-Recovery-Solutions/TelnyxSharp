@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response for deactivating a campaign.
     /// </summary>
-    public class DeactivateCampaignResponse : ITelnyxResponse
+    public class DeactivateCampaignResponse : TelnyxResponse
     {
         /// <summary>
         /// The timestamp or duration associated with the response.

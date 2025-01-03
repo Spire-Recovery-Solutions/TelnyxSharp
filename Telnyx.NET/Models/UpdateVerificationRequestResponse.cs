@@ -3,7 +3,7 @@ using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
 {
-    public class UpdateVerificationRequestResponse : BaseVerificationRequestResponse, ITelnyxResponse
+    public class UpdateVerificationRequestResponse : BaseVerificationRequestResponse
     {
          /// <summary>
         /// Gets or sets the unique identifier for the verification request.

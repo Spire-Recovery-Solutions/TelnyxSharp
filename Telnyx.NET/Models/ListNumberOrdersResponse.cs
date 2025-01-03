@@ -3,7 +3,7 @@ using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
 {
-    public class ListNumberOrdersResponse : ITelnyxResponse
+    public class ListNumberOrdersResponse : TelnyxResponse
     {
         [JsonPropertyName("data")]
         public List<NumberOrder> Data { get; set; }

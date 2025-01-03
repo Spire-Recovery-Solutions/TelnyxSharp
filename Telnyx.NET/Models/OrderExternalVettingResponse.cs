@@ -3,7 +3,7 @@ using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
 {
-    public class OrderExternalVettingResponse : ITelnyxResponse
+    public class OrderExternalVettingResponse : TelnyxResponse
     {
         /// <summary>
         /// Represents any errors encountered during the retrieval of the auto-response setting.

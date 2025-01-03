@@ -3,7 +3,7 @@ using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
 {
-    public class DeleteMessagingProfileResponse : ITelnyxResponse
+    public class DeleteMessagingProfileResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the data for the updated messaging profile.

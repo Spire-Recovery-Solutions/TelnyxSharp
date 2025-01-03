@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response received when updating a messaging profile using the Telnyx API.
     /// </summary>
-    public class UpdateMessagingProfileResponse : ITelnyxResponse
+    public class UpdateMessagingProfileResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the data for the updated messaging profile.

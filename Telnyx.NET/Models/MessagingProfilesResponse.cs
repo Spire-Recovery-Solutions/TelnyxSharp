@@ -3,7 +3,7 @@ using Telnyx.NET.Interfaces;
 
 namespace Telnyx.NET.Models
 {
-    public class MessagingProfilesResponse : ITelnyxResponse
+    public class MessagingProfilesResponse : TelnyxResponse
     {
         /// <summary>
         /// A list of messaging profiles.

@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response for retrieving phone number campaigns, containing a list of campaigns, pagination details, and potential errors.
     /// </summary>
-    public class RetrievePhoneNumberCampaignsResponse : ITelnyxResponse
+    public class RetrievePhoneNumberCampaignsResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the list of phone number campaigns retrieved by the API.

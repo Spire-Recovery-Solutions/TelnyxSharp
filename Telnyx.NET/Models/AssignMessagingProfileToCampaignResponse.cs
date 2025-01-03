@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response for assigning a messaging profile to a campaign.
     /// </summary>
-    public class AssignMessagingProfileToCampaignResponse : ITelnyxResponse
+    public class AssignMessagingProfileToCampaignResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the unique identifier of the messaging profile.

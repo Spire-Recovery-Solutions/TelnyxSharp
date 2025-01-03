@@ -7,7 +7,7 @@ namespace Telnyx.NET.Models
     /// Represents the response received after attempting to delete an auto-response setting.
     /// Implements the ITelnyxResponse interface to maintain consistency with Telnyx's API response structure.
     /// </summary>
-    public class DeleteAutoResponseSettingResponse : ITelnyxResponse
+    public class DeleteAutoResponseSettingResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the array of errors encountered during the deletion process.

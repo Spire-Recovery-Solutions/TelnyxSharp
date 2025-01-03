@@ -7,7 +7,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response containing a list of phone numbers associated with a messaging profile.
     /// </summary>
-    public class MessagingProfilePhoneNumberResponse : ITelnyxResponse
+    public class MessagingProfilePhoneNumberResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the list of phone numbers associated with the messaging profile.

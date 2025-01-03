@@ -6,7 +6,7 @@ namespace Telnyx.NET.Models
     /// <summary>
     /// Represents the response for partner campaigns shared by the user.
     /// </summary>
-    public class GetPartnerCampaignsSharedByUserResponse : ITelnyxResponse
+    public class GetPartnerCampaignsSharedByUserResponse : TelnyxResponse
     {
         /// <summary>
         /// Gets or sets the current page number in the paginated response.
