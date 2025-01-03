@@ -503,6 +503,8 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(MessageFrom))]
     [JsonSerializable(typeof(MessageToCc))]
     [JsonSerializable(typeof(Cost))]
+    [JsonSerializable(typeof(DeletePhoneNumberResponse))]
+    [JsonSerializable(typeof(DeletePhoneNumberData))]
     // [JsonSerializable(typeof(StreamingFailedEvent))]
     // [JsonSerializable(typeof(StreamingStartedEvent))]
     // [JsonSerializable(typeof(StreamingStoppedEvent))]
@@ -510,8 +512,8 @@ namespace Telnyx.NET
     // [JsonSerializable(typeof(VideoRoomRecordingStartedEvent))]
     // [JsonSerializable(typeof(VideoRoomSessionEndedEvent))]
     // [JsonSerializable(typeof(VideoRoomSessionStartedEvent))]
-    
-    
+
+
     [JsonSerializable(typeof(ITelnyxResponse))]
     [JsonSerializable(typeof(TelnyxResponse))]
     [JsonSerializable(typeof(TelnyxError))]
@@ -519,7 +521,7 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(TelnyxError[]))]
     [JsonSerializable(typeof(PaginationMeta))]
     [JsonSerializable(typeof(ValidationErrorDetail))]
-    
+
     [JsonSourceGenerationOptions(
         UseStringEnumConverter = true,
         PropertyNameCaseInsensitive = true,
