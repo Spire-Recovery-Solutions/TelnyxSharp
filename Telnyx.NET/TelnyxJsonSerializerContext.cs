@@ -504,7 +504,7 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(MessageToCc))]
     [JsonSerializable(typeof(Cost))]
     [JsonSerializable(typeof(DeletePhoneNumberResponse))]
-    [JsonSerializable(typeof(PhoneNumberData))]
+    [JsonSerializable(typeof(DeletePhoneNumberData))]
     // [JsonSerializable(typeof(StreamingFailedEvent))]
     // [JsonSerializable(typeof(StreamingStartedEvent))]
     // [JsonSerializable(typeof(StreamingStoppedEvent))]
