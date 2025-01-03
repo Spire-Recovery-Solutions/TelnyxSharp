@@ -94,7 +94,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     public async Task<AvailablePhoneNumbersResponse?> AvailablePhoneNumbers(AvailablePhoneNumbersRequest request,
         CancellationToken cancellationToken = default)
     {
-        var req = new RestRequest("available_phone_numbers?")
+        var req = new RestRequest("available_phone_numbers")
             .AddFilter("administrative_area", request.AdministrativeArea)
             .AddFilter("contains", request.Contains)
             .AddFilter("country_code", request.CountryCode)
@@ -119,7 +119,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     public async Task<ListNumberOrdersResponse?> ListNumberOrders(ListNumberOrdersRequest request,
         CancellationToken cancellationToken = default)
     {
-        var req = new RestRequest("number_orders?")
+        var req = new RestRequest("number_orders")
             .AddFilter("status", request.Status)
             .AddFilter("created_at[gt]", request.CreatedAfter)
             .AddFilter("created_at[lt]", request.CreatedBefore)
@@ -193,7 +193,7 @@ public class TelnyxClient : ITelnyxClient, IDisposable
     public async Task<ListNumbersResponse?> ListNumbers(ListNumbersRequest request,
         CancellationToken cancellationToken = default)
     {
-        var req = new RestRequest("phone_numbers?").AddFilterList("tag", request.Tags)
+        var req = new RestRequest("phone_numbers").AddFilterList("tag", request.Tags)
             .AddFilter("phone_number", request.PhoneNumber)
             .AddFilter("status", request.Status)
             .AddFilter("connection_id", request.ConnectionId)
