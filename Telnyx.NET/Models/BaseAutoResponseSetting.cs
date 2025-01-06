@@ -18,7 +18,7 @@ namespace Telnyx.NET.Models
         /// A list of keywords that trigger the auto-response setting.
         /// </summary>
         [JsonPropertyName("keywords")]
-        public List<string> Keywords { get; set; } = new List<string>();
+        public List<string> Keywords { get; set; } = new();
 
         /// <summary>
         /// The response text that is sent when the auto-response setting is triggered.
