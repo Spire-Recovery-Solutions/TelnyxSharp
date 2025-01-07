@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using Telnyx.NET.Models;
 
-namespace Telnyx.NET.Interfaces
+namespace Telnyx.NET.Base
 {
     public interface ITelnyxRequest
     {

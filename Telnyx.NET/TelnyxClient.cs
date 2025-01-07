@@ -4,6 +4,8 @@ using Polly;
 using Polly.RateLimit;
 using RestSharp;
 using RestSharp.Authenticators;
+using Telnyx.NET.Base;
+using Telnyx.NET.Messaging;
 using Telnyx.NET.Models;
 
 namespace Telnyx.NET;

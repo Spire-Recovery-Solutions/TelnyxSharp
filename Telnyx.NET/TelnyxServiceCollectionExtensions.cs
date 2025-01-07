@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Telnyx.NET.Interfaces;
 using Telnyx.NET.Models;
 
 namespace Telnyx.NET

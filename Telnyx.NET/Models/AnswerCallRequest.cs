@@ -1,5 +1,5 @@
-﻿using Telnyx.NET.Interfaces;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Base;
 
 namespace Telnyx.NET.Models;
 /// <summary>

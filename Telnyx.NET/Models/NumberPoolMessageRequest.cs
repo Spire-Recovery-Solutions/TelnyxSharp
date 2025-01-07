@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Base;
 using Telnyx.NET.Enums;
-using Telnyx.NET.Interfaces;
+using Telnyx.NET.Messaging.Models;
 
 namespace Telnyx.NET.Models
 {

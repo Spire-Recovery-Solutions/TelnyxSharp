@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Telnyx.NET.Enums;
+using Telnyx.NET.Messaging.Models;
 
 namespace Telnyx.NET.Models
 {

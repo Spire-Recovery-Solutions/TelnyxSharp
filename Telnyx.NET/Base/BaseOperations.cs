@@ -4,10 +4,9 @@ using System.Text.Json;
 using Polly.RateLimit;
 using Polly.Retry;
 using RestSharp;
-using Telnyx.NET.Interfaces;
 using Telnyx.NET.Models;
 
-namespace Telnyx.NET;
+namespace Telnyx.NET.Base;
 public abstract class BaseOperations
 {
     protected IRestClient Client { get; set; }

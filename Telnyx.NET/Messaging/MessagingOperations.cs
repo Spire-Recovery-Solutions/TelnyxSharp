@@ -1,7 +1,8 @@
 using Polly.Retry;
 using RestSharp;
+using Telnyx.NET.Base;
 
-namespace Telnyx.NET;
+namespace Telnyx.NET.Messaging;
 
 public interface IMessagingOperations : IDisposable
 {

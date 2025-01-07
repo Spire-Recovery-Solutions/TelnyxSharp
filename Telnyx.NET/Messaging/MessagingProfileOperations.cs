@@ -1,9 +1,11 @@
 using System.Text.Json;
 using Polly.Retry;
 using RestSharp;
+using Telnyx.NET.Base;
+using Telnyx.NET.Messaging.Models;
 using Telnyx.NET.Models;
 
-namespace Telnyx.NET;
+namespace Telnyx.NET.Messaging;
 public interface IMessagingProfileOperations
 {
     Task<MessagingProfilesResponse?> List(MessagingProfilesRequest request, CancellationToken cancellationToken = default);

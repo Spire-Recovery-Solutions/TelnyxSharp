@@ -1,4 +1,4 @@
-﻿using Telnyx.NET.Interfaces;
+﻿using Telnyx.NET.Base;
 using Telnyx.NET.Models.Events;
 
 namespace Telnyx.NET.Models;

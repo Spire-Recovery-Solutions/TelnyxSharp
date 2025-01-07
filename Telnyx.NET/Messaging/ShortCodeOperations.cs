@@ -1,9 +1,10 @@
 using System.Text.Json;
 using Polly.Retry;
 using RestSharp;
+using Telnyx.NET.Base;
 using Telnyx.NET.Models;
 
-namespace Telnyx.NET;
+namespace Telnyx.NET.Messaging;
 public interface IShortCodeOperations
 {
     Task<ListShortCodesResponse?> List(ListShortCodesRequest request, CancellationToken cancellationToken = default);
