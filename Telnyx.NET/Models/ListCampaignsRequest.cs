@@ -32,6 +32,6 @@ namespace Telnyx.NET.Models
         /// Defaults to descending order of creation date ("-createdAt").
         /// </summary>
         [JsonPropertyName("sort")]
-        public Sort? Sort { get; set; } = Enums.Sort.CreatedAt;
+        public Sort? Sort { get; set; } = Enums.Sort.CreatedAtDesc;
     }
 }
