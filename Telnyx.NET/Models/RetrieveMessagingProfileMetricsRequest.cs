@@ -1,5 +1,5 @@
-﻿using Telnyx.NET.Enums;
-using Telnyx.NET.Interfaces;
+﻿using Telnyx.NET.Base;
+using Telnyx.NET.Enums;
 
 namespace Telnyx.NET.Models
 {

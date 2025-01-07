@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Models;
 
-namespace Telnyx.NET.Models
+namespace Telnyx.NET.Messaging.Models
 {
     public class MessagingProfilesResponse : TelnyxResponse<List<MessagingProfile>>
     {

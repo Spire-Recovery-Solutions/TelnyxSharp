@@ -1,6 +1,6 @@
-﻿using Telnyx.NET.Interfaces;
+﻿using Telnyx.NET.Base;
 
-namespace Telnyx.NET.Models
+namespace Telnyx.NET.Messaging.Models
 {
     /// <summary>
     /// Represents the request parameters for listing short codes associated with a messaging profile.

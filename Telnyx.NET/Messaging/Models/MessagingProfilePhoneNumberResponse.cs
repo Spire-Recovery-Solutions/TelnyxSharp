@@ -1,7 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 using Telnyx.NET.Enums;
+using Telnyx.NET.Models;
 
-namespace Telnyx.NET.Models
+namespace Telnyx.NET.Messaging.Models
 {
     /// <summary>
     /// Represents the response containing a list of phone numbers associated with a messaging profile.

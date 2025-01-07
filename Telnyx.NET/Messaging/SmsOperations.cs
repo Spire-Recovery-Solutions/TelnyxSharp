@@ -1,9 +1,10 @@
 using System.Text.Json;
 using Polly.Retry;
 using RestSharp;
+using Telnyx.NET.Base;
 using Telnyx.NET.Models;
 
-namespace Telnyx.NET;
+namespace Telnyx.NET.Messaging;
 public interface ISmsOperations
 {
     Task<SendMessageResponse> Send(SendMessageRequest request, CancellationToken cancellationToken = default);

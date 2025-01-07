@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Text.Json.Serialization;
-using Telnyx.NET.Interfaces;
+using Telnyx.NET.Base;
 
 namespace Telnyx.NET.Models
 {

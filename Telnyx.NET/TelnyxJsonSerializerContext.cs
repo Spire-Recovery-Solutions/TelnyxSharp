@@ -1,7 +1,7 @@
-﻿using SRS.Data.Telnyx.Models.Events;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Base;
 using Telnyx.NET.Enums;
-using Telnyx.NET.Interfaces;
+using Telnyx.NET.Messaging.Models;
 using Telnyx.NET.Models;
 using Telnyx.NET.Models.Events;
 

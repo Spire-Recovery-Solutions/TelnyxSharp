@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using Telnyx.NET.Enums;
 
-namespace Telnyx.NET.Models
+namespace Telnyx.NET.Messaging.Models
 {
     /// <summary>
     /// Represents the base structure for a messaging profile.
