@@ -43,6 +43,6 @@ namespace Telnyx.NET.Models
         /// Gets or sets the sorting order for the campaigns. Default is by creation date in descending order.
         /// </summary>
         [JsonPropertyName("sort")]
-        public Sort? Sort { get; set; } = Enums.Sort.CreatedAt;
+        public Sort? Sort { get; set; } = Enums.Sort.CreatedAtDesc;
     }
 }
