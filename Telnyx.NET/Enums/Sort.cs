@@ -12,7 +12,7 @@ namespace Telnyx.NET.Enums
         /// Sort by the count of assigned campaigns in ascending order.
         /// </summary>
         [JsonPropertyName("assignedCampaignsCount")]
-        AssignedCampaignsCount,
+        AssignedCampaignsCountAsc,
 
         /// <summary>
         /// Sort by the count of assigned campaigns in descending order.
@@ -24,7 +24,7 @@ namespace Telnyx.NET.Enums
         /// Sort by the brand ID in ascending order.
         /// </summary>
         [JsonPropertyName("brandId")]
-        BrandId,
+        BrandIdAsc,
 
         /// <summary>
         /// Sort by the brand ID in descending order.
@@ -36,7 +36,7 @@ namespace Telnyx.NET.Enums
         /// Sort by the creation date in ascending order.
         /// </summary>
         [JsonPropertyName("createdAt")]
-        CreatedAt,
+        CreatedAtAsc,
 
         /// <summary>
         /// Sort by the creation date in descending order.
@@ -48,7 +48,7 @@ namespace Telnyx.NET.Enums
         /// Sort by the display name in ascending order.
         /// </summary>
         [JsonPropertyName("displayName")]
-        DisplayName,
+        DisplayNameAsc,
 
         /// <summary>
         /// Sort by the display name in descending order.
@@ -60,7 +60,7 @@ namespace Telnyx.NET.Enums
         /// Sort by the identity status in ascending order.
         /// </summary>
         [JsonPropertyName("identityStatus")]
-        IdentityStatus,
+        IdentityStatusAsc,
 
         /// <summary>
         /// Sort by the identity status in descending order.
@@ -72,7 +72,7 @@ namespace Telnyx.NET.Enums
         /// Sort by the status in ascending order.
         /// </summary>
         [JsonPropertyName("status")]
-        Status,
+        StatusAsc,
 
         /// <summary>
         /// Sort by the status in descending order.
@@ -84,7 +84,7 @@ namespace Telnyx.NET.Enums
         /// Sort by the TCR brand ID in ascending order.
         /// </summary>
         [JsonPropertyName("tcrBrandId")]
-        TcrBrandId,
+        TcrBrandIdAsc,
 
         /// <summary>
         /// Sort by the TCR brand ID in descending order.

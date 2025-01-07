@@ -16,6 +16,6 @@ namespace Telnyx.NET.Models
         /// Gets or sets the sorting order for the results. Defaults to sorting by created date in descending order.
         /// </summary>
         [JsonPropertyName("sort")]
-        public Sort Sort { get; set; } = Sort.CreatedAt;
+        public Sort Sort { get; set; } = Sort.CreatedAtDesc;
     }
 }
