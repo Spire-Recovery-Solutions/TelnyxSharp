@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using Telnyx.NET.Base;
 using Telnyx.NET.Enums;
+using Telnyx.NET.Messaging.Events;
 using Telnyx.NET.Messaging.Models;
 using Telnyx.NET.Messaging.Models.AdvancedOptInOptOut;
 using Telnyx.NET.Messaging.Models.AdvancedOptInOptOut.Requests;

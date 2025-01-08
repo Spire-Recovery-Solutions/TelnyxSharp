@@ -1,7 +1,9 @@
 using System.Text.Json.Serialization;
 using Telnyx.NET.Messaging.Models.Messages.Responses;
+using Telnyx.NET.Models;
+using Telnyx.NET.Models.Events;
 
-namespace Telnyx.NET.Models.Events
+namespace Telnyx.NET.Messaging.Events
 {
     /// <summary>
     /// Represents an event for a message received from Telnyx.
