@@ -1,17 +1,16 @@
 using Polly.Retry;
 using RestSharp;
 using Telnyx.NET.Base;
-using Telnyx.NET.Models;
+using Telnyx.NET.Messaging.Interfaces;
+using Telnyx.NET.Messaging.Models.MessagingUrlDomain;
 
 namespace Telnyx.NET.Messaging;
 
-public interface IMessagingUrlDomainOperations
-{
-    Task<ListMessagingUrlDomainsResponse?> List(ListMessagingUrlDomainsRequest request, CancellationToken cancellationToken = default);
-}
+
 public class MessagingUrlDomainOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), IMessagingUrlDomainOperations
 {
+    /// <inheritdoc />
     public async Task<ListMessagingUrlDomainsResponse?> List(ListMessagingUrlDomainsRequest request, CancellationToken cancellationToken = default)
     {
         var req = new RestRequest("messaging_url_domains")

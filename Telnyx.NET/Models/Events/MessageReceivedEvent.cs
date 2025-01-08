@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using Telnyx.NET.Messaging.Models;
+using Telnyx.NET.Messaging.Models.Messages;
 
 namespace Telnyx.NET.Models.Events
 {
