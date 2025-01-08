@@ -5,7 +5,7 @@ using Telnyx.NET.Base;
 using Telnyx.NET.Messaging.Interfaces;
 using Telnyx.NET.Messaging.Models.Messages;
 
-namespace Telnyx.NET.Messaging;
+namespace Telnyx.NET.Messaging.Operations;
 
 public class MessagesOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), IMessagesOperations
