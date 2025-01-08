@@ -1,4 +1,5 @@
-﻿using Telnyx.NET.Messaging.Models.ShortCodes;
+﻿using Telnyx.NET.Messaging.Models.ShortCodes.Requests;
+using Telnyx.NET.Messaging.Models.ShortCodes.Responses;
 using Telnyx.NET.Models;
 
 namespace Telnyx.NET.Messaging.Interfaces

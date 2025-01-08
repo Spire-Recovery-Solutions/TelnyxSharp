@@ -1,4 +1,5 @@
-﻿using Telnyx.NET.Messaging.Models.TollFreeVerificationOperations;
+﻿using Telnyx.NET.Messaging.Models.TollFreeVerificationOperations.Requests;
+using Telnyx.NET.Messaging.Models.TollFreeVerificationOperations.Responses;
 
 namespace Telnyx.NET.Messaging.Interfaces
 {

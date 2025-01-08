@@ -1,4 +1,5 @@
-﻿using Telnyx.NET.Messaging.Models.MessagesProfile;
+﻿using Telnyx.NET.Messaging.Models.MessagesProfile.Requests;
+using Telnyx.NET.Messaging.Models.MessagesProfile.Responses;
 
 namespace Telnyx.NET.Messaging.Interfaces
 {

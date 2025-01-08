@@ -1,4 +1,5 @@
-﻿using Telnyx.NET.Messaging.Models.Campaign;
+﻿using Telnyx.NET.Messaging.Models.Campaign.Requests;
+using Telnyx.NET.Messaging.Models.Campaign.Responses;
 
 namespace Telnyx.NET.Messaging.Interfaces
 {
