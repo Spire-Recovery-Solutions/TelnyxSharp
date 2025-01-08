@@ -3,7 +3,7 @@ using RestSharp;
 using Telnyx.NET.Base;
 using Telnyx.NET.Messaging.Interfaces;
 
-namespace Telnyx.NET.Messaging
+namespace Telnyx.NET.Messaging.Operations
 {
     /// <summary>
     /// Provides operations for managing SMS/MMS-related resources including messaging profiles, messages, short codes, URL domains, and number configurations.
@@ -12,24 +12,24 @@ namespace Telnyx.NET.Messaging
     public class SmsMmsOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy) : BaseOperations(client, rateLimitRetryPolicy), ISmsMmsOperations
     {
         // Lazy initialization for various operations, ensuring thread safety and lazy loading of instances.
-        
-        private readonly Lazy<IMessagingProfileOperations> _profiles = new(() => 
+
+        private readonly Lazy<IMessagingProfileOperations> _profiles = new(() =>
             new MessagingProfileOperations(client, rateLimitRetryPolicy),
             LazyThreadSafetyMode.ExecutionAndPublication);
 
-        private readonly Lazy<IMessagesOperations> _messages = new(() => 
+        private readonly Lazy<IMessagesOperations> _messages = new(() =>
             new MessagesOperations(client, rateLimitRetryPolicy),
             LazyThreadSafetyMode.ExecutionAndPublication);
 
-        private readonly Lazy<IMessagingUrlDomainOperations> _urlDomains = new(() => 
+        private readonly Lazy<IMessagingUrlDomainOperations> _urlDomains = new(() =>
             new MessagingUrlDomainOperations(client, rateLimitRetryPolicy),
             LazyThreadSafetyMode.ExecutionAndPublication);
 
-        private readonly Lazy<IShortCodeOperations> _shortCodes = new(() => 
+        private readonly Lazy<IShortCodeOperations> _shortCodes = new(() =>
             new ShortCodeOperations(client, rateLimitRetryPolicy),
             LazyThreadSafetyMode.ExecutionAndPublication);
 
-        private readonly Lazy<INumberConfigurationOperations> _numberConfiguration = new(() => 
+        private readonly Lazy<INumberConfigurationOperations> _numberConfiguration = new(() =>
             new NumberConfigurationOperations(client, rateLimitRetryPolicy),
             LazyThreadSafetyMode.ExecutionAndPublication);
 

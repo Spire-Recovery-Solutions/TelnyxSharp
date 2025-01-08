@@ -4,7 +4,7 @@ using Telnyx.NET.Base;
 using Telnyx.NET.Messaging.Interfaces;
 using Telnyx.NET.Messaging.Models.MessagingUrlDomain;
 
-namespace Telnyx.NET.Messaging;
+namespace Telnyx.NET.Messaging.Operations;
 
 
 public class MessagingUrlDomainOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
@@ -15,7 +15,7 @@ public class MessagingUrlDomainOperations(IRestClient client, AsyncRetryPolicy r
     {
         var req = new RestRequest("messaging_url_domains")
             .AddPagination(request.PageSize);
-            
+
         return await ExecuteAsync<ListMessagingUrlDomainsResponse>(req, cancellationToken);
     }
 }
