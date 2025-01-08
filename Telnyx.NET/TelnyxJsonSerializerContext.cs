@@ -2,6 +2,20 @@
 using Telnyx.NET.Base;
 using Telnyx.NET.Enums;
 using Telnyx.NET.Messaging.Models;
+using Telnyx.NET.Messaging.Models.AdvancedOptInOptOut;
+using Telnyx.NET.Messaging.Models.Brands;
+using Telnyx.NET.Messaging.Models.BulkPhoneNumberCampaign;
+using Telnyx.NET.Messaging.Models.Campaign;
+using Telnyx.NET.Messaging.Models.Enums;
+using Telnyx.NET.Messaging.Models.Messages;
+using Telnyx.NET.Messaging.Models.MessagesProfile;
+using Telnyx.NET.Messaging.Models.MessagingHostedNumber;
+using Telnyx.NET.Messaging.Models.MessagingUrlDomain;
+using Telnyx.NET.Messaging.Models.NumberConfigurations;
+using Telnyx.NET.Messaging.Models.PhoneNumberCampaign;
+using Telnyx.NET.Messaging.Models.SharedCampaign;
+using Telnyx.NET.Messaging.Models.ShortCodes;
+using Telnyx.NET.Messaging.Models.TollFreeVerificationOperations;
 using Telnyx.NET.Models;
 using Telnyx.NET.Models.Events;
 
