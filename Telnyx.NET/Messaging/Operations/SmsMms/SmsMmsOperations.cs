@@ -2,8 +2,9 @@ using Polly.Retry;
 using RestSharp;
 using Telnyx.NET.Base;
 using Telnyx.NET.Messaging.Interfaces;
+using Telnyx.NET.Messaging.Operations.TenDlc;
 
-namespace Telnyx.NET.Messaging.Operations
+namespace Telnyx.NET.Messaging.Operations.SmsMms
 {
     /// <summary>
     /// Provides operations for managing SMS/MMS-related resources including messaging profiles, messages, short codes, URL domains, and number configurations.
@@ -33,6 +34,14 @@ namespace Telnyx.NET.Messaging.Operations
             new NumberConfigurationOperations(client, rateLimitRetryPolicy),
             LazyThreadSafetyMode.ExecutionAndPublication);
 
+        private readonly Lazy<IMessagingHostedNumbersOperations> _messagingHostedNumbersOperations = new(() =>
+            new MessagingHostedNumbersOperations(client, rateLimitRetryPolicy),
+            LazyThreadSafetyMode.ExecutionAndPublication);
+
+        private readonly Lazy<IAdvancedOptInOptOutOperations> _advancedOptInOptOutOperations = new(() =>
+            new AdvancedOptInOptOutOperations(client, rateLimitRetryPolicy),
+            LazyThreadSafetyMode.ExecutionAndPublication);
+
         public IMessagingProfileOperations Profiles => _profiles.Value;
 
         public IMessagesOperations Messages => _messages.Value;
@@ -42,6 +51,11 @@ namespace Telnyx.NET.Messaging.Operations
         public IMessagingUrlDomainOperations UrlDomains => _urlDomains.Value;
 
         public INumberConfigurationOperations NumberConfiguration => _numberConfiguration.Value;
+
+        public IMessagingHostedNumbersOperations MessagingHostedNumbers => _messagingHostedNumbersOperations.Value;
+
+        public IAdvancedOptInOptOutOperations AdvancedOptInOptOut => _advancedOptInOptOutOperations.Value;
+
 
         /// <summary>
         /// Disposes of all resources and underlying disposable operations.
@@ -64,6 +78,12 @@ namespace Telnyx.NET.Messaging.Operations
 
             if (_numberConfiguration.IsValueCreated && _numberConfiguration.Value is IDisposable disposableNumberConfig)
                 disposableNumberConfig.Dispose();
+
+            if (_messagingHostedNumbersOperations.IsValueCreated && _messagingHostedNumbersOperations.Value is IDisposable disposableMessageHostedNumbers)
+                 disposableMessageHostedNumbers.Dispose();
+
+            if (_advancedOptInOptOutOperations.IsValueCreated && _advancedOptInOptOutOperations.Value is IDisposable disposableAdvancedOptInOptOut)
+                disposableAdvancedOptInOptOut.Dispose();
 
             // Suppress finalization to avoid redundant cleanup when the object is collected by garbage collection
             GC.SuppressFinalize(this);

@@ -2,7 +2,7 @@
 
 namespace Telnyx.NET.Messaging.Interfaces
 {
-    public interface IAdvancedOptInOptOut
+    public interface IAdvancedOptInOptOutOperations
     {
         /// <summary>
         /// Lists auto-response settings for a messaging profile.

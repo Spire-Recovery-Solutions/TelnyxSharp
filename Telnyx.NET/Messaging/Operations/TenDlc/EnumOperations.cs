@@ -5,7 +5,7 @@ using Telnyx.NET.Enums;
 using Telnyx.NET.Messaging.Interfaces;
 using Telnyx.NET.Messaging.Models.Enums;
 
-namespace Telnyx.NET.Messaging.Operations
+namespace Telnyx.NET.Messaging.Operations.TenDlc
 {
     public class EnumOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), IEnumOperations
