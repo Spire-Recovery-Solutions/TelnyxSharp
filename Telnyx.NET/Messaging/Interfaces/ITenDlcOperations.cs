@@ -6,6 +6,12 @@
     public interface ITenDlcOperations : IDisposable
     {
         /// <summary>
+        /// Gets the operations for managing brand-related resources.
+        /// A brand represents an entity (e.g., a business or organization) associated with 10DLC campaigns.
+        /// </summary>
+        IBrandOperations Brand { get; }
+
+        /// <summary>
         /// Gets the operations related to managing campaigns.
         /// </summary>
         ICampaignOperations Campaign { get; }

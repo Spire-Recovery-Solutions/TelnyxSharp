@@ -4,8 +4,7 @@ using Telnyx.NET.Base;
 using Telnyx.NET.Messaging.Interfaces;
 using Telnyx.NET.Messaging.Models.MessagingUrlDomain;
 
-namespace Telnyx.NET.Messaging.Operations;
-
+namespace Telnyx.NET.Messaging.Operations.SmsMms;
 
 public class MessagingUrlDomainOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), IMessagingUrlDomainOperations

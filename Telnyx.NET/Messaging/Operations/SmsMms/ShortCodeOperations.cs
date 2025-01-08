@@ -5,7 +5,7 @@ using Telnyx.NET.Base;
 using Telnyx.NET.Messaging.Interfaces;
 using Telnyx.NET.Messaging.Models.ShortCodes;
 
-namespace Telnyx.NET.Messaging.Operations;
+namespace Telnyx.NET.Messaging.Operations.SmsMms;
 
 public class ShortCodeOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), IShortCodeOperations

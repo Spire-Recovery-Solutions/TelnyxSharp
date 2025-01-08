@@ -5,7 +5,7 @@ using Telnyx.NET.Base;
 using Telnyx.NET.Messaging.Interfaces;
 using Telnyx.NET.Messaging.Models.BulkPhoneNumberCampaign;
 
-namespace Telnyx.NET.Messaging.Operations
+namespace Telnyx.NET.Messaging.Operations.TenDlc
 {
     public class BulkPhoneNumberCampaignOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), IBulkPhoneNumberCampaignOperations

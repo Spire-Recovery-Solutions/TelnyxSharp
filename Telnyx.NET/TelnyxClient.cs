@@ -5,6 +5,9 @@ using RestSharp.Authenticators;
 using Telnyx.NET.Base;
 using Telnyx.NET.Messaging;
 using Telnyx.NET.Messaging.Interfaces;
+using Telnyx.NET.Messaging.Operations.SmsMms;
+using Telnyx.NET.Messaging.Operations.TenDlc;
+using Telnyx.NET.Messaging.Operations.TollFreeVerification;
 
 namespace Telnyx.NET;
 

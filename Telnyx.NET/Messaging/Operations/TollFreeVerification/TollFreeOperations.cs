@@ -3,7 +3,7 @@ using RestSharp;
 using Telnyx.NET.Base;
 using Telnyx.NET.Messaging.Interfaces;
 
-namespace Telnyx.NET.Messaging.Operations
+namespace Telnyx.NET.Messaging.Operations.TollFreeVerification
 {
     /// <summary>
     /// Provides operations related to managing toll-free numbers, including toll-free verification.

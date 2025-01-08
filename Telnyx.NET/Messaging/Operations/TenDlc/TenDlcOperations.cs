@@ -3,7 +3,7 @@ using RestSharp;
 using Telnyx.NET.Base;
 using Telnyx.NET.Messaging.Interfaces;
 
-namespace Telnyx.NET.Messaging.Operations
+namespace Telnyx.NET.Messaging.Operations.TenDlc
 {
     /// <summary>
     /// Provides operations related to TenDLC (10-Digit Long Code) messaging campaigns.
@@ -11,20 +11,25 @@ namespace Telnyx.NET.Messaging.Operations
     /// </summary>
     public class TenDlcOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy) : BaseOperations(client, rateLimitRetryPolicy), ITenDlcOperations
     {
-        private readonly Lazy<CampaignOperations> _campaignOperations = new(() =>
+        private readonly Lazy<IBrandOperations> _brandOperations = new(() =>
+            new BrandOperations(client, rateLimitRetryPolicy), LazyThreadSafetyMode.ExecutionAndPublication);
+
+        private readonly Lazy<ICampaignOperations> _campaignOperations = new(() =>
             new CampaignOperations(client, rateLimitRetryPolicy), LazyThreadSafetyMode.ExecutionAndPublication);
 
-        private readonly Lazy<PhoneNumberCampaignOperations> _phoneNumberCampaignOperations = new(() =>
+        private readonly Lazy<IPhoneNumberCampaignOperations> _phoneNumberCampaignOperations = new(() =>
             new PhoneNumberCampaignOperations(client, rateLimitRetryPolicy), LazyThreadSafetyMode.ExecutionAndPublication);
 
-        private readonly Lazy<BulkPhoneNumberCampaignOperations> _bulkPhoneNumberCampaignOperations = new(() =>
+        private readonly Lazy<IBulkPhoneNumberCampaignOperations> _bulkPhoneNumberCampaignOperations = new(() =>
             new BulkPhoneNumberCampaignOperations(client, rateLimitRetryPolicy), LazyThreadSafetyMode.ExecutionAndPublication);
 
-        private readonly Lazy<SharedCampaignOperations> _sharedCampaignOperations = new(() =>
+        private readonly Lazy<ISharedCampaignOperations> _sharedCampaignOperations = new(() =>
             new SharedCampaignOperations(client, rateLimitRetryPolicy), LazyThreadSafetyMode.ExecutionAndPublication);
 
         private readonly Lazy<IEnumOperations> _enumOperations = new(() =>
             new EnumOperations(client, rateLimitRetryPolicy), LazyThreadSafetyMode.ExecutionAndPublication);
+
+        public IBrandOperations Brand => _brandOperations.Value;
 
         public ICampaignOperations Campaign => _campaignOperations.Value;
 
@@ -42,6 +47,9 @@ namespace Telnyx.NET.Messaging.Operations
         /// </summary>
         public void Dispose()
         {
+            if (_brandOperations.IsValueCreated && _brandOperations.Value is IDisposable disposableBrand)
+                disposableBrand.Dispose();
+
             if (_campaignOperations.IsValueCreated && _campaignOperations.Value is IDisposable disposableCampaign)
                 disposableCampaign.Dispose();
 
