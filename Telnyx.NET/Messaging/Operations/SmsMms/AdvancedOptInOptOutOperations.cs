@@ -3,7 +3,8 @@ using RestSharp;
 using System.Text.Json;
 using Telnyx.NET.Base;
 using Telnyx.NET.Messaging.Interfaces;
-using Telnyx.NET.Messaging.Models.AdvancedOptInOptOut;
+using Telnyx.NET.Messaging.Models.AdvancedOptInOptOut.Requests;
+using Telnyx.NET.Messaging.Models.AdvancedOptInOptOut.Responses;
 
 namespace Telnyx.NET.Messaging.Operations.SmsMms
 {

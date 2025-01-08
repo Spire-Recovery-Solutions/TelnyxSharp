@@ -1,4 +1,5 @@
-﻿using Telnyx.NET.Messaging.Models.MessagingHostedNumber;
+﻿using Telnyx.NET.Messaging.Models.MessagingHostedNumber.Requests;
+using Telnyx.NET.Messaging.Models.MessagingHostedNumber.Responses;
 
 namespace Telnyx.NET.Messaging.Interfaces
 {

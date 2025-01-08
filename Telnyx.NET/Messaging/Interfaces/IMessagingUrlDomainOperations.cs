@@ -1,4 +1,5 @@
-﻿using Telnyx.NET.Messaging.Models.MessagingUrlDomain;
+﻿using Telnyx.NET.Messaging.Models.MessagingUrlDomain.Requests;
+using Telnyx.NET.Messaging.Models.MessagingUrlDomain.Responses;
 
 namespace Telnyx.NET.Messaging.Interfaces
 {

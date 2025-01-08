@@ -2,7 +2,8 @@ using Polly.Retry;
 using RestSharp;
 using Telnyx.NET.Base;
 using Telnyx.NET.Messaging.Interfaces;
-using Telnyx.NET.Messaging.Models.MessagingUrlDomain;
+using Telnyx.NET.Messaging.Models.MessagingUrlDomain.Requests;
+using Telnyx.NET.Messaging.Models.MessagingUrlDomain.Responses;
 
 namespace Telnyx.NET.Messaging.Operations.SmsMms;
 

@@ -1,4 +1,5 @@
-﻿using Telnyx.NET.Messaging.Models.BulkPhoneNumberCampaign;
+﻿using Telnyx.NET.Messaging.Models.BulkPhoneNumberCampaign.Requests;
+using Telnyx.NET.Messaging.Models.BulkPhoneNumberCampaign.Responses;
 
 namespace Telnyx.NET.Messaging.Interfaces
 {

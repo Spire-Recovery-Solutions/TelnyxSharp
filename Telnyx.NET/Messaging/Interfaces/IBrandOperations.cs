@@ -1,4 +1,5 @@
-﻿using Telnyx.NET.Messaging.Models.Brands;
+﻿using Telnyx.NET.Messaging.Models.Brands.Requests;
+using Telnyx.NET.Messaging.Models.Brands.Responses;
 
 namespace Telnyx.NET.Messaging.Interfaces
 {

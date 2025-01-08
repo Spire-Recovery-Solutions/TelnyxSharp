@@ -1,4 +1,5 @@
-﻿using Telnyx.NET.Messaging.Models.AdvancedOptInOptOut;
+﻿using Telnyx.NET.Messaging.Models.AdvancedOptInOptOut.Requests;
+using Telnyx.NET.Messaging.Models.AdvancedOptInOptOut.Responses;
 
 namespace Telnyx.NET.Messaging.Interfaces
 {

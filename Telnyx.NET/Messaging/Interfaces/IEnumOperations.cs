@@ -1,5 +1,5 @@
 ﻿using Telnyx.NET.Enums;
-using Telnyx.NET.Messaging.Models.Enums;
+using Telnyx.NET.Messaging.Models.Enums.Responses;
 
 namespace Telnyx.NET.Messaging.Interfaces
 {

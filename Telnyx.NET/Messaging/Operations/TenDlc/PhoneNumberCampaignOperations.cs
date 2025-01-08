@@ -3,7 +3,8 @@ using RestSharp;
 using System.Text.Json;
 using Telnyx.NET.Base;
 using Telnyx.NET.Messaging.Interfaces;
-using Telnyx.NET.Messaging.Models.PhoneNumberCampaign;
+using Telnyx.NET.Messaging.Models.PhoneNumberCampaign.Requests;
+using Telnyx.NET.Messaging.Models.PhoneNumberCampaign.Responses;
 
 namespace Telnyx.NET.Messaging.Operations.TenDlc
 {

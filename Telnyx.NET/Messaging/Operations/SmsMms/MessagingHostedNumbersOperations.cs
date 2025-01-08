@@ -3,7 +3,8 @@ using RestSharp;
 using System.Text.Json;
 using Telnyx.NET.Base;
 using Telnyx.NET.Messaging.Interfaces;
-using Telnyx.NET.Messaging.Models.MessagingHostedNumber;
+using Telnyx.NET.Messaging.Models.MessagingHostedNumber.Requests;
+using Telnyx.NET.Messaging.Models.MessagingHostedNumber.Responses;
 
 namespace Telnyx.NET.Messaging.Operations.SmsMms
 {

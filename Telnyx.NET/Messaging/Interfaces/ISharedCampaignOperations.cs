@@ -1,4 +1,5 @@
-﻿using Telnyx.NET.Messaging.Models.SharedCampaign;
+﻿using Telnyx.NET.Messaging.Models.SharedCampaign.Requests;
+using Telnyx.NET.Messaging.Models.SharedCampaign.Responses;
 
 namespace Telnyx.NET.Messaging.Interfaces
 {
