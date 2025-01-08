@@ -38,6 +38,10 @@ using Telnyx.NET.Messaging.Models.TollFreeVerificationOperations.Requests;
 using Telnyx.NET.Messaging.Models.TollFreeVerificationOperations.Responses;
 using Telnyx.NET.Models;
 using Telnyx.NET.Models.Events;
+using Telnyx.NET.PhoneNumber.Models.Identity.Requests;
+using Telnyx.NET.PhoneNumber.Models.Identity.Responses;
+using Telnyx.NET.PhoneNumber.Models.PhoneNumber.Requests;
+using Telnyx.NET.PhoneNumber.Models.PhoneNumber.Responses;
 
 namespace Telnyx.NET
 {
@@ -312,7 +316,7 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(ListVerificationRequestsRequest))]
     [JsonSerializable(typeof(ListVerificationRequestsResponse))]
     [JsonSerializable(typeof(VerificationRequestRecord))]
-    [JsonSerializable(typeof(PhoneNumber))]
+    [JsonSerializable(typeof(Messaging.Models.TollFreeVerificationOperations.PhoneNumber))]
     [JsonSerializable(typeof(OptInWorkflowImage))]
 
     [JsonSerializable(typeof(SubmitVerificationRequestRequest))]
