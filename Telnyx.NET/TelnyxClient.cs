@@ -24,17 +24,17 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     private readonly Lazy<ISmsMmsOperations> _smsmms;
     private readonly Lazy<ITollFreeOperations> _tollFreeVerification;
     private readonly Lazy<ITenDlcOperations> _tenDlc;
-    private readonly Lazy<IIdentityOperations> _identity;
-    private readonly Lazy<IPhoneNumberOperations> _phoneNumber;
-    private readonly Lazy<ICallCommandsOperations> _call;
+    private readonly Lazy<IIdentityOperations> _identityOperations;
+    private readonly Lazy<IPhoneNumberOperations> _phoneNumberOperations;
+    private readonly Lazy<ICallCommandsOperations> _callCommandsOperations;
 
     // Public properties
     public ISmsMmsOperations SmsMms => _smsmms.Value;
     public ITollFreeOperations TollFreeVerification => _tollFreeVerification.Value;
-    public ITenDlcOperations TenDlcOperations => _tenDlc.Value;
-    public IIdentityOperations IdentityOperations => _identity.Value;
-    public IPhoneNumberOperations PhoneNumberOperations => _phoneNumber.Value;
-    public ICallCommandsOperations CallCommandsOperations => _call.Value;
+    public ITenDlcOperations TenDlc => _tenDlc.Value;
+    public IIdentityOperations Identity => _identityOperations.Value;
+    public IPhoneNumberOperations PhoneNumbers => _phoneNumberOperations.Value;
+    public ICallCommandsOperations CallCommands => _callCommandsOperations.Value;
 
 
     public TelnyxClient(string apiKey)
@@ -92,15 +92,15 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
            new TenDlcOperations(Client, RateLimitRetryPolicy),
            LazyThreadSafetyMode.ExecutionAndPublication);
 
-        _identity = new Lazy<IIdentityOperations>(() =>
+        _identityOperations = new Lazy<IIdentityOperations>(() =>
            new IdentityOperations(Client, RateLimitRetryPolicy),
            LazyThreadSafetyMode.ExecutionAndPublication);
 
-        _phoneNumber = new Lazy<IPhoneNumberOperations>(() =>
+        _phoneNumberOperations = new Lazy<IPhoneNumberOperations>(() =>
             new PhoneNumberOperations(Client, RateLimitRetryPolicy),
             LazyThreadSafetyMode.ExecutionAndPublication);
 
-        _call = new Lazy<ICallCommandsOperations>(() =>
+        _callCommandsOperations = new Lazy<ICallCommandsOperations>(() =>
             new CallCommandsOperations(Client, RateLimitRetryPolicy),
             LazyThreadSafetyMode.ExecutionAndPublication);
     }
@@ -120,15 +120,15 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
         {
             disposableTenDlc.Dispose();
         }
-        if (_identity.IsValueCreated && _identity.Value is IDisposable disposableIdentityOperations)
+        if (_identityOperations.IsValueCreated && _identityOperations.Value is IDisposable disposableIdentityOperations)
         {
             disposableIdentityOperations.Dispose();
         }
-        if (_phoneNumber.IsValueCreated && _phoneNumber.Value is IDisposable disposablePhoneNumberOperations)
+        if (_phoneNumberOperations.IsValueCreated && _phoneNumberOperations.Value is IDisposable disposablePhoneNumberOperations)
         {
             disposablePhoneNumberOperations.Dispose();
         }
-        if (_call.IsValueCreated && _call.Value is IDisposable disposableCallCommandsOperations)
+        if (_callCommandsOperations.IsValueCreated && _callCommandsOperations.Value is IDisposable disposableCallCommandsOperations)
         {
             disposableCallCommandsOperations.Dispose();
         }
