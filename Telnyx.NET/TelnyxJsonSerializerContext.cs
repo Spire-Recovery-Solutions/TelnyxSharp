@@ -40,6 +40,7 @@ using Telnyx.NET.Models;
 using Telnyx.NET.Models.Events;
 using Telnyx.NET.PhoneNumber.Models.Identity.Requests;
 using Telnyx.NET.PhoneNumber.Models.Identity.Responses;
+using Telnyx.NET.PhoneNumber.Models.PhoneNumber;
 using Telnyx.NET.PhoneNumber.Models.PhoneNumber.Requests;
 using Telnyx.NET.PhoneNumber.Models.PhoneNumber.Responses;
 
