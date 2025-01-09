@@ -11,7 +11,7 @@ namespace Telnyx.NET.Messaging.Operations.TollFreeVerification
     public class TollFreeOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), ITollFreeOperations
     {
-        private readonly Lazy<TollFreeVerificationOperations> _verificationOperations = new(() =>
+        private readonly Lazy<ITollFreeVerificationOperations> _verificationOperations = new(() =>
             new TollFreeVerificationOperations(client, rateLimitRetryPolicy),
         LazyThreadSafetyMode.ExecutionAndPublication);
 
