@@ -31,10 +31,10 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     // Public properties
     public ISmsMmsOperations SmsMms => _smsmms.Value;
     public ITollFreeOperations TollFreeVerification => _tollFreeVerification.Value;
-    public ITenDlcOperations TenDlc => _tenDlc.Value;
-    public IIdentityOperations Identity => _identity.Value;
-    public IPhoneNumberOperations PhoneNumber => _phoneNumber.Value;
-    public ICallCommandsOperations CallCommands => _call.Value;
+    public ITenDlcOperations TenDlcOperations => _tenDlc.Value;
+    public IIdentityOperations IdentityOperations => _identity.Value;
+    public IPhoneNumberOperations PhoneNumberOperations => _phoneNumber.Value;
+    public ICallCommandsOperations CallCommandsOperations => _call.Value;
 
 
     public TelnyxClient(string apiKey)
