@@ -1,7 +1,7 @@
 ﻿using Polly.Retry;
 using RestSharp;
 using Telnyx.NET.Base;
-using Telnyx.NET.Models;
+using Telnyx.NET.Enums;
 using Telnyx.NET.PhoneNumber.Interfaces;
 using Telnyx.NET.PhoneNumber.Models.Identity.Requests;
 using Telnyx.NET.PhoneNumber.Models.Identity.Responses;

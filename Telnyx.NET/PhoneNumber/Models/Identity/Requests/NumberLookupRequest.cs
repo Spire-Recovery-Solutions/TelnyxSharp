@@ -1,5 +1,5 @@
 ﻿using Telnyx.NET.Base;
-using Telnyx.NET.Models;
+using Telnyx.NET.Enums;
 
 namespace Telnyx.NET.PhoneNumber.Models.Identity.Requests;
 

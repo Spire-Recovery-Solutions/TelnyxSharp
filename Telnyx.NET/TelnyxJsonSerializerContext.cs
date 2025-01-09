@@ -40,8 +40,11 @@ using Telnyx.NET.Models;
 using Telnyx.NET.Models.Events;
 using Telnyx.NET.PhoneNumber.Models.Identity.Requests;
 using Telnyx.NET.PhoneNumber.Models.Identity.Responses;
+using Telnyx.NET.PhoneNumber.Models.PhoneNumber;
 using Telnyx.NET.PhoneNumber.Models.PhoneNumber.Requests;
 using Telnyx.NET.PhoneNumber.Models.PhoneNumber.Responses;
+using Telnyx.NET.Voice.Models.CallCommands.Requests;
+using Telnyx.NET.Voice.Models.CallCommands.Responses;
 
 namespace Telnyx.NET
 {
@@ -97,7 +100,6 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(NumberLookupCallerName))]
     [JsonSerializable(typeof(NumberLookupCarrier))]
     [JsonSerializable(typeof(NumberLookupPortability))]
-    [JsonSerializable(typeof(NumberLookupType))]
     [JsonSerializable(typeof(NumberOrder))]
     [JsonSerializable(typeof(SendMessageRequest))]
     [JsonSerializable(typeof(SendMessageResponse))]
@@ -383,7 +385,6 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(SubmitCampaignRequest))]
     [JsonSerializable(typeof(SubmitCampaignResponse))]
 
-    [JsonSerializable(typeof(QualifyCampaignByUsecaseRequest))]
     [JsonSerializable(typeof(QualifyCampaignByUsecaseResponse))]
 
     [JsonSerializable(typeof(AcceptSharedCampaignResponse))]
@@ -438,6 +439,7 @@ namespace Telnyx.NET
 
 
     //Enums
+    [JsonSerializable(typeof(NumberLookupType))]
     [JsonSerializable(typeof(AltBusinessIdType))]
     [JsonSerializable(typeof(BrandIdentityStatus))]
     [JsonSerializable(typeof(BrandRelationship))]

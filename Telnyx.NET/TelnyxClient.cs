@@ -8,6 +8,9 @@ using Telnyx.NET.Messaging.Operations.SmsMms;
 using Telnyx.NET.Messaging.Operations.TenDlc;
 using Telnyx.NET.Messaging.Operations.TollFreeVerification;
 using Telnyx.NET.PhoneNumber.Interfaces;
+using Telnyx.NET.PhoneNumber.Operations.Identity;
+using Telnyx.NET.Voice.Interfaces;
+using Telnyx.NET.Voice.Operations.ProgrammableVoice;
 
 namespace Telnyx.NET;
 
@@ -23,13 +26,15 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     private readonly Lazy<ITenDlcOperations> _tenDlc;
     private readonly Lazy<IIdentityOperations> _identityOperations;
     private readonly Lazy<IPhoneNumberOperations> _phoneNumberOperations;
+    private readonly Lazy<ICallCommandsOperations> _callCommandsOperations;
 
     // Public properties
     public ISmsMmsOperations SmsMms => _smsmms.Value;
     public ITollFreeOperations TollFreeVerification => _tollFreeVerification.Value;
-    public ITenDlcOperations TenDlcOperations => _tenDlc.Value;
-    public IIdentityOperations IdentityOperations => _identityOperations.Value;
-    public IPhoneNumberOperations PhoneNumberOperations => _phoneNumberOperations.Value;
+    public ITenDlcOperations TenDlc => _tenDlc.Value;
+    public IIdentityOperations Identity => _identityOperations.Value;
+    public IPhoneNumberOperations PhoneNumbers => _phoneNumberOperations.Value;
+    public ICallCommandsOperations CallCommands => _callCommandsOperations.Value;
 
 
     public TelnyxClient(string apiKey)
@@ -94,6 +99,10 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
         _phoneNumberOperations = new Lazy<IPhoneNumberOperations>(() =>
             new PhoneNumberOperations(Client, RateLimitRetryPolicy),
             LazyThreadSafetyMode.ExecutionAndPublication);
+
+        _callCommandsOperations = new Lazy<ICallCommandsOperations>(() =>
+            new CallCommandsOperations(Client, RateLimitRetryPolicy),
+            LazyThreadSafetyMode.ExecutionAndPublication);
     }
 
     public void Dispose()
@@ -118,6 +127,10 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
         if (_phoneNumberOperations.IsValueCreated && _phoneNumberOperations.Value is IDisposable disposablePhoneNumberOperations)
         {
             disposablePhoneNumberOperations.Dispose();
+        }
+        if (_callCommandsOperations.IsValueCreated && _callCommandsOperations.Value is IDisposable disposableCallCommandsOperations)
+        {
+            disposableCallCommandsOperations.Dispose();
         }
 
         _logWriter?.Dispose();
