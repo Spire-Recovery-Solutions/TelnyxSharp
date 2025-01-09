@@ -1,6 +1,7 @@
 ﻿
 
 using System.Text.Json.Serialization;
+using Telnyx.NET.PhoneNumber.Models.PhoneNumber.Responses;
 
 namespace Telnyx.NET.Models;
 
