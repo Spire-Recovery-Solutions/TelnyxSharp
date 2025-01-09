@@ -21,11 +21,6 @@
         IPhoneNumberOrdersOperations PhoneNumberOrders { get; }
 
         /// <summary>
-        /// Gets the operations for managing phone number configurations, including updating voice settings and other configurations.
-        /// </summary>
-        IPhoneNumberOperations PhoneNumber { get; }
-
-        /// <summary>
         /// Gets the operations for configuring phone numbers, including updating voice and other settings.
         /// </summary>
         IPhoneNumberConfigurationOperations PhoneNumberConfiguration { get; }

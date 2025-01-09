@@ -22,7 +22,7 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     private readonly Lazy<ITollFreeOperations> _tollFreeVerification;
     private readonly Lazy<ITenDlcOperations> _tenDlc;
     private readonly Lazy<IIdentityOperations> _identityOperations;
-    private readonly Lazy<PhoneNumberOperations> _phoneNumberOperations;
+    private readonly Lazy<IPhoneNumberOperations> _phoneNumberOperations;
 
     // Public properties
     public ISmsMmsOperations SmsMms => _smsmms.Value;
@@ -91,7 +91,7 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
            new IdentityOperations(Client, RateLimitRetryPolicy),
            LazyThreadSafetyMode.ExecutionAndPublication);
 
-        _phoneNumberOperations = new Lazy<PhoneNumberOperations>(() =>
+        _phoneNumberOperations = new Lazy<IPhoneNumberOperations>(() =>
             new PhoneNumberOperations(Client, RateLimitRetryPolicy),
             LazyThreadSafetyMode.ExecutionAndPublication);
     }

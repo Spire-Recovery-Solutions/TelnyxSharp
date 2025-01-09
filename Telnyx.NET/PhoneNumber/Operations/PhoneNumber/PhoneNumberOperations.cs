@@ -25,11 +25,6 @@ namespace Telnyx.NET.Messaging.Operations.TollFreeVerification
                 LazyThreadSafetyMode.ExecutionAndPublication);
 
 
-        private readonly Lazy<IPhoneNumberOperations> _phoneNumberOperations = new(() =>
-                new PhoneNumberOperations(client, rateLimitRetryPolicy),
-                    LazyThreadSafetyMode.ExecutionAndPublication);
-
-
         private readonly Lazy<IPhoneNumberConfigurationOperations> _phoneNumberConfigurationOperations = new(() =>
                 new PhoneNumberConfigurationOperations(client, rateLimitRetryPolicy),
                         LazyThreadSafetyMode.ExecutionAndPublication);
@@ -39,8 +34,6 @@ namespace Telnyx.NET.Messaging.Operations.TollFreeVerification
         public IPhoneNumberReservationsOperations PhoneNumberReservations => _phoneNumberReservationsOperations.Value;
 
         public IPhoneNumberOrdersOperations PhoneNumberOrders => _phoneNumberOrdersOperations.Value;
-
-        public IPhoneNumberOperations PhoneNumber => _phoneNumberOperations.Value;
 
         public IPhoneNumberConfigurationOperations PhoneNumberConfiguration => _phoneNumberConfigurationOperations.Value;
 
@@ -58,9 +51,6 @@ namespace Telnyx.NET.Messaging.Operations.TollFreeVerification
 
             if (_phoneNumberOrdersOperations.IsValueCreated && _phoneNumberOrdersOperations.Value is IDisposable disposablePhoneNumberOrders)
                 disposablePhoneNumberOrders.Dispose();
-
-            if (_phoneNumberOperations.IsValueCreated && _phoneNumberOperations.Value is IDisposable disposablePhoneNumber)
-                disposablePhoneNumber.Dispose();
 
             if (_phoneNumberConfigurationOperations.IsValueCreated && _phoneNumberConfigurationOperations.Value is IDisposable disposablePhoneNumberConfiguration)
                 disposablePhoneNumberConfiguration.Dispose();
