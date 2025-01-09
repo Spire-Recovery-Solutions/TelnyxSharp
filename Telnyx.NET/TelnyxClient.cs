@@ -1,19 +1,16 @@
-﻿// This should be the shared base class for all operations
-
-using Polly;
+﻿using Polly;
 using Polly.RateLimit;
 using RestSharp;
 using RestSharp.Authenticators;
 using Telnyx.NET.Base;
 using Telnyx.NET.Messaging;
-using Telnyx.NET.Models;
+using Telnyx.NET.Messaging.Interfaces;
+using Telnyx.NET.Messaging.Operations.SmsMms;
+using Telnyx.NET.Messaging.Operations.TenDlc;
+using Telnyx.NET.Messaging.Operations.TollFreeVerification;
 
 namespace Telnyx.NET;
 
-public interface ITelnyxClient : IDisposable
-{
-    IMessagingOperations Messaging { get; }
-}
 public class TelnyxClient : BaseOperations, ITelnyxClient
 {
     private static readonly string DefaultLogPath = Path.Combine(Path.GetTempPath(), "TelnyxSDK", "logs");
@@ -21,10 +18,14 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     private readonly FileStream? _logFileStream;
 
     // Lazy-loaded API sections
-    private readonly Lazy<IMessagingOperations> _messaging;
+    private readonly Lazy<ISmsMmsOperations> _smsmms;
+    private readonly Lazy<ITollFreeOperations> _tollFreeVerification;
+    private readonly Lazy<ITenDlcOperations> _tenDlc;
 
     // Public properties
-    public IMessagingOperations Messaging => _messaging.Value;
+    public ISmsMmsOperations SmsMms => _smsmms.Value;
+    public ITollFreeOperations TollFreeVerification => _tollFreeVerification.Value;
+    public ITenDlcOperations TenDlcOperations => _tenDlc.Value;
 
     public TelnyxClient(string apiKey)
     {
@@ -69,17 +70,33 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
         base.RateLimitRetryPolicy = rateLimitRetryPolicy;
 
         // Initialize lazy-loaded sections
-        _messaging = new Lazy<IMessagingOperations>(() => 
-            new MessagingOperations(Client, RateLimitRetryPolicy),
+        _smsmms = new Lazy<ISmsMmsOperations>(() =>
+            new SmsMmsOperations(Client, RateLimitRetryPolicy),
+            LazyThreadSafetyMode.ExecutionAndPublication);
+
+        _tollFreeVerification = new Lazy<ITollFreeOperations>(() =>
+            new TollFreeOperations(Client, RateLimitRetryPolicy),
+            LazyThreadSafetyMode.ExecutionAndPublication);
+
+         _tenDlc = new Lazy<ITenDlcOperations>(() =>
+            new TenDlcOperations(Client, RateLimitRetryPolicy),
             LazyThreadSafetyMode.ExecutionAndPublication);
     }
 
     public void Dispose()
     {
         // Dispose any initialized components
-        if (_messaging.IsValueCreated && _messaging.Value is IDisposable disposableMessaging)
+        if (_smsmms.IsValueCreated && _smsmms.Value is IDisposable disposableSmsMms)
         {
-            disposableMessaging.Dispose();
+            disposableSmsMms.Dispose();
+        }
+        if (_tollFreeVerification.IsValueCreated && _tollFreeVerification.Value is IDisposable disposableTollFreeVerification)
+        {
+            disposableTollFreeVerification.Dispose();
+        }
+        if (_tenDlc.IsValueCreated && _tenDlc.Value is IDisposable disposableTenDlc)
+        {
+            disposableTenDlc.Dispose();
         }
 
         _logWriter?.Dispose();
