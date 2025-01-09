@@ -1,11 +1,12 @@
 ﻿using Telnyx.NET.Messaging.Interfaces;
 using Telnyx.NET.PhoneNumber.Interfaces;
+using Telnyx.NET.Voice.Interfaces;
 
 namespace Telnyx.NET.Base
 {
     /// <summary>
     /// Represents the Telnyx client interface, providing access to various Telnyx API operations.
-    /// The client manages communication with the Telnyx API and encapsulates operations related to SMS/MMS, toll-free, and 10DLC services.
+    /// The client manages communication with the Telnyx API and encapsulates operations related to messaging, phone numbers, and programmable voice commands.
     /// </summary>
     public interface ITelnyxClient : IDisposable
     {
@@ -37,5 +38,11 @@ namespace Telnyx.NET.Base
         /// This includes various operations for managing phone numbers, such as purchasing, configuring, and releasing phone numbers.
         /// </summary>
         IPhoneNumberOperations PhoneNumberOperations { get; }
+
+        /// <summary>
+        /// Gets the operations for programmable voice call commands.
+        /// This includes operations such as dialing, answering, and managing calls programmatically via the Telnyx API.
+        /// </summary>
+        ICallCommandsOperations CallCommandsOperations { get; }
     }
 }
