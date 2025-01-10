@@ -437,9 +437,133 @@ namespace Telnyx.NET
 
     [JsonSerializable(typeof(GetEnumResponse))]
 
+    [JsonSerializable(typeof(BridgeCallRequest))]
+    [JsonSerializable(typeof(BridgeCallResponse))]
+    [JsonSerializable(typeof(BridgeCallResponseData))]
+
+    [JsonSerializable(typeof(ForkMediaRequest))]
+    [JsonSerializable(typeof(ForkMediaResponse))]
+    [JsonSerializable(typeof(ForkMediaResponseData))]
+
+    [JsonSerializable(typeof(ForkStopRequest))]
+    [JsonSerializable(typeof(ForkStopResponse))]
+    [JsonSerializable(typeof(ForkStopResponseData))]
+
+    [JsonSerializable(typeof(GatherRequest))]
+    [JsonSerializable(typeof(GatherResponse))]
+    [JsonSerializable(typeof(GatherResponseData))]
+
+    [JsonSerializable(typeof(GatherUsingAudioRequest))]
+    [JsonSerializable(typeof(GatherUsingAudioResponse))]
+    [JsonSerializable(typeof(GatherUsingAudioData))]
+
+    [JsonSerializable(typeof(GatherUsingAiRequest))]
+    [JsonSerializable(typeof(Transcription))]
+    [JsonSerializable(typeof(VoiceSettings))]
+    [JsonSerializable(typeof(TelnyxVoiceSettings))]
+    [JsonSerializable(typeof(ElevenLabsVoiceSettings))]
+    [JsonSerializable(typeof(AWSVoiceSettings))]
+    [JsonSerializable(typeof(AssistantConfig))]
+    [JsonSerializable(typeof(MessageHistory))]
+    [JsonSerializable(typeof(InterruptionSettings))]
+    [JsonSerializable(typeof(GatherUsingAiResponse))]
+    [JsonSerializable(typeof(GatherUsingAiResult))]
+
+    [JsonSerializable(typeof(GatherStopRequest))]
+    [JsonSerializable(typeof(GatherStopResponse))]
+    [JsonSerializable(typeof(GatherStopData))]
+
+    [JsonSerializable(typeof(AiAssistantStartResponse))]
+    [JsonSerializable(typeof(AiAssistantStartData))]
+    [JsonSerializable(typeof(AiAssistantStartRequest))]
+
+    [JsonSerializable(typeof(AiAssistantStopResponse))]
+    [JsonSerializable(typeof(AiAssistantStopData))]
+    [JsonSerializable(typeof(AiAssistantStopRequest))]
+
+    [JsonSerializable(typeof(UpdateClientStateRequest))]
+    [JsonSerializable(typeof(UpdateClientStateResponse))]
+    [JsonSerializable(typeof(UpdateClientStateData))]
+
+    [JsonSerializable(typeof(SipReferResponse))]
+    [JsonSerializable(typeof(SipReferData))]
+    [JsonSerializable(typeof(SipReferRequest))]
+
+    [JsonSerializable(typeof(RecordingStartRequest))]
+    [JsonSerializable(typeof(RecordingStartResponse))]
+    [JsonSerializable(typeof(RecordingStartData))]
+    [JsonSerializable(typeof(TranscriptionLanguageConfig))]
+    [JsonSerializable(typeof(GoogleTranscriptionLanguageConfig))]
+
+    [JsonSerializable(typeof(RecordPauseResponse))]
+    [JsonSerializable(typeof(RecordPauseData))]
+    [JsonSerializable(typeof(RecordPauseRequest))]
+
+    [JsonSerializable(typeof(RecordResumeResponse))]
+    [JsonSerializable(typeof(RecordResumeData))]
+    [JsonSerializable(typeof(RecordResumeRequest))]
+
+    [JsonSerializable(typeof(RecordStopResponse))]
+    [JsonSerializable(typeof(RecordStopData))]
+    [JsonSerializable(typeof(RecordStopRequest))]
+
+    [JsonSerializable(typeof(SendDtmfResponse))]
+    [JsonSerializable(typeof(SendDtmfData))]
+    [JsonSerializable(typeof(SendDtmfRequest))]
+    
+    [JsonSerializable(typeof(SendDtmfResponse))]
+    [JsonSerializable(typeof(SendDtmfData))]
+    [JsonSerializable(typeof(SendDtmfRequest))]
+    
+    [JsonSerializable(typeof(SendSipInfoRequest))]
+    [JsonSerializable(typeof(SendSipInfoResponse))]
+    [JsonSerializable(typeof(SendSipInfoData))]
+    
+    [JsonSerializable(typeof(SiprecStartResponse))]
+    [JsonSerializable(typeof(SiprecStartRequest))]
+    [JsonSerializable(typeof(SiprecStartData))]
+
+    [JsonSerializable(typeof(SiprecStopResponse))]
+    [JsonSerializable(typeof(SiprecStopData))]
+    [JsonSerializable(typeof(SiprecStopRequest))]
+
+    [JsonSerializable(typeof(StreamingStartRequest))]
+    [JsonSerializable(typeof(StreamingStartResponse))]
+    [JsonSerializable(typeof(StreamingStartData))]
+
+    [JsonSerializable(typeof(StreamingStopRequest))]
+    [JsonSerializable(typeof(StreamingStopResponse))]
+    [JsonSerializable(typeof(StreamingStopData))]
+    
+    [JsonSerializable(typeof(NoiseSuppressionStartResponse))]
+    [JsonSerializable(typeof(NoiseSuppressionStartData))]
+    [JsonSerializable(typeof(NoiseSuppressionStartRequest))]
+
+    [JsonSerializable(typeof(NoiseSuppressionStopResponse))]
+    [JsonSerializable(typeof(NoiseSuppressionStopData))]
+    [JsonSerializable(typeof(NoiseSuppressionStopRequest))]
+    
+    [JsonSerializable(typeof(TranscriptionStopResponse))]
+    [JsonSerializable(typeof(TranscriptionStopData))]
+    [JsonSerializable(typeof(TranscriptionStopRequest))]
 
     //Enums
-    [JsonSerializable(typeof(NumberLookupType))]
+    [JsonSerializable(typeof(StreamBidirectionalMode))]
+    [JsonSerializable(typeof(StreamBidirectionalCodec))]
+    [JsonSerializable(typeof(StreamBidirectionalTargetLegs))]
+    [JsonSerializable(typeof(Track))]
+    [JsonSerializable(typeof(GoogleLanguage))]
+    [JsonSerializable(typeof(TelnyxLanguage))]
+    [JsonSerializable(typeof(VoiceType))]
+    [JsonSerializable(typeof(MessageRole))]
+    [JsonSerializable(typeof(PayloadType))]
+    [JsonSerializable(typeof(ServiceLevel))]
+    [JsonSerializable(typeof(Language))]
+    [JsonSerializable(typeof(StreamType))]
+    [JsonSerializable(typeof(RecordTrack))]
+    [JsonSerializable(typeof(RecordFormat))]
+    [JsonSerializable(typeof(RecordChannels))]
+    [JsonSerializable(typeof(RingtoneCountry))]
     [JsonSerializable(typeof(AltBusinessIdType))]
     [JsonSerializable(typeof(BrandIdentityStatus))]
     [JsonSerializable(typeof(BrandRelationship))]
