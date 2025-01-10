@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Enums;
 
 namespace Telnyx.NET.Voice.Models.CallCommands.Requests
 {
@@ -28,7 +29,7 @@ namespace Telnyx.NET.Voice.Models.CallCommands.Requests
         /// uk, ur, uz, ve, vi, xh, zu].
         /// </summary>
         [JsonPropertyName("language")]
-        public string? Language { get; set; }
+        public Language? Language { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether interim results are requested. 
