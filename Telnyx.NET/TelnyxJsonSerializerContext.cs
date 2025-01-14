@@ -45,6 +45,9 @@ using Telnyx.NET.PhoneNumber.Models.PhoneNumber.Requests;
 using Telnyx.NET.PhoneNumber.Models.PhoneNumber.Responses;
 using Telnyx.NET.Voice.Models.CallCommands.Requests;
 using Telnyx.NET.Voice.Models.CallCommands.Responses;
+using Telnyx.NET.Voice.Models.ConferenceCommands;
+using Telnyx.NET.Voice.Models.ConferenceCommands.Requests;
+using Telnyx.NET.Voice.Models.ConferenceCommands.Responses;
 
 namespace Telnyx.NET
 {
@@ -510,15 +513,15 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(SendDtmfResponse))]
     [JsonSerializable(typeof(SendDtmfData))]
     [JsonSerializable(typeof(SendDtmfRequest))]
-    
+
     [JsonSerializable(typeof(SendDtmfResponse))]
     [JsonSerializable(typeof(SendDtmfData))]
     [JsonSerializable(typeof(SendDtmfRequest))]
-    
+
     [JsonSerializable(typeof(SendSipInfoRequest))]
     [JsonSerializable(typeof(SendSipInfoResponse))]
     [JsonSerializable(typeof(SendSipInfoData))]
-    
+
     [JsonSerializable(typeof(SiprecStartResponse))]
     [JsonSerializable(typeof(SiprecStartRequest))]
     [JsonSerializable(typeof(SiprecStartData))]
@@ -534,7 +537,7 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(StreamingStopRequest))]
     [JsonSerializable(typeof(StreamingStopResponse))]
     [JsonSerializable(typeof(StreamingStopData))]
-    
+
     [JsonSerializable(typeof(NoiseSuppressionStartResponse))]
     [JsonSerializable(typeof(NoiseSuppressionStartData))]
     [JsonSerializable(typeof(NoiseSuppressionStartRequest))]
@@ -542,12 +545,64 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(NoiseSuppressionStopResponse))]
     [JsonSerializable(typeof(NoiseSuppressionStopData))]
     [JsonSerializable(typeof(NoiseSuppressionStopRequest))]
-    
+
     [JsonSerializable(typeof(TranscriptionStopResponse))]
     [JsonSerializable(typeof(TranscriptionStopData))]
     [JsonSerializable(typeof(TranscriptionStopRequest))]
 
-    //Enums
+    [JsonSerializable(typeof(BaseConferenceData))]
+
+    [JsonSerializable(typeof(CreateConferenceResponse))]
+    [JsonSerializable(typeof(EndedBy))]
+    [JsonSerializable(typeof(CreateConferenceRequest))]
+
+    [JsonSerializable(typeof(ListConferencesRequest))]
+    [JsonSerializable(typeof(ListConferencesResponse))]
+
+    [JsonSerializable(typeof(RetrieveConferenceResponse))]
+    [JsonSerializable(typeof(RetrieveConferenceData))]
+
+    [JsonSerializable(typeof(ListConferenceParticipantsResponse))]
+    [JsonSerializable(typeof(ListConferenceParticipantsData))]
+    [JsonSerializable(typeof(ListConferenceParticipantsRequest))]
+
+    [JsonSerializable(typeof(JoinConferenceRequest))]
+    [JsonSerializable(typeof(ConferenceCommandResponse))]
+    [JsonSerializable(typeof(ConferenceCommandData))]
+
+    [JsonSerializable(typeof(LeaveConferenceRequest))]
+
+    [JsonSerializable(typeof(UpdateConferenceRequest))]
+
+    [JsonSerializable(typeof(MuteConferenceParticipantsRequest))]
+
+    [JsonSerializable(typeof(UnmuteConferenceParticipantsRequest))]
+
+    [JsonSerializable(typeof(HoldConferenceParticipantsRequest))]
+
+    [JsonSerializable(typeof(UnholdConferenceParticipantsRequest))]
+
+    [JsonSerializable(typeof(StartConferenceRecordingRequest))]
+
+    [JsonSerializable(typeof(StopConferenceRecordingRequest))]
+
+    [JsonSerializable(typeof(PauseConferenceRecordingRequest))]
+
+    [JsonSerializable(typeof(ResumeConferenceRecordingRequest))]
+
+    [JsonSerializable(typeof(SpeakTextToConferenceRequest))]
+
+    [JsonSerializable(typeof(PlayAudioToConferenceRequest))]
+    [JsonSerializable(typeof(Loop))]
+    [JsonSerializable(typeof(MOD1))]
+    [JsonSerializable(typeof(MOD2))]
+
+    [JsonSerializable(typeof(StopAudioToConferenceRequest))]
+    //Enums    
+    [JsonSerializable(typeof(BeepEnabled))]
+    [JsonSerializable(typeof(SupervisorRole))]
+    [JsonSerializable(typeof(StreamBidirectionalMode))]
+    [JsonSerializable(typeof(ConferenceStatus))]
     [JsonSerializable(typeof(StreamBidirectionalMode))]
     [JsonSerializable(typeof(StreamBidirectionalCodec))]
     [JsonSerializable(typeof(StreamBidirectionalTargetLegs))]
