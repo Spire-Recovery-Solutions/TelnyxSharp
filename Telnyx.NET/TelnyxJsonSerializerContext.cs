@@ -45,9 +45,14 @@ using Telnyx.NET.PhoneNumber.Models.PhoneNumber.Requests;
 using Telnyx.NET.PhoneNumber.Models.PhoneNumber.Responses;
 using Telnyx.NET.Voice.Models.CallCommands.Requests;
 using Telnyx.NET.Voice.Models.CallCommands.Responses;
+using Telnyx.NET.Voice.Models.CallControlApplications;
+using Telnyx.NET.Voice.Models.CallControlApplications.Requests;
+using Telnyx.NET.Voice.Models.CallControlApplications.Responses;
 using Telnyx.NET.Voice.Models.ConferenceCommands;
 using Telnyx.NET.Voice.Models.ConferenceCommands.Requests;
 using Telnyx.NET.Voice.Models.ConferenceCommands.Responses;
+using Telnyx.NET.Voice.Models.Debugging.Requests;
+using Telnyx.NET.Voice.Models.Debugging.Responses;
 
 namespace Telnyx.NET
 {
@@ -598,7 +603,39 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(MOD2))]
 
     [JsonSerializable(typeof(StopAudioToConferenceRequest))]
-    //Enums    
+
+    [JsonSerializable(typeof(ListCallEventsRequest))]
+    [JsonSerializable(typeof(ListCallEventsResponse))]
+    [JsonSerializable(typeof(ListCallEventsData))]
+    
+    [JsonSerializable(typeof(ListCallControlApplicationsRequest))]
+    [JsonSerializable(typeof(ListCallControlApplicationsResponse))]
+    [JsonSerializable(typeof(ListCallControlApplicationsData))]
+
+    [JsonSerializable(typeof(BaseCallControlApplications))]
+    [JsonSerializable(typeof(InboundSettings))]
+    [JsonSerializable(typeof(OutboundSettings))]
+
+    [JsonSerializable(typeof(CreateCallControlApplicationRequest))]
+    [JsonSerializable(typeof(CreateCallControlApplicationResponse))]
+    [JsonSerializable(typeof(CreateCallControlApplicationData))]
+    
+    [JsonSerializable(typeof(RetrieveCallControlApplicationResponse))]
+    [JsonSerializable(typeof(RetrieveCallControlApplicationData))]
+
+    [JsonSerializable(typeof(UpdateCallControlApplicationRequest))]
+    [JsonSerializable(typeof(UpdateCallControlApplicationResponse))]
+    [JsonSerializable(typeof(UpdateCallControlApplicationData))] 
+    
+    [JsonSerializable(typeof(DeleteCallControlApplicationResponse))]
+    [JsonSerializable(typeof(DeleteCallControlApplicationData))]
+
+    //Enums
+    [JsonSerializable(typeof(DtmfType))]
+    [JsonSerializable(typeof(AnchorsiteOverride))]
+    [JsonSerializable(typeof(SipSubdomainReceiveSettings))]
+    [JsonSerializable(typeof(EventType))]
+    [JsonSerializable(typeof(ProductType))]
     [JsonSerializable(typeof(BeepEnabled))]
     [JsonSerializable(typeof(SupervisorRole))]
     [JsonSerializable(typeof(StreamBidirectionalMode))]
