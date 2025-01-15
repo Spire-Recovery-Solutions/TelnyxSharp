@@ -48,11 +48,15 @@ using Telnyx.NET.Voice.Models.CallCommands.Responses;
 using Telnyx.NET.Voice.Models.CallControlApplications;
 using Telnyx.NET.Voice.Models.CallControlApplications.Requests;
 using Telnyx.NET.Voice.Models.CallControlApplications.Responses;
+using Telnyx.NET.Voice.Models.CallInformation.Requests;
+using Telnyx.NET.Voice.Models.CallInformation.Responses;
 using Telnyx.NET.Voice.Models.ConferenceCommands;
 using Telnyx.NET.Voice.Models.ConferenceCommands.Requests;
 using Telnyx.NET.Voice.Models.ConferenceCommands.Responses;
 using Telnyx.NET.Voice.Models.Debugging.Requests;
 using Telnyx.NET.Voice.Models.Debugging.Responses;
+using Telnyx.NET.Voice.Models.QueueCommands.Requests;
+using Telnyx.NET.Voice.Models.QueueCommands.Responses;
 
 namespace Telnyx.NET
 {
@@ -607,7 +611,7 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(ListCallEventsRequest))]
     [JsonSerializable(typeof(ListCallEventsResponse))]
     [JsonSerializable(typeof(ListCallEventsData))]
-    
+
     [JsonSerializable(typeof(ListCallControlApplicationsRequest))]
     [JsonSerializable(typeof(ListCallControlApplicationsResponse))]
     [JsonSerializable(typeof(ListCallControlApplicationsData))]
@@ -619,16 +623,32 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(CreateCallControlApplicationRequest))]
     [JsonSerializable(typeof(CreateCallControlApplicationResponse))]
     [JsonSerializable(typeof(CreateCallControlApplicationData))]
-    
+
     [JsonSerializable(typeof(RetrieveCallControlApplicationResponse))]
     [JsonSerializable(typeof(RetrieveCallControlApplicationData))]
 
     [JsonSerializable(typeof(UpdateCallControlApplicationRequest))]
     [JsonSerializable(typeof(UpdateCallControlApplicationResponse))]
-    [JsonSerializable(typeof(UpdateCallControlApplicationData))] 
-    
+    [JsonSerializable(typeof(UpdateCallControlApplicationData))]
+
     [JsonSerializable(typeof(DeleteCallControlApplicationResponse))]
     [JsonSerializable(typeof(DeleteCallControlApplicationData))]
+
+    [JsonSerializable(typeof(RetrieveQueueResponse))]
+    [JsonSerializable(typeof(RetrieveQueueResponseData))]
+
+    [JsonSerializable(typeof(RetrieveCallQueueResponse))]
+    [JsonSerializable(typeof(RetrieveCallQueueData))]
+
+    [JsonSerializable(typeof(RetrieveCallsQueueRequest))]
+    [JsonSerializable(typeof(RetrieveCallsQueueResponse))]
+    [JsonSerializable(typeof(RetrieveCallsQueueData))]
+
+    [JsonSerializable(typeof(ListActiveCallsRequest))]
+    [JsonSerializable(typeof(ListActiveCallsResponse))]
+    [JsonSerializable(typeof(ListActiveCallsData))]
+    [JsonSerializable(typeof(ActiveCallsMetaCursors))]
+    [JsonSerializable(typeof(ActiveCallsMeta))]
 
     //Enums
     [JsonSerializable(typeof(DtmfType))]
