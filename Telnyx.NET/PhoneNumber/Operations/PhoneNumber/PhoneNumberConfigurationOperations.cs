@@ -22,22 +22,23 @@ namespace Telnyx.NET.PhoneNumber.Operations.PhoneNumber
         }
 
         /// <inheritdoc />
-        public async Task<ListNumbersResponse> List(ListNumbersRequest request,
-            CancellationToken cancellationToken = default)
+        public async Task<ListNumbersResponse> List(ListNumbersRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("phone_numbers").AddFilterList("tag", request.Tags)
-                .AddFilter("phone_number", request.PhoneNumber)
-                .AddFilter("status", request.Status)
-                .AddFilter("connection_id", request.ConnectionId)
-                .AddFilter("voice.connection_name[contains]", request.VoiceConnectionNameContains)
-                .AddFilter("voice.connection_name[starts_with]", request.VoiceConnectionNameStartsWith)
-                .AddFilter("voice.connection_name[ends_with]", request.VoiceConnectionNameEndsWith)
-                .AddFilter("voice.connection_name[eq]", request.VoiceConnectionNameEquals)
-                .AddFilter("usage_payment_method", request.UsagePaymentMethod)
-                .AddFilter("billing_group_id", request.BillingGroupId)
-                .AddFilter("emergency_address_id", request.EmergencyAddressId)
-                .AddFilter("customer_reference", request.CustomerReference)
-                .AddFilter("sort", request.Sort)
+            var req = new RestRequest("phone_numbers")
+                .AddFilterList("filter[tag]", request.Tags)
+                .AddFilter("filter[phone_number]", request.PhoneNumber)
+                .AddFilter("filter[status]", request.Status)
+                .AddFilter("filter[connection_id]", request.ConnectionId?.ToString())
+                .AddFilter("filter[voice.connection_name][contains]", request.VoiceConnectionNameContains)
+                .AddFilter("filter[voice.connection_name][starts_with]", request.VoiceConnectionNameStartsWith)
+                .AddFilter("filter[voice.connection_name][ends_with]", request.VoiceConnectionNameEndsWith)
+                .AddFilter("filter[voice.connection_name][eq]", request.VoiceConnectionNameEquals)
+                .AddFilter("filter[voice.usage_payment_method]", request.UsagePaymentMethod)
+                .AddFilter("filter[billing_group_id]", request.BillingGroupId)
+                .AddFilter("filter[emergency_address_id]", request.EmergencyAddressId?.ToString())
+                .AddFilter("filter[customer_reference]", request.CustomerReference)
+                .AddFilter("filter[number_type][eq]", request.NumberType)
+                .AddParameter("sort", request.Sort)
                 .AddPagination(request.PageSize);
 
             return await ExecuteAsync<ListNumbersResponse>(req, cancellationToken);

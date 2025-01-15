@@ -24,9 +24,9 @@ namespace Telnyx.NET.Voice.Operations.ProgrammableVoice
         public async Task<ListConferencesResponse?> List(ListConferencesRequest request, CancellationToken cancellationToken = default)
         {
             var req = new RestRequest("conferences")
-           .AddFilter("name", request.Name)
-           .AddFilter("status", request.Status)
-           .AddPagination(request.PageSize);
+                           .AddFilter("filter[name]", request.Name)
+                           .AddFilter("filter[status]", request.Status)
+                           .AddPagination(request.PageSize);
 
             return await ExecuteAsync<ListConferencesResponse>(req, cancellationToken);
         }
@@ -42,9 +42,9 @@ namespace Telnyx.NET.Voice.Operations.ProgrammableVoice
         public async Task<ListConferenceParticipantsResponse?> ListParticipants(string conferenceId, ListConferenceParticipantsRequest request, CancellationToken cancellationToken = default)
         {
             var req = new RestRequest($"conferences/{conferenceId}/participants")
-                        .AddFilter("muted", request.Muted?.ToString().ToLower())
-                        .AddFilter("on_hold", request.OnHold?.ToString().ToLower())
-                        .AddFilter("whispering", request.Whispering?.ToString().ToLower())
+                        .AddFilter("filter[muted]", request.Muted?.ToString().ToLower())
+                        .AddFilter("filter[on_hold]", request.OnHold?.ToString().ToLower())
+                        .AddFilter("filter[whispering]", request.Whispering?.ToString().ToLower())
                         .AddPagination(request.PageSize);
 
             return await ExecuteAsync<ListConferenceParticipantsResponse>(req, cancellationToken);
