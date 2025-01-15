@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Telnyx.NET.Base;
+using Telnyx.NET.Enums;
 
 namespace Telnyx.NET.Voice.Models.CallCommands.Requests
 {
@@ -27,16 +28,5 @@ namespace Telnyx.NET.Voice.Models.CallCommands.Requests
         [JsonPropertyName("cause")]
         [JsonConverter(typeof(JsonStringEnumConverter<RejectCallCause>))]
         public required RejectCallCause Cause { get; set; }
-    }
-
-    /// <summary>
-    /// Enumeration of possible causes for call rejection.
-    /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter<RejectCallCause>))]
-    public enum RejectCallCause
-    {
-        UNKNOWN,
-        CALL_REJECTED,
-        USER_BUSY
     }
 }
