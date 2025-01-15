@@ -53,6 +53,8 @@ using Telnyx.NET.Voice.Models.ConferenceCommands.Requests;
 using Telnyx.NET.Voice.Models.ConferenceCommands.Responses;
 using Telnyx.NET.Voice.Models.Debugging.Requests;
 using Telnyx.NET.Voice.Models.Debugging.Responses;
+using Telnyx.NET.Voice.Models.QueueCommands.Requests;
+using Telnyx.NET.Voice.Models.QueueCommands.Responses;
 
 namespace Telnyx.NET
 {
@@ -625,10 +627,20 @@ namespace Telnyx.NET
 
     [JsonSerializable(typeof(UpdateCallControlApplicationRequest))]
     [JsonSerializable(typeof(UpdateCallControlApplicationResponse))]
-    [JsonSerializable(typeof(UpdateCallControlApplicationData))] 
+    [JsonSerializable(typeof(UpdateCallControlApplicationData))]
     
     [JsonSerializable(typeof(DeleteCallControlApplicationResponse))]
     [JsonSerializable(typeof(DeleteCallControlApplicationData))]
+    
+    [JsonSerializable(typeof(RetrieveQueueResponse))]
+    [JsonSerializable(typeof(RetrieveQueueResponseData))]
+    
+    [JsonSerializable(typeof(RetrieveCallQueueResponse))]
+    [JsonSerializable(typeof(RetrieveCallQueueData))]
+
+    [JsonSerializable(typeof(RetrieveCallsQueueRequest))]
+    [JsonSerializable(typeof(RetrieveCallsQueueResponse))]
+    [JsonSerializable(typeof(RetrieveCallsQueueData))]
 
     //Enums
     [JsonSerializable(typeof(DtmfType))]

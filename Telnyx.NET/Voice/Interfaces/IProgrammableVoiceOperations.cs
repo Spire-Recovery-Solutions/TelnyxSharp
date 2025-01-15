@@ -34,5 +34,11 @@
         /// Includes operations to create, update, retrieve, list, and delete call control applications.
         /// </summary>
         ICallControlApplicationsOperations CallControlApplications { get; }
+
+        /// <summary>
+        /// Gets the operations for queue commands.
+        /// Includes operations related to managing queues, such as retrieving information about call queues or managing queue states.
+        /// </summary>
+        IQueueCommandsOperations QueueCommands { get; }
     }
 }

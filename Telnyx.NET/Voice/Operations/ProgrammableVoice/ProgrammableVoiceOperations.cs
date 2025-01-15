@@ -24,16 +24,20 @@ namespace Telnyx.NET.Voice.Operations.ProgrammableVoice
             new ConferenceCommandsOperations(client, rateLimitRetryPolicy),
             LazyThreadSafetyMode.ExecutionAndPublication);
 
-         private readonly Lazy<IDebuggingOperations> _debuggingOperations = new(() =>
-            new DebuggingOperations(client, rateLimitRetryPolicy),
-            LazyThreadSafetyMode.ExecutionAndPublication);
-        
-         private readonly Lazy<ICallInformationOperations> _callInformationOperations = new(() =>
-            new CallInformationOperations(client, rateLimitRetryPolicy),
-            LazyThreadSafetyMode.ExecutionAndPublication);
+        private readonly Lazy<IDebuggingOperations> _debuggingOperations = new(() =>
+           new DebuggingOperations(client, rateLimitRetryPolicy),
+           LazyThreadSafetyMode.ExecutionAndPublication);
 
-         private readonly Lazy<ICallControlApplicationsOperations> _callControlApplicationsOperations = new(() =>
-            new CallControlApplicationsOperations(client, rateLimitRetryPolicy),
+        private readonly Lazy<ICallInformationOperations> _callInformationOperations = new(() =>
+           new CallInformationOperations(client, rateLimitRetryPolicy),
+           LazyThreadSafetyMode.ExecutionAndPublication);
+
+        private readonly Lazy<ICallControlApplicationsOperations> _callControlApplicationsOperations = new(() =>
+           new CallControlApplicationsOperations(client, rateLimitRetryPolicy),
+           LazyThreadSafetyMode.ExecutionAndPublication);
+
+        private readonly Lazy<IQueueCommandsOperations> _queueCommandsOperations = new(() =>
+            new QueueCommandsOperations(client, rateLimitRetryPolicy),
             LazyThreadSafetyMode.ExecutionAndPublication);
 
         /// <inheritdoc />
@@ -47,9 +51,12 @@ namespace Telnyx.NET.Voice.Operations.ProgrammableVoice
 
         /// <inheritdoc />
         public ICallInformationOperations CallInformation => _callInformationOperations.Value;
-        
+
         /// <inheritdoc />
         public ICallControlApplicationsOperations CallControlApplications => _callControlApplicationsOperations.Value;
+
+        /// <inheritdoc />
+        public IQueueCommandsOperations QueueCommands => _queueCommandsOperations.Value;
 
         /// <summary>
         /// Disposes of all resources and underlying disposable operations related to toll-free operations.
@@ -72,6 +79,9 @@ namespace Telnyx.NET.Voice.Operations.ProgrammableVoice
 
             if (_callControlApplicationsOperations.IsValueCreated && _callControlApplicationsOperations.Value is IDisposable disposableCallControlApps)
                 disposableCallControlApps.Dispose();
+
+            if (_queueCommandsOperations.IsValueCreated && _queueCommandsOperations.Value is IDisposable disposableQueueCmd)
+                disposableQueueCmd.Dispose();
 
             GC.SuppressFinalize(this);
         }
