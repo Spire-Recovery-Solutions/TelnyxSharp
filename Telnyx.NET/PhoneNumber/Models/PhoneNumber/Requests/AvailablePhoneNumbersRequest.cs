@@ -55,7 +55,7 @@ public class AvailablePhoneNumbersRequest : ITelnyxRequest
     /// <summary>
     /// Gets or sets the desired features for the phone number.
     /// </summary>
-    public string? Features { get; set; }
+    public List<string>? Features { get; set; }
 
     /// <summary>
     /// Gets or sets the limit for the number of results returned.

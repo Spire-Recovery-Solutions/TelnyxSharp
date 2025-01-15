@@ -16,7 +16,7 @@ public class ShortCodeOperations(IRestClient client, AsyncRetryPolicy rateLimitR
     {
         var req = new RestRequest("short_codes")
             .AddPagination(request.PageSize)
-            .AddFilter("messaging_profile_id", request.MessagingProfileId);
+            .AddFilter("filter[messaging_profile_id]", request.MessagingProfileId);
 
         return await ExecuteAsync<ListShortCodesResponse>(req, cancellationToken);
     }

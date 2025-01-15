@@ -16,7 +16,7 @@ public class MessagingProfileOperations(IRestClient client, AsyncRetryPolicy rat
     {
         var req = new RestRequest("messaging_profiles")
             .AddPagination(request.PageSize)
-            .AddFilter("name", request.NameFilter);
+            .AddFilter("filter[name]", request.NameFilter);
 
         return await ExecuteAsync<MessagingProfilesResponse>(req, cancellationToken);
     }

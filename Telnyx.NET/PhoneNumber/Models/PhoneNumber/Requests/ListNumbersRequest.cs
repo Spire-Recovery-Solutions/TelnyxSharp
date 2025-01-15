@@ -74,6 +74,12 @@ namespace Telnyx.NET.PhoneNumber.Models.PhoneNumber.Requests
         public string? CustomerReference { get; set; }
 
         /// <summary>
+        /// Gets or sets the number type to filter by.
+        /// Examples include "local," "mobile," or "toll-free."
+        /// </summary>
+        public string? NumberType { get; set; }
+
+        /// <summary>
         /// Gets or sets the sorting order for the results (e.g., ascending or descending).
         /// </summary>
         public string? Sort { get; set; }
