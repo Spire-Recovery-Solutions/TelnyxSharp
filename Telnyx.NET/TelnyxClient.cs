@@ -75,7 +75,7 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
                 },
                 onRetryAsync: (exception, timeSpan, attempt, context) => Task.CompletedTask);
 
-        // Initialize base with configured options
+        // Initialize base with configured optionsQ
         base.Client = new RestClient(options);
         base.RateLimitRetryPolicy = rateLimitRetryPolicy;
 
