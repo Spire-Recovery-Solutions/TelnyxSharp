@@ -1,6 +1,6 @@
-using Telnyx.NET.Models.Events;
-
 using System.Text.Json.Serialization;
+
+namespace Telnyx.NET.Models.Events;
 
 /// <summary>
 /// Represents an event indicating that machine detection has ended for a call.

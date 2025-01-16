@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Telnyx.NET.Voice.Models.CallCommands.Requests;
 
 namespace Telnyx.NET.Models.Events;
 

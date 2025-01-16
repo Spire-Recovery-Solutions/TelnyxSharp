@@ -1,8 +1,7 @@
-using Telnyx.NET.Models.Events;
 using System.Text.Json.Serialization;
-using Telnyx.NET.Models;
+using Telnyx.NET.Voice.Models.CallCommands.Requests;
 
-namespace SRS.Data.Telnyx.Models.Events;
+namespace Telnyx.NET.Models.Events;
 
 /// <summary>
 /// Represents an event indicating that a call has been initiated.

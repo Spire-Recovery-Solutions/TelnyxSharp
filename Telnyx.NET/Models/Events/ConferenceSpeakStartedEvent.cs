@@ -1,21 +1,46 @@
 using System.Text.Json.Serialization;
 
-namespace Telnyx.NET.Models.Events;
-
-public class ConferenceSpeakStartedEvent : BaseEvent
+namespace Telnyx.NET.Models.Events
 {
-    [JsonPropertyName("payload")]
-    public ConferenceSpeakStartedPayload Payload { get; set; }
-}
+    /// <summary>
+    /// Represents an event triggered when a participant starts speaking in a conference.
+    /// </summary>
+    public class ConferenceSpeakStartedEvent : BaseEvent
+    {
+        /// <summary>
+        /// Contains the details of the conference speak-started event.
+        /// </summary>
+        [JsonPropertyName("payload")]
+        public ConferenceSpeakStartedPayload Payload { get; set; }
+    }
 
-public class ConferenceSpeakStartedPayload
-{
-    [JsonPropertyName("connection_id")]
-    public string Connection_id { get; set; }
-    [JsonPropertyName("creator_call_session_id")]
-    public string Creator_call_session_id { get; set; }
-    [JsonPropertyName("conference_id")]
-    public string Conference_id { get; set; }
-    [JsonPropertyName("occurred_at")]
-    public string Occurred_at { get; set; }
+    /// <summary>
+    /// Represents the payload data for a conference speak-started event.
+    /// </summary>
+    public class ConferenceSpeakStartedPayload
+    {
+        /// <summary>
+        /// Gets or sets the identifier for the connection that started speaking.
+        /// </summary>
+        [JsonPropertyName("connection_id")]
+        public string Connection_id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the call session ID of the participant who started speaking.
+        /// </summary>
+        [JsonPropertyName("creator_call_session_id")]
+        public string Creator_call_session_id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the unique identifier for the conference.
+        /// </summary>
+        [JsonPropertyName("conference_id")]
+        public string Conference_id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the timestamp when the speak-started event occurred.
+        /// </summary>
+        [JsonPropertyName("occurred_at")]
+        public string Occurred_at { get; set; }
+    }
 }

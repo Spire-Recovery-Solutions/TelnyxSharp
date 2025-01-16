@@ -1,32 +1,54 @@
-﻿// Base abstract class implementing the non-generic interface
-
-using System.Net;
+﻿using System.Net;
 using System.Text.Json.Serialization;
-using Telnyx.NET.Interfaces;
+using Telnyx.NET.Base;
 
-namespace Telnyx.NET.Models;
-
-public abstract class TelnyxResponse : ITelnyxResponse
+namespace Telnyx.NET.Models
 {
-    [JsonIgnore]
-    public bool IsSuccessful { get; set; }
-    
-    [JsonIgnore]
-    public HttpStatusCode StatusCode { get; set; }
-    
-    [JsonIgnore]
-    public string? ErrorMessage { get; set; }
-    
-    [JsonPropertyName("errors")]
-    public TelnyxError[]? Errors { get; set; }
-    
-    [JsonPropertyName("meta")]
-    public PaginationMeta? Meta { get; set; }
-}
+    /// <summary>
+    /// Base abstract class implementing the non-generic ITelnyxResponse interface.
+    /// </summary>
+    public abstract class TelnyxResponse : ITelnyxResponse
+    {
+        /// <summary>
+        /// Gets or sets a value indicating whether the request was successful.
+        /// </summary>
+        [JsonIgnore]
+        public bool IsSuccessful { get; set; }
 
-// Generic abstract class that extends TelnyxResponse and implements the generic interface
-public abstract class TelnyxResponse<TData> : TelnyxResponse, ITelnyxResponse<TData>
-{
-    [JsonPropertyName("data")]
-    public TData? Data { get; set; }
+        /// <summary>
+        /// Gets or sets the HTTP status code of the response.
+        /// </summary>
+        [JsonIgnore]
+        public HttpStatusCode StatusCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the error message, if any.
+        /// </summary>
+        [JsonIgnore]
+        public string? ErrorMessage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the errors associated with the response.
+        /// </summary>
+        [JsonPropertyName("errors")]
+        public TelnyxError[]? Errors { get; set; }
+
+        /// <summary>
+        /// Gets or sets the pagination metadata for the response.
+        /// </summary>
+        [JsonPropertyName("meta")]
+        public PaginationMeta? Meta { get; set; }
+    }
+
+    /// <summary>
+    /// Generic abstract class that extends TelnyxResponse and implements the generic ITelnyxResponse interface.
+    /// </summary>
+    public abstract class TelnyxResponse<TData> : TelnyxResponse, ITelnyxResponse<TData>
+    {
+        /// <summary>
+        /// Gets or sets the data associated with the response.
+        /// </summary>
+        [JsonPropertyName("data")]
+        public TData? Data { get; set; }
+    }
 }
