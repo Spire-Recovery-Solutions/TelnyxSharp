@@ -3,7 +3,7 @@
     /// <summary>
     /// Provides operations related to phone number management, including searching, reserving, ordering, configuring, and retrieving phone numbers.
     /// </summary>
-    public interface IPhoneNumberOperations
+    public interface IPhoneNumberOperations : IDisposable
     {
         /// <summary>
         /// Gets the operations related to phone number search, such as searching for available phone numbers.
