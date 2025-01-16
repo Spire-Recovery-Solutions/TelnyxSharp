@@ -3,7 +3,7 @@
     /// <summary>
     /// Provides operations related to identity management, such as number lookups and identity verification.
     /// </summary>
-    public interface IIdentityOperations
+    public interface IIdentityOperations : IDisposable
     {
         /// <summary>
         /// Gets the operations for number lookup.
