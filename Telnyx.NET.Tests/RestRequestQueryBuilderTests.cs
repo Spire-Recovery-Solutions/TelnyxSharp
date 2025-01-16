@@ -7,7 +7,7 @@ namespace Telnyx.NET.Tests
     {
         private readonly RestRequest _sut;
 
-        public RestRequestQueryBuilderTests()
+        private RestRequestQueryBuilderTests()
         {
             _sut = new RestRequest();
         }
@@ -20,71 +20,114 @@ namespace Telnyx.NET.Tests
             Inactive
         }
 
-        [Fact]
-        public void AddFilter_WhenGivenEnum_UsesJsonPropertyName()
+        private enum PlainEnum
         {
-            var request = _sut.AddFilter("status", TestStatus.Active);
-            var parameter = request.Parameters.First();
+            First,
+            Second,
+            Third
+        }
 
-            Assert.Equal("status", parameter.Name);
-            Assert.Equal("active_status", parameter.Value);
-            Assert.Equal(ParameterType.QueryString, parameter.Type);
+        private string GetQueryString(RestRequest request)
+        {
+            var parameters = request.Parameters
+                .Where(p => p.Type == ParameterType.QueryString)
+                .OrderBy(p => p.Name)
+                .Select(p => $"{p.Name}={p.Value?.ToString()}");
+            
+            return string.Join("&", parameters);
+        }
+
+        [Fact]
+        public void AddFilter_WithEnum_GeneratesCorrectQueryString()
+        {
+            var request = _sut.AddFilter("status", TestStatus.Active);            
+            Assert.Equal("status=active_status", GetQueryString(request));
+        }
+
+        [Fact]
+        public void AddFilter_WithPlainEnum_GeneratesCorrectQueryString()
+        {
+            var request = _sut.AddFilter("level", PlainEnum.First);
+            Assert.Equal("level=First", GetQueryString(request));
+        }
+
+        [Fact]
+        public void AddFilter_WithNullEnum_GeneratesEmptyQueryString()
+        {
+            var request = _sut.AddFilter("status", null as TestStatus?);
+            Assert.Equal("", GetQueryString(request));
         }
 
         [Theory]
-        [InlineData("")]
         [InlineData(null)]
-        public void AddFilter_WhenGivenNullOrEmpty_AddsNoParameter(string value)
+        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData("   ")]
+        [InlineData("\t")]
+        [InlineData("\n")]
+        [InlineData("\r\n")]
+        public void AddFilter_WithNullOrWhitespace_GeneratesEmptyQueryString(string? value)
         {
             var request = _sut.AddFilter("key", value);
-            Assert.Empty(request.Parameters);
+            Assert.Equal("", GetQueryString(request));
         }
 
-        [Fact]
-        public void AddFilter_WhenGivenSpecialCharacters_AddsParameter()
+        [Theory]
+        [InlineData("simple", "value", "simple=value")]
+        [InlineData("key with space", "value with space", "key with space=value with space")]
+        [InlineData("key", "!@#$%", "key=!@#$%")]
+        [InlineData("key", "value&more", "key=value&more")]
+        [InlineData("key", " value ", "key= value ")] // Preserves meaningful whitespace
+        public void AddFilter_WithValidString_GeneratesCorrectQueryString(string key, string value, string expected)
         {
-            var request = _sut.AddFilter("name", "value");
-            var parameter = request.Parameters.First();
-
-            Assert.Equal("name", parameter.Name);
-            Assert.Equal("value", parameter.Value);
-            Assert.Equal(ParameterType.QueryString, parameter.Type);
+            var request = _sut.AddFilter(key, value);
+            Assert.Equal(expected, GetQueryString(request));
         }
 
         [Fact]
-        public void AddFilterList_WhenGivenMultipleValues_AddsArrayParameters()
+        public void AddFilterList_WithNullList_GeneratesEmptyQueryString()
+        {
+            var request = _sut.AddFilterList("tags", null);
+            Assert.Equal("", GetQueryString(request));
+        }
+
+        [Fact]
+        public void AddFilterList_WithEmptyList_GeneratesEmptyQueryString()
+        {
+            var request = _sut.AddFilterList("tags", new List<string>());
+            Assert.Equal("", GetQueryString(request));
+        }
+
+        [Fact]
+        public void AddFilterList_WithValues_GeneratesArrayStyleQueryString()
         {
             var values = new List<string> { "one", "two", "three" };
             var request = _sut.AddFilterList("items", values);
-            var parameters = request.Parameters.ToList();
-
-            Assert.Equal(2, parameters.Count);
-            Assert.Equal("items[]", parameters[0].Name);
-            Assert.Equal("one", parameters[0].Value);
-            Assert.Equal("items[]", parameters[1].Name);
-            Assert.Equal("two", parameters[1].Value);
-            Assert.Equal("items[]", parameters[2].Name);
-            Assert.Equal("three", parameters[2].Value);
-            Assert.All(parameters, p => Assert.Equal(ParameterType.QueryString, p.Type));
-        }
-
-        [Theory]
-        [InlineData(10, 10)]
-        [InlineData(300, 250)]
-        [InlineData(null, 50)]
-        public void AddPagination_AppliesCorrectLimits(int? pageSize, int expectedSize)
-        {
-            var request = _sut.AddPagination(pageSize);
-            var parameters = request.Parameters.ToList();
-
-            Assert.Equal(2, parameters.Count);
-            Assert.Contains(parameters, p => p.Name == "page[size]" && (int)p.Value == expectedSize);
-            Assert.Contains(parameters, p => p.Name == "page[number]" && (int)p.Value == 1);
-            Assert.All(parameters, p => Assert.Equal(ParameterType.QueryString, p.Type));
+            Assert.Equal("items[]=one&items[]=two&items[]=three", GetQueryString(request));
         }
 
         [Fact]
-        public void QueryBuilder_WhenCombiningMultipleFilters_AddsAllParameters()
+        public void AddFilterList_WithMixedValues_FiltersOutInvalidValues()
+        {
+            var values = new List<string> { "valid", "", null, "also-valid", " ", "\t", "  valid-too  " };
+            var request = _sut.AddFilterList("tags", values);
+            Assert.Equal("tags[]=valid&tags[]=also-valid&tags[]=  valid-too  ", GetQueryString(request));
+        }
+
+        [Theory]
+        [InlineData(10, "page[number]=1&page[size]=10")]
+        [InlineData(0, "page[number]=1&page[size]=1")]    // Below minimum
+        [InlineData(-1, "page[number]=1&page[size]=1")]   // Below minimum
+        [InlineData(300, "page[number]=1&page[size]=250")] // Above maximum
+        [InlineData(null, "page[number]=1&page[size]=50")] // Default value
+        public void AddPagination_GeneratesCorrectQueryString(int? pageSize, string expected)
+        {
+            var request = _sut.AddPagination(pageSize);
+            Assert.Equal(expected, GetQueryString(request));
+        }
+
+        [Fact]
+        public void QueryBuilder_CombiningMultipleFilters_GeneratesCorrectQueryString()
         {
             var request = _sut
                 .AddFilter("status", TestStatus.Active)
@@ -92,16 +135,17 @@ namespace Telnyx.NET.Tests
                 .AddFilterList("tags", new List<string> { "new", "vip" })
                 .AddPagination(50);
 
-            var parameters = request.Parameters.ToList();
+            var queryString = GetQueryString(request);
+            Assert.Equal("page[number]=1&page[size]=50&status=active_status&tags[]=new&tags[]=vip&type=customer", queryString);
+        }
 
-            Assert.Equal(6, parameters.Count);
-            Assert.All(parameters, p => Assert.Equal(ParameterType.QueryString, p.Type));
-            Assert.Contains(parameters, p => p.Name == "status" && p.Value.ToString() == "active_status");
-            Assert.Contains(parameters, p => p.Name == "type" && p.Value.ToString() == "customer");
-            Assert.Contains(parameters, p => p.Name == "tags[]" && p.Value.ToString() == "new");
-            Assert.Contains(parameters, p => p.Name == "tags[]" && p.Value.ToString() == "vip");
-            Assert.Contains(parameters, p => p.Name == "page[size]" && (int)p.Value == 50);
-            Assert.Contains(parameters, p => p.Name == "page[number]" && (int)p.Value == 1);
+        [Fact]
+        public void QueryBuilder_WithSpecialCharacters_GeneratesCorrectQueryString()
+        {
+            var request = _sut.AddFilter("complex", "Hello & World!")
+                            .AddFilterList("tags", new List<string> { "tag&value", "special!char" });
+
+            Assert.Equal("complex=Hello & World!&tags[]=tag&value&tags[]=special!char", GetQueryString(request));
         }
     }
 }

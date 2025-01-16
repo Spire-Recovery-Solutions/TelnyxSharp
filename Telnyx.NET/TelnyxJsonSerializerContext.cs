@@ -1,9 +1,62 @@
-﻿using SRS.Data.Telnyx.Models.Events;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Base;
 using Telnyx.NET.Enums;
-using Telnyx.NET.Interfaces;
+using Telnyx.NET.Messaging.Events;
+using Telnyx.NET.Messaging.Models;
+using Telnyx.NET.Messaging.Models.AdvancedOptInOptOut;
+using Telnyx.NET.Messaging.Models.AdvancedOptInOptOut.Requests;
+using Telnyx.NET.Messaging.Models.AdvancedOptInOptOut.Responses;
+using Telnyx.NET.Messaging.Models.Brands;
+using Telnyx.NET.Messaging.Models.Brands.Requests;
+using Telnyx.NET.Messaging.Models.Brands.Responses;
+using Telnyx.NET.Messaging.Models.BulkPhoneNumberCampaign.Requests;
+using Telnyx.NET.Messaging.Models.BulkPhoneNumberCampaign.Responses;
+using Telnyx.NET.Messaging.Models.Campaign.Requests;
+using Telnyx.NET.Messaging.Models.Campaign.Responses;
+using Telnyx.NET.Messaging.Models.Enums.Responses;
+using Telnyx.NET.Messaging.Models.Messages.Requests;
+using Telnyx.NET.Messaging.Models.Messages.Responses;
+using Telnyx.NET.Messaging.Models.MessagesProfile;
+using Telnyx.NET.Messaging.Models.MessagesProfile.Requests;
+using Telnyx.NET.Messaging.Models.MessagesProfile.Responses;
+using Telnyx.NET.Messaging.Models.MessagingHostedNumber;
+using Telnyx.NET.Messaging.Models.MessagingHostedNumber.Requests;
+using Telnyx.NET.Messaging.Models.MessagingHostedNumber.Responses;
+using Telnyx.NET.Messaging.Models.MessagingUrlDomain.Requests;
+using Telnyx.NET.Messaging.Models.MessagingUrlDomain.Responses;
+using Telnyx.NET.Messaging.Models.NumberConfigurations.Requests;
+using Telnyx.NET.Messaging.Models.NumberConfigurations.Responses;
+using Telnyx.NET.Messaging.Models.PhoneNumberCampaign.Requests;
+using Telnyx.NET.Messaging.Models.PhoneNumberCampaign.Responses;
+using Telnyx.NET.Messaging.Models.SharedCampaign;
+using Telnyx.NET.Messaging.Models.SharedCampaign.Requests;
+using Telnyx.NET.Messaging.Models.SharedCampaign.Responses;
+using Telnyx.NET.Messaging.Models.ShortCodes.Requests;
+using Telnyx.NET.Messaging.Models.ShortCodes.Responses;
+using Telnyx.NET.Messaging.Models.TollFreeVerificationOperations;
+using Telnyx.NET.Messaging.Models.TollFreeVerificationOperations.Requests;
+using Telnyx.NET.Messaging.Models.TollFreeVerificationOperations.Responses;
 using Telnyx.NET.Models;
 using Telnyx.NET.Models.Events;
+using Telnyx.NET.PhoneNumber.Models.Identity.Requests;
+using Telnyx.NET.PhoneNumber.Models.Identity.Responses;
+using Telnyx.NET.PhoneNumber.Models.PhoneNumber;
+using Telnyx.NET.PhoneNumber.Models.PhoneNumber.Requests;
+using Telnyx.NET.PhoneNumber.Models.PhoneNumber.Responses;
+using Telnyx.NET.Voice.Models.CallCommands.Requests;
+using Telnyx.NET.Voice.Models.CallCommands.Responses;
+using Telnyx.NET.Voice.Models.CallControlApplications;
+using Telnyx.NET.Voice.Models.CallControlApplications.Requests;
+using Telnyx.NET.Voice.Models.CallControlApplications.Responses;
+using Telnyx.NET.Voice.Models.CallInformation.Requests;
+using Telnyx.NET.Voice.Models.CallInformation.Responses;
+using Telnyx.NET.Voice.Models.ConferenceCommands;
+using Telnyx.NET.Voice.Models.ConferenceCommands.Requests;
+using Telnyx.NET.Voice.Models.ConferenceCommands.Responses;
+using Telnyx.NET.Voice.Models.Debugging.Requests;
+using Telnyx.NET.Voice.Models.Debugging.Responses;
+using Telnyx.NET.Voice.Models.QueueCommands.Requests;
+using Telnyx.NET.Voice.Models.QueueCommands.Responses;
 
 namespace Telnyx.NET
 {
@@ -59,7 +112,6 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(NumberLookupCallerName))]
     [JsonSerializable(typeof(NumberLookupCarrier))]
     [JsonSerializable(typeof(NumberLookupPortability))]
-    [JsonSerializable(typeof(NumberLookupType))]
     [JsonSerializable(typeof(NumberOrder))]
     [JsonSerializable(typeof(SendMessageRequest))]
     [JsonSerializable(typeof(SendMessageResponse))]
@@ -80,7 +132,8 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(UpdateNumberVoiceSettingsEmergency))]
     [JsonSerializable(typeof(UpdateNumberVoiceSettingsMediaFeatures))]
 
-
+    [JsonSerializable(typeof(CallCommandsResponse))]
+    [JsonSerializable(typeof(CallCommandsResponseData))]
 
     [JsonSerializable(typeof(DialRequest))]
     [JsonSerializable(typeof(DialResponse))]
@@ -93,45 +146,24 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(SoundModifications))]
     [JsonSerializable(typeof(TranscriptionConfig))]
 
-
-    [JsonSerializable(typeof(AnswerCallResponse))]
-    [JsonSerializable(typeof(AnswerCallResponseData))]
     [JsonSerializable(typeof(AnswerCallRequest))]
 
 
     [JsonSerializable(typeof(HangupCallRequest))]
-    [JsonSerializable(typeof(HangupCallResponse))]
-    [JsonSerializable(typeof(HangupCallResponseData))]
 
-
-    [JsonSerializable(typeof(RejectCallResponse))]
-    [JsonSerializable(typeof(RejectCallResponseData))]
     [JsonSerializable(typeof(RejectCallRequest))]
-    [JsonSerializable(typeof(RejectCallCause))]
 
     [JsonSerializable(typeof(SpeakTextRequest))]
-    [JsonSerializable(typeof(SpeakTextResponse))]
-    [JsonSerializable(typeof(SpeakTextResponseData))]
 
     [JsonSerializable(typeof(PlaybackStartRequest))]
-    [JsonSerializable(typeof(PlaybackStartResponse))]
-    [JsonSerializable(typeof(PlaybackStartResponseData))]
 
     [JsonSerializable(typeof(StopAudioPlaybackRequest))]
-    [JsonSerializable(typeof(StopAudioPlaybackResponse))]
-    [JsonSerializable(typeof(StopAudioPlaybackResponseData))]
 
     [JsonSerializable(typeof(EnqueueCallRequest))]
-    [JsonSerializable(typeof(EnqueueCallResponse))]
-    [JsonSerializable(typeof(EnqueueCallResponseData))]
 
     [JsonSerializable(typeof(RemoveCallFromQueueRequest))]
-    [JsonSerializable(typeof(RemoveCallFromQueueResponse))]
-    [JsonSerializable(typeof(RemoveCallFromQueueResponseData))]
 
     [JsonSerializable(typeof(TransferCallRequest))]
-    [JsonSerializable(typeof(TransferCallResponse))]
-    [JsonSerializable(typeof(TransferCallResponseData))]
 
     [JsonSerializable(typeof(MessagingProfileBase))]
     [JsonSerializable(typeof(MessagingProfilesRequest))]
@@ -278,7 +310,7 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(ListVerificationRequestsRequest))]
     [JsonSerializable(typeof(ListVerificationRequestsResponse))]
     [JsonSerializable(typeof(VerificationRequestRecord))]
-    [JsonSerializable(typeof(PhoneNumber))]
+    [JsonSerializable(typeof(Messaging.Models.TollFreeVerificationOperations.PhoneNumber))]
     [JsonSerializable(typeof(OptInWorkflowImage))]
 
     [JsonSerializable(typeof(SubmitVerificationRequestRequest))]
@@ -345,7 +377,6 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(SubmitCampaignRequest))]
     [JsonSerializable(typeof(SubmitCampaignResponse))]
 
-    [JsonSerializable(typeof(QualifyCampaignByUsecaseRequest))]
     [JsonSerializable(typeof(QualifyCampaignByUsecaseResponse))]
 
     [JsonSerializable(typeof(AcceptSharedCampaignResponse))]
@@ -398,8 +429,184 @@ namespace Telnyx.NET
 
     [JsonSerializable(typeof(GetEnumResponse))]
 
+    [JsonSerializable(typeof(BridgeCallRequest))]
+
+    [JsonSerializable(typeof(ForkMediaRequest))]
+
+    [JsonSerializable(typeof(ForkStopRequest))]
+
+    [JsonSerializable(typeof(GatherRequest))]
+
+    [JsonSerializable(typeof(GatherUsingAudioRequest))]
+
+    [JsonSerializable(typeof(GatherUsingAiRequest))]
+    [JsonSerializable(typeof(Transcription))]
+    [JsonSerializable(typeof(VoiceSettings))]
+    [JsonSerializable(typeof(TelnyxVoiceSettings))]
+    [JsonSerializable(typeof(ElevenLabsVoiceSettings))]
+    [JsonSerializable(typeof(AWSVoiceSettings))]
+    [JsonSerializable(typeof(AssistantConfig))]
+    [JsonSerializable(typeof(MessageHistory))]
+    [JsonSerializable(typeof(InterruptionSettings))]
+
+    [JsonSerializable(typeof(GatherStopRequest))]
+
+    [JsonSerializable(typeof(AiAssistantStartRequest))]
+
+    [JsonSerializable(typeof(AiAssistantStopRequest))]
+
+    [JsonSerializable(typeof(UpdateClientStateRequest))]
+
+    [JsonSerializable(typeof(SipReferRequest))]
+
+    [JsonSerializable(typeof(RecordingStartRequest))]
+    [JsonSerializable(typeof(TranscriptionLanguageConfig))]
+    [JsonSerializable(typeof(GoogleTranscriptionLanguageConfig))]
+
+    [JsonSerializable(typeof(RecordPauseRequest))]
+
+    [JsonSerializable(typeof(RecordResumeRequest))]
+
+    [JsonSerializable(typeof(RecordStopRequest))]
+
+    [JsonSerializable(typeof(SendDtmfRequest))]
+
+    [JsonSerializable(typeof(SendDtmfRequest))]
+
+    [JsonSerializable(typeof(SendSipInfoRequest))]
+
+    [JsonSerializable(typeof(SiprecStartRequest))]
+
+    [JsonSerializable(typeof(SiprecStopRequest))]
+
+    [JsonSerializable(typeof(StreamingStartRequest))]
+
+    [JsonSerializable(typeof(StreamingStopRequest))]
+
+    [JsonSerializable(typeof(NoiseSuppressionStartRequest))]
+
+    [JsonSerializable(typeof(NoiseSuppressionStopRequest))]
+
+    [JsonSerializable(typeof(TranscriptionStopRequest))]
+
+    [JsonSerializable(typeof(BaseConferenceData))]
+
+    [JsonSerializable(typeof(CreateConferenceResponse))]
+    [JsonSerializable(typeof(EndedBy))]
+    [JsonSerializable(typeof(CreateConferenceRequest))]
+
+    [JsonSerializable(typeof(ListConferencesRequest))]
+    [JsonSerializable(typeof(ListConferencesResponse))]
+
+    [JsonSerializable(typeof(RetrieveConferenceResponse))]
+    [JsonSerializable(typeof(RetrieveConferenceData))]
+
+    [JsonSerializable(typeof(ListConferenceParticipantsResponse))]
+    [JsonSerializable(typeof(ListConferenceParticipantsData))]
+    [JsonSerializable(typeof(ListConferenceParticipantsRequest))]
+
+    [JsonSerializable(typeof(JoinConferenceRequest))]
+    [JsonSerializable(typeof(ConferenceCommandResponse))]
+    [JsonSerializable(typeof(ConferenceCommandData))]
+
+    [JsonSerializable(typeof(LeaveConferenceRequest))]
+
+    [JsonSerializable(typeof(UpdateConferenceRequest))]
+
+    [JsonSerializable(typeof(MuteConferenceParticipantsRequest))]
+
+    [JsonSerializable(typeof(UnmuteConferenceParticipantsRequest))]
+
+    [JsonSerializable(typeof(HoldConferenceParticipantsRequest))]
+
+    [JsonSerializable(typeof(UnholdConferenceParticipantsRequest))]
+
+    [JsonSerializable(typeof(StartConferenceRecordingRequest))]
+
+    [JsonSerializable(typeof(StopConferenceRecordingRequest))]
+
+    [JsonSerializable(typeof(PauseConferenceRecordingRequest))]
+
+    [JsonSerializable(typeof(ResumeConferenceRecordingRequest))]
+
+    [JsonSerializable(typeof(SpeakTextToConferenceRequest))]
+
+    [JsonSerializable(typeof(PlayAudioToConferenceRequest))]
+    [JsonSerializable(typeof(Loop))]
+    [JsonSerializable(typeof(MOD1))]
+    [JsonSerializable(typeof(MOD2))]
+
+    [JsonSerializable(typeof(StopAudioToConferenceRequest))]
+
+    [JsonSerializable(typeof(ListCallEventsRequest))]
+    [JsonSerializable(typeof(ListCallEventsResponse))]
+    [JsonSerializable(typeof(ListCallEventsData))]
+
+    [JsonSerializable(typeof(ListCallControlApplicationsRequest))]
+    [JsonSerializable(typeof(ListCallControlApplicationsResponse))]
+    [JsonSerializable(typeof(ListCallControlApplicationsData))]
+
+    [JsonSerializable(typeof(BaseCallControlApplications))]
+    [JsonSerializable(typeof(InboundSettings))]
+    [JsonSerializable(typeof(OutboundSettings))]
+
+    [JsonSerializable(typeof(CreateCallControlApplicationRequest))]
+    [JsonSerializable(typeof(CreateCallControlApplicationResponse))]
+    [JsonSerializable(typeof(CreateCallControlApplicationData))]
+
+    [JsonSerializable(typeof(RetrieveCallControlApplicationResponse))]
+    [JsonSerializable(typeof(RetrieveCallControlApplicationData))]
+
+    [JsonSerializable(typeof(UpdateCallControlApplicationRequest))]
+    [JsonSerializable(typeof(UpdateCallControlApplicationResponse))]
+    [JsonSerializable(typeof(UpdateCallControlApplicationData))]
+
+    [JsonSerializable(typeof(DeleteCallControlApplicationResponse))]
+    [JsonSerializable(typeof(DeleteCallControlApplicationData))]
+
+    [JsonSerializable(typeof(RetrieveQueueResponse))]
+    [JsonSerializable(typeof(RetrieveQueueResponseData))]
+
+    [JsonSerializable(typeof(RetrieveCallQueueResponse))]
+    [JsonSerializable(typeof(RetrieveCallQueueData))]
+
+    [JsonSerializable(typeof(RetrieveCallsQueueRequest))]
+    [JsonSerializable(typeof(RetrieveCallsQueueResponse))]
+    [JsonSerializable(typeof(RetrieveCallsQueueData))]
+
+    [JsonSerializable(typeof(ListActiveCallsRequest))]
+    [JsonSerializable(typeof(ListActiveCallsResponse))]
+    [JsonSerializable(typeof(ListActiveCallsData))]
+    [JsonSerializable(typeof(ActiveCallsMetaCursors))]
+    [JsonSerializable(typeof(ActiveCallsMeta))]
 
     //Enums
+    [JsonSerializable(typeof(RejectCallCause))]
+    [JsonSerializable(typeof(DtmfType))]
+    [JsonSerializable(typeof(AnchorsiteOverride))]
+    [JsonSerializable(typeof(SipSubdomainReceiveSettings))]
+    [JsonSerializable(typeof(EventType))]
+    [JsonSerializable(typeof(ProductType))]
+    [JsonSerializable(typeof(BeepEnabled))]
+    [JsonSerializable(typeof(SupervisorRole))]
+    [JsonSerializable(typeof(StreamBidirectionalMode))]
+    [JsonSerializable(typeof(ConferenceStatus))]
+    [JsonSerializable(typeof(StreamBidirectionalMode))]
+    [JsonSerializable(typeof(StreamBidirectionalCodec))]
+    [JsonSerializable(typeof(StreamBidirectionalTargetLegs))]
+    [JsonSerializable(typeof(Track))]
+    [JsonSerializable(typeof(GoogleLanguage))]
+    [JsonSerializable(typeof(TelnyxLanguage))]
+    [JsonSerializable(typeof(VoiceType))]
+    [JsonSerializable(typeof(MessageRole))]
+    [JsonSerializable(typeof(PayloadType))]
+    [JsonSerializable(typeof(ServiceLevel))]
+    [JsonSerializable(typeof(Language))]
+    [JsonSerializable(typeof(StreamType))]
+    [JsonSerializable(typeof(RecordTrack))]
+    [JsonSerializable(typeof(RecordFormat))]
+    [JsonSerializable(typeof(RecordChannels))]
+    [JsonSerializable(typeof(RingtoneCountry))]
     [JsonSerializable(typeof(AltBusinessIdType))]
     [JsonSerializable(typeof(BrandIdentityStatus))]
     [JsonSerializable(typeof(BrandRelationship))]
