@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Telnyx.NET.Messaging.Models.Messages.Responses
+namespace Telnyx.NET.Messaging.Models.Messages.Requests
 {
     public abstract class MessageBaseRequest
     {
