@@ -15,7 +15,7 @@ namespace Telnyx.NET.Messaging.Operations.SmsMms
         public async Task<ListPhoneMessageSettingsResponse?> List(
             ListPhoneMessageSettingsRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"phone_numbers/messaging").AddPagination(request.PageSize);
+            var req = new RestRequest("phone_numbers/messaging").AddPagination(request.PageSize);
 
             return await ExecuteAsync<ListPhoneMessageSettingsResponse>(req, cancellationToken);
         }
