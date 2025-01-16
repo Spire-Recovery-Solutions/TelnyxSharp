@@ -15,7 +15,7 @@ namespace Telnyx.NET.Messaging.Operations.TenDlc
         public async Task<RetrievePhoneNumberCampaignsResponse?> Retrieve(
             RetrievePhoneNumberCampaignsRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/phone_number_campaigns")
+            var req = new RestRequest("10dlc/phone_number_campaigns")
                 .AddFilter("filter[telnyx_campaign_id]", request.FilterTelnyxCampaignId)
                 .AddFilter("filter[telnyx_brand_id]", request.FilterTelnyxBrandId)
                 .AddFilter("filter[tcr_campaign_id]", request.FilterTcrCampaignId)

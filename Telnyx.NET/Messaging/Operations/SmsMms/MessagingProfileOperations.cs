@@ -83,7 +83,7 @@ public class MessagingProfileOperations(IRestClient client, AsyncRetryPolicy rat
     /// <inheritdoc />
     public async Task<MessagingProfileMetricsResponse?> ListMetrics(MessagingProfileMetricsRequest request, CancellationToken cancellationToken = default)
     {
-        var req = new RestRequest($"messaging_profile_metrics")
+        var req = new RestRequest("messaging_profile_metrics")
             .AddPagination(request.PageSize)
             .AddFilter("id", request.MessagingProfileId.ToString())
             .AddFilter("time_frame", request.TimeFrame);
