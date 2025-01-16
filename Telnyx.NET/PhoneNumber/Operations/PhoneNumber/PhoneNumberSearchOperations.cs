@@ -24,7 +24,7 @@ namespace Telnyx.NET.PhoneNumber.Operations.PhoneNumber
                 .AddFilter("filter[phone_number_type]", request.PhoneNumberType)
                 .AddFilter("filter[rate_center]", request.RateCenter)
                 .AddFilter("filter[phone_number][starts_with]", request.StartsWith)
-                .AddFilter("filter[limit]", request.Limit?.ToString())
+                .AddFilter("filter[limit]", request.Limit.ToString())
                 .AddFilter("filter[national_destination_code]", request.NationalDestinationCode?.ToString())
                 .AddFilter("filter[quickship]", request.Quickship?.ToString())
                 .AddFilter("filter[best_effort]", request.BestEffort?.ToString())
