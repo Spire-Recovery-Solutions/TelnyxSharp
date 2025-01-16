@@ -16,10 +16,10 @@ namespace Telnyx.NET.Messaging.Operations.TenDlc
             RetrievePhoneNumberCampaignsRequest request, CancellationToken cancellationToken = default)
         {
             var req = new RestRequest($"10dlc/phone_number_campaigns")
-                .AddFilter("telnyx_campaign_id", request.FilterTelnyxCampaignId)
-                .AddFilter("telnyx_brand_id", request.FilterTelnyxBrandId)
-                .AddFilter("tcr_campaign_id", request.FilterTcrCampaignId)
-                .AddFilter("tcr_brand_id", request.FilterTcrBrandId)
+                .AddFilter("filter[telnyx_campaign_id]", request.FilterTelnyxCampaignId)
+                .AddFilter("filter[telnyx_brand_id]", request.FilterTelnyxBrandId)
+                .AddFilter("filter[tcr_campaign_id]", request.FilterTcrCampaignId)
+                .AddFilter("filter[tcr_brand_id]", request.FilterTcrBrandId)
                 .AddFilter("sort", request.Sort)
                 .AddPagination(request.PageSize);
 
