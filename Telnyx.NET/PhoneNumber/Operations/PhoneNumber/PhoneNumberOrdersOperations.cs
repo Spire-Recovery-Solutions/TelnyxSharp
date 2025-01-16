@@ -12,17 +12,17 @@ namespace Telnyx.NET.PhoneNumber.Operations.PhoneNumber
     : BaseOperations(client, rateLimitRetryPolicy), IPhoneNumberOrdersOperations
     {
         /// <inheritdoc />
-        public async Task<ListNumberOrdersResponse> List(ListNumberOrdersRequest request,
-            CancellationToken cancellationToken = default)
+        public async Task<ListNumberOrdersResponse> List(ListNumberOrdersRequest request, CancellationToken cancellationToken = default)
         {
             var req = new RestRequest("number_orders")
-                .AddFilter("status", request.Status)
-                .AddFilter("created_at[gt]", request.CreatedAfter)
-                .AddFilter("created_at[lt]", request.CreatedBefore)
-                .AddFilter("customer_reference", request.CustomerReference)
-                .AddFilter("phone_numbers_count", request.PhoneNumberCount?.ToString())
-                .AddFilter("requirements_met", request.RequirementsMet.ToString())
+                .AddFilter("filter[status]", request.Status)
+                .AddFilter("filter[created_at][gt]", request.CreatedAfter)
+                .AddFilter("filter[created_at][lt]", request.CreatedBefore)
+                .AddFilter("filter[customer_reference]", request.CustomerReference)
+                .AddFilter("filter[phone_numbers_count]", request.PhoneNumberCount?.ToString())
+                .AddFilter("filter[requirements_met]", request.RequirementsMet?.ToString().ToLowerInvariant())
                 .AddPagination(request.PageSize);
+
             return await ExecuteAsync<ListNumberOrdersResponse>(req, cancellationToken);
         }
 
