@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Telnyx.NET.Base;
+using Telnyx.NET.Enums;
 
 namespace Telnyx.NET.Voice.Models.CallCommands.Requests
 {
@@ -18,7 +19,7 @@ namespace Telnyx.NET.Voice.Models.CallCommands.Requests
         /// The voice to be used for the AI assistant. Default is "Telnyx.LibriTTS.0".
         /// </summary>
         [JsonPropertyName("voice")]
-        public string Voice { get; set; } = "Telnyx.LibriTTS.0";
+        public VoiceType Voice { get; set; } = VoiceType.TelnyxLibriTTS;
 
         /// <summary>
         /// Optional settings for the voice of the AI assistant.
