@@ -40,9 +40,9 @@ namespace Telnyx.NET.Base
         IPhoneNumberOperations PhoneNumbers { get; }
 
         /// <summary>
-        /// Gets the operations for programmable voice call commands.
-        /// This includes operations such as dialing, answering, and managing calls programmatically via the Telnyx API.
+        /// Provides operations for programmable voice calls.
+        /// Includes initiating, answering, and managing calls programmatically via the Telnyx API.
         /// </summary>
-        ICallCommandsOperations CallCommands { get; }
+        IProgrammableVoiceOperations ProgrammableVoice { get; }
     }
 }

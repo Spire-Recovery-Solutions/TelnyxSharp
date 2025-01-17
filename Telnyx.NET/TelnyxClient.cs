@@ -26,7 +26,7 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     private readonly Lazy<ITenDlcOperations> _tenDlc;
     private readonly Lazy<IIdentityOperations> _identityOperations;
     private readonly Lazy<IPhoneNumberOperations> _phoneNumberOperations;
-    private readonly Lazy<ICallCommandsOperations> _callCommandsOperations;
+    private readonly Lazy<IProgrammableVoiceOperations> _programmableVoiceOperations;
 
     // Public properties
     public ISmsMmsOperations SmsMms => _smsmms.Value;
@@ -34,7 +34,7 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     public ITenDlcOperations TenDlc => _tenDlc.Value;
     public IIdentityOperations Identity => _identityOperations.Value;
     public IPhoneNumberOperations PhoneNumbers => _phoneNumberOperations.Value;
-    public ICallCommandsOperations CallCommands => _callCommandsOperations.Value;
+    public IProgrammableVoiceOperations ProgrammableVoice => _programmableVoiceOperations.Value;
 
 
     public TelnyxClient(string apiKey)
@@ -100,8 +100,8 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
             new PhoneNumberOperations(Client, RateLimitRetryPolicy),
             LazyThreadSafetyMode.ExecutionAndPublication);
 
-        _callCommandsOperations = new Lazy<ICallCommandsOperations>(() =>
-            new CallCommandsOperations(Client, RateLimitRetryPolicy),
+        _programmableVoiceOperations = new Lazy<IProgrammableVoiceOperations>(() =>
+            new ProgrammableVoiceOperations(Client, RateLimitRetryPolicy),
             LazyThreadSafetyMode.ExecutionAndPublication);
     }
 
@@ -128,9 +128,9 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
         {
             disposablePhoneNumberOperations.Dispose();
         }
-        if (_callCommandsOperations.IsValueCreated && _callCommandsOperations.Value is IDisposable disposableCallCommandsOperations)
+        if (_programmableVoiceOperations.IsValueCreated && _programmableVoiceOperations.Value is IDisposable disposableProgrammableVoice)
         {
-            disposableCallCommandsOperations.Dispose();
+            disposableProgrammableVoice.Dispose();
         }
 
         _logWriter?.Dispose();
