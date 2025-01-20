@@ -86,8 +86,8 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(CreateNumberReservationRequest))]
     [JsonSerializable(typeof(CreateNumberReservationPhoneNumber))]
     [JsonSerializable(typeof(CreateNumberReservationResponse))]
-    [JsonSerializable(typeof(CreateNumberReservationResponseData))]
-    [JsonSerializable(typeof(CreateNumberReservationResponsePhoneNumber))]
+    [JsonSerializable(typeof(NumberReservationData))]
+    [JsonSerializable(typeof(ReservedPhoneNumber))]
     [JsonSerializable(typeof(GetNumberOrderResponse))]
     [JsonSerializable(typeof(ListNumberOrdersResponse))]
     [JsonSerializable(typeof(NumberOrdersPhoneNumber))]
@@ -596,6 +596,10 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(ListAvailablePhoneNumberBlocksRequest))]
     [JsonSerializable(typeof(ListAvailablePhoneNumberBlocksResponse))]
     [JsonSerializable(typeof(ListAvailablePhoneNumberBlocksData))]
+
+    [JsonSerializable(typeof(GetNumberReservationResponse))]
+
+    [JsonSerializable(typeof(ExtendNumberReservationResponse))]
 
     //Enums
     [JsonSerializable(typeof(PhoneNumberType))]
