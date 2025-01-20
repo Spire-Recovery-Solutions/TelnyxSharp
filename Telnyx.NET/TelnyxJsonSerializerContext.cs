@@ -1,6 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 using Telnyx.NET.Base;
 using Telnyx.NET.Enums;
+using Telnyx.NET.Identity.Models.NumberLookup.Requests;
+using Telnyx.NET.Identity.Models.NumberLookup.Responses;
 using Telnyx.NET.Messaging.Events;
 using Telnyx.NET.Messaging.Models;
 using Telnyx.NET.Messaging.Models.AdvancedOptInOptOut;
@@ -38,11 +40,18 @@ using Telnyx.NET.Messaging.Models.TollFreeVerificationOperations.Requests;
 using Telnyx.NET.Messaging.Models.TollFreeVerificationOperations.Responses;
 using Telnyx.NET.Models;
 using Telnyx.NET.Models.Events;
-using Telnyx.NET.PhoneNumber.Models.Identity.Requests;
-using Telnyx.NET.PhoneNumber.Models.Identity.Responses;
-using Telnyx.NET.PhoneNumber.Models.PhoneNumber;
-using Telnyx.NET.PhoneNumber.Models.PhoneNumber.Requests;
-using Telnyx.NET.PhoneNumber.Models.PhoneNumber.Responses;
+using Telnyx.NET.Numbers.Models.PhoneNumbers;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberConfigurations;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberOrders;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberReservations;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberSearch;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PortingOrder;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberConfigurations;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberOrders;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberReservartions;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberSearch;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder;
 using Telnyx.NET.Voice.Events;
 using Telnyx.NET.Voice.Models.CallCommands.Requests;
 using Telnyx.NET.Voice.Models.CallCommands.Responses;
@@ -584,7 +593,12 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(DeletePhoneNumberResponse))]
     [JsonSerializable(typeof(DeletePhoneNumberData))]
 
+    [JsonSerializable(typeof(ListAvailablePhoneNumberBlocksRequest))]
+    [JsonSerializable(typeof(ListAvailablePhoneNumberBlocksResponse))]
+    [JsonSerializable(typeof(ListAvailablePhoneNumberBlocksData))]
+
     //Enums
+    [JsonSerializable(typeof(PhoneNumberType))]
     [JsonSerializable(typeof(RejectCallCause))]
     [JsonSerializable(typeof(DtmfType))]
     [JsonSerializable(typeof(AnchorsiteOverride))]
