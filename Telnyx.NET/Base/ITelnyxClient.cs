@@ -1,5 +1,6 @@
-﻿using Telnyx.NET.Messaging.Interfaces;
-using Telnyx.NET.PhoneNumber.Interfaces;
+﻿using Telnyx.NET.Identity.Interfaces;
+using Telnyx.NET.Messaging.Interfaces;
+using Telnyx.NET.Numbers.Interfaces;
 using Telnyx.NET.Voice.Interfaces;
 
 namespace Telnyx.NET.Base
@@ -29,9 +30,10 @@ namespace Telnyx.NET.Base
         ITenDlcOperations TenDlc { get; }
 
         /// <summary>
-        /// Gets the operations related to identity management, such as identity verification and operations tied to user identification.
+        /// Provides operations related to phone number lookup, including retrieving information about a phone number 
+        /// such as carrier details, line type, and geographical information.
         /// </summary>
-        IIdentityOperations Identity { get; }
+        ILookUpNumberOperations LookUpNumber { get; }
 
         /// <summary>
         /// Gets the operations related to phone number management.
