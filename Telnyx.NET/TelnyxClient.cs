@@ -3,12 +3,14 @@ using Polly.RateLimit;
 using RestSharp;
 using RestSharp.Authenticators;
 using Telnyx.NET.Base;
+using Telnyx.NET.Identity.Interfaces;
+using Telnyx.NET.Identity.Operations.NumberLookup;
 using Telnyx.NET.Messaging.Interfaces;
 using Telnyx.NET.Messaging.Operations.SmsMms;
 using Telnyx.NET.Messaging.Operations.TenDlc;
 using Telnyx.NET.Messaging.Operations.TollFreeVerification;
-using Telnyx.NET.PhoneNumber.Interfaces;
-using Telnyx.NET.PhoneNumber.Operations.Identity;
+using Telnyx.NET.Numbers.Interfaces;
+using Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers;
 using Telnyx.NET.Voice.Interfaces;
 using Telnyx.NET.Voice.Operations.ProgrammableVoice;
 
@@ -24,7 +26,7 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     private readonly Lazy<ISmsMmsOperations> _smsmms;
     private readonly Lazy<ITollFreeOperations> _tollFreeVerification;
     private readonly Lazy<ITenDlcOperations> _tenDlc;
-    private readonly Lazy<IIdentityOperations> _identityOperations;
+    private readonly Lazy<ILookUpNumberOperations> _lookUpNumberOperations;
     private readonly Lazy<IPhoneNumberOperations> _phoneNumberOperations;
     private readonly Lazy<IProgrammableVoiceOperations> _programmableVoiceOperations;
 
@@ -32,7 +34,7 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     public ISmsMmsOperations SmsMms => _smsmms.Value;
     public ITollFreeOperations TollFreeVerification => _tollFreeVerification.Value;
     public ITenDlcOperations TenDlc => _tenDlc.Value;
-    public IIdentityOperations Identity => _identityOperations.Value;
+    public ILookUpNumberOperations LookUpNumber => _lookUpNumberOperations.Value;
     public IPhoneNumberOperations PhoneNumbers => _phoneNumberOperations.Value;
     public IProgrammableVoiceOperations ProgrammableVoice => _programmableVoiceOperations.Value;
 
@@ -92,8 +94,8 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
            new TenDlcOperations(Client, RateLimitRetryPolicy),
            LazyThreadSafetyMode.ExecutionAndPublication);
 
-        _identityOperations = new Lazy<IIdentityOperations>(() =>
-           new IdentityOperations(Client, RateLimitRetryPolicy),
+        _lookUpNumberOperations = new Lazy<ILookUpNumberOperations>(() =>
+           new LookUpNumberOperations(Client, RateLimitRetryPolicy),
            LazyThreadSafetyMode.ExecutionAndPublication);
 
         _phoneNumberOperations = new Lazy<IPhoneNumberOperations>(() =>
@@ -120,9 +122,9 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
         {
             disposableTenDlc.Dispose();
         }
-        if (_identityOperations.IsValueCreated && _identityOperations.Value is IDisposable disposableIdentityOperations)
+        if (_lookUpNumberOperations.IsValueCreated && _lookUpNumberOperations.Value is IDisposable disposableLookUpNumber)
         {
-            disposableIdentityOperations.Dispose();
+            disposableLookUpNumber.Dispose();
         }
         if (_phoneNumberOperations.IsValueCreated && _phoneNumberOperations.Value is IDisposable disposablePhoneNumberOperations)
         {
