@@ -5,18 +5,18 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild> <!-- This will generate the NuGet package during build -->
-        <PackageId>.Telnyx.NET</PackageId> <!-- Unique identifier for your package -->
-        <Authors>Spire Recovery Solutions</Authors> <!-- Your name or your organization's name -->
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>.Telnyx.NET</PackageId> 
+        <Authors>Spire Recovery Solutions</Authors>
         <Company>Spire Recovery Solutions</Company>
-        <Product>Telnyx.NET</Product> <!-- Name of your library -->
-        <Description>Library for integrating Telnyx services into .NET applications.</Description> <!-- Brief description of your package -->
-        <PackageTags>telnyx api rest client dotnet</PackageTags> <!-- Keywords for searching -->
-        <PackageLicenseExpression>MIT</PackageLicenseExpression> <!-- License; adjust if different -->
-        <PackageProjectUrl>https://github.com/Spire-Recovery-Solutions/Telnyx.NET</PackageProjectUrl> <!-- Link to your project -->
-        <RepositoryUrl>https://github.com/Spire-Recovery-Solutions/Telnyx.NET.git</RepositoryUrl> <!-- Git repo URL -->
+        <Product>Telnyx.NET</Product>
+        <Description>Library for integrating Telnyx services into .NET applications.</Description> 
+        <PackageTags>telnyx api rest client dotnet</PackageTags>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression> 
+        <PackageProjectUrl>https://github.com/Spire-Recovery-Solutions/Telnyx.NET</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/Spire-Recovery-Solutions/Telnyx.NET.git</RepositoryUrl> 
         <RepositoryType>git</RepositoryType>
-        <PackageReleaseNotes>Please check the GitHub repository for release notes.</PackageReleaseNotes> <!-- Placeholder for release notes -->
+        <PackageReleaseNotes>Please check the GitHub repository for release notes.</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
