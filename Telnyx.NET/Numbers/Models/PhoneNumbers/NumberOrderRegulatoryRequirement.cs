@@ -5,7 +5,7 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers;
 /// <summary>
 /// Represents a regulatory requirement for a Telnyx number order.
 /// </summary>
-public partial class CreateNumberOrderRegulatoryRequirement
+public partial class NumberOrderRegulatoryRequirement
 {
     /// <summary>
     /// Gets or sets the type of the field required for the number order.
