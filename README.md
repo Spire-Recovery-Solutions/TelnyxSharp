@@ -18,6 +18,8 @@ Install-Package Telnyx.NET
 
 ## Usage
 
+### Direct Initialization
+
 Here's a quick example to get you started:
 
 ```csharp
@@ -41,6 +43,50 @@ SendMessageResponse response = await client.Messages.Send(messageRequest);
 
 Console.WriteLine($"Message sent with ID: {response.Id}");
 ```
+
+### Using Dependency Injection
+
+For applications using Microsoft.Extensions.DependencyInjection, you can register the Telnyx client in your service collection:
+
+```csharp
+using Microsoft.Extensions.DependencyInjection;
+using Telnyx.NET;
+
+// In your Startup.cs or Program.cs
+services.AddTelnyxClient(options =>
+{
+    options.ApiKey = "YOUR_API_KEY";
+});
+```
+
+Then inject ITelnyxClient into your classes:
+
+```csharp
+public class MessagingService
+{
+    private readonly ITelnyxClient _telnyxClient;
+
+    public MessagingService(ITelnyxClient telnyxClient)
+    {
+        _telnyxClient = telnyxClient;
+    }
+
+    public async Task SendMessage(string to, string text)
+    {
+        var messageRequest = new SendMessageRequest
+        {
+            From = "+1234567890",
+            To = new List<string> { to },
+            Text = text
+        };
+
+        var response = await _telnyxClient.Messages.Send(messageRequest);
+        Console.WriteLine($"Message sent with ID: {response.Id}");
+    }
+}
+```
+
+This approach is recommended for ASP.NET Core applications and other scenarios where you want to manage the lifetime of the client through dependency injection.
 
 ## Contributing
 
