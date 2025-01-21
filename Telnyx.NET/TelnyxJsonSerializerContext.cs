@@ -77,18 +77,21 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(RegionInformation))]
     [JsonSerializable(typeof(AvailablePhoneNumbersMeta))]
     [JsonSerializable(typeof(AvailablePhoneNumbersRequest))]
-    [JsonSerializable(typeof(CreateNumberOrderRegulatoryRequirement))]
+    [JsonSerializable(typeof(NumberOrderRegulatoryRequirement))]
+    [JsonSerializable(typeof(BaseNumberOrdersData))]
+    [JsonSerializable(typeof(PhoneNumbersJobPhoneNumber))]
     [JsonSerializable(typeof(CreateNumberOrderRequest))]
     [JsonSerializable(typeof(CreateNumberOrderPhoneNumber))]
     [JsonSerializable(typeof(CreateNumberOrderResponse))]
-    [JsonSerializable(typeof(CreateNumberOrderResponseData))]
-    [JsonSerializable(typeof(CreateNumberOrderResponsePhoneNumber))]
+    [JsonSerializable(typeof(CreateNumberOrderData))]
+    [JsonSerializable(typeof(PhoneNumberOrderData))]
     [JsonSerializable(typeof(CreateNumberReservationRequest))]
     [JsonSerializable(typeof(CreateNumberReservationPhoneNumber))]
     [JsonSerializable(typeof(CreateNumberReservationResponse))]
     [JsonSerializable(typeof(NumberReservationData))]
     [JsonSerializable(typeof(ReservedPhoneNumber))]
     [JsonSerializable(typeof(GetNumberOrderResponse))]
+    [JsonSerializable(typeof(GetNumberOrderData))]
     [JsonSerializable(typeof(ListNumberOrdersResponse))]
     [JsonSerializable(typeof(NumberOrdersPhoneNumber))]
     [JsonSerializable(typeof(ListNumberOrdersRequest))]
@@ -600,6 +603,41 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(GetNumberReservationResponse))]
 
     [JsonSerializable(typeof(ExtendNumberReservationResponse))]
+
+    [JsonSerializable(typeof(UpdateNumberOrderRequest))]
+    [JsonSerializable(typeof(UpdateNumberOrderRegulatoryRequirement))]
+    [JsonSerializable(typeof(UpdateNumberOrderResponse))]
+    [JsonSerializable(typeof(UpdateNumberOrderData))]
+
+    [JsonSerializable(typeof(ListSubNumberOrdersRequest))]
+    [JsonSerializable(typeof(ListSubNumberOrdersResponse))]
+    [JsonSerializable(typeof(SubNumberOrderData))]
+
+    [JsonSerializable(typeof(GetSubNumberOrderRequest))]
+    [JsonSerializable(typeof(GetSubNumberOrderResponse))]
+
+    [JsonSerializable(typeof(UpdateSubNumberOrderRequest))]
+    [JsonSerializable(typeof(UpdateSubNumberOrderResponse))]
+
+    [JsonSerializable(typeof(CancelNumberOrderResponse))]
+
+    [JsonSerializable(typeof(ListNumberOrderPhonesResponse))]
+    [JsonSerializable(typeof(NumberOrderPhonesData))]
+    [JsonSerializable(typeof(ListNumberOrderPhonesRequest))]
+
+    [JsonSerializable(typeof(SingleNumberOrderPhoneResponse))]
+
+    [JsonSerializable(typeof(UpdateNumberOrderPhoneRequest))]
+    [JsonSerializable(typeof(UpdateNumberOrderPhoneResponse))]
+
+    [JsonSerializable(typeof(CreateCommentRequest))]
+    [JsonSerializable(typeof(CreateCommentResponse))]
+    [JsonSerializable(typeof(CommentData))]
+
+    [JsonSerializable(typeof(ListCommentsRequest))]
+    [JsonSerializable(typeof(ListCommentsResponse))]
+
+    [JsonSerializable(typeof(MarkCommentReadResponse))]
 
     //Enums
     [JsonSerializable(typeof(PhoneNumberType))]
