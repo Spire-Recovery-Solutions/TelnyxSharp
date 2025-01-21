@@ -97,7 +97,7 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(ListNumberOrdersRequest))]
     [JsonSerializable(typeof(ListNumbersRequest))]
     [JsonSerializable(typeof(ListNumbersResponse))]
-    [JsonSerializable(typeof(ListNumbersDatum))]
+    [JsonSerializable(typeof(NumberConfigurationData))]
     [JsonSerializable(typeof(ListPortingOrdersRequest))]
     [JsonSerializable(typeof(PortingOrdersRequest))]
     [JsonSerializable(typeof(ListPortingOrdersResponse))]
@@ -133,17 +133,18 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(FromTo))]
     [JsonSerializable(typeof(Media))]
     [JsonSerializable(typeof(TelnyxRateLimitConfiguration))]
+
+    [JsonSerializable(typeof(PhoneNumberVoiceSettings))]
+    [JsonSerializable(typeof(CallForwardingSettings))]
+    [JsonSerializable(typeof(CnamListingSettings))]
+    [JsonSerializable(typeof(EmergencySettings))]
+    [JsonSerializable(typeof(MediaFeatures))]
+    [JsonSerializable(typeof(CallRecordingSettings))]
+
     [JsonSerializable(typeof(UpdateNumberConfigurationRequest))]
     [JsonSerializable(typeof(UpdateNumberConfigurationResponse))]
-    [JsonSerializable(typeof(UpdateNumberConfigurationResponseData))]
     [JsonSerializable(typeof(UpdateNumberVoiceSettingsRequest))]
     [JsonSerializable(typeof(UpdateNumberVoiceSettingsResponse))]
-    [JsonSerializable(typeof(UpdateNumberVoiceSettingsData))]
-    [JsonSerializable(typeof(UpdateNumberVoiceSettingsCallForwarding))]
-    [JsonSerializable(typeof(UpdateNumberVoiceSettingsCallRecording))]
-    [JsonSerializable(typeof(UpdateNumberVoiceSettingsCnamListing))]
-    [JsonSerializable(typeof(UpdateNumberVoiceSettingsEmergency))]
-    [JsonSerializable(typeof(UpdateNumberVoiceSettingsMediaFeatures))]
 
     [JsonSerializable(typeof(CallCommandsResponse))]
     [JsonSerializable(typeof(CallCommandsResponseData))]
@@ -639,7 +640,27 @@ namespace Telnyx.NET
 
     [JsonSerializable(typeof(MarkCommentReadResponse))]
 
+    [JsonSerializable(typeof(SlimListNumbersRequest))]
+    [JsonSerializable(typeof(SlimListNumbersResponse))]
+    [JsonSerializable(typeof(SlimListNumbersData))]
+
+    [JsonSerializable(typeof(GetNumberResponse))]
+
+    [JsonSerializable(typeof(ListNumbersWithVoiceSettingsResponse))]
+    [JsonSerializable(typeof(ListNumbersWithVoiceSettingsRequest))]
+
+    [JsonSerializable(typeof(GetNumberVoiceSettingsResponse))]
+
+    [JsonSerializable(typeof(EnableEmergencyRequest))]
+    [JsonSerializable(typeof(EnableEmergencyResponse))]
+
+    [JsonSerializable(typeof(ChangeBundleStatusRequest))]
+    [JsonSerializable(typeof(ChangeBundleStatusResponse))]
+
     //Enums
+    [JsonSerializable(typeof(PhoneNumberStatusType))]
+    [JsonSerializable(typeof(SortOrder))]
+    [JsonSerializable(typeof(VoiceUsagePaymentMethod))]
     [JsonSerializable(typeof(PhoneNumberType))]
     [JsonSerializable(typeof(RejectCallCause))]
     [JsonSerializable(typeof(DtmfType))]
