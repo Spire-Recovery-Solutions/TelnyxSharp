@@ -28,14 +28,14 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberConfigurati
         /// This allows the phone number to forward incoming calls to another number, with configurable forwarding rules.
         /// </summary>
         [JsonPropertyName("call_forwarding")]
-        public UpdateNumberVoiceSettingsCallForwarding CallForwarding { get; set; }
+        public CallForwardingSettings? CallForwarding { get; set; }
 
         /// <summary>
         /// Gets or sets the CNAM (Caller ID Name) listing settings for the phone number.
         /// This allows for the customization or enabling/disabling of caller ID name information for outgoing calls.
         /// </summary>
         [JsonPropertyName("cnam_listing")]
-        public UpdateNumberVoiceSettingsCnamListing CnamListing { get; set; }
+        public CnamListingSettings? CnamListing { get; set; }
 
         /// <summary>
         /// Gets or sets the usage payment method for the phone number. This specifies how the phone number's usage costs will be billed.
@@ -48,13 +48,13 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberConfigurati
         /// This includes features like voicemail, messaging, and other media-related services.
         /// </summary>
         [JsonPropertyName("media_features")]
-        public UpdateNumberVoiceSettingsMediaFeatures MediaFeatures { get; set; }
+        public MediaFeatures? MediaFeatures { get; set; }
 
         /// <summary>
         /// Gets or sets the call recording settings for the phone number.
         /// This allows the configuration of automatic call recording features for the phone number.
         /// </summary>
         [JsonPropertyName("call_recording")]
-        public UpdateNumberVoiceSettingsCallRecording CallRecording { get; set; }
+        public CallRecordingSettings? CallRecording { get; set; }
     }
 }
