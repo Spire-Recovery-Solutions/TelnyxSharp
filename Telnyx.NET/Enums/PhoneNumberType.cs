@@ -11,6 +11,9 @@ namespace Telnyx.NET.Enums
         [JsonPropertyName("local")]
         Local,
 
+        [JsonPropertyName("national")]
+        National,
+
         [JsonPropertyName("toll_free")]
         TollFree,
 
@@ -18,6 +21,9 @@ namespace Telnyx.NET.Enums
         Mobile,
 
         [JsonPropertyName("voip")]
-        VoIP
+        VoIP,
+
+        [JsonPropertyName("shared_cost")]
+        SharedCost
     }
 }
