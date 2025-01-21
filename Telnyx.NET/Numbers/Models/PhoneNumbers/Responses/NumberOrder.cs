@@ -72,7 +72,7 @@ public class NumberOrder
     /// A list of phone numbers included in the number order.
     /// </summary>
     [JsonPropertyName("phone_numbers")]
-    public List<NumberOrdersPhoneNumber> PhoneNumbers { get; set; }
+    public List<NumberOrdersPhoneNumber>? PhoneNumbers { get; set; }
 
     /// <summary>
     /// The record type of the number order (e.g., "number_order").

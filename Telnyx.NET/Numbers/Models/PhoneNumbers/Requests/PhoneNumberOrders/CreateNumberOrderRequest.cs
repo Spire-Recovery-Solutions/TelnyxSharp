@@ -12,7 +12,7 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberOrders
         /// Gets or sets the list of phone numbers to be included in the order.
         /// </summary>
         [JsonPropertyName("phone_numbers")]
-        public List<CreateNumberOrderPhoneNumber> PhoneNumbers { get; set; } = new();
+        public List<CreateNumberOrderPhoneNumber>? PhoneNumbers { get; set; }
 
         /// <summary>
         /// Gets or sets the connection ID for the number order.
@@ -50,10 +50,16 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberOrders
         [JsonPropertyName("phone_number")]
         public required string PhoneNumber { get; set; }
 
-        /// <summary>
-        /// Gets or sets the list of regulatory requirements associated with the phone number.
+         /// <summary>
+        /// Gets or sets the ID of the requirement group to use to satisfy number requirements.
         /// </summary>
-        [JsonPropertyName("regulatory_requirements")]
-        public List<CreateNumberOrderRegulatoryRequirement> RegulatoryRequirements { get; set; }
+        [JsonPropertyName("requirement_group_id")]
+        public string? RequirementGroupId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ID of the bundle to associate the number with.
+        /// </summary>
+        [JsonPropertyName("bundle_id")]
+        public string? BundleId { get; set; }
     }
 }
