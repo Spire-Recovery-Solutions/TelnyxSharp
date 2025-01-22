@@ -13,7 +13,6 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.RegulatoryRequirements
         /// Gets or sets the phone number to check regulatory requirements for.
         /// The phone number is required to filter the regulatory requirements associated with it.
         /// </summary>
-        [JsonPropertyName("filter[phone_number]")]
         public required string PhoneNumber { get; set; }
     }
 }

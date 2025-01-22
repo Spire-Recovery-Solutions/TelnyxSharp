@@ -14,7 +14,6 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberOrders
         /// <remarks>
         /// This field specifies the type of record (e.g., "PhoneNumberOrder") whose comments are being requested.
         /// </remarks>
-        [JsonPropertyName("filter[comment_record_type]")]
         public string? CommentRecordType { get; set; }
 
         /// <summary>
@@ -23,7 +22,6 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberOrders
         /// <remarks>
         /// This field specifies the unique ID of the record (e.g., a phone number order ID) to filter the comments.
         /// </remarks>
-        [JsonPropertyName("filter[comment_record_id]")]
         public string? CommentRecordId { get; set; }
     }
 }
