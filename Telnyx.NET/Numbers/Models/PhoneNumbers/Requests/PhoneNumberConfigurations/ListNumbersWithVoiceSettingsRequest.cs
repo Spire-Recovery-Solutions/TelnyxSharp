@@ -58,9 +58,9 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberConfigurati
         /// Gets or sets the sorting order for the results.
         /// </summary>
         /// <remarks>
-        /// Use <see cref="SortOrder"/> to specify ascending or descending order for the results.
+        /// Use <see cref="SortNumberConfiguration"/> to specify ascending or descending order for the results.
         /// </remarks>
         [JsonPropertyName("sort")]
-        public SortOrder? Sort { get; set; }
+        public SortNumberConfiguration? Sort { get; set; }
     }
 }
