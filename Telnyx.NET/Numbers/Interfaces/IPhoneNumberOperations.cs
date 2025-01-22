@@ -30,5 +30,17 @@
         /// This allows you to modify settings or configurations for multiple phone numbers in a single request, improving efficiency.
         /// </summary>
         IBulkPhoneNumberOperations BulkPhoneNumber { get; }
+
+        /// <summary>
+        /// Gets the operations for inventory-level queries.
+        /// This includes checking the coverage and availability of phone numbers based on various filters, such as location or number type.
+        /// </summary>
+        IInventoryLevelOperations InventoryLevel { get; }
+
+        /// <summary>
+        /// Gets the operations for managing phone number block background jobs, 
+        /// including creating, retrieving, and managing jobs related to phone number blocks.
+        /// </summary>
+        IPhoneNumberBlocksBackgroundJobsOperations PhoneNumberBlocksBackgroundJobs { get; }
     }
 }
