@@ -8,7 +8,6 @@ namespace Telnyx.NET.Messaging.Models.BulkPhoneNumberCampaign.Requests
         /// <summary>
         /// The number of records to return per page.
         /// </summary>
-        [JsonPropertyName("recordsPerPage")]
         public int? PageSize { get; set; }
 
 
