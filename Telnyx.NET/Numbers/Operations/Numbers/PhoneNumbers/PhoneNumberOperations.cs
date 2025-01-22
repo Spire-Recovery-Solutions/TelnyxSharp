@@ -27,6 +27,10 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
         private readonly Lazy<IPhoneNumberConfigurationOperations> _phoneNumberConfigurationOperations = new(() =>
                 new PhoneNumberConfigurationOperations(client, rateLimitRetryPolicy),
                         LazyThreadSafetyMode.ExecutionAndPublication);
+        
+        private readonly Lazy<IBulkPhoneNumberOperations> _bulkPhoneNumberOperations = new(() =>
+                new BulkPhoneNumberOperations(client, rateLimitRetryPolicy),
+                        LazyThreadSafetyMode.ExecutionAndPublication);
 
         public IPhoneNumberSearchOperations PhoneNumberSearch => _phoneNumberSearchOperations.Value;
 
@@ -35,6 +39,8 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
         public IPhoneNumberOrdersOperations PhoneNumberOrders => _phoneNumberOrdersOperations.Value;
 
         public IPhoneNumberConfigurationOperations PhoneNumberConfiguration => _phoneNumberConfigurationOperations.Value;
+
+        public IBulkPhoneNumberOperations BulkPhoneNumber => _bulkPhoneNumberOperations.Value;
 
         /// <summary>
         /// Disposes of all resources and underlying disposable operations related to toll-free operations.
@@ -53,6 +59,9 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
 
             if (_phoneNumberConfigurationOperations.IsValueCreated && _phoneNumberConfigurationOperations.Value is IDisposable disposablePhoneNumberConfiguration)
                 disposablePhoneNumberConfiguration.Dispose();
+
+            if (_bulkPhoneNumberOperations.IsValueCreated && _bulkPhoneNumberOperations.Value is IDisposable disposableBulkPhoneNumber)
+                disposableBulkPhoneNumber.Dispose();
 
             GC.SuppressFinalize(this);
         }

@@ -24,5 +24,11 @@
         /// Gets the operations for configuring phone numbers, including updating voice and other settings.
         /// </summary>
         IPhoneNumberConfigurationOperations PhoneNumberConfiguration { get; }
+
+        /// <summary>
+        /// Gets the operations for performing bulk updates on phone numbers.
+        /// This allows you to modify settings or configurations for multiple phone numbers in a single request, improving efficiency.
+        /// </summary>
+        IBulkPhoneNumberOperations BulkPhoneNumber { get; }
     }
 }

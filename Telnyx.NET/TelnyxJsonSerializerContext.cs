@@ -41,12 +41,14 @@ using Telnyx.NET.Messaging.Models.TollFreeVerificationOperations.Responses;
 using Telnyx.NET.Models;
 using Telnyx.NET.Models.Events;
 using Telnyx.NET.Numbers.Models.PhoneNumbers;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.BulkPhoneNumberOperations;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberConfigurations;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberOrders;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberReservations;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberSearch;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PortingOrder;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.BulkPhoneNumberOperations;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberConfigurations;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberOrders;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberReservartions;
@@ -656,10 +658,27 @@ namespace Telnyx.NET
 
     [JsonSerializable(typeof(ChangeBundleStatusRequest))]
     [JsonSerializable(typeof(ChangeBundleStatusResponse))]
+    
+    [JsonSerializable(typeof(ListNumbersJobsRequest))]
+    [JsonSerializable(typeof(ListNumbersJobsResponse))]
+    [JsonSerializable(typeof(NumbersJobsData))]
+    [JsonSerializable(typeof(PhoneNumbersFailedJobNumber))]
 
+    [JsonSerializable(typeof(RetrieveNumbersJobResponse))]
+
+    [JsonSerializable(typeof(UpdateNumbersBatchRequest))]
+    [JsonSerializable(typeof(UpdateNumbersBatchResponse))]
+    [JsonSerializable(typeof(BatchVoiceSettings))]
+    
+    [JsonSerializable(typeof(DeleteNumbersBatchRequest))]
+    [JsonSerializable(typeof(DeleteNumbersBatchResponse))]
+
+    [JsonSerializable(typeof(UpdateEmergencySettingsRequest))]
+    [JsonSerializable(typeof(UpdateEmergencySettingsResponse))]
     //Enums
+    [JsonSerializable(typeof(PhoneNumberJobType))]
     [JsonSerializable(typeof(PhoneNumberStatusType))]
-    [JsonSerializable(typeof(SortOrder))]
+    [JsonSerializable(typeof(SortNumberConfiguration))]
     [JsonSerializable(typeof(VoiceUsagePaymentMethod))]
     [JsonSerializable(typeof(PhoneNumberType))]
     [JsonSerializable(typeof(RejectCallCause))]
