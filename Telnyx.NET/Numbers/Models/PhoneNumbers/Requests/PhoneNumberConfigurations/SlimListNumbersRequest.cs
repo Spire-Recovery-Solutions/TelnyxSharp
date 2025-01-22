@@ -107,6 +107,6 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberConfigurati
         /// The sort order for the results.
         /// </summary>;v
         [JsonPropertyName("sort")]
-        public SortOrder? Sort { get; set; }
+        public SortNumberConfigurationOrder? Sort { get; set; }
     }
 }
