@@ -6,7 +6,7 @@ namespace Telnyx.NET.Enums
     /// Specifies the fields by which number configurations can be sorted in Telnyx API requests.
     /// </summary>
     [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum SortNumberConfigurationOrder
+    public enum SortNumberConfiguration
     {
         /// <summary>
         /// Sorts number configurations by the date and time they were purchased.
