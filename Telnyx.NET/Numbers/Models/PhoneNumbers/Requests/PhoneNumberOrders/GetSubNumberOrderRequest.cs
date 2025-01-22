@@ -15,7 +15,6 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberOrders
         /// If <c>true</c>, the response will include detailed information about the phone numbers associated with the sub-number order.
         /// If <c>false</c> or <c>null</c>, phone number details will not be included.
         /// </remarks>
-        [JsonPropertyName("filter[include_phone_numbers]")]
         public bool? IncludePhoneNumbers { get; set; }
     }
 }

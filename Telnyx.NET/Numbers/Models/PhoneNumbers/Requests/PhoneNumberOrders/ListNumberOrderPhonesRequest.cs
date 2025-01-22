@@ -15,7 +15,6 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberOrders
         /// This property specifies the country code (e.g., "US" or "GB") to filter the phone numbers
         /// associated with the number order.
         /// </remarks>
-        [JsonPropertyName("filter[country_code]")]
         public string? CountryCode { get; set; }
     }
 }
