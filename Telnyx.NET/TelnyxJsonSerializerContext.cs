@@ -42,6 +42,8 @@ using Telnyx.NET.Models;
 using Telnyx.NET.Models.Events;
 using Telnyx.NET.Numbers.Models.PhoneNumbers;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.BulkPhoneNumberOperations;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.InventoryLevel;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberBlocksBackgroundJobs;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberConfigurations;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberOrders;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberReservations;
@@ -49,6 +51,8 @@ using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberSearch;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PortingOrder;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.BulkPhoneNumberOperations;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.InventoryLevel;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberBlocksBackgroundJobs;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberConfigurations;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberOrders;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberReservartions;
@@ -658,7 +662,7 @@ namespace Telnyx.NET
 
     [JsonSerializable(typeof(ChangeBundleStatusRequest))]
     [JsonSerializable(typeof(ChangeBundleStatusResponse))]
-    
+
     [JsonSerializable(typeof(ListNumbersJobsRequest))]
     [JsonSerializable(typeof(ListNumbersJobsResponse))]
     [JsonSerializable(typeof(NumbersJobsData))]
@@ -669,13 +673,31 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(UpdateNumbersBatchRequest))]
     [JsonSerializable(typeof(UpdateNumbersBatchResponse))]
     [JsonSerializable(typeof(BatchVoiceSettings))]
-    
+
     [JsonSerializable(typeof(DeleteNumbersBatchRequest))]
     [JsonSerializable(typeof(DeleteNumbersBatchResponse))]
 
     [JsonSerializable(typeof(UpdateEmergencySettingsRequest))]
     [JsonSerializable(typeof(UpdateEmergencySettingsResponse))]
+
+    [JsonSerializable(typeof(InventoryCoverageRequest))]
+    [JsonSerializable(typeof(InventoryCoverageResponse))]
+    [JsonSerializable(typeof(InventoryCoverageData))]
+
+    [JsonSerializable(typeof(ListPhoneNumberBlockJobsRequest))]
+    [JsonSerializable(typeof(ListPhoneNumberBlockJobsResponse))]
+    [JsonSerializable(typeof(PhoneNumberBlockJobData))]
+
+    [JsonSerializable(typeof(GetPhoneNumberBlocksJobResponse))]
+
+    [JsonSerializable(typeof(DeletePhoneNumberBlockRequest))]
+    [JsonSerializable(typeof(DeletePhoneNumberBlockResponse))]
+
     //Enums
+    [JsonSerializable(typeof(JobStatusType))]
+    [JsonSerializable(typeof(CountryCode))]
+    [JsonSerializable(typeof(FeatureType))]
+    [JsonSerializable(typeof(GroupByType))]
     [JsonSerializable(typeof(PhoneNumberJobType))]
     [JsonSerializable(typeof(PhoneNumberStatusType))]
     [JsonSerializable(typeof(SortNumberConfiguration))]

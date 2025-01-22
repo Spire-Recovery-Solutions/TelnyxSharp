@@ -20,6 +20,9 @@ namespace Telnyx.NET.Enums
         [JsonPropertyName("mobile")]
         Mobile,
 
+        [JsonPropertyName("landline")]
+        Landline,
+
         [JsonPropertyName("voip")]
         VoIP,
 
