@@ -678,7 +678,7 @@ namespace Telnyx.NET
     //Enums
     [JsonSerializable(typeof(PhoneNumberJobType))]
     [JsonSerializable(typeof(PhoneNumberStatusType))]
-    [JsonSerializable(typeof(SortNumberConfigurationOrder))]
+    [JsonSerializable(typeof(SortNumberConfiguration))]
     [JsonSerializable(typeof(VoiceUsagePaymentMethod))]
     [JsonSerializable(typeof(PhoneNumberType))]
     [JsonSerializable(typeof(RejectCallCause))]
