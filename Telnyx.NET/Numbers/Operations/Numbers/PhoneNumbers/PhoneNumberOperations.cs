@@ -27,9 +27,17 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
         private readonly Lazy<IPhoneNumberConfigurationOperations> _phoneNumberConfigurationOperations = new(() =>
                 new PhoneNumberConfigurationOperations(client, rateLimitRetryPolicy),
                         LazyThreadSafetyMode.ExecutionAndPublication);
-        
+
         private readonly Lazy<IBulkPhoneNumberOperations> _bulkPhoneNumberOperations = new(() =>
                 new BulkPhoneNumberOperations(client, rateLimitRetryPolicy),
+                        LazyThreadSafetyMode.ExecutionAndPublication);
+
+        private readonly Lazy<IInventoryLevelOperations> _inventoryLevelOperations = new(() =>
+                new InventoryLevelOperations(client, rateLimitRetryPolicy),
+                        LazyThreadSafetyMode.ExecutionAndPublication);
+
+        private readonly Lazy<IPhoneNumberBlocksBackgroundJobsOperations> _phoneNumberBlocksBackgroundJobsOperations = new(() =>
+                new PhoneNumberBlocksBackgroundJobsOperations(client, rateLimitRetryPolicy),
                         LazyThreadSafetyMode.ExecutionAndPublication);
 
         public IPhoneNumberSearchOperations PhoneNumberSearch => _phoneNumberSearchOperations.Value;
@@ -41,6 +49,10 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
         public IPhoneNumberConfigurationOperations PhoneNumberConfiguration => _phoneNumberConfigurationOperations.Value;
 
         public IBulkPhoneNumberOperations BulkPhoneNumber => _bulkPhoneNumberOperations.Value;
+
+        public IInventoryLevelOperations InventoryLevel => _inventoryLevelOperations.Value;
+
+        public IPhoneNumberBlocksBackgroundJobsOperations PhoneNumberBlocksBackgroundJobs => _phoneNumberBlocksBackgroundJobsOperations.Value;
 
         /// <summary>
         /// Disposes of all resources and underlying disposable operations related to toll-free operations.
@@ -62,6 +74,12 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
 
             if (_bulkPhoneNumberOperations.IsValueCreated && _bulkPhoneNumberOperations.Value is IDisposable disposableBulkPhoneNumber)
                 disposableBulkPhoneNumber.Dispose();
+
+            if (_inventoryLevelOperations.IsValueCreated && _inventoryLevelOperations.Value is IDisposable disposableInventoryLevel)
+                disposableInventoryLevel.Dispose();
+
+            if (_phoneNumberBlocksBackgroundJobsOperations.IsValueCreated && _phoneNumberBlocksBackgroundJobsOperations.Value is IDisposable disposablePhoneNumberBlocksBackgroundJobs)
+                disposablePhoneNumberBlocksBackgroundJobs.Dispose();
 
             GC.SuppressFinalize(this);
         }
