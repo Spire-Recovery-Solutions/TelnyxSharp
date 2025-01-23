@@ -13,28 +13,24 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberSearch
         /// Gets or sets the locality filter for the phone number block search.
         /// This specifies the geographic area (city or region) to search within.
         /// </summary>
-        [JsonPropertyName("filter[locality]")]
         public string? Locality { get; set; }
 
         /// <summary>
         /// Gets or sets the country code filter for the phone number block search.
         /// This specifies the country of the desired phone number blocks (e.g., "US" for the United States).
         /// </summary>
-        [JsonPropertyName("filter[country_code]")]
         public string? CountryCode { get; set; }
 
         /// <summary>
         /// Gets or sets the national destination code (NDC) filter for the phone number block search.
         /// This is used to narrow the search to a specific region within a country, such as area codes.
         /// </summary>
-        [JsonPropertyName("filter[national_destination_code]")]
         public string? NationalDestinationCode { get; set; }
 
         /// <summary>
         /// Gets or sets the phone number type filter for the phone number block search.
         /// This specifies the type of phone numbers to search for, such as local, mobile, or toll-free numbers.
         /// </summary>
-        [JsonPropertyName("filter[phone_number_type]")]
         public PhoneNumberType? PhoneNumberType { get; set; }
     }
 }

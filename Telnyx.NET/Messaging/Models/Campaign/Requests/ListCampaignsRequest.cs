@@ -12,7 +12,6 @@ namespace Telnyx.NET.Messaging.Models.Campaign.Requests
         /// <summary>
         /// Gets or sets the unique identifier of the brand for which campaigns are being listed.
         /// </summary>
-        [JsonPropertyName("brandId")]
         public required string BrandId { get; set; }
 
         /// <summary>
@@ -24,14 +23,12 @@ namespace Telnyx.NET.Messaging.Models.Campaign.Requests
         /// <summary>
         /// Gets or sets the number of records per page in the paginated results. Defaults to 10.
         /// </summary>
-        [JsonPropertyName("recordsPerPage")]
         public int PageSize { get; set; } = 10;
 
         /// <summary>
         /// Gets or sets the sorting criteria for the campaign results.
         /// Defaults to descending order of creation date ("-createdAt").
         /// </summary>
-        [JsonPropertyName("sort")]
         public Sort? Sort { get; set; } = NET.Enums.Sort.CreatedAtDesc;
     }
 }
