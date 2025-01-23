@@ -43,6 +43,7 @@ using Telnyx.NET.Models.Events;
 using Telnyx.NET.Numbers.Models.PhoneNumbers;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.BulkPhoneNumberOperations;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.InventoryLevel;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberBlockOrders;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberBlocksBackgroundJobs;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberConfigurations;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberOrders;
@@ -50,9 +51,12 @@ using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberReservations;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberSearch;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PortingOrder;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.RegulatoryRequirements;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.RequirementGroups;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.BulkPhoneNumberOperations;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.CountryCoverage;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.InventoryLevel;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberBlockOrders;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberBlocksBackgroundJobs;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberConfigurations;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberOrders;
@@ -60,6 +64,7 @@ using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberReservartions;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberSearch;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.RegulatoryRequirements;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.RequirementGroups;
 using Telnyx.NET.Voice.Events;
 using Telnyx.NET.Voice.Models.CallCommands.Requests;
 using Telnyx.NET.Voice.Models.CallCommands.Responses;
@@ -694,18 +699,58 @@ namespace Telnyx.NET
 
     [JsonSerializable(typeof(DeletePhoneNumberBlockRequest))]
     [JsonSerializable(typeof(DeletePhoneNumberBlockResponse))]
-    
+
     [JsonSerializable(typeof(GetRegulatoryRequirementsRequest))]
     [JsonSerializable(typeof(GetRegulatoryRequirementsResponse))]
     [JsonSerializable(typeof(RegulatoryRequirement))]
     [JsonSerializable(typeof(RequirementDetail))]
     [JsonSerializable(typeof(AcceptanceCriteria))]
-    
+
     [JsonSerializable(typeof(ListRegulatoryRequirementsRequest))]
     [JsonSerializable(typeof(ListRegulatoryRequirementsResponse))]
     [JsonSerializable(typeof(ListRegulatoryRequirementsData))]
 
+    [JsonSerializable(typeof(UpdateSubNumberOrderRequirementRequest))]
+    [JsonSerializable(typeof(UpdateSubNumberOrderRequirementResponse))]
+    [JsonSerializable(typeof(UpdateSubNumberOrderRequirementData))]
+
+    [JsonSerializable(typeof(UpdatePhoneNumberOrderRequirementRequest))]
+    [JsonSerializable(typeof(UpdatePhoneNumberOrderRequirementResponse))]
+    [JsonSerializable(typeof(PhoneNumberOrderRequirementData))]
+    [JsonSerializable(typeof(PhoneNumberRegRequirement))]
+
+    [JsonSerializable(typeof(ListRequirementGroupsRequest))]
+    [JsonSerializable(typeof(ListRequirementGroupsResponse))]
+    [JsonSerializable(typeof(RegulatoryRequirementDetail))]
+    [JsonSerializable(typeof(RequirementGroupData))]
+
+    [JsonSerializable(typeof(CreateRequirementGroupRequest))]
+    [JsonSerializable(typeof(CreateRequirementGroupResponse))]
+
+    [JsonSerializable(typeof(GetRequirementGroupResponse))]
+
+    [JsonSerializable(typeof(DeleteRequirementGroupResponse))]
+
+    [JsonSerializable(typeof(UpdateRequirementGroupRequest))]
+    [JsonSerializable(typeof(UpdateRequirementGroupResponse))]
+
+    [JsonSerializable(typeof(SubmitRequirementGroupApprovalResponse))]
+
+    [JsonSerializable(typeof(ListCountryCoverageResponse))]
+    [JsonSerializable(typeof(CountryCoverageDetails))]
+    
+    [JsonSerializable(typeof(GetCountryCoverageResponse))]
+
+    [JsonSerializable(typeof(ListNumberBlockOrdersRequest))]
+    [JsonSerializable(typeof(ListNumberBlockOrdersResponse))]
+    [JsonSerializable(typeof(NumberBlockOrder))]
+
+    [JsonSerializable(typeof(CreateNumberBlockOrderRequest))]
+    [JsonSerializable(typeof(CreateNumberBlockOrderResponse))]
+
+    [JsonSerializable(typeof(GetNumberBlockOrderResponse))]
     //Enums
+    [JsonSerializable(typeof(RequirementStatus))]
     [JsonSerializable(typeof(RequirementActionType))]
     [JsonSerializable(typeof(JobStatusType))]
     [JsonSerializable(typeof(CountryCode))]

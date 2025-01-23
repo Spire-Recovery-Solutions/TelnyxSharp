@@ -17,26 +17,25 @@ namespace Telnyx.NET
         /// Adds a filter with an enum value to the request query parameters.
         /// Uses JsonPropertyName attribute value if available.
         /// </summary>
-        public static RestRequest AddFilter(this RestRequest request, string key, Enum? value)
+        public static RestRequest AddFilter(this RestRequest request, string key, object? value)
         {
-            if (value == null) return request;
-            var stringValue = GetEnumValue(value);
-            if (!string.IsNullOrEmpty(stringValue))
+            switch (value)
             {
-                request.AddParameter(key, stringValue, ParameterType.QueryString);
-            }
-            return request;
-        }
-        
-        /// <summary>
-        /// Adds a filter with a string value to the request query parameters.
-        /// Ignores null, empty, or whitespace-only values.
-        /// </summary>
-        public static RestRequest AddFilter(this RestRequest request, string key, string? value)
-        {
-            if (!string.IsNullOrWhiteSpace(value))
-            {
-                request.AddParameter(key, value, ParameterType.QueryString);
+                case null:
+                    return request;
+                case Enum @enum:
+                {
+                    var stringValue = GetEnumValue(@enum);
+                    if (!string.IsNullOrEmpty(stringValue))
+                    {
+                        request.AddParameter(key, stringValue, ParameterType.QueryString);
+                    }
+
+                    break;
+                }
+                default:
+                    request.AddParameter(key, value, ParameterType.QueryString);
+                    break;
             }
             return request;
         }
@@ -57,7 +56,7 @@ namespace Telnyx.NET
         /// </summary>
         public static RestRequest AddFilterList(this RestRequest request, string key, List<string>? values)
         {
-            if (values == null || !values.Any()) return request;
+            if (values == null || values.Count == 0) return request;
 
             foreach (var value in values.Where(v => !string.IsNullOrWhiteSpace(v)))
             {
