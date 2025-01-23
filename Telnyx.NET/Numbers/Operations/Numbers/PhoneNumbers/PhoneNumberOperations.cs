@@ -56,6 +56,18 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
                  new PhoneNumberBlockOrdersOperations(client, rateLimitRetryPolicy),
                         LazyThreadSafetyMode.ExecutionAndPublication);
 
+        private readonly Lazy<IAdvancedNumberOrdersOperations> _advancedNumberOrdersOperations = new(() =>
+                    new AdvancedNumberOrdersOperations(client, rateLimitRetryPolicy),
+                            LazyThreadSafetyMode.ExecutionAndPublication);
+
+        private readonly Lazy<ICsvDownloadsOperations> _csvDownloadsOperations = new(() =>
+                        new CsvDownloadsOperations(client, rateLimitRetryPolicy),
+                                LazyThreadSafetyMode.ExecutionAndPublication);
+
+        private readonly Lazy<INumbersFeaturesOperations> _numbersFeaturesOperations = new(() =>
+                        new NumbersFeaturesOperations(client, rateLimitRetryPolicy),
+                                LazyThreadSafetyMode.ExecutionAndPublication);
+
         public IPhoneNumberSearchOperations PhoneNumberSearch => _phoneNumberSearchOperations.Value;
 
         public IPhoneNumberReservationsOperations PhoneNumberReservations => _phoneNumberReservationsOperations.Value;
@@ -77,6 +89,12 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
         public ICountryCoverageOperations CountryCoverage => _countryCoverageOperations.Value;
 
         public IPhoneNumberBlockOrdersOperations PhoneNumberBlockOrders => _phoneNumberBlockOrdersOperations.Value;
+
+        public IAdvancedNumberOrdersOperations AdvancedNumberOrders => _advancedNumberOrdersOperations.Value;
+
+        public ICsvDownloadsOperations CsvDownloads => _csvDownloadsOperations.Value;
+
+        public INumbersFeaturesOperations NumbersFeatures => _numbersFeaturesOperations.Value;
 
         /// <summary>
         /// Disposes of all resources and underlying disposable operations related to toll-free operations.
@@ -116,6 +134,15 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
 
             if (_phoneNumberBlockOrdersOperations.IsValueCreated && _phoneNumberBlockOrdersOperations.Value is IDisposable disposablePhoneNumberBlockOrders)
                 disposablePhoneNumberBlockOrders.Dispose();
+
+            if (_advancedNumberOrdersOperations.IsValueCreated && _advancedNumberOrdersOperations.Value is IDisposable disposableAdvancedNumberOrders)
+                disposableAdvancedNumberOrders.Dispose();
+
+            if (_csvDownloadsOperations.IsValueCreated && _csvDownloadsOperations.Value is IDisposable disposableCsvDownloads)
+                disposableCsvDownloads.Dispose();
+
+            if (_numbersFeaturesOperations.IsValueCreated && _numbersFeaturesOperations.Value is IDisposable disposableNumbersFeatures)
+                disposableNumbersFeatures.Dispose();
 
             GC.SuppressFinalize(this);
         }

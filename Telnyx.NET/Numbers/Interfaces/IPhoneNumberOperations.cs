@@ -70,6 +70,20 @@
         /// </summary>
         IPhoneNumberBlockOrdersOperations PhoneNumberBlockOrders { get; }
 
+        /// <summary>
+        /// Gets the operations related to advanced number orders, including creating and managing advanced orders for phone numbers.
+        /// </summary>
+        IAdvancedNumberOrdersOperations AdvancedNumberOrders { get; }
 
+        /// <summary>
+        /// Gets the operations for managing CSV downloads for phone numbers.
+        /// This includes creating new downloads, listing existing ones, and retrieving individual CSV download records.
+        /// </summary>
+        ICsvDownloadsOperations CsvDownloads { get; }
+
+        /// <summary>
+        /// Gets the operations for managing features of phone numbers, such as retrieving available features.
+        /// </summary>
+        INumbersFeaturesOperations NumbersFeatures { get; }
     }
 }

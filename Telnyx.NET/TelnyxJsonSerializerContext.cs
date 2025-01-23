@@ -41,8 +41,11 @@ using Telnyx.NET.Messaging.Models.TollFreeVerificationOperations.Responses;
 using Telnyx.NET.Models;
 using Telnyx.NET.Models.Events;
 using Telnyx.NET.Numbers.Models.PhoneNumbers;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.AdvancedNumberOrders;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.BulkPhoneNumberOperations;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.CsvDownloads;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.InventoryLevel;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.NumbersFeatures;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberBlockOrders;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberBlocksBackgroundJobs;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberConfigurations;
@@ -53,9 +56,13 @@ using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PortingOrder;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.RegulatoryRequirements;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.RequirementGroups;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.AdvancedNumberOrders;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.BulkPhoneNumberOperations;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.CountryCoverage;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.CsvDowloads;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.CsvDownloads;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.InventoryLevel;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.NumbersFeatures;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberBlockOrders;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberBlocksBackgroundJobs;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberConfigurations;
@@ -749,6 +756,25 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(CreateNumberBlockOrderResponse))]
 
     [JsonSerializable(typeof(GetNumberBlockOrderResponse))]
+    
+    [JsonSerializable(typeof(CreateAdvancedOrderRequest))]
+    [JsonSerializable(typeof(CreateAdvancedOrderResponse))]
+
+    [JsonSerializable(typeof(ListAdvancedOrdersResponse))]
+
+    [JsonSerializable(typeof(GetAdvancedOrderResponse))]
+
+    [JsonSerializable(typeof(ListCsvDownloadsRequest))]
+    [JsonSerializable(typeof(ListCsvDownloadsResponse))]
+    [JsonSerializable(typeof(CsvDownload))]
+
+    [JsonSerializable(typeof(CreateCsvDownloadResponse))]
+
+    [JsonSerializable(typeof(GetCsvDownloadResponse))]
+
+    [JsonSerializable(typeof(GetNumbersFeaturesRequest))]
+    [JsonSerializable(typeof(GetNumbersFeaturesResponse))]
+    [JsonSerializable(typeof(NumberFeature))]
     //Enums
     [JsonSerializable(typeof(RequirementStatus))]
     [JsonSerializable(typeof(RequirementActionType))]
