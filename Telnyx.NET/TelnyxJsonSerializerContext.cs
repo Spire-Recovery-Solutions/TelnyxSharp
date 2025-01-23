@@ -43,6 +43,7 @@ using Telnyx.NET.Models.Events;
 using Telnyx.NET.Numbers.Models.PhoneNumbers;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.BulkPhoneNumberOperations;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.InventoryLevel;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberBlockOrders;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberBlocksBackgroundJobs;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberConfigurations;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberOrders;
@@ -53,7 +54,9 @@ using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.RegulatoryRequirements;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.RequirementGroups;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.BulkPhoneNumberOperations;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.CountryCoverage;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.InventoryLevel;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberBlockOrders;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberBlocksBackgroundJobs;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberConfigurations;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberOrders;
@@ -732,6 +735,20 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(UpdateRequirementGroupResponse))]
 
     [JsonSerializable(typeof(SubmitRequirementGroupApprovalResponse))]
+
+    [JsonSerializable(typeof(ListCountryCoverageResponse))]
+    [JsonSerializable(typeof(CountryCoverageDetails))]
+    
+    [JsonSerializable(typeof(GetCountryCoverageResponse))]
+
+    [JsonSerializable(typeof(ListNumberBlockOrdersRequest))]
+    [JsonSerializable(typeof(ListNumberBlockOrdersResponse))]
+    [JsonSerializable(typeof(NumberBlockOrder))]
+
+    [JsonSerializable(typeof(CreateNumberBlockOrderRequest))]
+    [JsonSerializable(typeof(CreateNumberBlockOrderResponse))]
+
+    [JsonSerializable(typeof(GetNumberBlockOrderResponse))]
     //Enums
     [JsonSerializable(typeof(RequirementStatus))]
     [JsonSerializable(typeof(RequirementActionType))]

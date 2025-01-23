@@ -48,6 +48,14 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
                 new RequirementGroupsOperations(client, rateLimitRetryPolicy),
                         LazyThreadSafetyMode.ExecutionAndPublication);
 
+        private readonly Lazy<ICountryCoverageOperations> _countryCoverageOperations = new(() =>
+                new CountryCoverageOperations(client, rateLimitRetryPolicy),
+                        LazyThreadSafetyMode.ExecutionAndPublication);
+
+        private readonly Lazy<IPhoneNumberBlockOrdersOperations> _phoneNumberBlockOrdersOperations = new(() =>
+                 new PhoneNumberBlockOrdersOperations(client, rateLimitRetryPolicy),
+                        LazyThreadSafetyMode.ExecutionAndPublication);
+
         public IPhoneNumberSearchOperations PhoneNumberSearch => _phoneNumberSearchOperations.Value;
 
         public IPhoneNumberReservationsOperations PhoneNumberReservations => _phoneNumberReservationsOperations.Value;
@@ -65,6 +73,10 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
         public IRegulatoryRequirementsOperations RegulatoryRequirements => _regulatoryRequirementsOperations.Value;
 
         public IRequirementGroupsOperations RequirementGroups => _requirementGroupsOperations.Value;
+
+        public ICountryCoverageOperations CountryCoverage => _countryCoverageOperations.Value;
+
+        public IPhoneNumberBlockOrdersOperations PhoneNumberBlockOrders => _phoneNumberBlockOrdersOperations.Value;
 
         /// <summary>
         /// Disposes of all resources and underlying disposable operations related to toll-free operations.
@@ -98,6 +110,12 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
 
             if (_requirementGroupsOperations.IsValueCreated && _requirementGroupsOperations.Value is IDisposable disposableRequirementGroups)
                 disposableRequirementGroups.Dispose();
+
+            if (_countryCoverageOperations.IsValueCreated && _countryCoverageOperations.Value is IDisposable disposableCountryCoverage)
+                disposableCountryCoverage.Dispose();
+
+            if (_phoneNumberBlockOrdersOperations.IsValueCreated && _phoneNumberBlockOrdersOperations.Value is IDisposable disposablePhoneNumberBlockOrders)
+                disposablePhoneNumberBlockOrders.Dispose();
 
             GC.SuppressFinalize(this);
         }
