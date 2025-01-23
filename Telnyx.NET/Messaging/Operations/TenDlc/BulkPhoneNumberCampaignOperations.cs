@@ -36,7 +36,7 @@ namespace Telnyx.NET.Messaging.Operations.TenDlc
         {
             var req =
                 new RestRequest($"10dlc/phoneNumberAssignmentByProfile/{taskId}/phoneNumbers")
-                .AddFilter("recordsPerPage", request.PageSize.ToString());
+                .AddFilter("recordsPerPage", request.PageSize);
 
             return await ExecuteAsync<GetPhoneNumberStatusResponse>(req, cancellationToken);
         }

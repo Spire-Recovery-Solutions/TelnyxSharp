@@ -16,7 +16,7 @@ namespace Telnyx.NET.Messaging.Operations.TenDlc
             CancellationToken cancellationToken = default)
         {
             var req = new RestRequest($"10dlc/partner_campaigns")
-                .AddFilter("recordsPerPage", request.PageSize.ToString())
+                .AddFilter("recordsPerPage", request.PageSize)
                 .AddFilter("sort", request.Sort);
 
             return await ExecuteAsync<ListSharedCampaignsResponse>(req, cancellationToken);
@@ -54,7 +54,7 @@ namespace Telnyx.NET.Messaging.Operations.TenDlc
         public async Task<GetPartnerCampaignsSharedByUserResponse?> GetPartnerCampaignsSharedByUser(
             GetPartnerCampaignsSharedByUserRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/partnerCampaign/sharedByMe").AddFilter("recordsPerPage", request.PageSize.ToString());
+            var req = new RestRequest($"10dlc/partnerCampaign/sharedByMe").AddFilter("recordsPerPage", request.PageSize);
             return await ExecuteAsync<GetPartnerCampaignsSharedByUserResponse>(req, cancellationToken);
         }
     }
