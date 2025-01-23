@@ -1,4 +1,5 @@
 ﻿using Telnyx.NET.Models;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.RequirementGroups;
 
 namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberOrders
 {

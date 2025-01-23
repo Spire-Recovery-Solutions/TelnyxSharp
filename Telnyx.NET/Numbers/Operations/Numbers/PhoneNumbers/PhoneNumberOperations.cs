@@ -44,6 +44,10 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
                 new RegulatoryRequirementsOperations(client, rateLimitRetryPolicy),
                         LazyThreadSafetyMode.ExecutionAndPublication);
 
+        private readonly Lazy<IRequirementGroupsOperations> _requirementGroupsOperations = new(() =>
+                new RequirementGroupsOperations(client, rateLimitRetryPolicy),
+                        LazyThreadSafetyMode.ExecutionAndPublication);
+
         public IPhoneNumberSearchOperations PhoneNumberSearch => _phoneNumberSearchOperations.Value;
 
         public IPhoneNumberReservationsOperations PhoneNumberReservations => _phoneNumberReservationsOperations.Value;
@@ -59,6 +63,8 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
         public IPhoneNumberBlocksBackgroundJobsOperations PhoneNumberBlocksBackgroundJobs => _phoneNumberBlocksBackgroundJobsOperations.Value;
 
         public IRegulatoryRequirementsOperations RegulatoryRequirements => _regulatoryRequirementsOperations.Value;
+
+        public IRequirementGroupsOperations RequirementGroups => _requirementGroupsOperations.Value;
 
         /// <summary>
         /// Disposes of all resources and underlying disposable operations related to toll-free operations.
@@ -89,6 +95,9 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
 
             if (_regulatoryRequirementsOperations.IsValueCreated && _regulatoryRequirementsOperations.Value is IDisposable disposableRegulatoryRequirements)
                 disposableRegulatoryRequirements.Dispose();
+
+            if (_requirementGroupsOperations.IsValueCreated && _requirementGroupsOperations.Value is IDisposable disposableRequirementGroups)
+                disposableRequirementGroups.Dispose();
 
             GC.SuppressFinalize(this);
         }
