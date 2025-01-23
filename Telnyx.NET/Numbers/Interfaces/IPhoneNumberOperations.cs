@@ -48,5 +48,14 @@
         /// including checking and fulfilling regulatory requirements based on phone number and region.
         /// </summary>
         IRegulatoryRequirementsOperations RegulatoryRequirements { get; }
+
+        /// <summary>
+        /// Gets the operations for managing requirement groups associated with phone numbers.
+        /// This includes creating, updating, and deleting requirement groups, as well as submitting them for approval.
+        /// </summary>
+        /// <remarks>
+        /// Requirement groups are used to group related requirements for phone number transactions and regulatory checks.
+        /// </remarks>
+        IRequirementGroupsOperations RequirementGroups { get; }
     }
 }
