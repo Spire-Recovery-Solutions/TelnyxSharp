@@ -11,7 +11,6 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberBlocksBackg
         /// <summary>
         /// Gets or sets the unique identifier of the phone number block to delete.
         /// </summary>
-        [JsonPropertyName("phone_number_block_id")]
         public required string PhoneNumberBlockId { get; set; }
     }
 }

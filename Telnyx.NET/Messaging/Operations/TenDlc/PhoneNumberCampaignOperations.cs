@@ -21,7 +21,7 @@ namespace Telnyx.NET.Messaging.Operations.TenDlc
                 .AddFilter("filter[tcr_campaign_id]", request.FilterTcrCampaignId)
                 .AddFilter("filter[tcr_brand_id]", request.FilterTcrBrandId)
                 .AddFilter("sort", request.Sort)
-                .AddPagination(request.PageSize);
+                .AddFilter("recordsPerPage", request.PageSize.ToString());
 
             return await ExecuteAsync<RetrievePhoneNumberCampaignsResponse>(req, cancellationToken);
         }

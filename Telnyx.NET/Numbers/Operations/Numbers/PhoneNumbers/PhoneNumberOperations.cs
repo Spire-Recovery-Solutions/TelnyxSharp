@@ -40,6 +40,10 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
                 new PhoneNumberBlocksBackgroundJobsOperations(client, rateLimitRetryPolicy),
                         LazyThreadSafetyMode.ExecutionAndPublication);
 
+        private readonly Lazy<IRegulatoryRequirementsOperations> _regulatoryRequirementsOperations = new(() =>
+                new RegulatoryRequirementsOperations(client, rateLimitRetryPolicy),
+                        LazyThreadSafetyMode.ExecutionAndPublication);
+
         public IPhoneNumberSearchOperations PhoneNumberSearch => _phoneNumberSearchOperations.Value;
 
         public IPhoneNumberReservationsOperations PhoneNumberReservations => _phoneNumberReservationsOperations.Value;
@@ -53,6 +57,8 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
         public IInventoryLevelOperations InventoryLevel => _inventoryLevelOperations.Value;
 
         public IPhoneNumberBlocksBackgroundJobsOperations PhoneNumberBlocksBackgroundJobs => _phoneNumberBlocksBackgroundJobsOperations.Value;
+
+        public IRegulatoryRequirementsOperations RegulatoryRequirements => _regulatoryRequirementsOperations.Value;
 
         /// <summary>
         /// Disposes of all resources and underlying disposable operations related to toll-free operations.
@@ -80,6 +86,9 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
 
             if (_phoneNumberBlocksBackgroundJobsOperations.IsValueCreated && _phoneNumberBlocksBackgroundJobsOperations.Value is IDisposable disposablePhoneNumberBlocksBackgroundJobs)
                 disposablePhoneNumberBlocksBackgroundJobs.Dispose();
+
+            if (_regulatoryRequirementsOperations.IsValueCreated && _regulatoryRequirementsOperations.Value is IDisposable disposableRegulatoryRequirements)
+                disposableRegulatoryRequirements.Dispose();
 
             GC.SuppressFinalize(this);
         }

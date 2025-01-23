@@ -49,6 +49,7 @@ using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberOrders;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberReservations;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberSearch;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PortingOrder;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.RegulatoryRequirements;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.BulkPhoneNumberOperations;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.InventoryLevel;
@@ -58,6 +59,7 @@ using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberOrders;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberReservartions;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberSearch;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.RegulatoryRequirements;
 using Telnyx.NET.Voice.Events;
 using Telnyx.NET.Voice.Models.CallCommands.Requests;
 using Telnyx.NET.Voice.Models.CallCommands.Responses;
@@ -692,8 +694,19 @@ namespace Telnyx.NET
 
     [JsonSerializable(typeof(DeletePhoneNumberBlockRequest))]
     [JsonSerializable(typeof(DeletePhoneNumberBlockResponse))]
+    
+    [JsonSerializable(typeof(GetRegulatoryRequirementsRequest))]
+    [JsonSerializable(typeof(GetRegulatoryRequirementsResponse))]
+    [JsonSerializable(typeof(RegulatoryRequirement))]
+    [JsonSerializable(typeof(RequirementDetail))]
+    [JsonSerializable(typeof(AcceptanceCriteria))]
+    
+    [JsonSerializable(typeof(ListRegulatoryRequirementsRequest))]
+    [JsonSerializable(typeof(ListRegulatoryRequirementsResponse))]
+    [JsonSerializable(typeof(ListRegulatoryRequirementsData))]
 
     //Enums
+    [JsonSerializable(typeof(RequirementActionType))]
     [JsonSerializable(typeof(JobStatusType))]
     [JsonSerializable(typeof(CountryCode))]
     [JsonSerializable(typeof(FeatureType))]

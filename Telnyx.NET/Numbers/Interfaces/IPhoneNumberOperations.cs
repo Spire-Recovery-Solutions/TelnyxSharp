@@ -42,5 +42,11 @@
         /// including creating, retrieving, and managing jobs related to phone number blocks.
         /// </summary>
         IPhoneNumberBlocksBackgroundJobsOperations PhoneNumberBlocksBackgroundJobs { get; }
+
+        /// <summary>
+        /// Gets the operations for managing regulatory requirements associated with phone numbers, 
+        /// including checking and fulfilling regulatory requirements based on phone number and region.
+        /// </summary>
+        IRegulatoryRequirementsOperations RegulatoryRequirements { get; }
     }
 }
