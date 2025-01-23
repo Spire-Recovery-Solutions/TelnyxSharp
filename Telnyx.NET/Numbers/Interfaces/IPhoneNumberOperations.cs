@@ -48,5 +48,28 @@
         /// including checking and fulfilling regulatory requirements based on phone number and region.
         /// </summary>
         IRegulatoryRequirementsOperations RegulatoryRequirements { get; }
+
+        /// <summary>
+        /// Gets the operations for managing requirement groups associated with phone numbers.
+        /// This includes creating, updating, and deleting requirement groups, as well as submitting them for approval.
+        /// </summary>
+        /// <remarks>
+        /// Requirement groups are used to group related requirements for phone number transactions and regulatory checks.
+        /// </remarks>
+        IRequirementGroupsOperations RequirementGroups { get; }
+
+        /// <summary>
+        /// Gets the operations for retrieving country coverage details, such as phone number availability and types in specific countries.
+        /// This operation helps you understand which phone numbers are available in specific countries based on various filters.
+        /// </summary>
+        ICountryCoverageOperations CountryCoverage { get; }
+
+        /// <summary>
+        /// Gets the operations for managing phone number block orders.
+        /// This includes creating, listing, and retrieving orders related to blocks of phone numbers.
+        /// </summary>
+        IPhoneNumberBlockOrdersOperations PhoneNumberBlockOrders { get; }
+
+
     }
 }

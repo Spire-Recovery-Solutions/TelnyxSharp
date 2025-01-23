@@ -16,7 +16,7 @@ namespace Telnyx.NET.Messaging.Operations.TenDlc
             CancellationToken cancellationToken = default)
         {
             var req = new RestRequest($"10dlc/brand")
-                .AddFilter("recordsPerPage", request.PageSize.ToString())
+                .AddFilter("recordsPerPage", request.PageSize)
                 .AddFilter("sort", request.Sort)
                 .AddFilter("displayName", request.DisplayName)
                 .AddFilter("entityType", request.EntityType)

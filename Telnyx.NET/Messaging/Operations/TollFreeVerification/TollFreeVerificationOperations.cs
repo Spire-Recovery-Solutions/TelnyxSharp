@@ -16,7 +16,7 @@ namespace Telnyx.NET.Messaging.Operations.TollFreeVerification
             ListVerificationRequestsRequest request, CancellationToken cancellationToken = default)
         {
             var req = new RestRequest($"messaging_tollfree/verification/requests")
-                .AddFilter("page_size", request.PageSize.ToString())
+                .AddFilter("page_size", request.PageSize)
                 .AddFilter("date_start", request.DateStart?.ToString("yyyy-MM-ddTHH:mm:ss.ffffffzzz"))
                 .AddFilter("date_end", request.DateEnd?.ToString("yyyy-MM-ddTHH:mm:ss.ffffffzzz"))
                 .AddFilter("status", request.Status?.ToString())
