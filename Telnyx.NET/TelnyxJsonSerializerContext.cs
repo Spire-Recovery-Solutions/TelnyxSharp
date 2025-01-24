@@ -40,6 +40,8 @@ using Telnyx.NET.Messaging.Models.TollFreeVerificationOperations.Requests;
 using Telnyx.NET.Messaging.Models.TollFreeVerificationOperations.Responses;
 using Telnyx.NET.Models;
 using Telnyx.NET.Models.Events;
+using Telnyx.NET.Numbers.Models.ChannelZones.Requests;
+using Telnyx.NET.Numbers.Models.ChannelZones.Responses;
 using Telnyx.NET.Numbers.Models.PhoneNumbers;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.AdvancedNumberOrders;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.BulkPhoneNumberOperations;
@@ -72,6 +74,8 @@ using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberSearch;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.RegulatoryRequirements;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.RequirementGroups;
+using Telnyx.NET.Numbers.Models.Voicemail.Requests;
+using Telnyx.NET.Numbers.Models.Voicemail.Responses;
 using Telnyx.NET.Voice.Events;
 using Telnyx.NET.Voice.Models.CallCommands.Requests;
 using Telnyx.NET.Voice.Models.CallCommands.Responses;
@@ -775,6 +779,34 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(GetNumbersFeaturesRequest))]
     [JsonSerializable(typeof(GetNumbersFeaturesResponse))]
     [JsonSerializable(typeof(NumberFeature))]
+    
+    [JsonSerializable(typeof(GetVoicemailResponse))]
+    [JsonSerializable(typeof(VoicemailSettings))]
+
+    [JsonSerializable(typeof(CreateVoicemailRequest))]
+    [JsonSerializable(typeof(CreateVoicemailResponse))]
+    
+    [JsonSerializable(typeof(UpdateVoicemailRequest))]
+    [JsonSerializable(typeof(UpdateVoicemailResponse))]
+
+    [JsonSerializable(typeof(ListChannelZonesRequest))]
+    [JsonSerializable(typeof(ListChannelZonesResponse))]
+    [JsonSerializable(typeof(ChannelZone))]
+    
+    [JsonSerializable(typeof(GetChannelZonesResponse))]
+
+    [JsonSerializable(typeof(UpdateChannelZoneRequest))]
+    [JsonSerializable(typeof(UpdateChannelZoneResponse))]
+
+    [JsonSerializable(typeof(GetChannelZonePhoneNumbersRequest))]
+
+    [JsonSerializable(typeof(GetChannelZonePhoneNumbersResponse))]
+    [JsonSerializable(typeof(ChannelZonePhoneNumber))]
+
+    [JsonSerializable(typeof(AssignPhoneNumberToChannelZoneResponse))]
+    [JsonSerializable(typeof(AssignPhoneNumberToChannelZoneRequest))]
+
+    [JsonSerializable(typeof(UnassignPhoneNumberResponse))]
     //Enums
     [JsonSerializable(typeof(RequirementStatus))]
     [JsonSerializable(typeof(RequirementActionType))]
