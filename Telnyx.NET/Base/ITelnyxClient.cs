@@ -52,11 +52,23 @@ namespace Telnyx.NET.Base
         /// Includes configuring voicemail settings for phone numbers.
         /// </summary>
         IVoicemailOperations Voicemail { get; }
-        
+
         /// <summary>
         /// Provides operations related to channel zones management.
         /// This includes listing, retrieving, updating, assigning, and unassigning phone numbers within channel zones.
         /// </summary>
         IChannelZonesOperations ChannelZones { get; }
+
+        /// <summary>
+        /// Provides operations for managing inbound channels.
+        /// Supports operations for configuring and retrieving inbound channel settings.
+        /// </summary>
+        IInboundChannelsOperations InboundChannels { get; }
+
+        /// <summary>
+        /// Provides operations for managing number port-out requests.
+        /// Includes listing, retrieving, updating, and managing port-out requests and related events.
+        /// </summary>
+        INumberPortoutOperations NumberPortout { get; }
     }
 }
