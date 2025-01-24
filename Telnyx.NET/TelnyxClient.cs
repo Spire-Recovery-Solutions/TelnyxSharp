@@ -10,7 +10,9 @@ using Telnyx.NET.Messaging.Operations.SmsMms;
 using Telnyx.NET.Messaging.Operations.TenDlc;
 using Telnyx.NET.Messaging.Operations.TollFreeVerification;
 using Telnyx.NET.Numbers.Interfaces;
+using Telnyx.NET.Numbers.Operations.Numbers.ChannelZones;
 using Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers;
+using Telnyx.NET.Numbers.Operations.Numbers.Voicemail;
 using Telnyx.NET.Voice.Interfaces;
 using Telnyx.NET.Voice.Operations.ProgrammableVoice;
 
@@ -29,6 +31,8 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     private readonly Lazy<ILookUpNumberOperations> _lookUpNumberOperations;
     private readonly Lazy<IPhoneNumberOperations> _phoneNumberOperations;
     private readonly Lazy<IProgrammableVoiceOperations> _programmableVoiceOperations;
+    private readonly Lazy<IVoicemailOperations> _voicemailOperations;
+    private readonly Lazy<IChannelZonesOperations> _channelZones;
 
     // Public properties
     public ISmsMmsOperations SmsMms => _smsmms.Value;
@@ -37,6 +41,8 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     public ILookUpNumberOperations LookUpNumber => _lookUpNumberOperations.Value;
     public IPhoneNumberOperations PhoneNumbers => _phoneNumberOperations.Value;
     public IProgrammableVoiceOperations ProgrammableVoice => _programmableVoiceOperations.Value;
+    public IVoicemailOperations Voicemail => _voicemailOperations.Value;
+    public IChannelZonesOperations ChannelZones => _channelZones.Value;
 
 
     public TelnyxClient(string apiKey)
@@ -105,6 +111,14 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
         _programmableVoiceOperations = new Lazy<IProgrammableVoiceOperations>(() =>
             new ProgrammableVoiceOperations(Client, RateLimitRetryPolicy),
             LazyThreadSafetyMode.ExecutionAndPublication);
+
+        _voicemailOperations = new Lazy<IVoicemailOperations>(() =>
+            new VoicemailOperations(Client, RateLimitRetryPolicy),
+            LazyThreadSafetyMode.ExecutionAndPublication);
+
+        _channelZones = new Lazy<IChannelZonesOperations>(() =>
+            new ChannelZonesOperations(Client, RateLimitRetryPolicy),
+            LazyThreadSafetyMode.ExecutionAndPublication);
     }
 
     public void Dispose()
@@ -133,6 +147,14 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
         if (_programmableVoiceOperations.IsValueCreated && _programmableVoiceOperations.Value is IDisposable disposableProgrammableVoice)
         {
             disposableProgrammableVoice.Dispose();
+        }
+        if (_voicemailOperations.IsValueCreated && _voicemailOperations.Value is IDisposable disposableVoicemail)
+        {
+            disposableVoicemail.Dispose();
+        }
+        if (_channelZones.IsValueCreated && _channelZones.Value is IDisposable disposableChannelZones)
+        {
+            disposableChannelZones.Dispose();
         }
 
         _logWriter?.Dispose();
