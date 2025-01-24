@@ -42,6 +42,10 @@ using Telnyx.NET.Models;
 using Telnyx.NET.Models.Events;
 using Telnyx.NET.Numbers.Models.ChannelZones.Requests;
 using Telnyx.NET.Numbers.Models.ChannelZones.Responses;
+using Telnyx.NET.Numbers.Models.InboundChannels.Requests;
+using Telnyx.NET.Numbers.Models.InboundChannels.Responses;
+using Telnyx.NET.Numbers.Models.NumberPortout.Requests;
+using Telnyx.NET.Numbers.Models.NumberPortout.Responses;
 using Telnyx.NET.Numbers.Models.PhoneNumbers;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.AdvancedNumberOrders;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.BulkPhoneNumberOperations;
@@ -807,8 +811,67 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(AssignPhoneNumberToChannelZoneRequest))]
 
     [JsonSerializable(typeof(UnassignPhoneNumberResponse))]
+
+    [JsonSerializable(typeof(ListInboundChannelsResponse))]
+    [JsonSerializable(typeof(InboundChannels))]
+    
+    [JsonSerializable(typeof(UpdateInboundChannelsRequest))]
+    [JsonSerializable(typeof(UpdateInboundChannelsResponse))]
+
+    [JsonSerializable(typeof(ListPortoutRequest))]
+    [JsonSerializable(typeof(ListPortoutResponse))]
+    [JsonSerializable(typeof(PortoutData))]
+
+    [JsonSerializable(typeof(GetPortoutResponse))]
+
+    [JsonSerializable(typeof(UpdatePortoutStatusRequest))]
+    [JsonSerializable(typeof(UpdatePortoutStatusResponse))]
+    
+    [JsonSerializable(typeof(PortoutCommentsResponse))]
+    [JsonSerializable(typeof(PortoutComment))]
+
+    [JsonSerializable(typeof(CreatePortoutCommentRequest))]
+    [JsonSerializable(typeof(CreatePortoutCommentResponse))]
+    
+    [JsonSerializable(typeof(ListPortoutSupportingDocumentsResponse))]
+    [JsonSerializable(typeof(PortoutSupportingDocument))]
+    
+    [JsonSerializable(typeof(CreatePortoutSupportingDocumentsRequest))]
+    [JsonSerializable(typeof(SupportingDocumentDetail))]
+    
+    [JsonSerializable(typeof(CreatePortoutSupportingDocumentsResponse))]
+
+    [JsonSerializable(typeof(ListPortoutReportsRequest))]
+    [JsonSerializable(typeof(ListPortoutReportsResponse))]
+    [JsonSerializable(typeof(PortoutReport))]
+    [JsonSerializable(typeof(ExportPortoutsCSVReport))]
+    [JsonSerializable(typeof(ExportFilters))]
+    
+    [JsonSerializable(typeof(CreatePortoutReportRequest))]
+    [JsonSerializable(typeof(CreatePortoutReportResponse))]
+
+    [JsonSerializable(typeof(GetPortoutReportResponse))]
+    
+    [JsonSerializable(typeof(ListPortoutRejectionCodesRequest))]
+    [JsonSerializable(typeof(ListPortoutRejectionCodesResponse))]
+    [JsonSerializable(typeof(PortoutRejectionCode))]
+    
+    [JsonSerializable(typeof(ListPortoutEventsRequest))]
+    [JsonSerializable(typeof(ListPortoutEventsResponse))]
+    [JsonSerializable(typeof(PortoutEvent))]
+    
+    [JsonSerializable(typeof(BasePortoutPayload))]
+    [JsonSerializable(typeof(StatusChangedPayload))]
+    [JsonSerializable(typeof(NewCommentPayload))]
+    [JsonSerializable(typeof(FocDateChangedPayload))]
+
+    [JsonSerializable(typeof(GetPortoutEventResponse))]
+    [JsonSerializable(typeof(RepublishPortoutEventResponse))]
+
     //Enums
-    [JsonSerializable(typeof(RequirementStatus))]
+    [JsonSerializable(typeof(PortoutEventType))]
+    [JsonSerializable(typeof(PortoutStatus))]
+    [JsonSerializable(typeof(SupportingDocumentType))]
     [JsonSerializable(typeof(RequirementActionType))]
     [JsonSerializable(typeof(JobStatusType))]
     [JsonSerializable(typeof(CountryCode))]
