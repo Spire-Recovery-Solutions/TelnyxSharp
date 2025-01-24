@@ -46,5 +46,17 @@ namespace Telnyx.NET.Base
         /// Includes initiating, answering, and managing calls programmatically via the Telnyx API.
         /// </summary>
         IProgrammableVoiceOperations ProgrammableVoice { get; }
+
+        /// <summary>
+        /// Provides operations for managing voicemail services.
+        /// Includes configuring voicemail settings for phone numbers.
+        /// </summary>
+        IVoicemailOperations Voicemail { get; }
+        
+        /// <summary>
+        /// Provides operations related to channel zones management.
+        /// This includes listing, retrieving, updating, assigning, and unassigning phone numbers within channel zones.
+        /// </summary>
+        IChannelZonesOperations ChannelZones { get; }
     }
 }
