@@ -70,5 +70,17 @@ namespace Telnyx.NET.Base
         /// Includes listing, retrieving, updating, and managing port-out requests and related events.
         /// </summary>
         INumberPortoutOperations NumberPortout { get; }
+
+        /// <summary>
+        /// Provides operations for managing phone number porting orders.
+        /// Includes functionalities for submitting and managing porting requests for phone numbers.
+        /// </summary>
+        IPhoneNumberPortingOperations PhoneNumberOrders { get; }
+
+        /// <summary>
+        /// Provides operations for managing documents.
+        /// Includes uploading, retrieving, and managing documents related to Telnyx services.
+        /// </summary>
+        IDocumentsOperations Documents { get; }
     }
 }
