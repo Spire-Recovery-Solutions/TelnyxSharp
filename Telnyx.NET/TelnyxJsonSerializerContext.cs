@@ -42,6 +42,7 @@ using Telnyx.NET.Models;
 using Telnyx.NET.Models.Events;
 using Telnyx.NET.Numbers.Models.ChannelZones.Requests;
 using Telnyx.NET.Numbers.Models.ChannelZones.Responses;
+using Telnyx.NET.Numbers.Models.Documents.Requests;
 using Telnyx.NET.Numbers.Models.InboundChannels.Requests;
 using Telnyx.NET.Numbers.Models.InboundChannels.Responses;
 using Telnyx.NET.Numbers.Models.NumberPortout.Requests;
@@ -50,34 +51,42 @@ using Telnyx.NET.Numbers.Models.PhoneNumbers;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.AdvancedNumberOrders;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.BulkPhoneNumberOperations;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.CsvDownloads;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.Documents;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.InventoryLevel;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.NumbersFeatures;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberBlockOrders;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberBlocksBackgroundJobs;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberConfigurations;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberOrders;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberPorting;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberReservations;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberSearch;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PortingOrder;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.RegulatoryRequirements;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.RequirementGroups;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.Requirements;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.RequirementTypes;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.AdvancedNumberOrders;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.BulkPhoneNumberOperations;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.CountryCoverage;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.CsvDowloads;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.CsvDownloads;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.Documents;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.InventoryLevel;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.NumbersFeatures;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberBlockOrders;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberBlocksBackgroundJobs;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberConfigurations;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberOrders;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberPorting;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberReservartions;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberSearch;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.RegulatoryRequirements;
 using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.RequirementGroups;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.Requirements;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.RequirementTypes;
 using Telnyx.NET.Numbers.Models.Voicemail.Requests;
 using Telnyx.NET.Numbers.Models.Voicemail.Responses;
 using Telnyx.NET.Voice.Events;
@@ -753,7 +762,7 @@ namespace Telnyx.NET
 
     [JsonSerializable(typeof(ListCountryCoverageResponse))]
     [JsonSerializable(typeof(CountryCoverageDetails))]
-    
+
     [JsonSerializable(typeof(GetCountryCoverageResponse))]
 
     [JsonSerializable(typeof(ListNumberBlockOrdersRequest))]
@@ -764,7 +773,7 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(CreateNumberBlockOrderResponse))]
 
     [JsonSerializable(typeof(GetNumberBlockOrderResponse))]
-    
+
     [JsonSerializable(typeof(CreateAdvancedOrderRequest))]
     [JsonSerializable(typeof(CreateAdvancedOrderResponse))]
 
@@ -783,20 +792,20 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(GetNumbersFeaturesRequest))]
     [JsonSerializable(typeof(GetNumbersFeaturesResponse))]
     [JsonSerializable(typeof(NumberFeature))]
-    
+
     [JsonSerializable(typeof(GetVoicemailResponse))]
     [JsonSerializable(typeof(VoicemailSettings))]
 
     [JsonSerializable(typeof(CreateVoicemailRequest))]
     [JsonSerializable(typeof(CreateVoicemailResponse))]
-    
+
     [JsonSerializable(typeof(UpdateVoicemailRequest))]
     [JsonSerializable(typeof(UpdateVoicemailResponse))]
 
     [JsonSerializable(typeof(ListChannelZonesRequest))]
     [JsonSerializable(typeof(ListChannelZonesResponse))]
     [JsonSerializable(typeof(ChannelZone))]
-    
+
     [JsonSerializable(typeof(GetChannelZonesResponse))]
 
     [JsonSerializable(typeof(UpdateChannelZoneRequest))]
@@ -814,7 +823,7 @@ namespace Telnyx.NET
 
     [JsonSerializable(typeof(ListInboundChannelsResponse))]
     [JsonSerializable(typeof(InboundChannels))]
-    
+
     [JsonSerializable(typeof(UpdateInboundChannelsRequest))]
     [JsonSerializable(typeof(UpdateInboundChannelsResponse))]
 
@@ -826,19 +835,19 @@ namespace Telnyx.NET
 
     [JsonSerializable(typeof(UpdatePortoutStatusRequest))]
     [JsonSerializable(typeof(UpdatePortoutStatusResponse))]
-    
+
     [JsonSerializable(typeof(PortoutCommentsResponse))]
     [JsonSerializable(typeof(PortoutComment))]
 
     [JsonSerializable(typeof(CreatePortoutCommentRequest))]
     [JsonSerializable(typeof(CreatePortoutCommentResponse))]
-    
+
     [JsonSerializable(typeof(ListPortoutSupportingDocumentsResponse))]
     [JsonSerializable(typeof(PortoutSupportingDocument))]
-    
+
     [JsonSerializable(typeof(CreatePortoutSupportingDocumentsRequest))]
     [JsonSerializable(typeof(SupportingDocumentDetail))]
-    
+
     [JsonSerializable(typeof(CreatePortoutSupportingDocumentsResponse))]
 
     [JsonSerializable(typeof(ListPortoutReportsRequest))]
@@ -846,20 +855,20 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(PortoutReport))]
     [JsonSerializable(typeof(ExportPortoutsCSVReport))]
     [JsonSerializable(typeof(ExportFilters))]
-    
+
     [JsonSerializable(typeof(CreatePortoutReportRequest))]
     [JsonSerializable(typeof(CreatePortoutReportResponse))]
 
     [JsonSerializable(typeof(GetPortoutReportResponse))]
-    
+
     [JsonSerializable(typeof(ListPortoutRejectionCodesRequest))]
     [JsonSerializable(typeof(ListPortoutRejectionCodesResponse))]
     [JsonSerializable(typeof(PortoutRejectionCode))]
-    
+
     [JsonSerializable(typeof(ListPortoutEventsRequest))]
     [JsonSerializable(typeof(ListPortoutEventsResponse))]
     [JsonSerializable(typeof(PortoutEvent))]
-    
+
     [JsonSerializable(typeof(BasePortoutPayload))]
     [JsonSerializable(typeof(StatusChangedPayload))]
     [JsonSerializable(typeof(NewCommentPayload))]
@@ -868,7 +877,46 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(GetPortoutEventResponse))]
     [JsonSerializable(typeof(RepublishPortoutEventResponse))]
 
+    [JsonSerializable(typeof(PortabilityCheckRequest))]
+    [JsonSerializable(typeof(PortabilityCheckResponse))]
+    [JsonSerializable(typeof(PortabilityCheckResult))]
+
+    [JsonSerializable(typeof(ListDocumentsRequest))]
+    [JsonSerializable(typeof(ListDocumentsResponse))]
+    [JsonSerializable(typeof(Document))]
+
+    [JsonSerializable(typeof(GetDocumentResponse))]
+
+    [JsonSerializable(typeof(DeleteDocumentResponse))]
+
+    [JsonSerializable(typeof(UpdateDocumentResponse))]
+    [JsonSerializable(typeof(UpdateDocumentRequest))]
+
+    [JsonSerializable(typeof(UploadDocumentRequest))]
+    [JsonSerializable(typeof(UploadDocumentResponse))]
+    [JsonSerializable(typeof(UpdateDocumentResponse))]
+
+    [JsonSerializable(typeof(DownloadDocumentResponse))]
+
+    [JsonSerializable(typeof(ListDocumentLinksRequest))]
+    [JsonSerializable(typeof(ListDocumentLinksResponse))]
+    [JsonSerializable(typeof(DocumentLink))]
+
+    [JsonSerializable(typeof(ListRequirementsRequest))]
+    [JsonSerializable(typeof(ListRequirementResponse))]
+    [JsonSerializable(typeof(DocumentRequirement))]
+    [JsonSerializable(typeof(RequirementType))]
+    [JsonSerializable(typeof(RequirementAcceptanceCriteria))]
+
+    [JsonSerializable(typeof(RetrieveDocumentRequirementResponse))]
+    
+    [JsonSerializable(typeof(ListRequirementTypesRequest))]
+    [JsonSerializable(typeof(ListRequirementTypesResponse))]
+
+    [JsonSerializable(typeof(RetrieveRequirementTypeResponse))]
     //Enums
+    [JsonSerializable(typeof(DocumentSort))]
+    [JsonSerializable(typeof(RequirementSort))]
     [JsonSerializable(typeof(PortoutEventType))]
     [JsonSerializable(typeof(PortoutStatus))]
     [JsonSerializable(typeof(SupportingDocumentType))]

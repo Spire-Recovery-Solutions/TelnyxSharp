@@ -11,8 +11,10 @@ using Telnyx.NET.Messaging.Operations.TenDlc;
 using Telnyx.NET.Messaging.Operations.TollFreeVerification;
 using Telnyx.NET.Numbers.Interfaces;
 using Telnyx.NET.Numbers.Operations.Numbers.ChannelZones;
+using Telnyx.NET.Numbers.Operations.Numbers.Documents;
 using Telnyx.NET.Numbers.Operations.Numbers.InboundChannels;
 using Telnyx.NET.Numbers.Operations.Numbers.NumberPortout;
+using Telnyx.NET.Numbers.Operations.Numbers.PhoneNumberPorting;
 using Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers;
 using Telnyx.NET.Numbers.Operations.Numbers.Voicemail;
 using Telnyx.NET.Voice.Interfaces;
@@ -37,6 +39,8 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     private readonly Lazy<IChannelZonesOperations> _channelZones;
     private readonly Lazy<IInboundChannelsOperations> _inboundChannels;
     private readonly Lazy<INumberPortoutOperations> _numberPortout;
+    private readonly Lazy<IPhoneNumberPortingOperations> _phoneNumberPorting;
+    private readonly Lazy<IDocumentsOperations> _documents;
 
     // Public properties
     public ISmsMmsOperations SmsMms => _smsmms.Value;
@@ -49,6 +53,8 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     public IChannelZonesOperations ChannelZones => _channelZones.Value;
     public IInboundChannelsOperations InboundChannels => _inboundChannels.Value;
     public INumberPortoutOperations NumberPortout => _numberPortout.Value;
+    public IPhoneNumberPortingOperations PhoneNumberOrders => _phoneNumberPorting.Value;
+    public IDocumentsOperations Documents => _documents.Value;
 
 
     public TelnyxClient(string apiKey)
@@ -133,6 +139,14 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
         _numberPortout = new Lazy<INumberPortoutOperations>(() =>
             new NumberPortoutOperations(Client, RateLimitRetryPolicy),
             LazyThreadSafetyMode.ExecutionAndPublication);
+
+        _phoneNumberPorting = new Lazy<IPhoneNumberPortingOperations>(() =>
+            new PhoneNumberPortingOperations(Client, RateLimitRetryPolicy),
+            LazyThreadSafetyMode.ExecutionAndPublication);
+
+        _documents = new Lazy<IDocumentsOperations>(() =>
+            new DocumentsOperations(Client, RateLimitRetryPolicy),
+            LazyThreadSafetyMode.ExecutionAndPublication);
     }
 
     public void Dispose()
@@ -177,6 +191,14 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
         if (_numberPortout.IsValueCreated && _numberPortout.Value is IDisposable disposableNumberPortout)
         {
             disposableNumberPortout.Dispose();
+        }
+        if (_phoneNumberPorting.IsValueCreated && _phoneNumberPorting.Value is IDisposable disposablePhoneNumberPorting)
+        {
+            disposablePhoneNumberPorting.Dispose();
+        }
+        if (_documents.IsValueCreated && _documents.Value is IDisposable disposableDocuments)
+        {
+            disposableDocuments.Dispose();
         }
 
         _logWriter?.Dispose();
