@@ -82,5 +82,11 @@ namespace Telnyx.NET.Base
         /// Includes uploading, retrieving, and managing documents related to Telnyx services.
         /// </summary>
         IDocumentsOperations Documents { get; }
+
+        /// <summary>
+        /// Provides operations for managing porting orders.
+        /// Enables submission and tracking of porting-related requests.
+        /// </summary>
+        IPortingOrderOperations PortingOrder { get; }
     }
 }

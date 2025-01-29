@@ -21,7 +21,7 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder
         /// Settings related to the activation of ported numbers, including timing and eligibility
         /// </summary>
         [JsonPropertyName("activation_settings")]
-        public ListPortingOrdersActivationSettings ActivationSettings { get; set; }
+        public PortingOrdersActivationSettings ActivationSettings { get; set; }
 
         /// <summary>Timestamp when the porting order was created</summary>
         [JsonPropertyName("created_at")]
@@ -37,11 +37,11 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder
 
         /// <summary>Required documents for the porting process (LOA and invoice)</summary>
         [JsonPropertyName("documents")]
-        public ListPortingOrdersDocuments Documents { get; set; }
+        public PortingOrdersDocuments Documents { get; set; }
 
         /// <summary>End user details including admin contact and location information</summary>
         [JsonPropertyName("end_user")]
-        public ListPortingOrdersEndUser EndUser { get; set; }
+        public PortingOrdersEndUser EndUser { get; set; }
 
         /// <summary>Unique identifier for the porting order</summary>
         [JsonPropertyName("id")]
@@ -49,7 +49,7 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder
 
         /// <summary>Miscellaneous settings and configurations</summary>
         [JsonPropertyName("misc")]
-        public ListPortingOrdersMisc Misc { get; set; }
+        public PortingOrdersMisc Misc { get; set; }
 
         /// <summary>Operating Company Number of the current service provider</summary>
         [JsonPropertyName("old_service_provider_ocn")]
@@ -61,7 +61,7 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder
 
         /// <summary>Configuration settings for the ported phone numbers</summary>
         [JsonPropertyName("phone_number_configuration")]
-        public ListPortingOrdersPhoneNumberConfiguration PhoneNumberConfiguration { get; set; }
+        public PortingOrdersPhoneNumberConfiguration PhoneNumberConfiguration { get; set; }
 
         /// <summary>Type of phone number being ported (e.g., landline, mobile)</summary>
         [JsonPropertyName("phone_number_type")]
@@ -69,7 +69,7 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder
 
         /// <summary>List of phone numbers included in this porting order</summary>
         [JsonPropertyName("phone_numbers")]
-        public List<ListPortingOrdersPhoneNumber> PhoneNumbers { get; set; }
+        public List<PortingOrdersPhoneNumber> PhoneNumbers { get; set; }
 
         /// <summary>Total count of phone numbers being ported in this order</summary>
         [JsonPropertyName("porting_phone_numbers_count")]
@@ -89,7 +89,7 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder
 
         /// <summary>Current status of the porting order including detailed information</summary>
         [JsonPropertyName("status")]
-        public ListPortingOrdersStatus Status { get; set; }
+        public PortingOrdersStatus Status { get; set; }
 
         /// <summary>Unique support identifier for this order</summary>
         [JsonPropertyName("support_key")]
@@ -101,7 +101,7 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder
 
         /// <summary>Customer feedback about the porting process</summary>
         [JsonPropertyName("user_feedback")]
-        public ListPortingOrdersUserFeedback UserFeedback { get; set; }
+        public PortingOrdersUserFeedback UserFeedback { get; set; }
 
         /// <summary>Identifier of the user who created the porting order</summary>
         [JsonPropertyName("user_id")]
@@ -115,7 +115,7 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder
     /// <summary>
     /// Settings controlling the activation process of ported numbers
     /// </summary>
-    public partial class ListPortingOrdersActivationSettings
+    public partial class PortingOrdersActivationSettings
     {
         /// <summary>Current status of the activation process</summary>
         [JsonPropertyName("activation_status")]
@@ -141,7 +141,7 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder
     /// <summary>
     /// Required documents for the porting process
     /// </summary>
-    public partial class ListPortingOrdersDocuments
+    public partial class PortingOrdersDocuments
     {
         /// <summary>Letter of Authorization document URL or identifier</summary>
         [JsonPropertyName("loa")]
@@ -155,21 +155,21 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder
     /// <summary>
     /// End user information including administrative contact and location
     /// </summary>
-    public partial class ListPortingOrdersEndUser
+    public partial class PortingOrdersEndUser
     {
         /// <summary>Administrative contact information</summary>
         [JsonPropertyName("admin")]
-        public ListPortingOrdersAdmin Admin { get; set; }
+        public PortingOrdersAdmin Admin { get; set; }
 
         /// <summary>Physical location information</summary>
         [JsonPropertyName("location")]
-        public ListPortingOrdersLocation Location { get; set; }
+        public PortingOrdersLocation Location { get; set; }
     }
 
     /// <summary>
     /// Administrative contact information for the end user
     /// </summary>
-    public partial class ListPortingOrdersAdmin
+    public partial class PortingOrdersAdmin
     {
         /// <summary>Account number with current service provider</summary>
         [JsonPropertyName("account_number")]
@@ -203,7 +203,7 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder
     /// <summary>
     /// Physical location information for the end user
     /// </summary>
-    public partial class ListPortingOrdersLocation
+    public partial class PortingOrdersLocation
     {
         /// <summary>State/Province</summary>
         [JsonPropertyName("administrative_area")]
@@ -233,7 +233,7 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder
     /// <summary>
     /// Miscellaneous porting order settings
     /// </summary>
-    public partial class ListPortingOrdersMisc
+    public partial class PortingOrdersMisc
     {
         /// <summary>New billing phone number after port</summary>
         [JsonPropertyName("new_billing_phone_number")]
@@ -251,7 +251,7 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder
     /// <summary>
     /// Configuration settings for ported phone numbers
     /// </summary>
-    public partial class ListPortingOrdersPhoneNumberConfiguration
+    public partial class PortingOrdersPhoneNumberConfiguration
     {
         /// <summary>Connection identifier for routing</summary>
         [JsonPropertyName("connection_id")]
@@ -273,7 +273,7 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder
     /// <summary>
     /// Individual phone number information in a porting order
     /// </summary>
-    public partial class ListPortingOrdersPhoneNumber
+    public partial class PortingOrdersPhoneNumber
     {
         /// <summary>Current activation status</summary>
         [JsonPropertyName("activation_status")]
@@ -315,11 +315,11 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder
     /// <summary>
     /// Status information for the porting order
     /// </summary>
-    public partial class ListPortingOrdersStatus
+    public partial class PortingOrdersStatus
     {
         /// <summary>Detailed status information</summary>
         [JsonPropertyName("details")]
-        public List<ListPortingOrdersDetail> Details { get; set; }
+        public List<PortingOrdersDetail> Details { get; set; }
 
         /// <summary>Current status value</summary>
         [JsonPropertyName("value")]
@@ -329,7 +329,7 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder
     /// <summary>
     /// Detailed status information
     /// </summary>
-    public partial class ListPortingOrdersDetail
+    public partial class PortingOrdersDetail
     {
         /// <summary>Status code</summary>
         [JsonPropertyName("code")]
@@ -343,7 +343,7 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder
     /// <summary>
     /// User feedback about the porting process
     /// </summary>
-    public partial class ListPortingOrdersUserFeedback
+    public partial class PortingOrdersUserFeedback
     {
         /// <summary>User's comments about the porting process</summary>
         [JsonPropertyName("user_comment")]
