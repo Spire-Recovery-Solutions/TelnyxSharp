@@ -1068,6 +1068,7 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(RepublishPortingEventsResponse))]
 
     //Enums
+    [JsonSerializable(typeof(PhoneNumberFeature))]
     [JsonSerializable(typeof(PortingOrderPermission))]
     [JsonSerializable(typeof(PortingOrderStatus))]
     [JsonSerializable(typeof(DocumentSort))]
