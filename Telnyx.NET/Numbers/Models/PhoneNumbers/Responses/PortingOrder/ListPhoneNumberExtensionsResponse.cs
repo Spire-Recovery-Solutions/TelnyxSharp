@@ -9,7 +9,6 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder
     /// </summary>
     public class ListPhoneNumberExtensionsResponse : TelnyxResponse<List<PhoneNumberExtensionData>>
     {
-        // This class doesn't have additional properties or methods; it serves as a response type for phone number extensions.
     }
 
     /// <summary>

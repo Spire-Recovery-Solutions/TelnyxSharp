@@ -1037,7 +1037,6 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(CreateLoaConfigurationResponse))]
 
     [JsonSerializable(typeof(PreviewLoaConfigurationParamRequest))]
-    [JsonSerializable(typeof(PreviewLoaConfigurationParamResponse))]
 
     [JsonSerializable(typeof(GetLoaConfigurationResponse))]
 
