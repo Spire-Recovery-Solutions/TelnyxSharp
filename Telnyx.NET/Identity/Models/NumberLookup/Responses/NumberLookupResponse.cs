@@ -43,13 +43,13 @@ public partial class NumberLookupDatum
     /// Carrier details for the phone number.
     /// </summary>
     [JsonPropertyName("carrier")]
-    public NumberLookupCarrier Carrier { get; set; }
+    public NumberLookupCarrier? Carrier { get; set; }
 
     /// <summary>
     /// Caller name details for the phone number.
     /// </summary>
     [JsonPropertyName("caller_name")]
-    public NumberLookupCallerName CallerName { get; set; }
+    public NumberLookupCallerName? CallerName { get; set; }
 
     /// <summary>
     /// Overrides the default NNID associated with the phone number.
@@ -61,7 +61,7 @@ public partial class NumberLookupDatum
     /// Portability information about the phone number.
     /// </summary>
     [JsonPropertyName("portability")]
-    public NumberLookupPortability Portability { get; set; }
+    public NumberLookupPortability? Portability { get; set; }
 
     /// <summary>
     /// Indicates whether the phone number is valid.

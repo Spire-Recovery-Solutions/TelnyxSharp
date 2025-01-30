@@ -19,7 +19,7 @@ namespace Telnyx.NET.Messaging.Operations.TollFreeVerification
                 .AddFilter("page_size", request.PageSize)
                 .AddFilter("date_start", request.DateStart?.ToString("yyyy-MM-ddTHH:mm:ss.ffffffzzz"))
                 .AddFilter("date_end", request.DateEnd?.ToString("yyyy-MM-ddTHH:mm:ss.ffffffzzz"))
-                .AddFilter("status", request.Status?.ToString())
+                .AddFilter("status", request.Status)
                 .AddFilter("phone_number", request.PhoneNumber);
 
             return await ExecuteAsync<ListVerificationRequestsResponse>(req, cancellationToken);

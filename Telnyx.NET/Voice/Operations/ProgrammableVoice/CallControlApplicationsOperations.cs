@@ -17,8 +17,8 @@ namespace Telnyx.NET.Voice.Operations.ProgrammableVoice
             var req = new RestRequest("call_control_applications")
                 .AddPagination(request.PageSize)
                 .AddFilter("filter[application_name][contains]", request.ApplicationNameContains)
-                .AddFilter("filter[outbound.outbound_voice_profile_id]", request.OutboundVoiceProfileId.ToString())
-                .AddParameter("sort", request.Sort.ToString());
+                .AddFilter("filter[outbound.outbound_voice_profile_id]", request.OutboundVoiceProfileId)
+                .AddFilter("sort", request.Sort);
 
             return await ExecuteAsync<ListCallControlApplicationsResponse>(req, cancellationToken);
         }

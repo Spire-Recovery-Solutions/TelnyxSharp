@@ -17,5 +17,5 @@ public class NumberLookupRequest : ITelnyxRequest
     /// Gets or sets the list of lookup types to include in the request.
     /// These types determine the specific data to retrieve about the phone number.
     /// </summary>
-    public List<NumberLookupType> NumberLookupTypes { get; set; }
+    public List<NumberLookupType>? NumberLookupTypes { get; set; }
 }

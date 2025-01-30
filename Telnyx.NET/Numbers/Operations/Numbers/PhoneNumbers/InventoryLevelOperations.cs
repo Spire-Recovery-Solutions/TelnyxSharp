@@ -14,14 +14,14 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
         public async Task<InventoryCoverageResponse> Get(InventoryCoverageRequest request, CancellationToken cancellationToken = default)
         {
             var req = new RestRequest("inventory_coverage")
-                .AddFilter("filter[npa]", request.Npa.ToString())
-                .AddFilter("filter[nxx]", request.Nxx.ToString())
+                .AddFilter("filter[npa]", request.Npa)
+                .AddFilter("filter[nxx]", request.Nxx)
                 .AddFilter("filter[administrative_area]", request.AdministrativeArea)
-                .AddFilter("filter[phone_number_type]", request.PhoneNumberType?.ToString().ToLowerInvariant())
+                .AddFilter("filter[phone_number_type]", request.PhoneNumberType)
                 .AddFilter("filter[country_code]", request.CountryCode)
-                .AddFilter("filter[count]", request.Count.ToString())
-                .AddFilter("filter[features]", request.Features?.ToString())
-                .AddFilter("filter[groupBy]", request.GroupBy.ToString().ToLower());
+                .AddFilter("filter[count]", request.Count)
+                .AddFilter("filter[features]", request.Features)
+                .AddFilter("filter[groupBy]", request.GroupBy);
 
             return await ExecuteAsync<InventoryCoverageResponse>(req, cancellationToken);
         }

@@ -85,7 +85,7 @@ public class MessagingProfileOperations(IRestClient client, AsyncRetryPolicy rat
     {
         var req = new RestRequest("messaging_profile_metrics")
             .AddPagination(request.PageSize)
-            .AddFilter("id", request.MessagingProfileId.ToString())
+            .AddFilter("id", request.MessagingProfileId)
             .AddFilter("time_frame", request.TimeFrame);
 
         return await ExecuteAsync<MessagingProfileMetricsResponse>(req, cancellationToken);
