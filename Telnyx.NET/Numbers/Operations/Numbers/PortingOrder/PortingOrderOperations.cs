@@ -381,12 +381,12 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PortingOrder
         }
 
         /// <inheritdoc />
-        public async Task<PreviewLoaConfigurationParamResponse> PreviewConfigurationParamters(PreviewLoaConfigurationParamRequest request, CancellationToken cancellationToken = default)
+        public async Task<PreviewLoaConfigurationResponse> PreviewConfigurationParamters(PreviewLoaConfigurationParamRequest request, CancellationToken cancellationToken = default)
         {
             var req = new RestRequest("porting/loa_configuration/preview", Method.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
-            return await ExecuteAsync<PreviewLoaConfigurationParamResponse>(req, cancellationToken);
+            return await ExecuteAsync<PreviewLoaConfigurationResponse>(req, cancellationToken);
         }
 
         /// <inheritdoc />

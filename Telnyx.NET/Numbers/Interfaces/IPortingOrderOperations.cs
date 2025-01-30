@@ -294,7 +294,7 @@ namespace Telnyx.NET.Numbers.Interfaces
         /// </summary>
         /// <param name="request">Preview configuration options.</param>
         /// <param name="cancellationToken">Optional cancellation token.</param>
-        Task<PreviewLoaConfigurationParamResponse> PreviewConfigurationParamters(PreviewLoaConfigurationParamRequest request, CancellationToken cancellationToken = default);
+        Task<PreviewLoaConfigurationResponse> PreviewConfigurationParamters(PreviewLoaConfigurationParamRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Retrieves a specific LOA configuration.
