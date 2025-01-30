@@ -24,12 +24,12 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
                 .AddFilter("filter[phone_number_type]", request.PhoneNumberType)
                 .AddFilter("filter[rate_center]", request.RateCenter)
                 .AddFilter("filter[phone_number][starts_with]", request.StartsWith)
-                .AddFilter("filter[limit]", request.Limit.ToString())
-                .AddFilter("filter[national_destination_code]", request.NationalDestinationCode?.ToString())
-                .AddFilter("filter[quickship]", request.Quickship?.ToString())
-                .AddFilter("filter[best_effort]", request.BestEffort?.ToString())
-                .AddFilter("filter[reservable]", request.Reservable?.ToString())
-                .AddFilter("filter[exclude_held_numbers]", request.ExcludeHeldNumbers?.ToString());
+                .AddFilter("filter[limit]", request.Limit)
+                .AddFilter("filter[national_destination_code]", request.NationalDestinationCode)
+                .AddFilter("filter[quickship]", request.Quickship)
+                .AddFilter("filter[best_effort]", request.BestEffort)
+                .AddFilter("filter[reservable]", request.Reservable)
+                .AddFilter("filter[exclude_held_numbers]", request.ExcludeHeldNumbers);
 
             return await ExecuteAsync<AvailablePhoneNumbersResponse>(req, cancellationToken);
         }

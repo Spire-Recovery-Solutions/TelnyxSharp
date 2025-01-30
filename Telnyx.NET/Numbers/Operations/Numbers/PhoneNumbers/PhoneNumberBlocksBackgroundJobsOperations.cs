@@ -15,10 +15,10 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
         public async Task<ListPhoneNumberBlockJobsResponse> List(ListPhoneNumberBlockJobsRequest request, CancellationToken cancellationToken = default)
         {
             var req = new RestRequest("phone_number_blocks/jobs")
-                .AddFilter("filter[type]", request.Type?.ToString().ToLower())
-                .AddFilter("filter[status]", request.Status?.ToString().ToLower())
+                .AddFilter("filter[type]", request.Type)
+                .AddFilter("filter[status]", request.Status)
                 .AddPagination(request.PageSize)
-                .AddFilter("sort", request.Sort?.ToString().ToLower());
+                .AddFilter("sort", request.Sort);
 
             return await ExecuteAsync<ListPhoneNumberBlockJobsResponse>(req, cancellationToken);
         }
