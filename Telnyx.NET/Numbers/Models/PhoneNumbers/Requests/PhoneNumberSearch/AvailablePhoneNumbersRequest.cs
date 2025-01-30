@@ -1,4 +1,5 @@
 ﻿using Telnyx.NET.Base;
+using Telnyx.NET.Enums;
 
 namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberSearch;
 
@@ -55,7 +56,7 @@ public class AvailablePhoneNumbersRequest : ITelnyxRequest
     /// <summary>
     /// Gets or sets the desired features for the phone number.
     /// </summary>
-    public List<string>? Features { get; set; }
+    public List<PhoneNumberFeature>? Features { get; set; }
 
     /// <summary>
     /// Gets or sets the limit for the number of results returned.

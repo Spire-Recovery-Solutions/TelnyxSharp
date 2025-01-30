@@ -16,6 +16,7 @@ using Telnyx.NET.Numbers.Operations.Numbers.InboundChannels;
 using Telnyx.NET.Numbers.Operations.Numbers.NumberPortout;
 using Telnyx.NET.Numbers.Operations.Numbers.PhoneNumberPorting;
 using Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers;
+using Telnyx.NET.Numbers.Operations.Numbers.PortingOrder;
 using Telnyx.NET.Numbers.Operations.Numbers.Voicemail;
 using Telnyx.NET.Voice.Interfaces;
 using Telnyx.NET.Voice.Operations.ProgrammableVoice;
@@ -41,6 +42,7 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     private readonly Lazy<INumberPortoutOperations> _numberPortout;
     private readonly Lazy<IPhoneNumberPortingOperations> _phoneNumberPorting;
     private readonly Lazy<IDocumentsOperations> _documents;
+    private readonly Lazy<IPortingOrderOperations> _portingOrder;
 
     // Public properties
     public ISmsMmsOperations SmsMms => _smsmms.Value;
@@ -55,6 +57,7 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     public INumberPortoutOperations NumberPortout => _numberPortout.Value;
     public IPhoneNumberPortingOperations PhoneNumberOrders => _phoneNumberPorting.Value;
     public IDocumentsOperations Documents => _documents.Value;
+    public IPortingOrderOperations PortingOrder => _portingOrder.Value;
 
 
     public TelnyxClient(string apiKey)
@@ -147,6 +150,10 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
         _documents = new Lazy<IDocumentsOperations>(() =>
             new DocumentsOperations(Client, RateLimitRetryPolicy),
             LazyThreadSafetyMode.ExecutionAndPublication);
+
+        _portingOrder = new Lazy<IPortingOrderOperations>(() =>
+            new PortingOrderOperations(Client, RateLimitRetryPolicy),
+            LazyThreadSafetyMode.ExecutionAndPublication);
     }
 
     public void Dispose()
@@ -199,6 +206,10 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
         if (_documents.IsValueCreated && _documents.Value is IDisposable disposableDocuments)
         {
             disposableDocuments.Dispose();
+        }
+        if (_portingOrder.IsValueCreated && _portingOrder.Value is IDisposable disposablePortingOrder)
+        {
+            disposablePortingOrder.Dispose();
         }
 
         _logWriter?.Dispose();
