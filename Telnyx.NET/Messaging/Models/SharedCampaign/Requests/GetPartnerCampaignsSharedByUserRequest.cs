@@ -8,7 +8,6 @@ namespace Telnyx.NET.Messaging.Models.SharedCampaign.Requests
         /// <summary>
         /// The number of records to return per page.
         /// </summary>
-        [JsonPropertyName("recordsPerPage")]
         public int? PageSize { get; set; }
 
 

@@ -42,9 +42,9 @@ namespace Telnyx.NET.Voice.Operations.ProgrammableVoice
         public async Task<ListConferenceParticipantsResponse?> ListParticipants(string conferenceId, ListConferenceParticipantsRequest request, CancellationToken cancellationToken = default)
         {
             var req = new RestRequest($"conferences/{conferenceId}/participants")
-                        .AddFilter("filter[muted]", request.Muted?.ToString().ToLower())
-                        .AddFilter("filter[on_hold]", request.OnHold?.ToString().ToLower())
-                        .AddFilter("filter[whispering]", request.Whispering?.ToString().ToLower())
+                        .AddFilter("filter[muted]", request.Muted)
+                        .AddFilter("filter[on_hold]", request.OnHold)
+                        .AddFilter("filter[whispering]", request.Whispering)
                         .AddPagination(request.PageSize);
 
             return await ExecuteAsync<ListConferenceParticipantsResponse>(req, cancellationToken);

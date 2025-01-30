@@ -1,6 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 using Telnyx.NET.Base;
 using Telnyx.NET.Enums;
+using Telnyx.NET.Identity.Models.NumberLookup.Requests;
+using Telnyx.NET.Identity.Models.NumberLookup.Responses;
 using Telnyx.NET.Messaging.Events;
 using Telnyx.NET.Messaging.Models;
 using Telnyx.NET.Messaging.Models.AdvancedOptInOptOut;
@@ -38,11 +40,55 @@ using Telnyx.NET.Messaging.Models.TollFreeVerificationOperations.Requests;
 using Telnyx.NET.Messaging.Models.TollFreeVerificationOperations.Responses;
 using Telnyx.NET.Models;
 using Telnyx.NET.Models.Events;
-using Telnyx.NET.PhoneNumber.Models.Identity.Requests;
-using Telnyx.NET.PhoneNumber.Models.Identity.Responses;
-using Telnyx.NET.PhoneNumber.Models.PhoneNumber;
-using Telnyx.NET.PhoneNumber.Models.PhoneNumber.Requests;
-using Telnyx.NET.PhoneNumber.Models.PhoneNumber.Responses;
+using Telnyx.NET.Numbers.Models.ChannelZones.Requests;
+using Telnyx.NET.Numbers.Models.ChannelZones.Responses;
+using Telnyx.NET.Numbers.Models.Documents.Requests;
+using Telnyx.NET.Numbers.Models.InboundChannels.Requests;
+using Telnyx.NET.Numbers.Models.InboundChannels.Responses;
+using Telnyx.NET.Numbers.Models.NumberPortout.Requests;
+using Telnyx.NET.Numbers.Models.NumberPortout.Responses;
+using Telnyx.NET.Numbers.Models.PhoneNumbers;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.AdvancedNumberOrders;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.BulkPhoneNumberOperations;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.CsvDownloads;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.Documents;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.InventoryLevel;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.NumbersFeatures;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberBlockOrders;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberBlocksBackgroundJobs;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberConfigurations;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberOrders;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberPorting;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberReservations;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PhoneNumberSearch;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.PortingOrder;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.RegulatoryRequirements;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.RequirementGroups;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.Requirements;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Requests.RequirementTypes;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.AdvancedNumberOrders;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.BulkPhoneNumberOperations;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.CountryCoverage;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.CsvDowloads;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.CsvDownloads;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.Documents;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.InventoryLevel;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.NumbersFeatures;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberBlockOrders;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberBlocksBackgroundJobs;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberConfigurations;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberOrders;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberPorting;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberReservartions;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PhoneNumberSearch;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.RegulatoryRequirements;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.RequirementGroups;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.Requirements;
+using Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.RequirementTypes;
+using Telnyx.NET.Numbers.Models.Voicemail.Requests;
+using Telnyx.NET.Numbers.Models.Voicemail.Responses;
 using Telnyx.NET.Voice.Events;
 using Telnyx.NET.Voice.Models.CallCommands.Requests;
 using Telnyx.NET.Voice.Models.CallCommands.Responses;
@@ -68,43 +114,44 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(RegionInformation))]
     [JsonSerializable(typeof(AvailablePhoneNumbersMeta))]
     [JsonSerializable(typeof(AvailablePhoneNumbersRequest))]
-    [JsonSerializable(typeof(CreateNumberOrderRegulatoryRequirement))]
+    [JsonSerializable(typeof(NumberOrderRegulatoryRequirement))]
+    [JsonSerializable(typeof(BaseNumberOrdersData))]
+    [JsonSerializable(typeof(PhoneNumbersJobPhoneNumber))]
     [JsonSerializable(typeof(CreateNumberOrderRequest))]
     [JsonSerializable(typeof(CreateNumberOrderPhoneNumber))]
     [JsonSerializable(typeof(CreateNumberOrderResponse))]
-    [JsonSerializable(typeof(CreateNumberOrderResponseData))]
-    [JsonSerializable(typeof(CreateNumberOrderResponsePhoneNumber))]
+    [JsonSerializable(typeof(CreateNumberOrderData))]
+    [JsonSerializable(typeof(PhoneNumberOrderData))]
     [JsonSerializable(typeof(CreateNumberReservationRequest))]
     [JsonSerializable(typeof(CreateNumberReservationPhoneNumber))]
     [JsonSerializable(typeof(CreateNumberReservationResponse))]
-    [JsonSerializable(typeof(CreateNumberReservationResponseData))]
-    [JsonSerializable(typeof(CreateNumberReservationResponsePhoneNumber))]
+    [JsonSerializable(typeof(NumberReservationData))]
+    [JsonSerializable(typeof(ReservedPhoneNumber))]
     [JsonSerializable(typeof(GetNumberOrderResponse))]
+    [JsonSerializable(typeof(GetNumberOrderData))]
     [JsonSerializable(typeof(ListNumberOrdersResponse))]
     [JsonSerializable(typeof(NumberOrdersPhoneNumber))]
     [JsonSerializable(typeof(ListNumberOrdersRequest))]
     [JsonSerializable(typeof(ListNumbersRequest))]
     [JsonSerializable(typeof(ListNumbersResponse))]
-    [JsonSerializable(typeof(ListNumbersDatum))]
+    [JsonSerializable(typeof(NumberConfigurationData))]
     [JsonSerializable(typeof(ListPortingOrdersRequest))]
     [JsonSerializable(typeof(PortingOrdersRequest))]
     [JsonSerializable(typeof(ListPortingOrdersResponse))]
-    [JsonSerializable(typeof(ListPortingOrdersDatum))]
-    [JsonSerializable(typeof(ListPortingOrdersActivationSettings))]
-    [JsonSerializable(typeof(ListPortingOrdersDocuments))]
-    [JsonSerializable(typeof(ListPortingOrdersEndUser))]
-    [JsonSerializable(typeof(ListPortingOrdersAdmin))]
-    [JsonSerializable(typeof(ListPortingOrdersLocation))]
-    [JsonSerializable(typeof(ListPortingOrdersMisc))]
-    [JsonSerializable(typeof(ListPortingOrdersPhoneNumberConfiguration))]
-    [JsonSerializable(typeof(ListPortingOrdersPhoneNumber))]
-    [JsonSerializable(typeof(ListPortingOrdersStatus))]
-    [JsonSerializable(typeof(ListPortingOrdersDetail))]
-    [JsonSerializable(typeof(ListPortingOrdersUserFeedback))]
+    [JsonSerializable(typeof(PortingOrdersActivationSettings))]
+    [JsonSerializable(typeof(PortingOrdersDocuments))]
+    [JsonSerializable(typeof(PortingOrdersEndUser))]
+    [JsonSerializable(typeof(PortingOrdersAdmin))]
+    [JsonSerializable(typeof(PortingOrdersLocation))]
+    [JsonSerializable(typeof(PortingOrdersMisc))]
+    [JsonSerializable(typeof(PortingOrdersPhoneNumberConfiguration))]
+    [JsonSerializable(typeof(PortingOrdersPhoneNumber))]
+    [JsonSerializable(typeof(PortingOrdersStatus))]
+    [JsonSerializable(typeof(PortingOrdersDetail))]
+    [JsonSerializable(typeof(PortingOrdersUserFeedback))]
 
     [JsonSerializable(typeof(ListPortingPhoneNumbersRequest))]
     [JsonSerializable(typeof(ListPortingPhoneNumbersResponse))]
-    [JsonSerializable(typeof(ListPortingPhoneNumbersDatum))]
 
 
     [JsonSerializable(typeof(NumberLookupRequest))]
@@ -121,17 +168,18 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(FromTo))]
     [JsonSerializable(typeof(Media))]
     [JsonSerializable(typeof(TelnyxRateLimitConfiguration))]
+
+    [JsonSerializable(typeof(PhoneNumberVoiceSettings))]
+    [JsonSerializable(typeof(CallForwardingSettings))]
+    [JsonSerializable(typeof(CnamListingSettings))]
+    [JsonSerializable(typeof(EmergencySettings))]
+    [JsonSerializable(typeof(MediaFeatures))]
+    [JsonSerializable(typeof(CallRecordingSettings))]
+
     [JsonSerializable(typeof(UpdateNumberConfigurationRequest))]
     [JsonSerializable(typeof(UpdateNumberConfigurationResponse))]
-    [JsonSerializable(typeof(UpdateNumberConfigurationResponseData))]
     [JsonSerializable(typeof(UpdateNumberVoiceSettingsRequest))]
     [JsonSerializable(typeof(UpdateNumberVoiceSettingsResponse))]
-    [JsonSerializable(typeof(UpdateNumberVoiceSettingsData))]
-    [JsonSerializable(typeof(UpdateNumberVoiceSettingsCallForwarding))]
-    [JsonSerializable(typeof(UpdateNumberVoiceSettingsCallRecording))]
-    [JsonSerializable(typeof(UpdateNumberVoiceSettingsCnamListing))]
-    [JsonSerializable(typeof(UpdateNumberVoiceSettingsEmergency))]
-    [JsonSerializable(typeof(UpdateNumberVoiceSettingsMediaFeatures))]
 
     [JsonSerializable(typeof(CallCommandsResponse))]
     [JsonSerializable(typeof(CallCommandsResponseData))]
@@ -584,7 +632,460 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(DeletePhoneNumberResponse))]
     [JsonSerializable(typeof(DeletePhoneNumberData))]
 
+    [JsonSerializable(typeof(ListAvailablePhoneNumberBlocksRequest))]
+    [JsonSerializable(typeof(ListAvailablePhoneNumberBlocksResponse))]
+    [JsonSerializable(typeof(ListAvailablePhoneNumberBlocksData))]
+
+    [JsonSerializable(typeof(GetNumberReservationResponse))]
+
+    [JsonSerializable(typeof(ExtendNumberReservationResponse))]
+
+    [JsonSerializable(typeof(UpdateNumberOrderRequest))]
+    [JsonSerializable(typeof(UpdateNumberOrderRegulatoryRequirement))]
+    [JsonSerializable(typeof(UpdateNumberOrderResponse))]
+    [JsonSerializable(typeof(UpdateNumberOrderData))]
+
+    [JsonSerializable(typeof(ListSubNumberOrdersRequest))]
+    [JsonSerializable(typeof(ListSubNumberOrdersResponse))]
+    [JsonSerializable(typeof(SubNumberOrderData))]
+
+    [JsonSerializable(typeof(GetSubNumberOrderRequest))]
+    [JsonSerializable(typeof(GetSubNumberOrderResponse))]
+
+    [JsonSerializable(typeof(UpdateSubNumberOrderRequest))]
+    [JsonSerializable(typeof(UpdateSubNumberOrderResponse))]
+
+    [JsonSerializable(typeof(CancelNumberOrderResponse))]
+
+    [JsonSerializable(typeof(ListNumberOrderPhonesResponse))]
+    [JsonSerializable(typeof(NumberOrderPhonesData))]
+    [JsonSerializable(typeof(ListNumberOrderPhonesRequest))]
+
+    [JsonSerializable(typeof(SingleNumberOrderPhoneResponse))]
+
+    [JsonSerializable(typeof(UpdateNumberOrderPhoneRequest))]
+    [JsonSerializable(typeof(UpdateNumberOrderPhoneResponse))]
+
+    [JsonSerializable(typeof(CreateCommentRequest))]
+    [JsonSerializable(typeof(CreateCommentResponse))]
+    [JsonSerializable(typeof(CommentData))]
+
+    [JsonSerializable(typeof(ListCommentsRequest))]
+    [JsonSerializable(typeof(ListCommentsResponse))]
+
+    [JsonSerializable(typeof(MarkCommentReadResponse))]
+
+    [JsonSerializable(typeof(SlimListNumbersRequest))]
+    [JsonSerializable(typeof(SlimListNumbersResponse))]
+    [JsonSerializable(typeof(SlimListNumbersData))]
+
+    [JsonSerializable(typeof(GetNumberResponse))]
+
+    [JsonSerializable(typeof(ListNumbersWithVoiceSettingsResponse))]
+    [JsonSerializable(typeof(ListNumbersWithVoiceSettingsRequest))]
+
+    [JsonSerializable(typeof(GetNumberVoiceSettingsResponse))]
+
+    [JsonSerializable(typeof(EnableEmergencyRequest))]
+    [JsonSerializable(typeof(EnableEmergencyResponse))]
+
+    [JsonSerializable(typeof(ChangeBundleStatusRequest))]
+    [JsonSerializable(typeof(ChangeBundleStatusResponse))]
+
+    [JsonSerializable(typeof(ListNumbersJobsRequest))]
+    [JsonSerializable(typeof(ListNumbersJobsResponse))]
+    [JsonSerializable(typeof(NumbersJobsData))]
+    [JsonSerializable(typeof(PhoneNumbersFailedJobNumber))]
+
+    [JsonSerializable(typeof(RetrieveNumbersJobResponse))]
+
+    [JsonSerializable(typeof(UpdateNumbersBatchRequest))]
+    [JsonSerializable(typeof(UpdateNumbersBatchResponse))]
+    [JsonSerializable(typeof(BatchVoiceSettings))]
+
+    [JsonSerializable(typeof(DeleteNumbersBatchRequest))]
+    [JsonSerializable(typeof(DeleteNumbersBatchResponse))]
+
+    [JsonSerializable(typeof(UpdateEmergencySettingsRequest))]
+    [JsonSerializable(typeof(UpdateEmergencySettingsResponse))]
+
+    [JsonSerializable(typeof(InventoryCoverageRequest))]
+    [JsonSerializable(typeof(InventoryCoverageResponse))]
+    [JsonSerializable(typeof(InventoryCoverageData))]
+
+    [JsonSerializable(typeof(ListPhoneNumberBlockJobsRequest))]
+    [JsonSerializable(typeof(ListPhoneNumberBlockJobsResponse))]
+    [JsonSerializable(typeof(PhoneNumberBlockJobData))]
+
+    [JsonSerializable(typeof(GetPhoneNumberBlocksJobResponse))]
+
+    [JsonSerializable(typeof(DeletePhoneNumberBlockRequest))]
+    [JsonSerializable(typeof(DeletePhoneNumberBlockResponse))]
+
+    [JsonSerializable(typeof(GetRegulatoryRequirementsRequest))]
+    [JsonSerializable(typeof(GetRegulatoryRequirementsResponse))]
+    [JsonSerializable(typeof(RegulatoryRequirement))]
+    [JsonSerializable(typeof(RequirementDetail))]
+    [JsonSerializable(typeof(AcceptanceCriteria))]
+
+    [JsonSerializable(typeof(ListRegulatoryRequirementsRequest))]
+    [JsonSerializable(typeof(ListRegulatoryRequirementsResponse))]
+    [JsonSerializable(typeof(ListRegulatoryRequirementsData))]
+
+    [JsonSerializable(typeof(UpdateSubNumberOrderRequirementRequest))]
+    [JsonSerializable(typeof(UpdateSubNumberOrderRequirementResponse))]
+    [JsonSerializable(typeof(UpdateSubNumberOrderRequirementData))]
+
+    [JsonSerializable(typeof(UpdatePhoneNumberOrderRequirementRequest))]
+    [JsonSerializable(typeof(UpdatePhoneNumberOrderRequirementResponse))]
+    [JsonSerializable(typeof(PhoneNumberOrderRequirementData))]
+    [JsonSerializable(typeof(PhoneNumberRegRequirement))]
+
+    [JsonSerializable(typeof(ListRequirementGroupsRequest))]
+    [JsonSerializable(typeof(ListRequirementGroupsResponse))]
+    [JsonSerializable(typeof(RegulatoryRequirementDetail))]
+    [JsonSerializable(typeof(RequirementGroupData))]
+
+    [JsonSerializable(typeof(CreateRequirementGroupRequest))]
+    [JsonSerializable(typeof(CreateRequirementGroupResponse))]
+
+    [JsonSerializable(typeof(GetRequirementGroupResponse))]
+
+    [JsonSerializable(typeof(DeleteRequirementGroupResponse))]
+
+    [JsonSerializable(typeof(UpdateRequirementGroupRequest))]
+    [JsonSerializable(typeof(UpdateRequirementGroupResponse))]
+
+    [JsonSerializable(typeof(SubmitRequirementGroupApprovalResponse))]
+
+    [JsonSerializable(typeof(ListCountryCoverageResponse))]
+    [JsonSerializable(typeof(CountryCoverageDetails))]
+
+    [JsonSerializable(typeof(GetCountryCoverageResponse))]
+
+    [JsonSerializable(typeof(ListNumberBlockOrdersRequest))]
+    [JsonSerializable(typeof(ListNumberBlockOrdersResponse))]
+    [JsonSerializable(typeof(NumberBlockOrder))]
+
+    [JsonSerializable(typeof(CreateNumberBlockOrderRequest))]
+    [JsonSerializable(typeof(CreateNumberBlockOrderResponse))]
+
+    [JsonSerializable(typeof(GetNumberBlockOrderResponse))]
+
+    [JsonSerializable(typeof(CreateAdvancedOrderRequest))]
+    [JsonSerializable(typeof(CreateAdvancedOrderResponse))]
+
+    [JsonSerializable(typeof(ListAdvancedOrdersResponse))]
+
+    [JsonSerializable(typeof(GetAdvancedOrderResponse))]
+
+    [JsonSerializable(typeof(ListCsvDownloadsRequest))]
+    [JsonSerializable(typeof(ListCsvDownloadsResponse))]
+    [JsonSerializable(typeof(CsvDownload))]
+
+    [JsonSerializable(typeof(CreateCsvDownloadResponse))]
+
+    [JsonSerializable(typeof(GetCsvDownloadResponse))]
+
+    [JsonSerializable(typeof(GetNumbersFeaturesRequest))]
+    [JsonSerializable(typeof(GetNumbersFeaturesResponse))]
+    [JsonSerializable(typeof(NumberFeature))]
+
+    [JsonSerializable(typeof(GetVoicemailResponse))]
+    [JsonSerializable(typeof(VoicemailSettings))]
+
+    [JsonSerializable(typeof(CreateVoicemailRequest))]
+    [JsonSerializable(typeof(CreateVoicemailResponse))]
+
+    [JsonSerializable(typeof(UpdateVoicemailRequest))]
+    [JsonSerializable(typeof(UpdateVoicemailResponse))]
+
+    [JsonSerializable(typeof(ListChannelZonesRequest))]
+    [JsonSerializable(typeof(ListChannelZonesResponse))]
+    [JsonSerializable(typeof(ChannelZone))]
+
+    [JsonSerializable(typeof(GetChannelZonesResponse))]
+
+    [JsonSerializable(typeof(UpdateChannelZoneRequest))]
+    [JsonSerializable(typeof(UpdateChannelZoneResponse))]
+
+    [JsonSerializable(typeof(GetChannelZonePhoneNumbersRequest))]
+
+    [JsonSerializable(typeof(GetChannelZonePhoneNumbersResponse))]
+    [JsonSerializable(typeof(ChannelZonePhoneNumber))]
+
+    [JsonSerializable(typeof(AssignPhoneNumberToChannelZoneResponse))]
+    [JsonSerializable(typeof(AssignPhoneNumberToChannelZoneRequest))]
+
+    [JsonSerializable(typeof(UnassignPhoneNumberResponse))]
+
+    [JsonSerializable(typeof(ListInboundChannelsResponse))]
+    [JsonSerializable(typeof(InboundChannels))]
+
+    [JsonSerializable(typeof(UpdateInboundChannelsRequest))]
+    [JsonSerializable(typeof(UpdateInboundChannelsResponse))]
+
+    [JsonSerializable(typeof(ListPortoutRequest))]
+    [JsonSerializable(typeof(ListPortoutResponse))]
+    [JsonSerializable(typeof(PortoutData))]
+
+    [JsonSerializable(typeof(GetPortoutResponse))]
+
+    [JsonSerializable(typeof(UpdatePortoutStatusRequest))]
+    [JsonSerializable(typeof(UpdatePortoutStatusResponse))]
+
+    [JsonSerializable(typeof(PortoutCommentsResponse))]
+    [JsonSerializable(typeof(PortoutComment))]
+
+    [JsonSerializable(typeof(CreatePortoutCommentRequest))]
+    [JsonSerializable(typeof(CreatePortoutCommentResponse))]
+
+    [JsonSerializable(typeof(ListPortoutSupportingDocumentsResponse))]
+    [JsonSerializable(typeof(PortoutSupportingDocument))]
+
+    [JsonSerializable(typeof(CreatePortoutSupportingDocumentsRequest))]
+    [JsonSerializable(typeof(SupportingDocumentDetail))]
+
+    [JsonSerializable(typeof(CreatePortoutSupportingDocumentsResponse))]
+
+    [JsonSerializable(typeof(ListPortoutReportsRequest))]
+    [JsonSerializable(typeof(ListPortoutReportsResponse))]
+    [JsonSerializable(typeof(PortoutReport))]
+    [JsonSerializable(typeof(ExportPortoutsCSVReport))]
+    [JsonSerializable(typeof(ExportFilters))]
+
+    [JsonSerializable(typeof(CreatePortoutReportRequest))]
+    [JsonSerializable(typeof(CreatePortoutReportResponse))]
+
+    [JsonSerializable(typeof(GetPortoutReportResponse))]
+
+    [JsonSerializable(typeof(ListPortoutRejectionCodesRequest))]
+    [JsonSerializable(typeof(ListPortoutRejectionCodesResponse))]
+    [JsonSerializable(typeof(PortoutRejectionCode))]
+
+    [JsonSerializable(typeof(ListPortoutEventsRequest))]
+    [JsonSerializable(typeof(ListPortoutEventsResponse))]
+    [JsonSerializable(typeof(PortoutEvent))]
+
+    [JsonSerializable(typeof(BasePortoutPayload))]
+    [JsonSerializable(typeof(StatusChangedPayload))]
+    [JsonSerializable(typeof(NewCommentPayload))]
+    [JsonSerializable(typeof(FocDateChangedPayload))]
+
+    [JsonSerializable(typeof(GetPortoutEventResponse))]
+    [JsonSerializable(typeof(RepublishPortoutEventResponse))]
+
+    [JsonSerializable(typeof(PortabilityCheckRequest))]
+    [JsonSerializable(typeof(PortabilityCheckResponse))]
+    [JsonSerializable(typeof(PortabilityCheckResult))]
+
+    [JsonSerializable(typeof(ListDocumentsRequest))]
+    [JsonSerializable(typeof(ListDocumentsResponse))]
+    [JsonSerializable(typeof(Document))]
+
+    [JsonSerializable(typeof(GetDocumentResponse))]
+
+    [JsonSerializable(typeof(DeleteDocumentResponse))]
+
+    [JsonSerializable(typeof(UpdateDocumentResponse))]
+    [JsonSerializable(typeof(UpdateDocumentRequest))]
+
+    [JsonSerializable(typeof(UploadDocumentRequest))]
+    [JsonSerializable(typeof(UploadDocumentResponse))]
+    [JsonSerializable(typeof(UpdateDocumentResponse))]
+
+    [JsonSerializable(typeof(DownloadDocumentResponse))]
+
+    [JsonSerializable(typeof(ListDocumentLinksRequest))]
+    [JsonSerializable(typeof(ListDocumentLinksResponse))]
+    [JsonSerializable(typeof(DocumentLink))]
+
+    [JsonSerializable(typeof(ListRequirementsRequest))]
+    [JsonSerializable(typeof(ListRequirementResponse))]
+    [JsonSerializable(typeof(DocumentRequirement))]
+    [JsonSerializable(typeof(RequirementType))]
+    [JsonSerializable(typeof(RequirementAcceptanceCriteria))]
+
+    [JsonSerializable(typeof(RetrieveDocumentRequirementResponse))]
+
+    [JsonSerializable(typeof(ListRequirementTypesRequest))]
+    [JsonSerializable(typeof(ListRequirementTypesResponse))]
+
+    [JsonSerializable(typeof(RetrieveRequirementTypeResponse))]
+
+    [JsonSerializable(typeof(CreatePortingOrderRequest))]
+    [JsonSerializable(typeof(CreatePortingOrderResponse))]
+    [JsonSerializable(typeof(PortingOrder))]
+    [JsonSerializable(typeof(PortingRequirement))]
+    [JsonSerializable(typeof(MessagingInfo))]
+
+    [JsonSerializable(typeof(RetrievePortingOrderRequest))]
+    [JsonSerializable(typeof(RetrievePortingOrderResponse))]
+
+    [JsonSerializable(typeof(EditPortingOrderRequest))]
+    [JsonSerializable(typeof(EditPortingOrderResponse))]
+
+    [JsonSerializable(typeof(DeletePortingOrderResponse))]
+
+
+    [JsonSerializable(typeof(DownloadLoaTemplateRequest))]
+    [JsonSerializable(typeof(DownloadLoaTemplateResponse))]
+
+    [JsonSerializable(typeof(GetSubRequestResponse))]
+    [JsonSerializable(typeof(SubRequestData))]
+
+    [JsonSerializable(typeof(CancelPortingOrderResponse))]
+
+    [JsonSerializable(typeof(ConfirmPortingOrderResponse))]
+
+    [JsonSerializable(typeof(SharePortingOrderRequest))]
+    [JsonSerializable(typeof(SharePortingOrderResponse))]
+    [JsonSerializable(typeof(PortingOrderSharingToken))]
+
+    [JsonSerializable(typeof(ActivatePortingOrderResponse))]
+    [JsonSerializable(typeof(PortingActivationJob))]
+
+    [JsonSerializable(typeof(ListPortingActivationJobsRequest))]
+    [JsonSerializable(typeof(ListPortingActivationJobsResponse))]
+
+    [JsonSerializable(typeof(GetPortingActivationJobsResponse))]
+
+    [JsonSerializable(typeof(UpdatePortingActivationJobRequest))]
+    [JsonSerializable(typeof(UpdatePortingActivationJobResponse))]
+
+    [JsonSerializable(typeof(CreatePortingCommentRequest))]
+    [JsonSerializable(typeof(CreatePortingCommentResponse))]
+    [JsonSerializable(typeof(PortingComment))]
+
+    [JsonSerializable(typeof(ListPortingCommentsRequest))]
+    [JsonSerializable(typeof(ListPortingCommentsResponse))]
+
+    [JsonSerializable(typeof(ListAllowedFocWindowsResponse))]
+    [JsonSerializable(typeof(FocWindow))]
+
+    [JsonSerializable(typeof(ListPortingOrderRequirementsRequest))]
+    [JsonSerializable(typeof(ListPortingOrderRequirementsResponse))]
+    [JsonSerializable(typeof(ListPortingOrderRequirementsData))]
+    [JsonSerializable(typeof(PortingRequirementType))]
+
+    [JsonSerializable(typeof(ListPortingExceptionTypesResponse))]
+    [JsonSerializable(typeof(ExceptionType))]
+
+    [JsonSerializable(typeof(ListPhoneNumberConfigurationsRequest))]
+    [JsonSerializable(typeof(ListPhoneNumberConfigurationsResponse))]
+
+    [JsonSerializable(typeof(ListPortingPhoneNumbersRequest))]
+    [JsonSerializable(typeof(ListPortingPhoneNumbersResponse))]
+
+    [JsonSerializable(typeof(ListVerificationCodesResponse))]
+    [JsonSerializable(typeof(VerificationCode))]
+
+    [JsonSerializable(typeof(VerifyCodesRequest))]
+    [JsonSerializable(typeof(VerificationCodeEntry))]
+    [JsonSerializable(typeof(VerifyCodesResponse))]
+
+    [JsonSerializable(typeof(SendVerificationCodesRequest))]
+    [JsonSerializable(typeof(SendVerificationCodesResponse))]
+
+    [JsonSerializable(typeof(ListAdditionalDocumentsRequest))]
+    [JsonSerializable(typeof(ListAdditionalDocumentsResponse))]
+    [JsonSerializable(typeof(AdditionalDocument))]
+
+    [JsonSerializable(typeof(CreateAdditionalDocumentsRequest))]
+    [JsonSerializable(typeof(AdditionalDocumentRequest))]
+    [JsonSerializable(typeof(CreateAdditionalDocumentsResponse))]
+
+    [JsonSerializable(typeof(DeleteAdditionalDocumentsResponse))]
+
+    [JsonSerializable(typeof(ListPhoneNumberExtensionsRequest))]
+    [JsonSerializable(typeof(ListPhoneNumberExtensionsResponse))]
+    [JsonSerializable(typeof(PhoneNumberExtensionData))]
+    [JsonSerializable(typeof(Ranges))]
+
+
+    [JsonSerializable(typeof(CreatePhoneNumberExtensionsRequest))]
+    [JsonSerializable(typeof(CreatePhoneNumberExtensionsResponse))]
+
+    [JsonSerializable(typeof(DeletePhoneNumberExtensionsResponse))]
+
+    [JsonSerializable(typeof(ListPortingPhoneBlocksRequest))]
+    [JsonSerializable(typeof(ListPortingPhoneBlocksResponse))]
+    [JsonSerializable(typeof(PortingPhoneBlock))]
+
+    [JsonSerializable(typeof(CreatePortingPhoneBlockRequest))]
+    [JsonSerializable(typeof(CreatePortingPhoneBlockResponse))]
+
+    [JsonSerializable(typeof(DeletePortingPhoneBlockResponse))]
+
+    [JsonSerializable(typeof(ListPortingReportsRequest))]
+    [JsonSerializable(typeof(ListPortingReportsResponse))]
+    [JsonSerializable(typeof(PortingReport))]
+    [JsonSerializable(typeof(ReportParams))]
+    [JsonSerializable(typeof(ReportFilters))]
+
+    [JsonSerializable(typeof(GetPortingReportResponse))]
+
+    [JsonSerializable(typeof(ListLoaConfigurationsRequest))]
+    [JsonSerializable(typeof(ListLoaConfigurationsResponse))]
+    [JsonSerializable(typeof(LoaConfiguration))]
+    [JsonSerializable(typeof(LogoInfo))]
+    [JsonSerializable(typeof(Address))]
+    [JsonSerializable(typeof(Contact))]
+
+    [JsonSerializable(typeof(CreateLoaConfigurationRequest))]
+    [JsonSerializable(typeof(CreateLoaConfigurationResponse))]
+
+    [JsonSerializable(typeof(PreviewLoaConfigurationParamRequest))]
+
+    [JsonSerializable(typeof(GetLoaConfigurationResponse))]
+
+    [JsonSerializable(typeof(UpdateLoaConfigurationRequest))]
+    [JsonSerializable(typeof(UpdateLoaConfigurationResponse))]
+
+    [JsonSerializable(typeof(UpdateLoaConfigurationRequest))]
+
+    [JsonSerializable(typeof(DeleteLoaConfigurationResponse))]
+
+    [JsonSerializable(typeof(PreviewLoaConfigurationResponse))]
+
+    [JsonSerializable(typeof(ListPortingEventsRequest))]
+    [JsonSerializable(typeof(ListPortingEventsResponse))]
+    [JsonSerializable(typeof(PortingEvent))]
+    [JsonSerializable(typeof(PortingEventPayload))]
+    [JsonSerializable(typeof(PortingOrderDeletedPayload))]
+    [JsonSerializable(typeof(PortingOrderMessagingChangedPayload))]
+    [JsonSerializable(typeof(MessagingStatus))]
+    [JsonSerializable(typeof(PortingOrderStatusChangedPayload))]
+    [JsonSerializable(typeof(PortStatus))]
+    [JsonSerializable(typeof(PortStatusDetail))]
+    [JsonSerializable(typeof(PortingOrderNewCommentPayload))]
+    [JsonSerializable(typeof(Comment))]
+    [JsonSerializable(typeof(PortingOrderSplitPayload))]
+    [JsonSerializable(typeof(PortingOrderNumberReference))]
+
+    [JsonSerializable(typeof(GetPortingEventResponse))]
+
+    [JsonSerializable(typeof(RepublishPortingEventsResponse))]
+
     //Enums
+    [JsonSerializable(typeof(PhoneNumberFeature))]
+    [JsonSerializable(typeof(PortingOrderPermission))]
+    [JsonSerializable(typeof(PortingOrderStatus))]
+    [JsonSerializable(typeof(DocumentSort))]
+    [JsonSerializable(typeof(RequirementSort))]
+    [JsonSerializable(typeof(PortoutEventType))]
+    [JsonSerializable(typeof(PortoutStatus))]
+    [JsonSerializable(typeof(SupportingDocumentType))]
+    [JsonSerializable(typeof(RequirementActionType))]
+    [JsonSerializable(typeof(JobStatusType))]
+    [JsonSerializable(typeof(CountryCode))]
+    [JsonSerializable(typeof(FeatureType))]
+    [JsonSerializable(typeof(GroupByType))]
+    [JsonSerializable(typeof(PhoneNumberJobType))]
+    [JsonSerializable(typeof(PhoneNumberStatusType))]
+    [JsonSerializable(typeof(SortNumberConfiguration))]
+    [JsonSerializable(typeof(VoiceUsagePaymentMethod))]
+    [JsonSerializable(typeof(PhoneNumberType))]
     [JsonSerializable(typeof(RejectCallCause))]
     [JsonSerializable(typeof(DtmfType))]
     [JsonSerializable(typeof(AnchorsiteOverride))]

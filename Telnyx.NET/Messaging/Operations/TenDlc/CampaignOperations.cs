@@ -15,7 +15,8 @@ namespace Telnyx.NET.Messaging.Operations.TenDlc
         public async Task<ListCampaignsResponse?> List(ListCampaignsRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/campaign").AddPagination(request.PageSize)
+            var req = new RestRequest($"10dlc/campaign")
+                .AddFilter("recordsPerPage", request.PageSize)
                 .AddFilter("sort", request.Sort)
                 .AddFilter("brandId", request.BrandId);
             return await ExecuteAsync<ListCampaignsResponse>(req, cancellationToken);

@@ -15,7 +15,8 @@ namespace Telnyx.NET.Messaging.Operations.TenDlc
         public async Task<ListBrandsResponse?> ListBrandsAsync(ListBrandsRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/brand").AddPagination(request.PageSize)
+            var req = new RestRequest($"10dlc/brand")
+                .AddFilter("recordsPerPage", request.PageSize)
                 .AddFilter("sort", request.Sort)
                 .AddFilter("displayName", request.DisplayName)
                 .AddFilter("entityType", request.EntityType)

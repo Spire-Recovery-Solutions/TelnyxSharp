@@ -3,12 +3,21 @@ using Polly.RateLimit;
 using RestSharp;
 using RestSharp.Authenticators;
 using Telnyx.NET.Base;
+using Telnyx.NET.Identity.Interfaces;
+using Telnyx.NET.Identity.Operations.NumberLookup;
 using Telnyx.NET.Messaging.Interfaces;
 using Telnyx.NET.Messaging.Operations.SmsMms;
 using Telnyx.NET.Messaging.Operations.TenDlc;
 using Telnyx.NET.Messaging.Operations.TollFreeVerification;
-using Telnyx.NET.PhoneNumber.Interfaces;
-using Telnyx.NET.PhoneNumber.Operations.Identity;
+using Telnyx.NET.Numbers.Interfaces;
+using Telnyx.NET.Numbers.Operations.Numbers.ChannelZones;
+using Telnyx.NET.Numbers.Operations.Numbers.Documents;
+using Telnyx.NET.Numbers.Operations.Numbers.InboundChannels;
+using Telnyx.NET.Numbers.Operations.Numbers.NumberPortout;
+using Telnyx.NET.Numbers.Operations.Numbers.PhoneNumberPorting;
+using Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers;
+using Telnyx.NET.Numbers.Operations.Numbers.PortingOrder;
+using Telnyx.NET.Numbers.Operations.Numbers.Voicemail;
 using Telnyx.NET.Voice.Interfaces;
 using Telnyx.NET.Voice.Operations.ProgrammableVoice;
 
@@ -24,17 +33,31 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     private readonly Lazy<ISmsMmsOperations> _smsmms;
     private readonly Lazy<ITollFreeOperations> _tollFreeVerification;
     private readonly Lazy<ITenDlcOperations> _tenDlc;
-    private readonly Lazy<IIdentityOperations> _identityOperations;
+    private readonly Lazy<ILookUpNumberOperations> _lookUpNumberOperations;
     private readonly Lazy<IPhoneNumberOperations> _phoneNumberOperations;
     private readonly Lazy<IProgrammableVoiceOperations> _programmableVoiceOperations;
+    private readonly Lazy<IVoicemailOperations> _voicemailOperations;
+    private readonly Lazy<IChannelZonesOperations> _channelZones;
+    private readonly Lazy<IInboundChannelsOperations> _inboundChannels;
+    private readonly Lazy<INumberPortoutOperations> _numberPortout;
+    private readonly Lazy<IPhoneNumberPortingOperations> _phoneNumberPorting;
+    private readonly Lazy<IDocumentsOperations> _documents;
+    private readonly Lazy<IPortingOrderOperations> _portingOrder;
 
     // Public properties
     public ISmsMmsOperations SmsMms => _smsmms.Value;
     public ITollFreeOperations TollFreeVerification => _tollFreeVerification.Value;
     public ITenDlcOperations TenDlc => _tenDlc.Value;
-    public IIdentityOperations Identity => _identityOperations.Value;
+    public ILookUpNumberOperations LookUpNumber => _lookUpNumberOperations.Value;
     public IPhoneNumberOperations PhoneNumbers => _phoneNumberOperations.Value;
     public IProgrammableVoiceOperations ProgrammableVoice => _programmableVoiceOperations.Value;
+    public IVoicemailOperations Voicemail => _voicemailOperations.Value;
+    public IChannelZonesOperations ChannelZones => _channelZones.Value;
+    public IInboundChannelsOperations InboundChannels => _inboundChannels.Value;
+    public INumberPortoutOperations NumberPortout => _numberPortout.Value;
+    public IPhoneNumberPortingOperations PhoneNumberOrders => _phoneNumberPorting.Value;
+    public IDocumentsOperations Documents => _documents.Value;
+    public IPortingOrderOperations PortingOrder => _portingOrder.Value;
 
 
     public TelnyxClient(string apiKey)
@@ -92,8 +115,8 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
            new TenDlcOperations(Client, RateLimitRetryPolicy),
            LazyThreadSafetyMode.ExecutionAndPublication);
 
-        _identityOperations = new Lazy<IIdentityOperations>(() =>
-           new IdentityOperations(Client, RateLimitRetryPolicy),
+        _lookUpNumberOperations = new Lazy<ILookUpNumberOperations>(() =>
+           new LookUpNumberOperations(Client, RateLimitRetryPolicy),
            LazyThreadSafetyMode.ExecutionAndPublication);
 
         _phoneNumberOperations = new Lazy<IPhoneNumberOperations>(() =>
@@ -102,6 +125,34 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
 
         _programmableVoiceOperations = new Lazy<IProgrammableVoiceOperations>(() =>
             new ProgrammableVoiceOperations(Client, RateLimitRetryPolicy),
+            LazyThreadSafetyMode.ExecutionAndPublication);
+
+        _voicemailOperations = new Lazy<IVoicemailOperations>(() =>
+            new VoicemailOperations(Client, RateLimitRetryPolicy),
+            LazyThreadSafetyMode.ExecutionAndPublication);
+
+        _channelZones = new Lazy<IChannelZonesOperations>(() =>
+            new ChannelZonesOperations(Client, RateLimitRetryPolicy),
+            LazyThreadSafetyMode.ExecutionAndPublication);
+
+        _inboundChannels = new Lazy<IInboundChannelsOperations>(() =>
+            new InboundChannelsOperations(Client, RateLimitRetryPolicy),
+            LazyThreadSafetyMode.ExecutionAndPublication);
+
+        _numberPortout = new Lazy<INumberPortoutOperations>(() =>
+            new NumberPortoutOperations(Client, RateLimitRetryPolicy),
+            LazyThreadSafetyMode.ExecutionAndPublication);
+
+        _phoneNumberPorting = new Lazy<IPhoneNumberPortingOperations>(() =>
+            new PhoneNumberPortingOperations(Client, RateLimitRetryPolicy),
+            LazyThreadSafetyMode.ExecutionAndPublication);
+
+        _documents = new Lazy<IDocumentsOperations>(() =>
+            new DocumentsOperations(Client, RateLimitRetryPolicy),
+            LazyThreadSafetyMode.ExecutionAndPublication);
+
+        _portingOrder = new Lazy<IPortingOrderOperations>(() =>
+            new PortingOrderOperations(Client, RateLimitRetryPolicy),
             LazyThreadSafetyMode.ExecutionAndPublication);
     }
 
@@ -120,9 +171,9 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
         {
             disposableTenDlc.Dispose();
         }
-        if (_identityOperations.IsValueCreated && _identityOperations.Value is IDisposable disposableIdentityOperations)
+        if (_lookUpNumberOperations.IsValueCreated && _lookUpNumberOperations.Value is IDisposable disposableLookUpNumber)
         {
-            disposableIdentityOperations.Dispose();
+            disposableLookUpNumber.Dispose();
         }
         if (_phoneNumberOperations.IsValueCreated && _phoneNumberOperations.Value is IDisposable disposablePhoneNumberOperations)
         {
@@ -131,6 +182,34 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
         if (_programmableVoiceOperations.IsValueCreated && _programmableVoiceOperations.Value is IDisposable disposableProgrammableVoice)
         {
             disposableProgrammableVoice.Dispose();
+        }
+        if (_voicemailOperations.IsValueCreated && _voicemailOperations.Value is IDisposable disposableVoicemail)
+        {
+            disposableVoicemail.Dispose();
+        }
+        if (_channelZones.IsValueCreated && _channelZones.Value is IDisposable disposableChannelZones)
+        {
+            disposableChannelZones.Dispose();
+        }
+        if (_inboundChannels.IsValueCreated && _inboundChannels.Value is IDisposable disposableInboundChannels)
+        {
+            disposableInboundChannels.Dispose();
+        }
+        if (_numberPortout.IsValueCreated && _numberPortout.Value is IDisposable disposableNumberPortout)
+        {
+            disposableNumberPortout.Dispose();
+        }
+        if (_phoneNumberPorting.IsValueCreated && _phoneNumberPorting.Value is IDisposable disposablePhoneNumberPorting)
+        {
+            disposablePhoneNumberPorting.Dispose();
+        }
+        if (_documents.IsValueCreated && _documents.Value is IDisposable disposableDocuments)
+        {
+            disposableDocuments.Dispose();
+        }
+        if (_portingOrder.IsValueCreated && _portingOrder.Value is IDisposable disposablePortingOrder)
+        {
+            disposablePortingOrder.Dispose();
         }
 
         _logWriter?.Dispose();

@@ -21,7 +21,7 @@ namespace Telnyx.NET.Voice.Operations.ProgrammableVoice
         public async Task<ListActiveCallsResponse?> ListActiveCalls(string connectionId, ListActiveCallsRequest request, CancellationToken cancellationToken = default)
         {
             var req = new RestRequest($"connections/{connectionId}/active_calls")
-                .AddPagination(request.PageSize)
+                .AddFilter("page[limit]", request.PageSize)
                 .AddFilter("page[after]", request.PageAfter)
                 .AddFilter("page[before]", request.PageBefore);
 

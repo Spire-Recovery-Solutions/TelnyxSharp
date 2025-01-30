@@ -1,5 +1,6 @@
-﻿using Telnyx.NET.Messaging.Interfaces;
-using Telnyx.NET.PhoneNumber.Interfaces;
+﻿using Telnyx.NET.Identity.Interfaces;
+using Telnyx.NET.Messaging.Interfaces;
+using Telnyx.NET.Numbers.Interfaces;
 using Telnyx.NET.Voice.Interfaces;
 
 namespace Telnyx.NET.Base
@@ -29,9 +30,10 @@ namespace Telnyx.NET.Base
         ITenDlcOperations TenDlc { get; }
 
         /// <summary>
-        /// Gets the operations related to identity management, such as identity verification and operations tied to user identification.
+        /// Provides operations related to phone number lookup, including retrieving information about a phone number 
+        /// such as carrier details, line type, and geographical information.
         /// </summary>
-        IIdentityOperations Identity { get; }
+        ILookUpNumberOperations LookUpNumber { get; }
 
         /// <summary>
         /// Gets the operations related to phone number management.
@@ -44,5 +46,47 @@ namespace Telnyx.NET.Base
         /// Includes initiating, answering, and managing calls programmatically via the Telnyx API.
         /// </summary>
         IProgrammableVoiceOperations ProgrammableVoice { get; }
+
+        /// <summary>
+        /// Provides operations for managing voicemail services.
+        /// Includes configuring voicemail settings for phone numbers.
+        /// </summary>
+        IVoicemailOperations Voicemail { get; }
+
+        /// <summary>
+        /// Provides operations related to channel zones management.
+        /// This includes listing, retrieving, updating, assigning, and unassigning phone numbers within channel zones.
+        /// </summary>
+        IChannelZonesOperations ChannelZones { get; }
+
+        /// <summary>
+        /// Provides operations for managing inbound channels.
+        /// Supports operations for configuring and retrieving inbound channel settings.
+        /// </summary>
+        IInboundChannelsOperations InboundChannels { get; }
+
+        /// <summary>
+        /// Provides operations for managing number port-out requests.
+        /// Includes listing, retrieving, updating, and managing port-out requests and related events.
+        /// </summary>
+        INumberPortoutOperations NumberPortout { get; }
+
+        /// <summary>
+        /// Provides operations for managing phone number porting orders.
+        /// Includes functionalities for submitting and managing porting requests for phone numbers.
+        /// </summary>
+        IPhoneNumberPortingOperations PhoneNumberOrders { get; }
+
+        /// <summary>
+        /// Provides operations for managing documents.
+        /// Includes uploading, retrieving, and managing documents related to Telnyx services.
+        /// </summary>
+        IDocumentsOperations Documents { get; }
+
+        /// <summary>
+        /// Provides operations for managing porting orders.
+        /// Enables submission and tracking of porting-related requests.
+        /// </summary>
+        IPortingOrderOperations PortingOrder { get; }
     }
 }

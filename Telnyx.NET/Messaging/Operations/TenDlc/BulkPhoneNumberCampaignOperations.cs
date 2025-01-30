@@ -35,8 +35,8 @@ namespace Telnyx.NET.Messaging.Operations.TenDlc
             GetPhoneNumberStatusRequest request, CancellationToken cancellationToken = default)
         {
             var req =
-                new RestRequest($"10dlc/phoneNumberAssignmentByProfile/{taskId}/phoneNumbers").AddPagination(
-                    request.PageSize);
+                new RestRequest($"10dlc/phoneNumberAssignmentByProfile/{taskId}/phoneNumbers")
+                .AddFilter("recordsPerPage", request.PageSize);
 
             return await ExecuteAsync<GetPhoneNumberStatusResponse>(req, cancellationToken);
         }
