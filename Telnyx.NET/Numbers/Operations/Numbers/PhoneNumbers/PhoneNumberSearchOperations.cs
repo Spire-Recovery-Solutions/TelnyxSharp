@@ -19,7 +19,7 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
                 .AddFilter("filter[phone_number][contains]", request.Contains)
                 .AddFilter("filter[country_code]", request.CountryCode)
                 .AddFilter("filter[phone_number][ends_with]", request.EndsWith)
-                .AddFilterList("filter[features]", request.Features)
+                .AddFilter("filter[features]", request.Features)
                 .AddFilter("filter[locality]", request.Locality)
                 .AddFilter("filter[phone_number_type]", request.PhoneNumberType)
                 .AddFilter("filter[rate_center]", request.RateCenter)
