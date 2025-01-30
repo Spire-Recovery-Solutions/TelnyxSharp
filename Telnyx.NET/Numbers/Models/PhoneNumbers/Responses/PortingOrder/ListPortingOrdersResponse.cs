@@ -218,7 +218,7 @@ namespace Telnyx.NET.Numbers.Models.PhoneNumbers.Responses.PortingOrder
     {
         /// <summary>Detailed status information</summary>
         [JsonPropertyName("details")]
-        public List<PortingOrdersDetail> Details { get; set; }
+        public List<PortingOrdersDetail>? Details { get; set; }
 
         /// <summary>Current status value</summary>
         [JsonPropertyName("value")]
