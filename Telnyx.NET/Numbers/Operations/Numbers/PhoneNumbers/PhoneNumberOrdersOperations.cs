@@ -19,8 +19,8 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
                 .AddFilter("filter[created_at][gt]", request.CreatedAfter)
                 .AddFilter("filter[created_at][lt]", request.CreatedBefore)
                 .AddFilter("filter[customer_reference]", request.CustomerReference)
-                .AddFilter("filter[phone_numbers_count]", request.PhoneNumberCount?.ToString())
-                .AddFilter("filter[requirements_met]", request.RequirementsMet?.ToString().ToLowerInvariant())
+                .AddFilter("filter[phone_numbers_count]", request.PhoneNumberCount)
+                .AddFilter("filter[requirements_met]", request.RequirementsMet)
                 .AddPagination(request.PageSize);
 
             return await ExecuteAsync<ListNumberOrdersResponse>(req, cancellationToken);
@@ -61,7 +61,7 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
                 .AddFilter("filter[order_request_id]", request.OrderRequestId)
                 .AddFilter("filter[country_code]", request.CountryCode)
                 .AddFilter("filter[phone_number_type]", request.PhoneNumberType)
-                .AddFilter("filter[phone_numbers_count]", request.PhoneNumbersCount?.ToString());
+                .AddFilter("filter[phone_numbers_count]", request.PhoneNumbersCount);
 
             return await ExecuteAsync<ListSubNumberOrdersResponse>(req, cancellationToken);
         }
@@ -70,7 +70,7 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
         public async Task<GetSubNumberOrderResponse> GetSubNumber(string subNumberOrderId, GetSubNumberOrderRequest request, CancellationToken cancellationToken = default)
         {
             var req = new RestRequest($"sub_number_orders/{subNumberOrderId}")
-                .AddFilter("filter[include_phone_numbers]", request.IncludePhoneNumbers?.ToString().ToLower());
+                .AddFilter("filter[include_phone_numbers]", request.IncludePhoneNumbers);
 
             return await ExecuteAsync<GetSubNumberOrderResponse>(req, cancellationToken);
         }
