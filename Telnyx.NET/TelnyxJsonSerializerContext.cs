@@ -138,7 +138,6 @@ namespace Telnyx.NET
     [JsonSerializable(typeof(ListPortingOrdersRequest))]
     [JsonSerializable(typeof(PortingOrdersRequest))]
     [JsonSerializable(typeof(ListPortingOrdersResponse))]
-    [JsonSerializable(typeof(ListPortingOrdersDatum))]
     [JsonSerializable(typeof(PortingOrdersActivationSettings))]
     [JsonSerializable(typeof(PortingOrdersDocuments))]
     [JsonSerializable(typeof(PortingOrdersEndUser))]
