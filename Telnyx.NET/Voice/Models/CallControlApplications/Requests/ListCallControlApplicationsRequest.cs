@@ -28,6 +28,6 @@ namespace Telnyx.NET.Voice.Models.CallControlApplications.Requests
         /// <summary>
         /// Specifies the sort order for the results.
         /// </summary>
-        public Sort? Sort { get; set; }
+        public SortVoice? Sort { get; set; }
     }
 }

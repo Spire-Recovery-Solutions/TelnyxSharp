@@ -36,9 +36,9 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PhoneNumbers
         {
             var req = new RestRequest("requirement_groups")
                 .AddFilter("filter[country_code]", request.CountryCode)
-                .AddFilter("filter[phone_number_type]", request.PhoneNumberType?.ToString().ToLowerInvariant())
-                .AddFilter("filter[action]", request.Action?.ToString().ToLowerInvariant())
-                .AddFilter("filter[status]", request.Status?.ToString().ToLowerInvariant())
+                .AddFilter("filter[phone_number_type]", request.PhoneNumberType)
+                .AddFilter("filter[action]", request.Action)
+                .AddFilter("filter[status]", request.Status)
                 .AddFilter("filter[customer_reference]", request.CustomerReference);
 
             return await ExecuteAsync<ListRequirementGroupsResponse>(req, cancellationToken);

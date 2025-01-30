@@ -26,7 +26,7 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PortingOrder
         {
             var req = new RestRequest("porting_orders")
                             .AddFilter("filter[status]", request.Status)
-                            .AddFilter("include_phone_numbers", request.IncludePhoneNumbers.ToString())
+                            .AddFilter("include_phone_numbers", request.IncludePhoneNumbers)
                             .AddFilter("filter[customer_reference]", request.CustomerReference)
                             .AddFilter("sort[]", request.Sort)
                             .AddPagination(request.PageSize)
@@ -35,9 +35,9 @@ namespace Telnyx.NET.Numbers.Operations.Numbers.PortingOrder
                             .AddFilter("filter[misc.type]", request.PortingOrderType)
                             .AddFilter("filter[end_user.admin.entity_name]", request.EntityName)
                             .AddFilter("filter[end_user.admin.auth_person_name]", request.AuthorizedPerson)
-                            .AddFilter("filter[activation_settings.fast_port_eligible]", request.FastPortEligible?.ToString())
-                            .AddFilter("filter[activation_settings.foc_datetime_requested][gt]", request.FocDatetimeRequestedAfter?.ToString())
-                            .AddFilter("filter[activation_settings.foc_datetime_requested][lt]", request.FocDatetimeRequestedBefore?.ToString())
+                            .AddFilter("filter[activation_settings.fast_port_eligible]", request.FastPortEligible)
+                            .AddFilter("filter[activation_settings.foc_datetime_requested][gt]", request.FocDatetimeRequestedAfter)
+                            .AddFilter("filter[activation_settings.foc_datetime_requested][lt]", request.FocDatetimeRequestedBefore)
                             .AddFilter("filter[phone_numbers.phone_number][contains]", request.PhoneNumber)
                             .AddFilterList("filter[status][in]", request.StatusList);
 
