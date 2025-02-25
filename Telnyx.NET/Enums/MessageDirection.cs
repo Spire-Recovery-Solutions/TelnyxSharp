@@ -16,11 +16,11 @@ namespace Telnyx.NET.Enums
         /// <summary>
         /// The message is sent from the sender to the recipient.
         /// </summary>
-        outbound,
+        Outbound,
 
         /// <summary>
         /// The message is received by the recipient.
         /// </summary>
-        inbound
+        Inbound
     }
 }
