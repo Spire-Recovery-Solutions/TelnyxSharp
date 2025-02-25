@@ -11,13 +11,11 @@ namespace Telnyx.NET.Enums
         /// <summary>
         /// Basic service level with standard features.
         /// </summary>
-        [JsonPropertyName("basic")]
         Basic,
 
         /// <summary>
         /// Premium service level with advanced features and support.
         /// </summary>
-        [JsonPropertyName("premium")]
         Premium
     }
 }

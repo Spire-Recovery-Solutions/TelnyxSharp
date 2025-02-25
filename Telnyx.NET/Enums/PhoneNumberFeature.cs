@@ -5,55 +5,55 @@ namespace Telnyx.NET.Enums
     /// <summary>
     /// Represents the available features for a phone number.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(Converters.PhoneNumberFeatureConverter))]
     public enum PhoneNumberFeature
     {
         /// <summary>
         /// Short Message Service (SMS) support.
         /// </summary>
-        [JsonPropertyName("sms")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("sms")]
         Sms,
 
         /// <summary>
         /// Multimedia Messaging Service (MMS) support.
         /// </summary>
-        [JsonPropertyName("mms")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("mms")]
         Mms,
 
         /// <summary>
         /// Voice calling support.
         /// </summary>
-        [JsonPropertyName("voice")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("voice")]
         Voice,
 
         /// <summary>
         /// Fax communication support.
         /// </summary>
-        [JsonPropertyName("fax")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("fax")]
         Fax,
 
         /// <summary>
         /// Emergency calling support.
         /// </summary>
-        [JsonPropertyName("emergency")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("emergency")]
         Emergency,
 
         /// <summary>
         /// High-definition voice calling support.
         /// </summary>
-        [JsonPropertyName("hd_voice")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("hd_voice")]
         HdVoice,
 
         /// <summary>
         /// International SMS messaging support.
         /// </summary>
-        [JsonPropertyName("international_sms")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("international_sms")]
         InternationalSms,
 
         /// <summary>
         /// Local calling support.
         /// </summary>
-        [JsonPropertyName("local_calling")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("local_calling")]
         LocalCalling
     }
 }

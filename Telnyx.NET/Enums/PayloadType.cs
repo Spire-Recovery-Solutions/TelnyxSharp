@@ -11,13 +11,11 @@ namespace Telnyx.NET.Enums
         /// <summary>
         /// Represents a text-based payload.
         /// </summary>
-        [JsonPropertyName("text")]
         Text,
 
         /// <summary>
         /// Represents a Speech Synthesis Markup Language (SSML) payload.
         /// </summary>
-        [JsonPropertyName("ssml")]
         Ssml
     }
 }

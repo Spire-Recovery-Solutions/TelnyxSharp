@@ -11,19 +11,16 @@ namespace Telnyx.NET.Enums
         /// <summary>
         /// Both legs of the stream, indicating communication in both directions.
         /// </summary>
-        [JsonPropertyName("both")]
-        Both,
+       Both,
 
         /// <summary>
         /// The same leg of the stream, indicating communication on the same side.
         /// </summary>
-        [JsonPropertyName("self")]
         Self,
 
         /// <summary>
         /// The opposite leg of the stream, indicating communication on the opposite side.
         /// </summary>
-        [JsonPropertyName("opposite")]
         Opposite
     }
 }

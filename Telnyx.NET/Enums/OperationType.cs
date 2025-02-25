@@ -16,19 +16,16 @@ namespace Telnyx.NET.Enums
         /// <summary>
         /// Represents the "start" operation type.
         /// </summary>
-        [JsonPropertyName("start")]
-        Start,
+        start,
 
         /// <summary>
         /// Represents the "stop" operation type.
         /// </summary>
-        [JsonPropertyName("stop")]
-        Stop,
+        stop,
 
         /// <summary>
         /// Represents the "info" operation type.
         /// </summary>
-        [JsonPropertyName("info")]
-        Info
+        info
     }
 }

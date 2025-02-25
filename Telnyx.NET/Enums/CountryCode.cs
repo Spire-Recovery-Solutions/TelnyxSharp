@@ -1,227 +1,228 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Converters;
 
 namespace Telnyx.NET.Enums
 {
     /// <summary>
     /// Represents country codes with their respective full country names.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(CountryCodeConverter))]
     public enum CountryCode
     {
         /// <summary>
         /// Austria (AT)
         /// </summary>
-        [JsonPropertyName("AT")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("AT")]
         Austria,
 
         /// <summary>
         /// Australia (AU)
         /// </summary>
-        [JsonPropertyName("AU")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("AU")]
         Australia,
 
         /// <summary>
         /// Belgium (BE)
         /// </summary>
-        [JsonPropertyName("BE")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("BE")]
         Belgium,
 
         /// <summary>
         /// Bulgaria (BG)
         /// </summary>
-        [JsonPropertyName("BG")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("BG")]
         Bulgaria,
 
         /// <summary>
         /// Canada (CA)
         /// </summary>
-        [JsonPropertyName("CA")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("CA")]
         Canada,
 
         /// <summary>
         /// Switzerland (CH)
         /// </summary>
-        [JsonPropertyName("CH")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("CH")]
         Switzerland,
 
         /// <summary>
         /// China (CN)
         /// </summary>
-        [JsonPropertyName("CN")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("CN")]
         China,
 
         /// <summary>
         /// Cyprus (CY)
         /// </summary>
-        [JsonPropertyName("CY")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("CY")]
         Cyprus,
 
         /// <summary>
         /// Czech Republic (CZ)
         /// </summary>
-        [JsonPropertyName("CZ")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("CZ")]
         CzechRepublic,
 
         /// <summary>
         /// Germany (DE)
         /// </summary>
-        [JsonPropertyName("DE")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("DE")]
         Germany,
 
         /// <summary>
         /// Denmark (DK)
         /// </summary>
-        [JsonPropertyName("DK")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("DK")]
         Denmark,
 
         /// <summary>
         /// Estonia (EE)
         /// </summary>
-        [JsonPropertyName("EE")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("EE")]
         Estonia,
 
         /// <summary>
         /// Spain (ES)
         /// </summary>
-        [JsonPropertyName("ES")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("ES")]
         Spain,
 
         /// <summary>
         /// Finland (FI)
         /// </summary>
-        [JsonPropertyName("FI")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("FI")]
         Finland,
 
         /// <summary>
         /// France (FR)
         /// </summary>
-        [JsonPropertyName("FR")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("FR")]
         France,
 
         /// <summary>
         /// United Kingdom (GB)
         /// </summary>
-        [JsonPropertyName("GB")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("GB")]
         UnitedKingdom,
 
         /// <summary>
         /// Greece (GR)
         /// </summary>
-        [JsonPropertyName("GR")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("GR")]
         Greece,
 
         /// <summary>
         /// Hungary (HU)
         /// </summary>
-        [JsonPropertyName("HU")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("HU")]
         Hungary,
 
         /// <summary>
         /// Croatia (HR)
         /// </summary>
-        [JsonPropertyName("HR")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("HR")]
         Croatia,
 
         /// <summary>
         /// Ireland (IE)
         /// </summary>
-        [JsonPropertyName("IE")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("IE")]
         Ireland,
 
         /// <summary>
         /// Italy (IT)
         /// </summary>
-        [JsonPropertyName("IT")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("IT")]
         Italy,
 
         /// <summary>
         /// Lithuania (LT)
         /// </summary>
-        [JsonPropertyName("LT")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("LT")]
         Lithuania,
 
         /// <summary>
         /// Luxembourg (LU)
         /// </summary>
-        [JsonPropertyName("LU")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("LU")]
         Luxembourg,
 
         /// <summary>
         /// Latvia (LV)
         /// </summary>
-        [JsonPropertyName("LV")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("LV")]
         Latvia,
 
         /// <summary>
         /// Netherlands (NL)
         /// </summary>
-        [JsonPropertyName("NL")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("NL")]
         Netherlands,
 
         /// <summary>
         /// New Zealand (NZ)
         /// </summary>
-        [JsonPropertyName("NZ")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("NZ")]
         NewZealand,
 
         /// <summary>
         /// Mexico (MX)
         /// </summary>
-        [JsonPropertyName("MX")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("MX")]
         Mexico,
 
         /// <summary>
         /// Norway (NO)
         /// </summary>
-        [JsonPropertyName("NO")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("NO")]
         Norway,
 
         /// <summary>
         /// Poland (PL)
         /// </summary>
-        [JsonPropertyName("PL")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("PL")]
         Poland,
 
         /// <summary>
         /// Portugal (PT)
         /// </summary>
-        [JsonPropertyName("PT")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("PT")]
         Portugal,
 
         /// <summary>
         /// Romania (RO)
         /// </summary>
-        [JsonPropertyName("RO")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("RO")]
         Romania,
 
         /// <summary>
         /// Sweden (SE)
         /// </summary>
-        [JsonPropertyName("SE")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("SE")]
         Sweden,
 
         /// <summary>
         /// Singapore (SG)
         /// </summary>
-        [JsonPropertyName("SG")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("SG")]
         Singapore,
 
         /// <summary>
         /// Slovenia (SI)
         /// </summary>
-        [JsonPropertyName("SI")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("SI")]
         Slovenia,
 
         /// <summary>
         /// Slovakia (SK)
         /// </summary>
-        [JsonPropertyName("SK")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("SK")]
         Slovakia,
 
         /// <summary>
         /// United States (US)
         /// </summary>
-        [JsonPropertyName("US")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("US")]
         UnitedStates
     }
 }

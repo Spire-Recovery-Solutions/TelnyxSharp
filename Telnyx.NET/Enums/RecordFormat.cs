@@ -11,13 +11,11 @@ namespace Telnyx.NET.Enums
         /// <summary>
         /// Represents a WAV audio format.
         /// </summary>
-        [JsonPropertyName("wav")]
         Wav,
 
         /// <summary>
         /// Represents an MP3 audio format.
         /// </summary>
-        [JsonPropertyName("mp3")]
         Mp3
     }
 }

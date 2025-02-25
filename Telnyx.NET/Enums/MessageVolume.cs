@@ -5,7 +5,7 @@ namespace Telnyx.NET.Enums
     /// <summary>
     /// Enum representing different message volume categories.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(Converters.MessageVolumeConverter))]
     public enum MessageVolume
     {
         /// <summary>
@@ -16,67 +16,67 @@ namespace Telnyx.NET.Enums
         /// <summary>
         /// Represents a message volume of 10.
         /// </summary>
-        [JsonPropertyName("10")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("10")]
         Ten,
 
         /// <summary>
         /// Represents a message volume of 100.
         /// </summary>
-        [JsonPropertyName("100")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("100")]
         OneHundred,
 
         /// <summary>
         /// Represents a message volume of 1,000.
         /// </summary>
-        [JsonPropertyName("1,000")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("1,000")]
         Thousand,
 
         /// <summary>
         /// Represents a message volume of 10,000.
         /// </summary>
-        [JsonPropertyName("10,000")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("10,000")]
         TenThousand,
 
         /// <summary>
         /// Represents a message volume of 100,000.
         /// </summary>
-        [JsonPropertyName("100,000")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("100,000")]
         HundredThousand,
 
         /// <summary>
         /// Represents a message volume of 250,000.
         /// </summary>
-        [JsonPropertyName("250,000")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("250,000")]
         TwoHundredFiftyThousand,
 
         /// <summary>
         /// Represents a message volume of 500,000.
         /// </summary>
-        [JsonPropertyName("500,000")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("500,000")]
         FiveHundredThousand,
 
         /// <summary>
         /// Represents a message volume of 750,000.
         /// </summary>
-        [JsonPropertyName("750,000")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("750,000")]
         SevenHundredFiftyThousand,
 
         /// <summary>
         /// Represents a message volume of 1,000,000.
         /// </summary>
-        [JsonPropertyName("1,000,000")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("1,000,000")]
         OneMillion,
 
         /// <summary>
         /// Represents a message volume of 5,000,000.
         /// </summary>
-        [JsonPropertyName("5,000,000")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("5,000,000")]
         FiveMillion,
 
         /// <summary>
         /// Represents a message volume of 10,000,000+.
         /// </summary>
-        [JsonPropertyName("10,000,000+")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("10,000,000+")]
         TenMillionPlus
     }
 }

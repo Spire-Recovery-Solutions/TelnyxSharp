@@ -5,7 +5,7 @@ namespace Telnyx.NET.Enums
     /// <summary>
     /// Enum representing various business verticals.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(Converters.VerticalConverter))]
     public enum Vertical
     {
         /// <summary>
@@ -16,103 +16,103 @@ namespace Telnyx.NET.Enums
         /// <summary>
         /// Real estate industry.
         /// </summary>
-        [JsonPropertyName("REAL_ESTATE")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("REAL_ESTATE")]
         RealEstate,
 
         /// <summary>
         /// Healthcare industry.
         /// </summary>
-        [JsonPropertyName("HEALTHCARE")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("HEALTHCARE")]
         Healthcare,
 
         /// <summary>
         /// Energy industry.
         /// </summary>
-        [JsonPropertyName("ENERGY")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("ENERGY")]
         Energy,
 
         /// <summary>
         /// Entertainment industry.
         /// </summary>
-        [JsonPropertyName("ENTERTAINMENT")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("ENTERTAINMENT")]
         Entertainment,
 
         /// <summary>
         /// Retail industry.
         /// </summary>
-        [JsonPropertyName("RETAIL")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("RETAIL")]
         Retail,
 
         /// <summary>
         /// Agriculture industry.
         /// </summary>
-        [JsonPropertyName("AGRICULTURE")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("AGRICULTURE")]
         Agriculture,
 
         /// <summary>
         /// Insurance industry.
         /// </summary>
-        [JsonPropertyName("INSURANCE")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("INSURANCE")]
         Insurance,
 
         /// <summary>
         /// Education industry.
         /// </summary>
-        [JsonPropertyName("EDUCATION")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("EDUCATION")]
         Education,
 
         /// <summary>
         /// Hospitality industry.
         /// </summary>
-        [JsonPropertyName("HOSPITALITY")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("HOSPITALITY")]
         Hospitality,
 
         /// <summary>
         /// Financial industry.
         /// </summary>
-        [JsonPropertyName("FINANCIAL")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("FINANCIAL")]
         Financial,
 
         /// <summary>
         /// Gambling industry.
         /// </summary>
-        [JsonPropertyName("GAMBLING")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("GAMBLING")]
         Gambling,
 
         /// <summary>
         /// Construction industry.
         /// </summary>
-        [JsonPropertyName("CONSTRUCTION")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("CONSTRUCTION")]
         Construction,
 
         /// <summary>
         /// Non-governmental organizations (NGOs).
         /// </summary>
-        [JsonPropertyName("NGO")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("NGO")]
         NGO,
 
         /// <summary>
         /// Manufacturing industry.
         /// </summary>
-        [JsonPropertyName("MANUFACTURING")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("MANUFACTURING")]
         Manufacturing,
 
         /// <summary>
         /// Government sector.
         /// </summary>
-        [JsonPropertyName("GOVERNMENT")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("GOVERNMENT")]
         Government,
 
         /// <summary>
         /// Technology industry.
         /// </summary>
-        [JsonPropertyName("TECHNOLOGY")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("TECHNOLOGY")]
         Technology,
 
         /// <summary>
         /// Communication sector.
         /// </summary>
-        [JsonPropertyName("COMMUNICATION")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("COMMUNICATION")]
         Communication
     }
 }

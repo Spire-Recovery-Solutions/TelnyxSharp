@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Converters;
 
 namespace Telnyx.NET.Enums
 {
@@ -6,31 +7,31 @@ namespace Telnyx.NET.Enums
     /// Represents the status of a requirement, providing a standardized way to
     /// describe the approval or decline state of a given requirement.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(RequirementStatusConverter))]
     public enum RequirementStatus
     {
         /// <summary>
         /// Indicates the requirement has been approved.
         /// </summary>
-        [JsonPropertyName("approved")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("approved")]
         Approved,
 
         /// <summary>
         /// Indicates the requirement has not been approved.
         /// </summary>
-        [JsonPropertyName("unapproved")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("unapproved")]
         Unapproved,
 
         /// <summary>
         /// Indicates the requirement is awaiting approval.
         /// </summary>
-        [JsonPropertyName("pending-approval")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("pending-approval")]
         PendingApproval,
 
         /// <summary>
         /// Indicates the requirement has been declined.
         /// </summary>
-        [JsonPropertyName("declined")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("declined")]
         Declined
     }
 }
