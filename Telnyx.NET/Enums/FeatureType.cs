@@ -11,26 +11,26 @@ namespace Telnyx.NET.Enums
         /// <summary>
         /// Short Message Service (SMS) feature.
         /// </summary>
-        sms,
+        Sms,
 
         /// <summary>
         /// Multimedia Messaging Service (MMS) feature.
         /// </summary>
-        mms,
+        Mms,
 
         /// <summary>
         /// Voice call feature.
         /// </summary>
-        voice,
+        Voice,
 
         /// <summary>
         /// Fax communication feature.
         /// </summary>
-        fax,
+        Fax,
 
         /// <summary>
         /// Emergency services feature.
         /// </summary>
-        emergency
+        Emergency
     }
 }
