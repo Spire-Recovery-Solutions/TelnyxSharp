@@ -5,25 +5,25 @@ namespace Telnyx.NET.Enums
     /// <summary>
     /// Represents the different types of products available in the Telnyx system.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(Converters.ProductTypeConverter))]
     public enum ProductType
     {
-        /// <summary>
+       /// <summary>
         /// Represents the Call Control product type.
         /// </summary>
-        [JsonPropertyName("call_control")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("call_control")]
         CallControl,
 
         /// <summary>
         /// Represents the Fax product type.
         /// </summary>
-        [JsonPropertyName("fax")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("fax")]
         Fax,
 
         /// <summary>
         /// Represents the Texml product type.
         /// </summary>
-        [JsonPropertyName("texml")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("texml")]
         Texml
     }
 }

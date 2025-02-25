@@ -11,19 +11,16 @@ namespace Telnyx.NET.Enums
         /// <summary>
         /// PCMU codec (Pulse Code Modulation, A-law).
         /// </summary>
-        [JsonPropertyName("PCMU")]
-        Pcmu,
+        PCMU,
 
         /// <summary>
         /// PCMA codec (Pulse Code Modulation, U-law).
         /// </summary>
-        [JsonPropertyName("PCMA")]
-        Pcma,
+        PCMA,
 
         /// <summary>
         /// G722 codec (Wideband speech codec).
         /// </summary>
-        [JsonPropertyName("G722")]
         G722
     }
 }
