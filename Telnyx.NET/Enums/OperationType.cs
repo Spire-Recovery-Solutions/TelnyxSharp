@@ -16,16 +16,16 @@ namespace Telnyx.NET.Enums
         /// <summary>
         /// Represents the "start" operation type.
         /// </summary>
-        start,
+        Start,
 
         /// <summary>
         /// Represents the "stop" operation type.
         /// </summary>
-        stop,
+        Stop,
 
         /// <summary>
         /// Represents the "info" operation type.
         /// </summary>
-        info
+        Info
     }
 }

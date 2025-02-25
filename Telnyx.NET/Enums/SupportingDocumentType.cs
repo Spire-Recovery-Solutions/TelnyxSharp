@@ -11,11 +11,11 @@ namespace Telnyx.NET.Enums
         /// <summary>
         /// Letter of Authorization (LOA) document type, typically used to authorize the porting of a phone number.
         /// </summary>
-        loa,
+        Loa,
 
         /// <summary>
         /// Invoice document type, typically used for verification or validation purposes during a port-out request.
         /// </summary>
-        invoice
+        Invoice
     }
 }

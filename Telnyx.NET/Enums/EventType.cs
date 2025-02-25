@@ -11,11 +11,11 @@ namespace Telnyx.NET.Enums
         /// <summary>
         /// Indicates a command event type.
         /// </summary>
-        command,
+        Command,
 
         /// <summary>
         /// Indicates a webhook event type.
         /// </summary>
-        webhook
+        Webhook
     }
 }
