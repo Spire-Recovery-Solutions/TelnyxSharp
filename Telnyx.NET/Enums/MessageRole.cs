@@ -11,13 +11,11 @@ namespace Telnyx.NET.Enums
         /// <summary>
         /// Represents a message from the assistant.
         /// </summary>
-        [JsonPropertyName("assistant")]
-        Assistant,
+        Assitant,
 
         /// <summary>
         /// Represents a message from the user.
         /// </summary>
-        [JsonPropertyName("user")]
         User
     }
 }

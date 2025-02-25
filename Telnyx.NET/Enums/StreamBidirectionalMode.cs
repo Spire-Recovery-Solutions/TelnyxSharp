@@ -11,13 +11,11 @@ namespace Telnyx.NET.Enums
         /// <summary>
         /// MP3 mode, used for audio streams in MP3 format.
         /// </summary>
-        [JsonPropertyName("mp3")]
         Mp3,
 
         /// <summary>
         /// RTP (Real-time Transport Protocol) mode, used for streaming real-time data like audio and video.
         /// </summary>
-        [JsonPropertyName("rtp")]
         Rtp
     }
 }

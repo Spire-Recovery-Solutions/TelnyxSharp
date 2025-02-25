@@ -11,31 +11,26 @@ namespace Telnyx.NET.Enums
         /// <summary>
         /// Short Message Service (SMS) feature.
         /// </summary>
-        [JsonPropertyName("sms")]
         Sms,
 
         /// <summary>
         /// Multimedia Messaging Service (MMS) feature.
         /// </summary>
-        [JsonPropertyName("mms")]
         Mms,
 
         /// <summary>
         /// Voice call feature.
         /// </summary>
-        [JsonPropertyName("voice")]
         Voice,
 
         /// <summary>
         /// Fax communication feature.
         /// </summary>
-        [JsonPropertyName("fax")]
         Fax,
 
         /// <summary>
         /// Emergency services feature.
         /// </summary>
-        [JsonPropertyName("emergency")]
         Emergency
     }
 }

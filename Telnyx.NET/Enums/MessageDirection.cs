@@ -11,19 +11,16 @@ namespace Telnyx.NET.Enums
         /// <summary>
         /// The direction of the message is unknown or unspecified.
         /// </summary>
-        [JsonPropertyName("Unknown")]
         Unknown,
 
         /// <summary>
         /// The message is sent from the sender to the recipient.
         /// </summary>
-        [JsonPropertyName("outbound")]
         Outbound,
 
         /// <summary>
         /// The message is received by the recipient.
         /// </summary>
-        [JsonPropertyName("inbound")]
         Inbound
     }
 }

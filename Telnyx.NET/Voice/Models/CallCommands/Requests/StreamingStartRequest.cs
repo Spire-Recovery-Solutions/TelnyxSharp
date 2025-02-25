@@ -35,7 +35,7 @@ namespace Telnyx.NET.Voice.Models.CallCommands.Requests
         /// Default is PCMU codec.
         /// </summary>
         [JsonPropertyName("stream_bidirectional_codec")]
-        public StreamBidirectionalCodec StreamBidirectionalCodec { get; set; } = StreamBidirectionalCodec.Pcmu;
+        public StreamBidirectionalCodec StreamBidirectionalCodec { get; set; } = StreamBidirectionalCodec.PCMU;
 
         /// <summary>
         /// Gets or sets the target leg for bidirectional streaming. Determines which legs of the call will be involved.

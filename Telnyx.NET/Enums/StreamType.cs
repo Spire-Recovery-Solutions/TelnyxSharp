@@ -11,13 +11,11 @@ namespace Telnyx.NET.Enums
         /// <summary>
         /// A raw, unprocessed stream, typically in its original form.
         /// </summary>
-        [JsonPropertyName("raw")]
         Raw,
 
         /// <summary>
         /// A decrypted stream, typically after being processed to remove encryption.
         /// </summary>
-        [JsonPropertyName("decrypted")]
         Decrypted
     }
 }

@@ -11,19 +11,16 @@ namespace Telnyx.NET.Enums
         /// <summary>
         /// Records both inbound and outbound tracks.
         /// </summary>
-        [JsonPropertyName("both")]
         Both,
 
         /// <summary>
         /// Records only the inbound track.
         /// </summary>
-        [JsonPropertyName("inbound")]
         Inbound,
 
         /// <summary>
         /// Records only the outbound track.
         /// </summary>
-        [JsonPropertyName("outbound")]
         Outbound
     }
 }

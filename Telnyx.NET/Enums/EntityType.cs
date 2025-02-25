@@ -1,47 +1,48 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Converters;
 
 namespace Telnyx.NET.Enums
 {
     /// <summary>
     /// Enum representing different entity types for business or organization classifications.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(EntityTypeConverter))]
     public enum EntityType
     {
         /// <summary>
         /// The entity type is unknown or unspecified.
         /// </summary>
-        [JsonPropertyName("Unknown")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("Unknown")]
         Unknown,
 
         /// <summary>
         /// The entity is a private profit-driven business.
         /// </summary>
-        [JsonPropertyName("PRIVATE_PROFIT")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("PRIVATE_PROFIT")]
         PrivateProfit,
 
         /// <summary>
         /// The entity is a public profit-driven business.
         /// </summary>
-        [JsonPropertyName("PUBLIC_PROFIT")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("PUBLIC_PROFIT")]
         PublicProfit,
 
         /// <summary>
         /// The entity is a non-profit organization.
         /// </summary>
-        [JsonPropertyName("NON_PROFIT")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("NON_PROFIT")]
         NonProfit,
 
         /// <summary>
         /// The entity is a sole proprietor business.
         /// </summary>
-        [JsonPropertyName("SOLE_PROPRIETOR")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("SOLE_PROPRIETOR")]
         SoleProprietor,
 
         /// <summary>
         /// The entity is a government organization.
         /// </summary>
-        [JsonPropertyName("GOVERNMENT")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("GOVERNMENT")]
         Government
     }
 }

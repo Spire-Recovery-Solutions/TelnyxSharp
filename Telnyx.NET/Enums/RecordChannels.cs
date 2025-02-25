@@ -11,13 +11,11 @@ namespace Telnyx.NET.Enums
         /// <summary>
         /// Represents a single-channel recording.
         /// </summary>
-        [JsonPropertyName("single")]
         Single,
 
         /// <summary>
         /// Represents a dual-channel recording.
         /// </summary>
-        [JsonPropertyName("dual")]
         Dual
     }
 }

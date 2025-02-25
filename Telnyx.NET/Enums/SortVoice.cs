@@ -1,29 +1,30 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Converters;
 
 namespace Telnyx.NET.Enums
 {
     /// <summary>
     /// Specifies sorting options for voice-related data.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(SortVoiceConverter))]
     public enum SortVoice
     {
         /// <summary>
         /// Sort by the creation date.
         /// </summary>
-        [JsonPropertyName("created_at")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("created_at")]
         CreatedAt,
 
         /// <summary>
         /// Sort by the connection name.
         /// </summary>
-        [JsonPropertyName("connection_name")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("connection_name")]
         ConnectionName,
 
         /// <summary>
         /// Sort by the active status.
         /// </summary>
-        [JsonPropertyName("active")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("active")]
         Active
     }
 }

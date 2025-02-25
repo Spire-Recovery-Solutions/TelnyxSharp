@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Converters;
 
 namespace Telnyx.NET.Enums
 {
@@ -6,19 +7,19 @@ namespace Telnyx.NET.Enums
     /// Enum representing the settings for receiving SIP messages on a subdomain.
     /// Defines the access level for who can send SIP messages to the subdomain.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(SipSubdomainReceiveSettingsConverter))]
     public enum SipSubdomainReceiveSettings
     {
         /// <summary>
         /// Restricts SIP message reception to only allow connections from authorized peers.
         /// </summary>
-        [JsonPropertyName("only_my_connections")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("only_my_connections")]
         OnlyMyConnections,
 
         /// <summary>
         /// Allows SIP messages from any sender, regardless of the connection status.
         /// </summary>
-        [JsonPropertyName("from_anyone")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("from_anyone")]
         FromAnyone
     }
 }

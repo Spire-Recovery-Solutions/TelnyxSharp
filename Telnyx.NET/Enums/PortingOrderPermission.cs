@@ -5,19 +5,19 @@ namespace Telnyx.NET.Enums
     /// <summary>
     /// Specifies the permissions available for a porting order token.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(Converters.PortingOrderPermissionConverter))]
     public enum PortingOrderPermission
     {
-        /// <summary>
+       /// <summary>
         /// Permission to read porting order documents.
         /// </summary>
-        [JsonPropertyName("porting_order.document.read")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("porting_order.document.read")]
         DocumentRead,
 
         /// <summary>
         /// Permission to update porting order documents.
         /// </summary>
-        [JsonPropertyName("porting_order.document.update")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("porting_order.document.update")]
         DocumentUpdate
     }
 }
