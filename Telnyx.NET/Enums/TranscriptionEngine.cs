@@ -2,22 +2,22 @@
 
 namespace Telnyx.NET.Enums
 {
-    /// <summary>
+   /// <summary>
     /// Enum representing the transcription engines available for use.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(Converters.TranscriptionEngineConverter))]
     public enum TranscriptionEngine
     {
         /// <summary>
         /// Represents the Google transcription engine.
         /// </summary>
-        [JsonPropertyName("A")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("A")]
         Google,
 
         /// <summary>
         /// Represents the Telnyx transcription engine.
         /// </summary>
-        [JsonPropertyName("B")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("B")]
         Telnyx
     }
 }

@@ -1,29 +1,30 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Converters;
 
 namespace Telnyx.NET.Enums
 {
     /// <summary>
     /// Enumeration of possible causes for call rejection.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(RejectCallCauseConverter))]
     public enum RejectCallCause
     {
         /// <summary>
         /// Default unknown cause.
         /// </summary>
-        [JsonPropertyName("UNKNOWN")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("UNKNOWN")]
         Unknown,
 
         /// <summary>
         /// Call was rejected.
         /// </summary>
-        [JsonPropertyName("CALL_REJECTED")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("CALL_REJECTED")]
         CallRejected,
 
         /// <summary>
         /// User is busy.
         /// </summary>
-        [JsonPropertyName("USER_BUSY")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("USER_BUSY")]
         UserBusy
     }
 }

@@ -5,13 +5,13 @@ namespace Telnyx.NET.Enums
     /// <summary>
     /// Enumeration for voice usage payment methods.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(Converters.VoiceUsagePaymentMethodConverter))]
     public enum VoiceUsagePaymentMethod
     {
-        [JsonPropertyName("pay-per-minute")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("pay-per-minute")]
         PayPerMinute,
 
-        [JsonPropertyName("channel")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("channel")]
         Channel
     }
 }

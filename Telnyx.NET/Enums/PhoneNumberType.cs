@@ -5,28 +5,28 @@ namespace Telnyx.NET.Enums
     // <summary>
     /// Enum representing possible phone number types.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(Converters.PhoneNumberTypeConverter))]
     public enum PhoneNumberType
     {
-        [JsonPropertyName("local")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("local")]
         Local,
 
-        [JsonPropertyName("national")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("national")]
         National,
 
-        [JsonPropertyName("toll_free")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("toll_free")]
         TollFree,
 
-        [JsonPropertyName("mobile")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("mobile")]
         Mobile,
 
-        [JsonPropertyName("landline")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("landline")]
         Landline,
 
-        [JsonPropertyName("voip")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("voip")]
         VoIP,
 
-        [JsonPropertyName("shared_cost")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("shared_cost")]
         SharedCost
     }
 }

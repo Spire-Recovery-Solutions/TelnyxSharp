@@ -11,13 +11,11 @@ namespace Telnyx.NET.Enums
         /// <summary>
         /// Indicates a command event type.
         /// </summary>
-        [JsonPropertyName("command")]
-        Command,
+        command,
 
         /// <summary>
         /// Indicates a webhook event type.
         /// </summary>
-        [JsonPropertyName("webhook")]
-        Webhook
+        webhook
     }
 }

@@ -5,61 +5,61 @@ namespace Telnyx.NET.Enums
     /// <summary>
     /// Represents the various statuses of a porting order.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(Converters.PortingOrderStatusConverter))]
     public enum PortingOrderStatus
     {
-        /// <summary>
+         /// <summary>
         /// The activation process is in progress.
         /// </summary>
-        [JsonPropertyName("activation-in-progress")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("activation-in-progress")]
         ActivationInProgress,
 
         /// <summary>
         /// The cancellation process is pending.
         /// </summary>
-        [JsonPropertyName("cancel-pending")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("cancel-pending")]
         CancelPending,
 
         /// <summary>
         /// The porting order has been cancelled.
         /// </summary>
-        [JsonPropertyName("cancelled")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("cancelled")]
         Cancelled,
 
         /// <summary>
         /// The porting order is in draft state.
         /// </summary>
-        [JsonPropertyName("draft")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("draft")]
         Draft,
 
         /// <summary>
         /// An exception occurred during processing.
         /// </summary>
-        [JsonPropertyName("exception")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("exception")]
         Exception,
 
         /// <summary>
         /// The Firm Order Commitment (FOC) date has been confirmed.
         /// </summary>
-        [JsonPropertyName("foc-date-confirmed")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("foc-date-confirmed")]
         FocDateConfirmed,
 
         /// <summary>
         /// The porting order is currently in process.
         /// </summary>
-        [JsonPropertyName("in-process")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("in-process")]
         InProcess,
 
         /// <summary>
         /// The phone number has been successfully ported.
         /// </summary>
-        [JsonPropertyName("ported")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("ported")]
         Ported,
 
         /// <summary>
         /// The porting order has been submitted for processing.
         /// </summary>
-        [JsonPropertyName("submitted")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("submitted")]
         Submitted
     }
 }

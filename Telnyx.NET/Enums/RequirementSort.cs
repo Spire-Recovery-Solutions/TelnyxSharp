@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Converters;
 
 namespace Telnyx.NET.Enums
 {
@@ -7,31 +8,31 @@ namespace Telnyx.NET.Enums
     /// This enumeration is used to specify how requirement data should be sorted, 
     /// with each option corresponding to a specific attribute of the requirements.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(RequirementSortConverter))]
     public enum RequirementSort
     {
         /// <summary>
         /// Sorts requirements based on the action to be performed.
         /// </summary>
-        [JsonPropertyName("action")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("action")]
         Action,
 
         /// <summary>
         /// Sorts requirements based on the country code associated with the requirement.
         /// </summary>
-        [JsonPropertyName("country_code")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("country_code")]
         CountryCode,
 
         /// <summary>
         /// Sorts requirements based on the locality or geographical region.
         /// </summary>
-        [JsonPropertyName("locality")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("locality")]
         Locality,
 
         /// <summary>
         /// Sorts requirements based on the type of phone number, such as mobile or toll-free.
         /// </summary>
-        [JsonPropertyName("phone_number_type")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("phone_number_type")]
         PhoneNumberType
     }
 }

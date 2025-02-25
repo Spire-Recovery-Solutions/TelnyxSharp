@@ -2,310 +2,270 @@
 
 namespace Telnyx.NET.Enums
 {
-    /// <summary>
+   /// <summary>
     /// Supported languages for Telnyx transcription.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(Converters.TelnyxLanguageConverter))]
     public enum TelnyxLanguage
     {
         /// <summary> English language. </summary>
-        [JsonPropertyName("en")] English,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("en")]
+        English,
 
         /// <summary> Chinese language. </summary>
-        [JsonPropertyName("zh")] Chinese,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("zh")]
+        Chinese,
 
         /// <summary> German language. </summary>
-        [JsonPropertyName("de")] German,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("de")]
+        German,
 
         /// <summary> Spanish language. </summary>
-        [JsonPropertyName("es")] Spanish,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("es")]
+        Spanish,
 
         /// <summary> Russian language. </summary>
-        [JsonPropertyName("ru")] Russian,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("ru")]
+        Russian,
 
         /// <summary> Korean language. </summary>
-        [JsonPropertyName("ko")] Korean,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("ko")]
+        Korean,
 
         /// <summary> French language. </summary>
-        [JsonPropertyName("fr")] French,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("fr")]
+        French,
 
         /// <summary> Japanese language. </summary>
-        [JsonPropertyName("ja")] Japanese,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("ja")]
+        Japanese,
 
         /// <summary> Portuguese language. </summary>
-        [JsonPropertyName("pt")] Portuguese,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("pt")]
+        Portuguese,
 
         /// <summary> Turkish language. </summary>
-        [JsonPropertyName("tr")] Turkish,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("tr")]
+        Turkish,
 
         /// <summary> Polish language. </summary>
-        [JsonPropertyName("pl")] Polish,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("pl")]
+        Polish,
 
         /// <summary> Catalan language. </summary>
-        [JsonPropertyName("ca")] Catalan,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("ca")]
+        Catalan,
 
         /// <summary> Dutch language. </summary>
-        [JsonPropertyName("nl")] Dutch,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("nl")]
+        Dutch,
 
         /// <summary> Arabic language. </summary>
-        [JsonPropertyName("ar")] Arabic,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("ar")]
+        Arabic,
 
         /// <summary> Swedish language. </summary>
-        [JsonPropertyName("sv")] Swedish,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("sv")]
+        Swedish,
 
         /// <summary> Italian language. </summary>
-        [JsonPropertyName("it")] Italian,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("it")]
+        Italian,
 
         /// <summary> Indonesian language. </summary>
-        [JsonPropertyName("id")] Indonesian,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("id")]
+        Indonesian,
 
         /// <summary> Hindi language. </summary>
-        [JsonPropertyName("hi")] Hindi,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("hi")]
+        Hindi,
 
         /// <summary> Finnish language. </summary>
-        [JsonPropertyName("fi")] Finnish,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("fi")]
+        Finnish,
 
         /// <summary> Vietnamese language. </summary>
-        [JsonPropertyName("vi")] Vietnamese,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("vi")]
+        Vietnamese,
 
         /// <summary> Hebrew language. </summary>
-        [JsonPropertyName("he")] Hebrew,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("he")]
+        Hebrew,
 
         /// <summary> Ukrainian language. </summary>
-        [JsonPropertyName("uk")] Ukrainian,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("uk")]
+        Ukrainian,
 
         /// <summary> Greek language. </summary>
-        [JsonPropertyName("el")] Greek,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("el")]
+        Greek,
 
         /// <summary> Malay language. </summary>
-        [JsonPropertyName("ms")] Malay,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("ms")]
+        Malay,
 
         /// <summary> Czech language. </summary>
-        [JsonPropertyName("cs")] Czech,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("cs")]
+        Czech,
 
         /// <summary> Romanian language. </summary>
-        [JsonPropertyName("ro")] Romanian,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("ro")]
+        Romanian,
 
         /// <summary> Danish language. </summary>
-        [JsonPropertyName("da")] Danish,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("da")]
+        Danish,
 
         /// <summary> Hungarian language. </summary>
-        [JsonPropertyName("hu")] Hungarian,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("hu")]
+        Hungarian,
 
         /// <summary> Tamil language. </summary>
-        [JsonPropertyName("ta")] Tamil,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("ta")]
+        Tamil,
 
         /// <summary> Norwegian language. </summary>
-        [JsonPropertyName("no")] Norwegian,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("no")]
+        Norwegian,
 
         /// <summary> Thai language. </summary>
-        [JsonPropertyName("th")] Thai,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("th")]
+        Thai,
 
         /// <summary> Urdu language. </summary>
-        [JsonPropertyName("ur")] Urdu,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("ur")]
+        Urdu,
 
         /// <summary> Croatian language. </summary>
-        [JsonPropertyName("hr")] Croatian,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("hr")]
+        Croatian,
 
         /// <summary> Bulgarian language. </summary>
-        [JsonPropertyName("bg")] Bulgarian,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("bg")]
+        Bulgarian,
 
         /// <summary> Lithuanian language. </summary>
-        [JsonPropertyName("lt")] Lithuanian,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("lt")]
+        Lithuanian,
 
         /// <summary> Latin language. </summary>
-        [JsonPropertyName("la")] Latin,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("la")]
+        Latin,
 
         /// <summary> Maori language. </summary>
-        [JsonPropertyName("mi")] Maori,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("mi")]
+        Maori,
 
         /// <summary> Malayalam language. </summary>
-        [JsonPropertyName("ml")] Malayalam,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("ml")]
+        Malayalam,
 
         /// <summary> Welsh language. </summary>
-        [JsonPropertyName("cy")] Welsh,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("cy")]
+        Welsh,
 
         /// <summary> Slovak language. </summary>
-        [JsonPropertyName("sk")] Slovak,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("sk")]
+        Slovak,
 
         /// <summary> Telugu language. </summary>
-        [JsonPropertyName("te")] Telugu,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("te")]
+        Telugu,
 
         /// <summary> Persian language. </summary>
-        [JsonPropertyName("fa")] Persian,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("fa")]
+        Persian,
 
         /// <summary> Latvian language. </summary>
-        [JsonPropertyName("lv")] Latvian,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("lv")]
+        Latvian,
 
         /// <summary> Bengali language. </summary>
-        [JsonPropertyName("bn")] Bengali,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("bn")]
+        Bengali,
 
         /// <summary> Serbian language. </summary>
-        [JsonPropertyName("sr")] Serbian,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("sr")]
+        Serbian,
 
         /// <summary> Azerbaijani language. </summary>
-        [JsonPropertyName("az")] Azerbaijani,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("az")]
+        Azerbaijani,
 
         /// <summary> Slovenian language. </summary>
-        [JsonPropertyName("sl")] Slovenian,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("sl")]
+        Slovenian,
 
         /// <summary> Kannada language. </summary>
-        [JsonPropertyName("kn")] Kannada,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("kn")]
+        Kannada,
 
         /// <summary> Estonian language. </summary>
-        [JsonPropertyName("et")] Estonian,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("et")]
+        Estonian,
 
         /// <summary> Macedonian language. </summary>
-        [JsonPropertyName("mk")] Macedonian,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("mk")]
+        Macedonian,
 
         /// <summary> Breton language. </summary>
-        [JsonPropertyName("br")] Breton,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("br")]
+        Breton,
 
         /// <summary> Basque language. </summary>
-        [JsonPropertyName("eu")] Basque,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("eu")]
+        Basque,
 
         /// <summary> Icelandic language. </summary>
-        [JsonPropertyName("is")] Icelandic,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("is")]
+        Icelandic,
 
         /// <summary> Armenian language. </summary>
-        [JsonPropertyName("hy")] Armenian,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("hy")]
+        Armenian,
 
         /// <summary> Nepali language. </summary>
-        [JsonPropertyName("ne")] Nepali,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("ne")]
+        Nepali,
 
         /// <summary> Mongolian language. </summary>
-        [JsonPropertyName("mn")] Mongolian,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("mn")]
+        Mongolian,
 
         /// <summary> Bosnian language. </summary>
-        [JsonPropertyName("bs")] Bosnian,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("bs")]
+        Bosnian,
 
         /// <summary> Kazakh language. </summary>
-        [JsonPropertyName("kk")] Kazakh,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("kk")]
+        Kazakh,
 
         /// <summary> Albanian language. </summary>
-        [JsonPropertyName("sq")] Albanian,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("sq")]
+        Albanian,
 
         /// <summary> Swahili language. </summary>
-        [JsonPropertyName("sw")] Swahili,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("sw")]
+        Swahili,
 
         /// <summary> Galician language. </summary>
-        [JsonPropertyName("gl")] Galician,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("gl")]
+        Galician,
 
         /// <summary> Marathi language. </summary>
-        [JsonPropertyName("mr")] Marathi,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("mr")]
+        Marathi,
 
         /// <summary> Punjabi language. </summary>
-        [JsonPropertyName("pa")] Punjabi,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("pa")]
+        Punjabi,
 
         /// <summary> Sinhala language. </summary>
-        [JsonPropertyName("si")] Sinhala,
+        //NET9UNCOMMENT [JsonStringEnumMemberName("si")]
+        Sinhala,
 
         /// <summary> Khmer language. </summary>
-        [JsonPropertyName("km")] Khmer,
-
-        /// <summary> Shona language. </summary>
-        [JsonPropertyName("sn")] Shona,
-
-        /// <summary> Yoruba language. </summary>
-        [JsonPropertyName("yo")] Yoruba,
-
-        /// <summary> Somali language. </summary>
-        [JsonPropertyName("so")] Somali,
-
-        /// <summary> Afrikaans language. </summary>
-        [JsonPropertyName("af")] Afrikaans,
-
-        /// <summary> Occitan language. </summary>
-        [JsonPropertyName("oc")] Occitan,
-
-        /// <summary> Georgian language. </summary>
-        [JsonPropertyName("ka")] Georgian,
-
-        /// <summary> Belarusian language. </summary>
-        [JsonPropertyName("be")] Belarusian,
-
-        /// <summary> Tajik language. </summary>
-        [JsonPropertyName("tg")] Tajik,
-
-        /// <summary> Sindhi language. </summary>
-        [JsonPropertyName("sd")] Sindhi,
-
-        /// <summary> Gujarati language. </summary>
-        [JsonPropertyName("gu")] Gujarati,
-
-        /// <summary> Amharic language. </summary>
-        [JsonPropertyName("am")] Amharic,
-
-        /// <summary> Yiddish language. </summary>
-        [JsonPropertyName("yi")] Yiddish,
-
-        /// <summary> Lao language. </summary>
-        [JsonPropertyName("lo")] Lao,
-
-        /// <summary> Uzbek language. </summary>
-        [JsonPropertyName("uz")] Uzbek,
-
-        /// <summary> Faroese language. </summary>
-        [JsonPropertyName("fo")] Faroese,
-
-        /// <summary> Haitian Creole language. </summary>
-        [JsonPropertyName("ht")] HaitianCreole,
-
-        /// <summary> Pashto language. </summary>
-        [JsonPropertyName("ps")] Pashto,
-
-        /// <summary> Turkmen language. </summary>
-        [JsonPropertyName("tk")] Turkmen,
-
-        /// <summary> Norwegian Nynorsk language. </summary>
-        [JsonPropertyName("nn")] NorwegianNynorsk,
-
-        /// <summary> Maltese language. </summary>
-        [JsonPropertyName("mt")] Maltese,
-
-        /// <summary> Sanskrit language. </summary>
-        [JsonPropertyName("sa")] Sanskrit,
-
-        /// <summary> Luxembourgish language. </summary>
-        [JsonPropertyName("lb")] Luxembourgish,
-
-        /// <summary> Burmese language. </summary>
-        [JsonPropertyName("my")] Burmese,
-
-        /// <summary> Tibetan language. </summary>
-        [JsonPropertyName("bo")] Tibetan,
-
-        /// <summary> Tagalog language. </summary>
-        [JsonPropertyName("tl")] Tagalog,
-
-        /// <summary> Malagasy language. </summary>
-        [JsonPropertyName("mg")] Malagasy,
-
-        /// <summary> Assamese language. </summary>
-        [JsonPropertyName("as")] Assamese,
-
-        /// <summary> Tatar language. </summary>
-        [JsonPropertyName("tt")] Tatar,
-
-        /// <summary> Hawaiian language. </summary>
-        [JsonPropertyName("haw")] Hawaiian,
-
-        /// <summary> Lingala language. </summary>
-        [JsonPropertyName("ln")] Lingala,
-
-        /// <summary> Hausa language. </summary>
-        [JsonPropertyName("ha")] Hausa,
-
-        /// <summary> Bashkir language. </summary>
-        [JsonPropertyName("ba")] Bashkir,
-
-        /// <summary> Javanese language. </summary>
-        [JsonPropertyName("jw")] Javanese,
-
-        /// <summary> Sundanese language. </summary>
-        [JsonPropertyName("su")] Sundanese,
-
-        /// <summary> Language auto detection. </summary>
-        [JsonPropertyName("auto_detect")] AutoDetect
+        //NET9UNCOMMENT [JsonStringEnumMemberName("km")]
+        Khmer
     }
 }
