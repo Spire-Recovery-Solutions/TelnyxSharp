@@ -7,7 +7,7 @@ namespace Telnyx.NET.Tests
     {
         private readonly RestRequest _sut;
 
-        private RestRequestQueryBuilderTests()
+        public RestRequestQueryBuilderTests()
         {
             _sut = new RestRequest();
         }
