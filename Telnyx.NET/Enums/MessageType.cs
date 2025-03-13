@@ -1,11 +1,12 @@
 ﻿using System.Text.Json.Serialization;
+using Telnyx.NET.Converters;
 
 namespace Telnyx.NET.Enums
 {
     /// <summary>
     /// Enum representing the different types of message types.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(MessageTypeConverter))]
     public enum MessageType
     {
         /// <summary>
@@ -16,49 +17,49 @@ namespace Telnyx.NET.Enums
         /// <summary>
         /// Represents a long-code message type.
         /// </summary>
-        [JsonPropertyName("long-code")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("long-code")]
         LongCode,
 
         /// <summary>
         /// Represents a toll-free message type.
         /// </summary>
-        [JsonPropertyName("toll-free")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("toll-free")]
         TollFree,
 
         /// <summary>
         /// Represents a short-code message type.
         /// </summary>
-        [JsonPropertyName("short-code")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("short-code")]
         ShortCode,
 
         /// <summary>
         /// Represents a longcode message type.
         /// </summary>
-        [JsonPropertyName("longcode")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("longcode")]
         Longcode,
 
         /// <summary>
         /// Represents a tollfree message type.
         /// </summary>
-        [JsonPropertyName("tollfree")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("tollfree")]
         Tollfree,
 
         /// <summary>
         /// Represents a shortcode message type.
         /// </summary>
-        [JsonPropertyName("shortcode")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("shortcode")]
         Shortcode,
 
         /// <summary>
         /// Represents an SMS message type.
         /// </summary>
-        [JsonPropertyName("SMS")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("SMS")]
         Sms,
 
         /// <summary>
         /// Represents an MMS message type.
         /// </summary>
-        [JsonPropertyName("MMS")]
+        //NET9UNCOMMENT [JsonStringEnumMemberName("MMS")]
         Mms
     }
 }
