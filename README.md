@@ -1,19 +1,19 @@
-# Telnyx.NET
+# TelnyxSharp
 
-Welcome to the Telnyx.NET SDK! This library provides a simple and intuitive way to interact with the Telnyx API using .NET. 🚀
+Welcome to the TelnyxSharp SDK! This library provides a simple and intuitive way to interact with the Telnyx API using .NET. 🚀
 
 ## Installation
 
-To install the Telnyx.NET SDK, you can use the NuGet package manager:
+To install the TelnyxSharp SDK, you can use the NuGet package manager:
 
 ```bash
-dotnet add package Telnyx.NET
+dotnet add package TelnyxSharp
 ```
 
 Or via the NuGet Package Manager Console:
 
 ```bash
-Install-Package Telnyx.NET
+Install-Package TelnyxSharp
 ```
 
 ## Usage
@@ -23,9 +23,9 @@ Install-Package Telnyx.NET
 Here's a quick example to get you started:
 
 ```csharp
-using Telnyx.NET;
-using Telnyx.NET.Messaging.Models.Messages.Requests;
-using Telnyx.NET.Messaging.Models.Messages.Responses;
+using TelnyxSharp;
+using TelnyxSharp.Messaging.Models.Messages.Requests;
+using TelnyxSharp.Messaging.Models.Messages.Responses;
 
 var apiKey = "YOUR_API_KEY";
 var client = new TelnyxClient(apiKey);
@@ -35,7 +35,7 @@ var messageRequest = new SendMessageRequest
 {
     From = "+1234567890",
     To = new List<string> { "+0987654321" },
-    Text = "Hello from Telnyx.NET!"
+    Text = "Hello from TelnyxSharp!"
 };
 
 // Send the message
@@ -50,7 +50,7 @@ For applications using Microsoft.Extensions.DependencyInjection, you can registe
 
 ```csharp
 using Microsoft.Extensions.DependencyInjection;
-using Telnyx.NET;
+using TelnyxSharp;
 
 // In your Startup.cs or Program.cs
 services.AddTelnyxClient(options =>
