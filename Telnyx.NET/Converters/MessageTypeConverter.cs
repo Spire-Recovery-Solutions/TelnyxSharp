@@ -23,8 +23,7 @@ namespace Telnyx.NET.Converters
                 "shortcode"   => MessageType.Shortcode,
                 "SMS"         => MessageType.Sms,
                 "MMS"         => MessageType.Mms,
-                "Unknown"     => MessageType.Unknown,
-                _             => throw new JsonException($"Value '{value}' is not supported for MessageType enum")
+                 _            => MessageType.Unknown
             };
         }
 
@@ -40,8 +39,7 @@ namespace Telnyx.NET.Converters
                 MessageType.Shortcode  => "shortcode",
                 MessageType.Sms        => "SMS",
                 MessageType.Mms        => "MMS",
-                MessageType.Unknown    => "Unknown",
-                _                      => throw new JsonException($"Value '{value}' is not supported for MessageType enum")
+                 _                     => "Unknown"  
             };
 
             writer.WriteStringValue(stringValue);
