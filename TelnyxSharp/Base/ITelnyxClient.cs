@@ -1,4 +1,5 @@
-﻿using TelnyxSharp.DetailRecords.Interfaces;
+﻿using TelnyxSharp.CdrReports.Interfaces;
+using TelnyxSharp.DetailRecords.Interfaces;
 using TelnyxSharp.Identity.Interfaces;
 using TelnyxSharp.Messaging.Interfaces;
 using TelnyxSharp.Numbers.Interfaces;
@@ -95,5 +96,11 @@ namespace TelnyxSharp.Base
         /// This includes retrieving detailed records related to Telnyx API usage, such as messaging, conferencing, and other product-specific events.
         /// </summary>
         IDetailRecordsOperations DetailRecordsSearch { get; }
+
+        /// <summary>
+        /// Provides operations for managing CDR requests.
+        /// This includes creating, listing, retrieving, and deleting CDR requests.
+        /// </summary>
+        ICdrRequestsOperations CdrRequests { get; }
     }
 }
