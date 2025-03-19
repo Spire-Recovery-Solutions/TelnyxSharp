@@ -1,6 +1,7 @@
 ﻿using RestSharp;
 using System.Reflection;
 using System.Text.Json.Serialization;
+using TelnyxSharp.Enums;
 namespace TelnyxSharp
 {
     /// <summary>
@@ -15,12 +16,18 @@ namespace TelnyxSharp
         /// Adds a filter with an enum value to the request query parameters.
         /// Uses JsonPropertyName attribute value if available.
         /// </summary>
-        public static RestRequest AddFilter(this RestRequest request, string key, object? value)
+        public static RestRequest AddFilter(this RestRequest request, string key, object? value = null, FilterOperator? filterOperator = null)
         {
             if (value == null || (value is string strValue && string.IsNullOrWhiteSpace(strValue)))
             {
                 return request;
             }
+
+            string? filterOperatorStr = filterOperator.HasValue ? GetEnumValue(filterOperator.Value) : null;
+
+            var finalKey = string.IsNullOrWhiteSpace(filterOperatorStr)
+                ? key
+                : $"{key}[{filterOperatorStr}]";
 
             switch (value)
             {
@@ -29,13 +36,12 @@ namespace TelnyxSharp
                         var stringValue = GetEnumValue(@enum);
                         if (!string.IsNullOrEmpty(stringValue))
                         {
-                            request.AddParameter(key, stringValue, ParameterType.QueryString);
+                            request.AddParameter(finalKey, stringValue, ParameterType.QueryString);
                         }
-
                         break;
                     }
                 default:
-                    request.AddParameter(key, value, ParameterType.QueryString);
+                    request.AddParameter(finalKey, value, ParameterType.QueryString);
                     break;
             }
             return request;

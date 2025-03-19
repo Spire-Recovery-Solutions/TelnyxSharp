@@ -1,4 +1,5 @@
-﻿using TelnyxSharp.Identity.Interfaces;
+﻿using TelnyxSharp.DetailRecords.Interfaces;
+using TelnyxSharp.Identity.Interfaces;
 using TelnyxSharp.Messaging.Interfaces;
 using TelnyxSharp.Numbers.Interfaces;
 using TelnyxSharp.Voice.Interfaces;
@@ -88,5 +89,11 @@ namespace TelnyxSharp.Base
         /// Enables submission and tracking of porting-related requests.
         /// </summary>
         IPortingOrderOperations PortingOrder { get; }
+
+        /// <summary>
+        /// Provides operations for searching detail records.
+        /// This includes retrieving detailed records related to Telnyx API usage, such as messaging, conferencing, and other product-specific events.
+        /// </summary>
+        IDetailRecordsOperations DetailRecordsSearch { get; }
     }
 }
