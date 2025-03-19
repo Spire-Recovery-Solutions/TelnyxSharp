@@ -10,42 +10,42 @@ namespace TelnyxSharp.Enums
         /// Serializes as "eq".
         /// </summary>
         [JsonStringEnumMemberName("eq")]
-        Eq,
+        Equals,
 
         /// <summary>
         /// Represents a non-equality check.
         /// Serializes as "ne".
         /// </summary>
         [JsonStringEnumMemberName("ne")]
-        Ne,
+        NotEquals,
 
         /// <summary>
         /// Represents a "greater than" comparison.
         /// Serializes as "gt".
         /// </summary>
         [JsonStringEnumMemberName("gt")]
-        Gt,
+        GreaterThan,
 
         /// <summary>
         /// Represents a "greater than or equal to" comparison.
         /// Serializes as "gte".
         /// </summary>
         [JsonStringEnumMemberName("gte")]
-        Gte,
+        GreaterThanOrEqualTo,
 
         /// <summary>
         /// Represents a "less than" comparison.
         /// Serializes as "lt".
         /// </summary>
         [JsonStringEnumMemberName("lt")]
-        Lt,
+        LessThan,
 
         /// <summary>
         /// Represents a "less than or equal to" comparison.
         /// Serializes as "lte".
         /// </summary>
         [JsonStringEnumMemberName("lte")]
-        Lte,
+        LessThanOrEqualTo,
 
         /// <summary>
         /// Checks if the target string starts with a specified value.
