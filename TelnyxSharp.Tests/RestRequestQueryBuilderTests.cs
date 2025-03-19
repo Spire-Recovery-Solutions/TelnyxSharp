@@ -158,7 +158,7 @@ namespace TelnyxSharp.Tests
         [Fact]
         public void AddFilter_WithEnumAndOperator_GeneratesCorrectQueryString()
         {
-            var request = _sut.AddFilter("filter[status]", TestStatus.Active, FilterOperator.Eq);
+            var request = _sut.AddFilter("filter[status]", TestStatus.Active, FilterOperator.Equals);
             Assert.Equal("filter[status][eq]=active_status", GetQueryString(request));
         }
 
@@ -173,8 +173,8 @@ namespace TelnyxSharp.Tests
         public void AddFilter_WithMultipleOperators_GeneratesDistinctParameters()
         {
             var request = _sut
-                .AddFilter("filter[created_at]", "2023-01-01", FilterOperator.Gte)
-                .AddFilter("filter[created_at]", "2023-12-31", FilterOperator.Lte);
+                .AddFilter("filter[created_at]", "2023-01-01", FilterOperator.GreaterThanOrEqualTo)
+                .AddFilter("filter[created_at]", "2023-12-31", FilterOperator.LessThanOrEqualTo);
             Assert.Equal("filter[created_at][gte]=2023-01-01&filter[created_at][lte]=2023-12-31", GetQueryString(request));
         }
 
@@ -184,8 +184,8 @@ namespace TelnyxSharp.Tests
             var request = _sut
                 .AddFilter("filter[record_type]", DetailRecordType.Conference)
                 .AddFilter("filter[direction]", "inbound")
-                .AddFilter("filter[created_at]", "2023-01-01", FilterOperator.Gte)
-                .AddFilter("filter[created_at]", "2023-12-31", FilterOperator.Lte)
+                .AddFilter("filter[created_at]", "2023-01-01", FilterOperator.GreaterThanOrEqualTo)
+                .AddFilter("filter[created_at]", "2023-12-31", FilterOperator.LessThanOrEqualTo)
                 .AddFilter("filter[status]", TestStatus.Active)
                 .AddFilter("sort", "created_at");
 
@@ -196,8 +196,8 @@ namespace TelnyxSharp.Tests
         public void AddFilter_MultipleConditionsForSameField_GeneratesCorrectQueryString()
         {
             var request = _sut
-                .AddFilter("filter[started_at]", "2022-02-02", FilterOperator.Gt)
-                .AddFilter("filter[started_at]", "2022-03-01", FilterOperator.Lt);
+                .AddFilter("filter[started_at]", "2022-02-02", FilterOperator.GreaterThan)
+                .AddFilter("filter[started_at]", "2022-03-01", FilterOperator.LessThan);
 
             Assert.Equal("filter[started_at][gt]=2022-02-02&filter[started_at][lt]=2022-03-01", GetQueryString(request));
         }

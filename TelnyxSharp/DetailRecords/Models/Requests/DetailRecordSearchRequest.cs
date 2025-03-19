@@ -71,7 +71,6 @@ namespace TelnyxSharp.DetailRecords.Models.Requests
         /// If null, a simple equality check is assumed.
         /// Uses a custom converter (<see cref="FilterOperatorConverter"/>) to map enum values to their string representation.
         /// </summary>
-        [JsonConverter(typeof(FilterOperatorConverter))]
         public FilterOperator? Operator { get; set; }
 
         /// <summary>
