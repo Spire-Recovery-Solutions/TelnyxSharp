@@ -5,31 +5,31 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Represents the status of a job or process, indicating its current state in the workflow.
     /// </summary>
-    [JsonConverter(typeof(Converters.JobStatusTypeConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum JobStatusType
     {
-       /// <summary>
+        /// <summary>
         /// The job is pending and has not started yet.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("pending")]
+        [JsonStringEnumMemberName("pending")]
         Pending,
 
         /// <summary>
         /// The job is currently in progress.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("in_progress")]
+        [JsonStringEnumMemberName("in_progress")]
         InProgress,
 
         /// <summary>
         /// The job has been completed successfully.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("completed")]
+        [JsonStringEnumMemberName("completed")]
         Completed,
 
         /// <summary>
         /// The job has failed and was not successfully completed.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("failed")]
+        [JsonStringEnumMemberName("failed")]
         Failed
     }
 }

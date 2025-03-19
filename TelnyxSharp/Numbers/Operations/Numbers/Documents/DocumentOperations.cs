@@ -68,15 +68,15 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.Documents
             var req = new RestRequest($"documents/{id}/dowload", Method.Patch);
             return await ExecuteAsync<DownloadDocumentResponse>(req, cancellationToken);
         }
-        
+
         /// <inheritdoc />
         public async Task<ListDocumentLinksResponse> ListDocumentLinks(ListDocumentLinksRequest request,
             CancellationToken cancellationToken = default)
         {
             var req = new RestRequest("document_links")
                 .AddPagination(request.PageSize)
-                .AddFilter("filter[document_id]",request.DocumentId)
-                .AddFilter("filter[linked_record_type]",request.LinkedRecordType)
+                .AddFilter("filter[document_id]", request.DocumentId)
+                .AddFilter("filter[linked_record_type]", request.LinkedRecordType)
                 .AddFilter("filter[linked_resource_id]", request.LinkedResourceId);
 
             return await ExecuteAsync<ListDocumentLinksResponse>(req, cancellationToken);

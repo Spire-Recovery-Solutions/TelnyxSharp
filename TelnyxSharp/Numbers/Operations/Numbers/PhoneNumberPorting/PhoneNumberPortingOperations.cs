@@ -12,11 +12,11 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumberPorting
     : BaseOperations(client, rateLimitRetryPolicy), IPhoneNumberPortingOperations
     {
         /// <inheritdoc />
-        public async Task<PortabilityCheckResponse> RunPortabilityCheck(PortabilityCheckRequest request, 
+        public async Task<PortabilityCheckResponse> RunPortabilityCheck(PortabilityCheckRequest request,
             CancellationToken cancellationToken = default)
         {
             var req = new RestRequest("portability_checks", Method.Post);
-            
+
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<PortabilityCheckResponse>(req, cancellationToken);
         }

@@ -55,7 +55,7 @@ namespace TelnyxSharp.Numbers.Interfaces
         /// <param name="cancellationToken">A cancellation token for the operation.</param>
         /// <returns>A response indicating the status of the emergency settings update operation.</returns>
         Task<UpdateEmergencySettingsResponse> UpdateEmergencySettings(
-            UpdateEmergencySettingsRequest request, 
+            UpdateEmergencySettingsRequest request,
             CancellationToken cancellationToken = default);
     }
 }

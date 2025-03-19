@@ -1,5 +1,6 @@
 ﻿using RestSharp;
 using System.Text.Json.Serialization;
+using TelnyxSharp.Enums;
 
 namespace TelnyxSharp.Tests
 {
@@ -7,14 +8,17 @@ namespace TelnyxSharp.Tests
     {
         private readonly RestRequest _sut = new();
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         private enum TestStatus
         {
-            [JsonPropertyName("active_status")]
+            [JsonStringEnumMemberName("active_status")]
             Active,
-            [JsonPropertyName("inactive_status")]
+
+            [JsonStringEnumMemberName("inactive_status")]
             Inactive
         }
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         private enum PlainEnum
         {
             First,
@@ -28,14 +32,14 @@ namespace TelnyxSharp.Tests
                 .Where(p => p.Type == ParameterType.QueryString)
                 .OrderBy(p => p.Name)
                 .Select(p => $"{p.Name}={p.Value?.ToString()}");
-            
+
             return string.Join("&", parameters);
         }
 
         [Fact]
         public void AddFilter_WithEnum_GeneratesCorrectQueryString()
         {
-            var request = _sut.AddFilter("status", TestStatus.Active);            
+            var request = _sut.AddFilter("status", TestStatus.Active);
             Assert.Equal("status=active_status", GetQueryString(request));
         }
 
@@ -141,6 +145,61 @@ namespace TelnyxSharp.Tests
                             .AddFilterList("tags", new List<string> { "tag&value", "special!char" });
 
             Assert.Equal("complex=Hello & World!&tags[]=tag&value&tags[]=special!char", GetQueryString(request));
+        }
+
+
+        [Fact]
+        public void AddFilter_WithOperator_GeneratesCorrectQueryString()
+        {
+            var request = _sut.AddFilter("filter[created_at]", "2023-01-01", FilterOperator.StartsWith);
+            Assert.Equal("filter[created_at][starts_with]=2023-01-01", GetQueryString(request));
+        }
+
+        [Fact]
+        public void AddFilter_WithEnumAndOperator_GeneratesCorrectQueryString()
+        {
+            var request = _sut.AddFilter("filter[status]", TestStatus.Active, FilterOperator.Eq);
+            Assert.Equal("filter[status][eq]=active_status", GetQueryString(request));
+        }
+
+        [Fact]
+        public void AddFilter_WithPreformattedKeyAndOperator_AppendsOperatorCorrectly()
+        {
+            var request = _sut.AddFilter("custom_key", "value", FilterOperator.Contains);
+            Assert.Equal("custom_key[contains]=value", GetQueryString(request));
+        }
+
+        [Fact]
+        public void AddFilter_WithMultipleOperators_GeneratesDistinctParameters()
+        {
+            var request = _sut
+                .AddFilter("filter[created_at]", "2023-01-01", FilterOperator.Gte)
+                .AddFilter("filter[created_at]", "2023-12-31", FilterOperator.Lte);
+            Assert.Equal("filter[created_at][gte]=2023-01-01&filter[created_at][lte]=2023-12-31", GetQueryString(request));
+        }
+
+        [Fact]
+        public void AddFilter_WithComplexFilterChain_GeneratesCorrectQueryString()
+        {
+            var request = _sut
+                .AddFilter("filter[record_type]", DetailRecordType.Conference)
+                .AddFilter("filter[direction]", "inbound")
+                .AddFilter("filter[created_at]", "2023-01-01", FilterOperator.Gte)
+                .AddFilter("filter[created_at]", "2023-12-31", FilterOperator.Lte)
+                .AddFilter("filter[status]", TestStatus.Active)
+                .AddFilter("sort", "created_at");
+
+            Assert.Equal("filter[created_at][gte]=2023-01-01&filter[created_at][lte]=2023-12-31&filter[direction]=inbound&filter[record_type]=conference&filter[status]=active_status&sort=created_at", GetQueryString(request));
+        }
+
+        [Fact]
+        public void AddFilter_MultipleConditionsForSameField_GeneratesCorrectQueryString()
+        {
+            var request = _sut
+                .AddFilter("filter[started_at]", "2022-02-02", FilterOperator.Gt)
+                .AddFilter("filter[started_at]", "2022-03-01", FilterOperator.Lt);
+
+            Assert.Equal("filter[started_at][gt]=2022-02-02&filter[started_at][lt]=2022-03-01", GetQueryString(request));
         }
     }
 }

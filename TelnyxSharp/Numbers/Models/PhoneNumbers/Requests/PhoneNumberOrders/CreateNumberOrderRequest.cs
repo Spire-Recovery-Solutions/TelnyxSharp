@@ -50,7 +50,7 @@ namespace TelnyxSharp.Numbers.Models.PhoneNumbers.Requests.PhoneNumberOrders
         [JsonPropertyName("phone_number")]
         public required string PhoneNumber { get; set; }
 
-         /// <summary>
+        /// <summary>
         /// Gets or sets the ID of the requirement group to use to satisfy number requirements.
         /// </summary>
         [JsonPropertyName("requirement_group_id")]

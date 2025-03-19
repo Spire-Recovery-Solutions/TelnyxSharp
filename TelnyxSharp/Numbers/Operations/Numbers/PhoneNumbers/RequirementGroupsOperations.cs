@@ -66,7 +66,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
             var req = new RestRequest($"requirement_groups/{id}", Method.Delete);
             return await ExecuteAsync<DeleteRequirementGroupResponse>(req, cancellationToken);
         }
-        
+
         /// <inheritdoc />
         public async Task<UpdateRequirementGroupResponse> Update(string id, UpdateRequirementGroupRequest request, CancellationToken cancellationToken = default)
         {
@@ -75,7 +75,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<UpdateRequirementGroupResponse>(req, cancellationToken);
         }
-        
+
         /// <inheritdoc />
         public async Task<SubmitRequirementGroupApprovalResponse> SubmitForApproval(string id,
             CancellationToken cancellationToken = default)

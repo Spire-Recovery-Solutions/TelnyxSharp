@@ -25,7 +25,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
 
             return await ExecuteAsync<ListNumberOrdersResponse>(req, cancellationToken);
         }
-        
+
 
         /// <inheritdoc />
         public async Task<CreateNumberOrderResponse> Create(CreateNumberOrderRequest request,
@@ -139,7 +139,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
             var req = new RestRequest($"comments/{id}");
             return await ExecuteAsync<GetCommentResponse>(req, cancellationToken);
         }
-        
+
         /// <inheritdoc />
         public async Task<MarkCommentReadResponse> MarkCommentAsRead(string id, CancellationToken cancellationToken = default)
         {

@@ -1,6 +1,5 @@
 ﻿using RestSharp;
-using System.Reflection;
-using System.Text.Json.Serialization;
+using System.Text.Json;
 using TelnyxSharp.Enums;
 namespace TelnyxSharp
 {
@@ -12,6 +11,7 @@ namespace TelnyxSharp
         private const int DefaultPageSize = 50;
         private const int MaxPageSize = 250;
         private const int MinPageSize = 1;
+
         /// <summary>
         /// Adds a filter with an enum value to the request query parameters.
         /// Uses JsonPropertyName attribute value if available.
@@ -23,7 +23,9 @@ namespace TelnyxSharp
                 return request;
             }
 
-            string? filterOperatorStr = filterOperator.HasValue ? GetEnumValue(filterOperator.Value) : null;
+            string? filterOperatorStr = filterOperator.HasValue
+                ? JsonSerializer.Serialize(filterOperator.Value).Trim('"')
+                : null;
 
             var finalKey = string.IsNullOrWhiteSpace(filterOperatorStr)
                 ? key
@@ -32,14 +34,10 @@ namespace TelnyxSharp
             switch (value)
             {
                 case Enum @enum:
-                    {
-                        var stringValue = GetEnumValue(@enum);
-                        if (!string.IsNullOrEmpty(stringValue))
-                        {
-                            request.AddParameter(finalKey, stringValue, ParameterType.QueryString);
-                        }
-                        break;
-                    }
+                    var enumType = @enum.GetType();
+                    var stringValue = JsonSerializer.Serialize(@enum, enumType).Trim('"');
+                    request.AddParameter(finalKey, stringValue, ParameterType.QueryString);
+                    break;
                 default:
                     request.AddParameter(finalKey, value, ParameterType.QueryString);
                     break;
@@ -47,15 +45,6 @@ namespace TelnyxSharp
             return request;
         }
 
-        /// <summary>
-        /// Retrieves the string value of an enum, using JsonPropertyName if available.
-        /// </summary>
-        private static string GetEnumValue(Enum value)
-        {
-            var memberInfo = value.GetType().GetMember(value.ToString())[0];
-            var attribute = memberInfo.GetCustomAttribute<JsonPropertyNameAttribute>();
-            return attribute?.Name ?? value.ToString();
-        }
         /// <summary>
         /// Adds a list of values as query parameters with array notation.
         /// Filters out null, empty, or whitespace-only values.

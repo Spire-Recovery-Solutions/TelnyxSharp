@@ -107,7 +107,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
 
             return await ExecuteAsync<EnableEmergencyResponse>(req, cancellationToken);
         }
-        
+
         /// <inheritdoc />
         public async Task<ChangeBundleStatusResponse> ChangeBundleStatus(long phoneNumberId, ChangeBundleStatusRequest request, CancellationToken cancellationToken = default)
         {
