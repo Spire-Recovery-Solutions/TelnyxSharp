@@ -2,10 +2,10 @@
 
 namespace TelnyxSharp.Enums
 {
-   /// <summary>
+    /// <summary>
     /// Enum representing various verification statuses.
     /// </summary>
-    [JsonConverter(typeof(Converters.VerificationStatusConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum VerificationStatus
     {
         /// <summary>
@@ -16,31 +16,31 @@ namespace TelnyxSharp.Enums
         /// <summary>
         /// The verification has been successfully completed.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("Verified")]
+        [JsonStringEnumMemberName("Verified")]
         Verified,
 
         /// <summary>
         /// The verification was rejected.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("Rejected")]
+        [JsonStringEnumMemberName("Rejected")]
         Rejected,
 
         /// <summary>
         /// Verification is waiting for vendor action.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("Waiting For Vendor")]
+        [JsonStringEnumMemberName("Waiting For Vendor")]
         WaitingForVendor,
 
         /// <summary>
         /// Verification is waiting for customer action.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("Waiting For Customer")]
+        [JsonStringEnumMemberName("Waiting For Customer")]
         WaitingForCustomer,
 
         /// <summary>
         /// The verification process is currently in progress.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("In Progress")]
+        [JsonStringEnumMemberName("In Progress")]
         InProgress
     }
 }

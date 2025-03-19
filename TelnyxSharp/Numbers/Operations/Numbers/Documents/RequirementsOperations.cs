@@ -12,7 +12,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.Documents
     : BaseOperations(client, rateLimitRetryPolicy), IRequirementsOperations
     {
         /// <inheritdoc />
-        public async Task<ListRequirementResponse> List(ListRequirementsRequest request,CancellationToken cancellationToken = default)
+        public async Task<ListRequirementResponse> List(ListRequirementsRequest request, CancellationToken cancellationToken = default)
         {
             var req = new RestRequest("requirements")
                         .AddFilter("filter[country_code]", request.CountryCode)
@@ -20,10 +20,10 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.Documents
                         .AddFilter("filter[action]", request.Action)
                         .AddFilter("sort[]", request.Sort)
                         .AddPagination(request.PageSize);
-           
+
             return await ExecuteAsync<ListRequirementResponse>(req, cancellationToken);
         }
-        
+
         /// <inheritdoc />
         public async Task<RetrieveDocumentRequirementResponse> Retrieve(string requirementId, CancellationToken cancellationToken = default)
         {

@@ -79,7 +79,7 @@ namespace TelnyxSharp.Messaging.Operations.SmsMms
                 disposableNumberConfig.Dispose();
 
             if (_messagingHostedNumbersOperations.IsValueCreated && _messagingHostedNumbersOperations.Value is IDisposable disposableMessageHostedNumbers)
-                 disposableMessageHostedNumbers.Dispose();
+                disposableMessageHostedNumbers.Dispose();
 
             if (_advancedOptInOptOutOperations.IsValueCreated && _advancedOptInOptOutOperations.Value is IDisposable disposableAdvancedOptInOptOut)
                 disposableAdvancedOptInOptOut.Dispose();

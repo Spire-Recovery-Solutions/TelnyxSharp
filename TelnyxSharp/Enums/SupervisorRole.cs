@@ -11,25 +11,25 @@ namespace TelnyxSharp.Enums
         /// <summary>
         /// The supervisor can join the call and interact with the participants (e.g., interrupt the conversation).
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("barge")]
+        [JsonStringEnumMemberName("barge")]
         Barge,
 
         /// <summary>
         /// The supervisor can listen to the call but cannot interact with the participants.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("monitor")]
+        [JsonStringEnumMemberName("monitor")]
         Monitor,
 
         /// <summary>
         /// The supervisor has no special role or permissions during the call.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("none")]
+        [JsonStringEnumMemberName("none")]
         None,
 
         /// <summary>
         /// The supervisor can listen to the call and whisper instructions to a participant without others hearing.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("whisper")]
+        [JsonStringEnumMemberName("whisper")]
         Whisper
     }
 }

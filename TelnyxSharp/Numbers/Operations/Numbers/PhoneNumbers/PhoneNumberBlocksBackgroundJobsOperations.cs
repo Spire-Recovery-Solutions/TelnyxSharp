@@ -29,7 +29,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
             var req = new RestRequest($"phone_number_blocks/jobs/{id}");
             return await ExecuteAsync<GetPhoneNumberBlocksJobResponse>(req, cancellationToken);
         }
-        
+
         /// <inheritdoc />
         public async Task<DeletePhoneNumberBlockResponse> Delete(DeletePhoneNumberBlockRequest request, CancellationToken cancellationToken = default)
         {

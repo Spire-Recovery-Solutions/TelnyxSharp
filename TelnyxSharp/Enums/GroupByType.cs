@@ -5,25 +5,25 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Specifies the grouping options for inventory coverage queries.
     /// </summary>
-    [JsonConverter(typeof(Converters.GroupByTypeConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum GroupByType
     {
         /// <summary>
         /// Group results by locality.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("locality")]
+        [JsonStringEnumMemberName("locality")]
         Locality,
 
         /// <summary>
         /// Group results by Numbering Plan Area (NPA).
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("npa")]
+        [JsonStringEnumMemberName("npa")]
         Npa,
 
         /// <summary>
         /// Group results by National Destination Code (NDC).
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("national_destination_code")]
+        [JsonStringEnumMemberName("national_destination_code")]
         NationalDestinationCode
     }
 }

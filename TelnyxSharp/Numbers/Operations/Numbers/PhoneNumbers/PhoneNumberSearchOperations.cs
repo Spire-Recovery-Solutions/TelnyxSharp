@@ -33,7 +33,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
 
             return await ExecuteAsync<AvailablePhoneNumbersResponse>(req, cancellationToken);
         }
-        
+
         /// <inheritdoc />
         public async Task<ListAvailablePhoneNumberBlocksResponse> ListAvailableNumberBlocks(ListAvailablePhoneNumberBlocksRequest request, CancellationToken cancellationToken = default)
         {
