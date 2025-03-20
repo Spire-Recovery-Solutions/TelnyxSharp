@@ -2,9 +2,8 @@
 using Polly.RateLimit;
 using RestSharp;
 using RestSharp.Authenticators;
+using RestSharp.Interceptors;
 using TelnyxSharp.Base;
-using TelnyxSharp.CdrReports.Interfaces;
-using TelnyxSharp.CdrReports.Operations;
 using TelnyxSharp.DetailRecords.Interfaces;
 using TelnyxSharp.DetailRecords.Operations;
 using TelnyxSharp.Identity.Interfaces;
@@ -22,16 +21,18 @@ using TelnyxSharp.Numbers.Operations.Numbers.PhoneNumberPorting;
 using TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers;
 using TelnyxSharp.Numbers.Operations.Numbers.PortingOrder;
 using TelnyxSharp.Numbers.Operations.Numbers.Voicemail;
+using TelnyxSharp.V1Operations.Interfaces;
+using TelnyxSharp.V1Operations.Operations;
 using TelnyxSharp.Voice.Interfaces;
 using TelnyxSharp.Voice.Operations.ProgrammableVoice;
 
 namespace TelnyxSharp;
-
 public class TelnyxClient : BaseOperations, ITelnyxClient
 {
     private static readonly string DefaultLogPath = Path.Combine(Path.GetTempPath(), "TelnyxSDK", "logs");
     private readonly StreamWriter? _logWriter;
     private readonly FileStream? _logFileStream;
+    private readonly IRestClient? _v1Client;
 
     // Lazy-loaded API sections
     private readonly Lazy<ISmsMmsOperations> _smsmms;
@@ -48,7 +49,7 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     private readonly Lazy<IDocumentsOperations> _documents;
     private readonly Lazy<IPortingOrderOperations> _portingOrder;
     private readonly Lazy<IDetailRecordsOperations> _detailRecordsSearch;
-    private readonly Lazy<ICdrRequestsOperations> _cdrRequests;
+    private readonly Lazy<IV1ApiOperations> _v1Operations;
 
     // Public properties
     public ISmsMmsOperations SmsMms => _smsmms.Value;
@@ -65,16 +66,26 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     public IDocumentsOperations Documents => _documents.Value;
     public IPortingOrderOperations PortingOrder => _portingOrder.Value;
     public IDetailRecordsOperations DetailRecordsSearch => _detailRecordsSearch.Value;
-    public ICdrRequestsOperations CdrRequests => _cdrRequests.Value;
+    public IV1ApiOperations V1 => _v1Operations?.Value;
 
-    public TelnyxClient(string apiKey)
+    public TelnyxClient(string apiKey, string v1ApiToken = null)
     {
-        var options = new RestClientOptions("https://api.telnyx.com/v2/")
+        var v2Options = new RestClientOptions("https://api.telnyx.com/v2/")
         {
             Authenticator = new JwtAuthenticator(apiKey),
             ThrowOnDeserializationError = false,
             ThrowOnAnyError = false,
         };
+
+        RestClientOptions v1Options = null;
+        if (!string.IsNullOrEmpty(v1ApiToken))
+        {
+            v1Options = new RestClientOptions("https://api.telnyx.com/v1/")
+            {
+                ThrowOnDeserializationError = false,
+                ThrowOnAnyError = false,
+            };
+        }
 
         const bool debugMode = false;
         if (debugMode)
@@ -89,9 +100,16 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
             _logWriter.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] TelnyxSDK Debug Log File: {logFilePath}");
             _logWriter.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] Session Started: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
 
-            options.Interceptors = [new TelnyxAsyncLoggingInterceptor(_logWriter)];
-            options.ThrowOnAnyError = debugMode;
-            options.ThrowOnDeserializationError = debugMode;
+            v2Options.Interceptors = new List<Interceptor> { new TelnyxAsyncLoggingInterceptor(_logWriter) };
+            v2Options.ThrowOnAnyError = debugMode;
+            v2Options.ThrowOnDeserializationError = debugMode;
+
+            if (v1Options != null)
+            {
+                v1Options.Interceptors = new List<Interceptor> { new TelnyxAsyncLoggingInterceptor(_logWriter) };
+                v1Options.ThrowOnAnyError = debugMode;
+                v1Options.ThrowOnDeserializationError = debugMode;
+            }
         }
 
         var rateLimitRetryPolicy = Policy
@@ -104,10 +122,19 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
                     return ex?.RetryAfter ?? TimeSpan.FromSeconds(1);
                 },
                 onRetryAsync: (exception, timeSpan, attempt, context) => Task.CompletedTask);
-
         // Initialize base with configured optionsQ
-        base.Client = new RestClient(options);
+        base.Client = new RestClient(v2Options);
         base.RateLimitRetryPolicy = rateLimitRetryPolicy;
+
+        if (v1Options != null)
+        {
+            _v1Client = new RestClient(v1Options);
+            _v1Client.AddDefaultHeader("x-api-token", v1ApiToken);
+        }
+        else
+        {
+            _v1Client = null;
+        }
 
         // Initialize lazy-loaded sections
         _smsmms = new Lazy<ISmsMmsOperations>(() =>
@@ -119,12 +146,12 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
             LazyThreadSafetyMode.ExecutionAndPublication);
 
         _tenDlc = new Lazy<ITenDlcOperations>(() =>
-           new TenDlcOperations(Client, RateLimitRetryPolicy),
-           LazyThreadSafetyMode.ExecutionAndPublication);
+            new TenDlcOperations(Client, RateLimitRetryPolicy),
+            LazyThreadSafetyMode.ExecutionAndPublication);
 
         _lookUpNumberOperations = new Lazy<ILookUpNumberOperations>(() =>
-           new LookUpNumberOperations(Client, RateLimitRetryPolicy),
-           LazyThreadSafetyMode.ExecutionAndPublication);
+            new LookUpNumberOperations(Client, RateLimitRetryPolicy),
+            LazyThreadSafetyMode.ExecutionAndPublication);
 
         _phoneNumberOperations = new Lazy<IPhoneNumberOperations>(() =>
             new PhoneNumberOperations(Client, RateLimitRetryPolicy),
@@ -166,9 +193,13 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
             new DetailRecordsOperations(Client, RateLimitRetryPolicy),
             LazyThreadSafetyMode.ExecutionAndPublication);
 
-        _cdrRequests = new Lazy<ICdrRequestsOperations>(() =>
-            new CdrRequestsOperations(Client, RateLimitRetryPolicy),
-            LazyThreadSafetyMode.ExecutionAndPublication);
+        _v1Operations = new Lazy<IV1ApiOperations>(() =>
+            {
+                if (_v1Client == null)
+                    throw new InvalidOperationException("v1 token not provided; v1 endpoints cannot be used.");
+
+                return new V1ApiOperations(_v1Client, RateLimitRetryPolicy);
+            }, LazyThreadSafetyMode.ExecutionAndPublication);
     }
 
     public void Dispose()
@@ -231,14 +262,15 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
         {
             disposableDetailRecordsSearch.Dispose();
         }
-        if (_cdrRequests.IsValueCreated && _cdrRequests.Value is IDisposable disposableCdrRequests)
+        if (_v1Operations.IsValueCreated && _v1Operations.Value is IDisposable disposableV1Operations)
         {
-            disposableCdrRequests.Dispose();
+            disposableV1Operations.Dispose();
         }
 
         _logWriter?.Dispose();
         _logFileStream?.Dispose();
         Client?.Dispose();
+        _v1Client?.Dispose();
         GC.SuppressFinalize(this);
     }
 }

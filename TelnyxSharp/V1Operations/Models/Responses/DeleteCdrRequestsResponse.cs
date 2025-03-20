@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using TelnyxSharp.Models;
 
-namespace TelnyxSharp.CdrReports.Models.Responses
+namespace TelnyxSharp.V1Operations.Models.Responses
 {
     /// <summary>
     /// Represents the response from a DELETE CDR Request operation.
