@@ -13,7 +13,7 @@ namespace TelnyxSharp.CdrReports.Models.Requests
         /// Example: "2025-02-20T00:00:00+00:00"
         /// </summary>
         [JsonPropertyName("start_time")]
-        public string StartTime { get; set; }
+        public required string StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets the end time of the report (UTC). Must be less than 24 hours from now.
