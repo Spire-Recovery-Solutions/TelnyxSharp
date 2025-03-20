@@ -2,11 +2,11 @@
 using RestSharp;
 using System.Text.Json;
 using TelnyxSharp.Base;
-using TelnyxSharp.CdrReports.Interfaces;
-using TelnyxSharp.CdrReports.Models.Requests;
-using TelnyxSharp.CdrReports.Models.Responses;
+using TelnyxSharp.V1Operations.Interfaces;
+using TelnyxSharp.V1Operations.Models.Requests;
+using TelnyxSharp.V1Operations.Models.Responses;
 
-namespace TelnyxSharp.CdrReports.Operations
+namespace TelnyxSharp.V1Operations.Operations
 {
     /// <summary>
     /// Implements operations for CDR requests.

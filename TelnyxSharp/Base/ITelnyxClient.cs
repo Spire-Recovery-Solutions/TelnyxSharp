@@ -1,8 +1,8 @@
-﻿using TelnyxSharp.CdrReports.Interfaces;
-using TelnyxSharp.DetailRecords.Interfaces;
+﻿using TelnyxSharp.DetailRecords.Interfaces;
 using TelnyxSharp.Identity.Interfaces;
 using TelnyxSharp.Messaging.Interfaces;
 using TelnyxSharp.Numbers.Interfaces;
+using TelnyxSharp.V1Operations.Interfaces;
 using TelnyxSharp.Voice.Interfaces;
 
 namespace TelnyxSharp.Base
@@ -98,9 +98,10 @@ namespace TelnyxSharp.Base
         IDetailRecordsOperations DetailRecordsSearch { get; }
 
         /// <summary>
-        /// Provides operations for managing CDR requests.
-        /// This includes creating, listing, retrieving, and deleting CDR requests.
+        /// Provides operations for interacting with Telnyx v1 endpoints.
+        /// Currently, this interface exposes functionality related to CDR requests,
+        /// such as creating, listing, retrieving, and deleting CDR requests.
         /// </summary>
-        ICdrRequestsOperations CdrRequests { get; }
+        IV1ApiOperations V1 { get; }
     }
 }
