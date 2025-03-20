@@ -3,6 +3,8 @@ using Polly.RateLimit;
 using RestSharp;
 using RestSharp.Authenticators;
 using TelnyxSharp.Base;
+using TelnyxSharp.CdrReports.Interfaces;
+using TelnyxSharp.CdrReports.Operations;
 using TelnyxSharp.DetailRecords.Interfaces;
 using TelnyxSharp.DetailRecords.Operations;
 using TelnyxSharp.Identity.Interfaces;
@@ -46,6 +48,7 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     private readonly Lazy<IDocumentsOperations> _documents;
     private readonly Lazy<IPortingOrderOperations> _portingOrder;
     private readonly Lazy<IDetailRecordsOperations> _detailRecordsSearch;
+    private readonly Lazy<ICdrRequestsOperations> _cdrRequests;
 
     // Public properties
     public ISmsMmsOperations SmsMms => _smsmms.Value;
@@ -62,6 +65,7 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     public IDocumentsOperations Documents => _documents.Value;
     public IPortingOrderOperations PortingOrder => _portingOrder.Value;
     public IDetailRecordsOperations DetailRecordsSearch => _detailRecordsSearch.Value;
+    public ICdrRequestsOperations CdrRequests => _cdrRequests.Value;
 
     public TelnyxClient(string apiKey)
     {
@@ -161,6 +165,10 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
         _detailRecordsSearch = new Lazy<IDetailRecordsOperations>(() =>
             new DetailRecordsOperations(Client, RateLimitRetryPolicy),
             LazyThreadSafetyMode.ExecutionAndPublication);
+
+        _cdrRequests = new Lazy<ICdrRequestsOperations>(() =>
+            new CdrRequestsOperations(Client, RateLimitRetryPolicy),
+            LazyThreadSafetyMode.ExecutionAndPublication);
     }
 
     public void Dispose()
@@ -222,6 +230,10 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
         if (_detailRecordsSearch.IsValueCreated && _detailRecordsSearch.Value is IDisposable disposableDetailRecordsSearch)
         {
             disposableDetailRecordsSearch.Dispose();
+        }
+        if (_cdrRequests.IsValueCreated && _cdrRequests.Value is IDisposable disposableCdrRequests)
+        {
+            disposableCdrRequests.Dispose();
         }
 
         _logWriter?.Dispose();
