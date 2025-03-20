@@ -11,7 +11,7 @@ namespace TelnyxSharp.CdrReports.Operations
     /// <summary>
     /// Implements operations for CDR requests.
     /// </summary>
-    public class CdrRequestsOperation(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
+    public class CdrRequestsOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
         : BaseOperations(client, rateLimitRetryPolicy), ICdrRequestsOperations
     {
         /// <inheritdoc />

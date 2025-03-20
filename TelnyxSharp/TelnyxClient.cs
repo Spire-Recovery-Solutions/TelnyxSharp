@@ -167,7 +167,7 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
             LazyThreadSafetyMode.ExecutionAndPublication);
 
         _cdrRequests = new Lazy<ICdrRequestsOperations>(() =>
-            new CdrRequestsOperation(Client, RateLimitRetryPolicy),
+            new CdrRequestsOperations(Client, RateLimitRetryPolicy),
             LazyThreadSafetyMode.ExecutionAndPublication);
     }
 
