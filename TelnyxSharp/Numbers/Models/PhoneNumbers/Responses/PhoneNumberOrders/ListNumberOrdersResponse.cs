@@ -17,7 +17,7 @@ namespace TelnyxSharp.Numbers.Models.PhoneNumbers.Responses.PhoneNumberOrders
     /// </summary>
     public partial class NumberOrdersPhoneNumber : BaseNumberOrdersData
     {
-        
+
         /// <summary>
         /// Gets or sets the list of phone numbers in the number order.
         /// </summary>

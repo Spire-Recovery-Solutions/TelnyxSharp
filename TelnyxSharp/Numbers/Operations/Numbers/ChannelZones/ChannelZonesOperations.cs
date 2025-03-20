@@ -39,7 +39,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.ChannelZones
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<UpdateChannelZoneResponse>(req, cancellationToken);
         }
-        
+
         /// <inheritdoc />
         public async Task<GetChannelZonePhoneNumbersResponse> ListPhoneNumbers(string channelZoneId, GetChannelZonePhoneNumbersRequest request,
             CancellationToken cancellationToken = default)
@@ -49,17 +49,17 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.ChannelZones
 
             return await ExecuteAsync<GetChannelZonePhoneNumbersResponse>(req, cancellationToken);
         }
-        
+
         /// <inheritdoc />
         public async Task<AssignPhoneNumberToChannelZoneResponse> AssignPhoneNumber(string channelZoneId, AssignPhoneNumberToChannelZoneRequest request,
             CancellationToken cancellationToken = default)
         {
             var req = new RestRequest($"phone_numbers/channel_zones/{channelZoneId}/channel_zone_phone_numbers", Method.Post);
-            
+
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<AssignPhoneNumberToChannelZoneResponse>(req, cancellationToken);
         }
-        
+
         /// <inheritdoc />
         public async Task<UnassignPhoneNumberResponse> UnassignPhoneNumber(string channelZoneId, string phoneNumber,
             CancellationToken cancellationToken = default)

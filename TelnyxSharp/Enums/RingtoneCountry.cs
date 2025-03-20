@@ -5,167 +5,167 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Represents countries with specific ringtone patterns in telephony systems.
     /// </summary>
-    [JsonConverter(typeof(Converters.RingtoneCountryConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum RingtoneCountry
     {
         /// <summary>Austria</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("at")]
+        [JsonStringEnumMemberName("at")]
         Austria,
 
         /// <summary>Australia</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("au")]
+        [JsonStringEnumMemberName("au")]
         Australia,
 
         /// <summary>Belgium</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("be")]
+        [JsonStringEnumMemberName("be")]
         Belgium,
 
         /// <summary>Bulgaria</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("bg")]
+        [JsonStringEnumMemberName("bg")]
         Bulgaria,
 
         /// <summary>Brazil</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("br")]
+        [JsonStringEnumMemberName("br")]
         Brazil,
 
         /// <summary>Switzerland</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("ch")]
+        [JsonStringEnumMemberName("ch")]
         Switzerland,
 
         /// <summary>Chile</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("cl")]
+        [JsonStringEnumMemberName("cl")]
         Chile,
 
         /// <summary>China</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("cn")]
+        [JsonStringEnumMemberName("cn")]
         China,
 
         /// <summary>Czech Republic</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("cz")]
+        [JsonStringEnumMemberName("cz")]
         CzechRepublic,
 
         /// <summary>Germany</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("de")]
+        [JsonStringEnumMemberName("de")]
         Germany,
 
         /// <summary>Denmark</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("dk")]
+        [JsonStringEnumMemberName("dk")]
         Denmark,
 
         /// <summary>Estonia</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("ee")]
+        [JsonStringEnumMemberName("ee")]
         Estonia,
 
         /// <summary>Spain</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("es")]
+        [JsonStringEnumMemberName("es")]
         Spain,
 
         /// <summary>Finland</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("fi")]
+        [JsonStringEnumMemberName("fi")]
         Finland,
 
         /// <summary>France</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("fr")]
+        [JsonStringEnumMemberName("fr")]
         France,
 
         /// <summary>Greece</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("gr")]
+        [JsonStringEnumMemberName("gr")]
         Greece,
 
         /// <summary>Hungary</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("hu")]
+        [JsonStringEnumMemberName("hu")]
         Hungary,
 
         /// <summary>Israel</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("il")]
+        [JsonStringEnumMemberName("il")]
         Israel,
 
         /// <summary>India</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("in")]
+        [JsonStringEnumMemberName("in")]
         India,
 
         /// <summary>Italy</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("it")]
+        [JsonStringEnumMemberName("it")]
         Italy,
 
         /// <summary>Japan</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("jp")]
+        [JsonStringEnumMemberName("jp")]
         Japan,
 
         /// <summary>Lithuania</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("lt")]
+        [JsonStringEnumMemberName("lt")]
         Lithuania,
 
         /// <summary>Mexico</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("mx")]
+        [JsonStringEnumMemberName("mx")]
         Mexico,
 
         /// <summary>Malaysia</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("my")]
+        [JsonStringEnumMemberName("my")]
         Malaysia,
 
         /// <summary>Netherlands</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("nl")]
+        [JsonStringEnumMemberName("nl")]
         Netherlands,
 
         /// <summary>Norway</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("no")]
+        [JsonStringEnumMemberName("no")]
         Norway,
 
         /// <summary>New Zealand</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("nz")]
+        [JsonStringEnumMemberName("nz")]
         NewZealand,
 
         /// <summary>Philippines</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("ph")]
+        [JsonStringEnumMemberName("ph")]
         Philippines,
 
         /// <summary>Poland</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("pl")]
+        [JsonStringEnumMemberName("pl")]
         Poland,
 
         /// <summary>Portugal</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("pt")]
+        [JsonStringEnumMemberName("pt")]
         Portugal,
 
         /// <summary>Russia</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("ru")]
+        [JsonStringEnumMemberName("ru")]
         Russia,
 
         /// <summary>Sweden</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("se")]
+        [JsonStringEnumMemberName("se")]
         Sweden,
 
         /// <summary>Singapore</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("sg")]
+        [JsonStringEnumMemberName("sg")]
         Singapore,
 
         /// <summary>Thailand</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("th")]
+        [JsonStringEnumMemberName("th")]
         Thailand,
 
         /// <summary>Taiwan</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("tw")]
+        [JsonStringEnumMemberName("tw")]
         Taiwan,
 
         /// <summary>United Kingdom</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("uk")]
+        [JsonStringEnumMemberName("uk")]
         UnitedKingdom,
 
         /// <summary>United States (Legacy Pattern)</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("us-old")]
+        [JsonStringEnumMemberName("us-old")]
         UnitedStatesLegacy,
 
         /// <summary>United States</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("us")]
+        [JsonStringEnumMemberName("us")]
         UnitedStates,
 
         /// <summary>Venezuela</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("ve")]
+        [JsonStringEnumMemberName("ve")]
         Venezuela,
 
         /// <summary>South Africa</summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("za")]
+        [JsonStringEnumMemberName("za")]
         SouthAfrica
     }
 }

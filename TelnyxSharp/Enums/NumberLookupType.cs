@@ -1,8 +1,11 @@
-﻿namespace TelnyxSharp.Enums
+﻿using System.Text.Json.Serialization;
+
+namespace TelnyxSharp.Enums
 {
     /// <summary>
     /// Represents the types of number lookups that can be performed.
     /// </summary>
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum NumberLookupType
     {
         /// <summary>

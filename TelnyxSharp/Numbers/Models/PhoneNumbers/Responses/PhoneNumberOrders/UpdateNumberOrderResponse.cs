@@ -12,7 +12,7 @@ namespace TelnyxSharp.Numbers.Models.PhoneNumbers.Responses.PhoneNumberOrders
 
     public class UpdateNumberOrderData : BaseNumberOrdersData
     {
-        
+
         /// <summary>
         /// Gets or sets the list of phone numbers in the number order.
         /// </summary>

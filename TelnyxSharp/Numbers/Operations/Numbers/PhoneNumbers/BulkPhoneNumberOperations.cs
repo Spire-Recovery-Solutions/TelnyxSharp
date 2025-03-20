@@ -29,7 +29,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
             return await ExecuteAsync<RetrieveNumbersJobResponse>(req, cancellationToken);
         }
 
-        
+
         /// <inheritdoc />
         public async Task<UpdateEmergencySettingsResponse> UpdateEmergencySettings(UpdateEmergencySettingsRequest request, CancellationToken cancellationToken = default)
         {

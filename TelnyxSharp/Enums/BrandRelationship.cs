@@ -1,48 +1,47 @@
 ﻿using System.Text.Json.Serialization;
-using TelnyxSharp.Converters;
 
 namespace TelnyxSharp.Enums
 {
     /// <summary>
     /// Enum representing the possible brand relationships with Telnyx.
     /// </summary>
-    [JsonConverter(typeof(BrandRelationshipConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum BrandRelationship
     {
-       /// <summary>
+        /// <summary>
         /// Unknown brand relationship status.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("UNKNOWN")]
+        [JsonStringEnumMemberName("UNKNOWN")]
         Unknown,
 
         /// <summary>
         /// Basic account relationship.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("BASIC_ACCOUNT")]
+        [JsonStringEnumMemberName("BASIC_ACCOUNT")]
         BasicAccount,
 
         /// <summary>
         /// Small account relationship.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("SMALL_ACCOUNT")]
+        [JsonStringEnumMemberName("SMALL_ACCOUNT")]
         SmallAccount,
 
         /// <summary>
         /// Medium account relationship.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("MEDIUM_ACCOUNT")]
+        [JsonStringEnumMemberName("MEDIUM_ACCOUNT")]
         MediumAccount,
 
         /// <summary>
         /// Large account relationship.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("LARGE_ACCOUNT")]
+        [JsonStringEnumMemberName("LARGE_ACCOUNT")]
         LargeAccount,
 
         /// <summary>
         /// Key account relationship.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("KEY_ACCOUNT")]
+        [JsonStringEnumMemberName("KEY_ACCOUNT")]
         KeyAccount
     }
 }

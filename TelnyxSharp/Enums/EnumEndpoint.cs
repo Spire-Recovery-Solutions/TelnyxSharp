@@ -1,8 +1,11 @@
-﻿namespace TelnyxSharp.Enums
+﻿using System.Text.Json.Serialization;
+
+namespace TelnyxSharp.Enums
 {
     /// <summary>
     /// Represents the various endpoints used within the TelnyxSharp system.
     /// </summary>
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum EnumEndpoint
     {
         /// <summary>
