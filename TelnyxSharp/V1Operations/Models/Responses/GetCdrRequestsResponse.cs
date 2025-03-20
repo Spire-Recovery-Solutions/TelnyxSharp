@@ -3,16 +3,12 @@ using System.Text.Json.Serialization;
 using TelnyxSharp.Base;
 using TelnyxSharp.Models;
 
-namespace TelnyxSharp.CdrReports.Models.Responses
+namespace TelnyxSharp.V1Operations.Models.Responses
 {
     /// <summary>
-    /// Represents the response for listing CDR requests.
-    /// Contains an array of CDR request data.
+    /// Represents the response for a single CDR request.
     /// </summary>
-   /// <summary>
-    /// Response model for listing CDR requests.
-    /// </summary>
-    public class ListCdrRequestsResponse : List<CdrRequestData>, ITelnyxResponse
+    public class GetCdrRequestsResponse : CdrRequestData, ITelnyxResponse
     {
         /// <summary>
         /// Gets or sets whether the response was successful.
