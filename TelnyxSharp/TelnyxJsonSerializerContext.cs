@@ -1,5 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using TelnyxSharp.Base;
+using TelnyxSharp.CdrReports.Models.Requests;
+using TelnyxSharp.CdrReports.Models.Responses;
 using TelnyxSharp.DetailRecords.Models.Requests;
 using TelnyxSharp.DetailRecords.Models.Responses;
 using TelnyxSharp.Enums;
@@ -1253,6 +1255,16 @@ namespace TelnyxSharp
     [JsonSerializable(typeof(AmdDetailRecord))]
     [JsonSerializable(typeof(SimCardUsageDetailRecord))]
     [JsonSerializable(typeof(MediaStorageDetailRecord))]
+
+    
+    [JsonSerializable(typeof(CreateCdrRequestsRequest))]
+    [JsonSerializable(typeof(CdrFilter))]
+    [JsonSerializable(typeof(CreateCdrRequestsResponse))]
+    [JsonSerializable(typeof(CdrRequestData))]
+    [JsonSerializable(typeof(ListCdrRequestsRequest))]
+    [JsonSerializable(typeof(ListCdrRequestsResponse))]
+    [JsonSerializable(typeof(GetCdrRequestsResponse))]
+    [JsonSerializable(typeof(DeleteCdrRequestsResponse))]
 
     // [JsonSerializable(typeof(StreamingFailedEvent))]
     // [JsonSerializable(typeof(StreamingStartedEvent))]
