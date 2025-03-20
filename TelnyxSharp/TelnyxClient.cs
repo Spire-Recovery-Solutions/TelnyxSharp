@@ -51,6 +51,7 @@ namespace TelnyxSharp;
         private readonly Lazy<IDetailRecordsOperations> _detailRecordsSearch;
         private readonly Lazy<ICdrRequestsOperations> _cdrRequests;
 
+        // Public properties
         public ISmsMmsOperations SmsMms => _smsmms.Value;
         public ITollFreeOperations TollFreeVerification => _tollFreeVerification.Value;
         public ITenDlcOperations TenDlc => _tenDlc.Value;
@@ -121,7 +122,7 @@ namespace TelnyxSharp;
                         return ex?.RetryAfter ?? TimeSpan.FromSeconds(1);
                     },
                     onRetryAsync: (exception, timeSpan, attempt, context) => Task.CompletedTask);
-
+            // Initialize base with configured optionsQ
             base.Client = new RestClient(v2Options);
             base.RateLimitRetryPolicy = rateLimitRetryPolicy;
 
@@ -135,6 +136,7 @@ namespace TelnyxSharp;
                 _v1Client = null;
             }
 
+            // Initialize lazy-loaded sections
             _smsmms = new Lazy<ISmsMmsOperations>(() =>
                 new SmsMmsOperations(Client, RateLimitRetryPolicy),
                 LazyThreadSafetyMode.ExecutionAndPublication);
