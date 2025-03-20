@@ -1,6 +1,6 @@
 ﻿using RestSharp;
-using System.Reflection;
-using System.Text.Json.Serialization;
+using System.Text.Json;
+using TelnyxSharp.Enums;
 namespace TelnyxSharp
 {
     /// <summary>
@@ -11,45 +11,40 @@ namespace TelnyxSharp
         private const int DefaultPageSize = 50;
         private const int MaxPageSize = 250;
         private const int MinPageSize = 1;
+
         /// <summary>
         /// Adds a filter with an enum value to the request query parameters.
         /// Uses JsonPropertyName attribute value if available.
         /// </summary>
-        public static RestRequest AddFilter(this RestRequest request, string key, object? value)
+        public static RestRequest AddFilter(this RestRequest request, string key, object? value = null, FilterOperator? filterOperator = null)
         {
             if (value == null || (value is string strValue && string.IsNullOrWhiteSpace(strValue)))
             {
                 return request;
             }
 
+            string? filterOperatorStr = filterOperator.HasValue
+                ? JsonSerializer.Serialize(filterOperator.Value).Trim('"')
+                : null;
+
+            var finalKey = string.IsNullOrWhiteSpace(filterOperatorStr)
+                ? key
+                : $"{key}[{filterOperatorStr}]";
+
             switch (value)
             {
                 case Enum @enum:
-                    {
-                        var stringValue = GetEnumValue(@enum);
-                        if (!string.IsNullOrEmpty(stringValue))
-                        {
-                            request.AddParameter(key, stringValue, ParameterType.QueryString);
-                        }
-
-                        break;
-                    }
+                    var enumType = @enum.GetType();
+                    var stringValue = JsonSerializer.Serialize(@enum, enumType).Trim('"');
+                    request.AddParameter(finalKey, stringValue, ParameterType.QueryString);
+                    break;
                 default:
-                    request.AddParameter(key, value, ParameterType.QueryString);
+                    request.AddParameter(finalKey, value, ParameterType.QueryString);
                     break;
             }
             return request;
         }
 
-        /// <summary>
-        /// Retrieves the string value of an enum, using JsonPropertyName if available.
-        /// </summary>
-        private static string GetEnumValue(Enum value)
-        {
-            var memberInfo = value.GetType().GetMember(value.ToString())[0];
-            var attribute = memberInfo.GetCustomAttribute<JsonPropertyNameAttribute>();
-            return attribute?.Name ?? value.ToString();
-        }
         /// <summary>
         /// Adds a list of values as query parameters with array notation.
         /// Filters out null, empty, or whitespace-only values.

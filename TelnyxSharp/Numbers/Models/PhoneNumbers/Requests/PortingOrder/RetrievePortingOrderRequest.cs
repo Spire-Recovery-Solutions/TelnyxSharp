@@ -12,6 +12,6 @@ namespace TelnyxSharp.Numbers.Models.PhoneNumbers.Requests.PortingOrder
         /// Gets or sets a value indicating whether to include associated phone numbers in the response.
         /// If true, the response will include phone numbers; otherwise, phone numbers will be excluded.
         /// </summary>
-        public bool? IncludePhoneNumbers { get; set; } 
+        public bool? IncludePhoneNumbers { get; set; }
     }
 }

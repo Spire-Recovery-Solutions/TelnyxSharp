@@ -2,7 +2,7 @@
 
 namespace TelnyxSharp.Enums
 {
-     /// <summary>
+    /// <summary>
     /// Enum representing the various statuses of a resource.
     /// </summary>
     [JsonConverter(typeof(JsonStringEnumConverter))]
@@ -16,55 +16,55 @@ namespace TelnyxSharp.Enums
         /// <summary>
         /// Represents a deleted status.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("deleted")]
+        [JsonStringEnumMemberName("deleted")]
         Deleted,
 
         /// <summary>
         /// Represents a failed status.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("failed")]
+        [JsonStringEnumMemberName("failed")]
         Failed,
 
         /// <summary>
         /// Represents a pending status.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("pending")]
+        [JsonStringEnumMemberName("pending")]
         Pending,
 
         /// <summary>
         /// Represents a successful status.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("successful")]
+        [JsonStringEnumMemberName("successful")]
         Successful,
 
         /// <summary>
         /// Represents a verified status.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("Verified")]
+        [JsonStringEnumMemberName("Verified")]
         Verified,
 
         /// <summary>
         /// Represents a rejected status.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("Rejected")]
+        [JsonStringEnumMemberName("Rejected")]
         Rejected,
 
         /// <summary>
         /// Represents a status where the resource is waiting for vendor action.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("Waiting For Vendor")]
+        [JsonStringEnumMemberName("Waiting For Vendor")]
         WaitingForVendor,
 
         /// <summary>
         /// Represents a status where the resource is waiting for customer action.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("Waiting For Customer")]
+        [JsonStringEnumMemberName("Waiting For Customer")]
         WaitingForCustomer,
 
         /// <summary>
         /// Represents a status where the resource is in progress.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("In Progress")]
+        [JsonStringEnumMemberName("In Progress")]
         InProgress
     }
 }

@@ -1,9 +1,9 @@
-﻿using System.Collections;
-using System.Net;
-using System.Text.Json;
-using Polly.RateLimit;
+﻿using Polly.RateLimit;
 using Polly.Retry;
 using RestSharp;
+using System.Collections;
+using System.Net;
+using System.Text.Json;
 using TelnyxSharp.Models;
 
 namespace TelnyxSharp.Base

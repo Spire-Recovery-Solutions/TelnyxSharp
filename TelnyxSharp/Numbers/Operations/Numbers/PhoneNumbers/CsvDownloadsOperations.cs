@@ -19,14 +19,14 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
 
             return await ExecuteAsync<ListCsvDownloadsResponse>(req, cancellationToken);
         }
-        
+
         /// <inheritdoc />
         public async Task<CreateCsvDownloadResponse> Create(CancellationToken cancellationToken = default)
         {
             var restRequest = new RestRequest("phone_numbers/csv_downloads", Method.Post);
             return await ExecuteAsync<CreateCsvDownloadResponse>(restRequest, cancellationToken);
         }
-        
+
         /// <inheritdoc />
         public async Task<GetCsvDownloadResponse> Get(string id, CancellationToken cancellationToken = default)
         {

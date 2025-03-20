@@ -11,7 +11,7 @@ namespace TelnyxSharp.Enums
         /// <summary>
         /// Both legs of the stream, indicating communication in both directions.
         /// </summary>
-       Both,
+        Both,
 
         /// <summary>
         /// The same leg of the stream, indicating communication on the same side.

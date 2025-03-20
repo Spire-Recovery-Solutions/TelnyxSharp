@@ -53,7 +53,7 @@ public class BaseEvent : IEvent
     /// This is a UUID that identifies the resource.
     /// </summary>
     [JsonPropertyName("id")]
-    public Guid Id { get; set; }   
+    public Guid Id { get; set; }
 
     /// <summary>
     /// Gets or sets the timestamp indicating when the event occurred.

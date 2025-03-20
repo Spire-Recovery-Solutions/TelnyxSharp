@@ -40,7 +40,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
             var req = new RestRequest($"number_reservations/{numberReservationId}");
             return await ExecuteAsync<GetNumberReservationResponse>(req, cancellationToken);
         }
-        
+
         /// <inheritdoc />
         public async Task<ExtendNumberReservationResponse> Extend(string numberReservationId, CancellationToken cancellationToken = default)
         {

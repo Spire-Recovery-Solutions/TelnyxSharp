@@ -1,12 +1,11 @@
 ﻿using System.Text.Json.Serialization;
-using TelnyxSharp.Converters;
 
 namespace TelnyxSharp.Enums
 {
     /// <summary>
     /// Enum representing the different types of message types.
     /// </summary>
-    [JsonConverter(typeof(MessageTypeConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum MessageType
     {
         /// <summary>
@@ -17,49 +16,49 @@ namespace TelnyxSharp.Enums
         /// <summary>
         /// Represents a long-code message type.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("long-code")]
+        [JsonStringEnumMemberName("long-code")]
         LongCode,
 
         /// <summary>
         /// Represents a toll-free message type.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("toll-free")]
+        [JsonStringEnumMemberName("toll-free")]
         TollFree,
 
         /// <summary>
         /// Represents a short-code message type.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("short-code")]
+        [JsonStringEnumMemberName("short-code")]
         ShortCode,
 
         /// <summary>
         /// Represents a longcode message type.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("longcode")]
+        [JsonStringEnumMemberName("longcode")]
         Longcode,
 
         /// <summary>
         /// Represents a tollfree message type.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("tollfree")]
+        [JsonStringEnumMemberName("tollfree")]
         Tollfree,
 
         /// <summary>
         /// Represents a shortcode message type.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("shortcode")]
+        [JsonStringEnumMemberName("shortcode")]
         Shortcode,
 
         /// <summary>
         /// Represents an SMS message type.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("SMS")]
+        [JsonStringEnumMemberName("SMS")]
         Sms,
 
         /// <summary>
         /// Represents an MMS message type.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("MMS")]
+        [JsonStringEnumMemberName("MMS")]
         Mms
     }
 }

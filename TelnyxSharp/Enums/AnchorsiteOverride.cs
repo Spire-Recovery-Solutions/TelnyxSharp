@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using TelnyxSharp.Converters;
 
 namespace TelnyxSharp.Enums
 {
@@ -7,31 +6,31 @@ namespace TelnyxSharp.Enums
     /// Enum representing different anchor site overrides for the Telnyx service.
     /// This is used to specify the location override for the anchor site.
     /// </summary>
-    [JsonConverter(typeof(AnchorsiteOverrideConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum AnchorsiteOverride
     {
-         /// <summary>
+        /// <summary>
         /// Indicates a latency-based anchor site override.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("Latency")]
+        [JsonStringEnumMemberName("Latency")]
         Latency,
 
         /// <summary>
         /// Specifies Chicago, IL as the anchor site override.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("Chicago, IL")]
+        [JsonStringEnumMemberName("Chicago, IL")]
         Chicago,
 
         /// <summary>
         /// Specifies Ashburn, VA as the anchor site override.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("Ashburn, VA")]
+        [JsonStringEnumMemberName("Ashburn, VA")]
         Ashburn,
 
         /// <summary>
         /// Specifies San Jose, CA as the anchor site override.
         /// </summary>
-        //NET9UNCOMMENT [JsonStringEnumMemberName("San Jose, CA")]
+        [JsonStringEnumMemberName("San Jose, CA")]
         SanJose
     }
 }

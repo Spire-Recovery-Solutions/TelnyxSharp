@@ -17,10 +17,10 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.Documents
             var req = new RestRequest("requirement_types")
                           .AddFilter("filter[name][contains]", request.NameContains)
                           .AddFilter("sort[]", request.Sort);
-           
+
             return await ExecuteAsync<ListRequirementTypesResponse>(req, cancellationToken);
         }
-        
+
         /// <inheritdoc />
         public async Task<RetrieveRequirementTypeResponse> Get(string requirementTypeId, CancellationToken cancellationToken = default)
         {

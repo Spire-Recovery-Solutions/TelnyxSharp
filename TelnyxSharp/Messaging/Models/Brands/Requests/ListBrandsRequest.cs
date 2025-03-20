@@ -10,7 +10,7 @@ namespace TelnyxSharp.Messaging.Models.Brands.Requests
     /// and sorting the results based on a specified field.
     /// </summary>
     public class ListBrandsRequest : ITelnyxRequest
-    { 
+    {
         /// <summary>
         /// Gets or sets the page number for pagination. Defaults to 1.
         /// </summary>

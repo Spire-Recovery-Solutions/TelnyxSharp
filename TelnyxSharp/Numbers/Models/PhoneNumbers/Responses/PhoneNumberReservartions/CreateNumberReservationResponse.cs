@@ -16,7 +16,7 @@ namespace TelnyxSharp.Numbers.Models.PhoneNumbers.Responses.PhoneNumberReservart
     /// Includes information such as reservation ID, phone numbers reserved, status, and timestamps.
     /// </summary>
     public partial class NumberReservationData
-    {   
+    {
         /// <summary>
         /// Gets or sets the unique identifier of the number reservation.
         /// </summary>

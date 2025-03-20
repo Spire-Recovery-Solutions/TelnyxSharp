@@ -12,7 +12,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
     : BaseOperations(client, rateLimitRetryPolicy), IPhoneNumberBlockOrdersOperations
     {
         /// <inheritdoc />
-        public async Task<ListNumberBlockOrdersResponse> List(ListNumberBlockOrdersRequest request, 
+        public async Task<ListNumberBlockOrdersResponse> List(ListNumberBlockOrdersRequest request,
             CancellationToken cancellationToken = default)
         {
             var req = new RestRequest("number_block_orders")

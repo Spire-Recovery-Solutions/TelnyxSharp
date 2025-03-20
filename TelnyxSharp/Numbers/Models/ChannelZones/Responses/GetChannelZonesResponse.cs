@@ -5,7 +5,7 @@ using TelnyxSharp.Models;
 
 namespace TelnyxSharp.Numbers.Models.ChannelZones.Responses
 {
-    public class GetChannelZonesResponse : ChannelZone , ITelnyxResponse
+    public class GetChannelZonesResponse : ChannelZone, ITelnyxResponse
     {
         /// <summary>
         /// Indicates whether the operation was successful.

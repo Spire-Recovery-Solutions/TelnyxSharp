@@ -3,6 +3,8 @@ using Polly.RateLimit;
 using RestSharp;
 using RestSharp.Authenticators;
 using TelnyxSharp.Base;
+using TelnyxSharp.DetailRecords.Interfaces;
+using TelnyxSharp.DetailRecords.Operations;
 using TelnyxSharp.Identity.Interfaces;
 using TelnyxSharp.Identity.Operations.NumberLookup;
 using TelnyxSharp.Messaging.Interfaces;
@@ -43,6 +45,7 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     private readonly Lazy<IPhoneNumberPortingOperations> _phoneNumberPorting;
     private readonly Lazy<IDocumentsOperations> _documents;
     private readonly Lazy<IPortingOrderOperations> _portingOrder;
+    private readonly Lazy<IDetailRecordsOperations> _detailRecordsSearch;
 
     // Public properties
     public ISmsMmsOperations SmsMms => _smsmms.Value;
@@ -58,7 +61,7 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     public IPhoneNumberPortingOperations PhoneNumberOrders => _phoneNumberPorting.Value;
     public IDocumentsOperations Documents => _documents.Value;
     public IPortingOrderOperations PortingOrder => _portingOrder.Value;
-
+    public IDetailRecordsOperations DetailRecordsSearch => _detailRecordsSearch.Value;
 
     public TelnyxClient(string apiKey)
     {
@@ -154,6 +157,10 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
         _portingOrder = new Lazy<IPortingOrderOperations>(() =>
             new PortingOrderOperations(Client, RateLimitRetryPolicy),
             LazyThreadSafetyMode.ExecutionAndPublication);
+
+        _detailRecordsSearch = new Lazy<IDetailRecordsOperations>(() =>
+            new DetailRecordsOperations(Client, RateLimitRetryPolicy),
+            LazyThreadSafetyMode.ExecutionAndPublication);
     }
 
     public void Dispose()
@@ -210,6 +217,11 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
         if (_portingOrder.IsValueCreated && _portingOrder.Value is IDisposable disposablePortingOrder)
         {
             disposablePortingOrder.Dispose();
+
+        }
+        if (_detailRecordsSearch.IsValueCreated && _detailRecordsSearch.Value is IDisposable disposableDetailRecordsSearch)
+        {
+            disposableDetailRecordsSearch.Dispose();
         }
 
         _logWriter?.Dispose();

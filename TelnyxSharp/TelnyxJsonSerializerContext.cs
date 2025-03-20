@@ -1,5 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using TelnyxSharp.Base;
+using TelnyxSharp.DetailRecords.Models.Requests;
+using TelnyxSharp.DetailRecords.Models.Responses;
 using TelnyxSharp.Enums;
 using TelnyxSharp.Identity.Models.NumberLookup.Requests;
 using TelnyxSharp.Identity.Models.NumberLookup.Responses;
@@ -1129,6 +1131,8 @@ namespace TelnyxSharp
     [JsonSerializable(typeof(UseCaseCategories))]
     [JsonSerializable(typeof(VerificationStatus))]
     [JsonSerializable(typeof(Vertical))]
+    [JsonSerializable(typeof(FilterOperator))]
+    [JsonSerializable(typeof(DetailRecordType))]
 
     //Events
     [JsonSerializable(typeof(TelnyxEvent))]
@@ -1237,6 +1241,19 @@ namespace TelnyxSharp
     [JsonSerializable(typeof(MessageFrom))]
     [JsonSerializable(typeof(MessageToCc))]
     [JsonSerializable(typeof(Cost))]
+    [JsonSerializable(typeof(DetailRecordSearchRequest))]
+    [JsonSerializable(typeof(FilterCriteria))]
+    [JsonSerializable(typeof(DetailRecordSearchResponse))]
+    [JsonSerializable(typeof(DetailRecordBase))]
+    [JsonSerializable(typeof(MessageDetailRecord))]
+    [JsonSerializable(typeof(ConferenceDetailRecord))]
+    [JsonSerializable(typeof(ConferenceParticipantDetailRecord))]
+    [JsonSerializable(typeof(AmdDetailRecord))]
+    [JsonSerializable(typeof(VerificationDetailRecord))]
+    [JsonSerializable(typeof(AmdDetailRecord))]
+    [JsonSerializable(typeof(SimCardUsageDetailRecord))]
+    [JsonSerializable(typeof(MediaStorageDetailRecord))]
+
     // [JsonSerializable(typeof(StreamingFailedEvent))]
     // [JsonSerializable(typeof(StreamingStartedEvent))]
     // [JsonSerializable(typeof(StreamingStoppedEvent))]

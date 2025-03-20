@@ -5,34 +5,34 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Enumeration for phone number status.
     /// </summary>
-    [JsonConverter(typeof(Converters.PhoneNumberStatusTypeConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum PhoneNumberStatusType
     {
-        //NET9UNCOMMENT [JsonStringEnumMemberName("purchase_pending")]
+        [JsonStringEnumMemberName("purchase_pending")]
         PurchasePending,
 
-        //NET9UNCOMMENT [JsonStringEnumMemberName("purchase_failed")]
+        [JsonStringEnumMemberName("purchase_failed")]
         PurchaseFailed,
 
-        //NET9UNCOMMENT [JsonStringEnumMemberName("port_pending")]
+        [JsonStringEnumMemberName("port_pending")]
         PortPending,
 
-        //NET9UNCOMMENT [JsonStringEnumMemberName("active")]
+        [JsonStringEnumMemberName("active")]
         Active,
 
-        //NET9UNCOMMENT [JsonStringEnumMemberName("deleted")]
+        [JsonStringEnumMemberName("deleted")]
         Deleted,
 
-        //NET9UNCOMMENT [JsonStringEnumMemberName("port_failed")]
+        [JsonStringEnumMemberName("port_failed")]
         PortFailed,
 
-        //NET9UNCOMMENT [JsonStringEnumMemberName("emergency_only")]
+        [JsonStringEnumMemberName("emergency_only")]
         EmergencyOnly,
 
-        //NET9UNCOMMENT [JsonStringEnumMemberName("ported_out")]
+        [JsonStringEnumMemberName("ported_out")]
         PortedOut,
 
-        //NET9UNCOMMENT [JsonStringEnumMemberName("port_out_pending")]
+        [JsonStringEnumMemberName("port_out_pending")]
         PortOutPending
     }
 }

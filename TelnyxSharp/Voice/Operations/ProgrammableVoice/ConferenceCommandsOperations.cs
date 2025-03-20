@@ -166,7 +166,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
 
             return await ExecuteAsync<ConferenceCommandResponse>(req, cancellationToken);
         }
-        
+
         /// <inheritdoc />
         public async Task<ConferenceCommandResponse?> StopAudioToParticipants(string conferenceId, StopAudioToConferenceRequest request, CancellationToken cancellationToken = default)
         {
