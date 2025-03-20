@@ -1,6 +1,5 @@
 ﻿using System.Text.Json.Serialization;
 using TelnyxSharp.Base;
-using TelnyxSharp.Converters;
 using TelnyxSharp.Enums;
 
 namespace TelnyxSharp.DetailRecords.Models.Requests

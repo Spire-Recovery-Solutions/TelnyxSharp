@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using TelnyxSharp.Base;
 using TelnyxSharp.Models;
 
-namespace TelnyxSharp.CdrReports.Models.Responses
+namespace TelnyxSharp.V1Operations.Models.Responses
 {
     /// <summary>
     /// Represents the response returned after creating a CDR request.
@@ -42,7 +42,7 @@ namespace TelnyxSharp.CdrReports.Models.Responses
     }
 
 
-   /// <summary>
+    /// <summary>
     /// Represents a CDR (Call Detail Record) request item.
     /// </summary>
     public class CdrRequestData

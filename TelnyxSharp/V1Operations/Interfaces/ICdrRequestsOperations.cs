@@ -1,7 +1,7 @@
-﻿using TelnyxSharp.CdrReports.Models.Requests;
-using TelnyxSharp.CdrReports.Models.Responses;
+﻿using TelnyxSharp.V1Operations.Models.Requests;
+using TelnyxSharp.V1Operations.Models.Responses;
 
-namespace TelnyxSharp.CdrReports.Interfaces
+namespace TelnyxSharp.V1Operations.Interfaces
 {
     /// <summary>
     /// Defines operations for managing CDR requests.

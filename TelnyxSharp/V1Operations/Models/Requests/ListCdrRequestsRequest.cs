@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using TelnyxSharp.Base;
 
-namespace TelnyxSharp.CdrReports.Models.Requests
+namespace TelnyxSharp.V1Operations.Models.Requests
 {
     /// <summary>
     /// Represents the request parameters for listing CDR requests.

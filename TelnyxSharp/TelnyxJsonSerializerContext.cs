@@ -1,7 +1,5 @@
 ﻿using System.Text.Json.Serialization;
 using TelnyxSharp.Base;
-using TelnyxSharp.CdrReports.Models.Requests;
-using TelnyxSharp.CdrReports.Models.Responses;
 using TelnyxSharp.DetailRecords.Models.Requests;
 using TelnyxSharp.DetailRecords.Models.Responses;
 using TelnyxSharp.Enums;
@@ -93,6 +91,8 @@ using TelnyxSharp.Numbers.Models.PhoneNumbers.Responses.Requirements;
 using TelnyxSharp.Numbers.Models.PhoneNumbers.Responses.RequirementTypes;
 using TelnyxSharp.Numbers.Models.Voicemail.Requests;
 using TelnyxSharp.Numbers.Models.Voicemail.Responses;
+using TelnyxSharp.V1Operations.Models.Requests;
+using TelnyxSharp.V1Operations.Models.Responses;
 using TelnyxSharp.Voice.Events;
 using TelnyxSharp.Voice.Models.CallCommands.Requests;
 using TelnyxSharp.Voice.Models.CallCommands.Responses;
@@ -1256,7 +1256,7 @@ namespace TelnyxSharp
     [JsonSerializable(typeof(SimCardUsageDetailRecord))]
     [JsonSerializable(typeof(MediaStorageDetailRecord))]
 
-    
+
     [JsonSerializable(typeof(CreateCdrRequestsRequest))]
     [JsonSerializable(typeof(CdrFilter))]
     [JsonSerializable(typeof(CreateCdrRequestsResponse))]
