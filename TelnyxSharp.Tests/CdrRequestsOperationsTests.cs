@@ -1,26 +1,15 @@
-﻿using TelnyxSharp.V1Operations.Models.Requests;
+﻿using TelnyxSharp.Enums;
+using TelnyxSharp.V1Operations.Models.Requests;
 namespace TelnyxSharp.Tests;
 
 public class CdrRequestsOperationsTests : TelnyxTestBase
 {
-    private readonly TelnyxClient _telnyxClient;
-
-    public CdrRequestsOperationsTests()
-    {
-        var apiKey = "set me"
-                         ?? throw new InvalidOperationException("TELNYX_API_KEY not set");
-        var v1ApiUser = "set me";
-        var v1ApiToken = "set me"
-                         ?? throw new InvalidOperationException("TELNYX_V1_API_TOKEN not set");
-
-        _telnyxClient = new TelnyxClient(apiKey, v1ApiUser, v1ApiToken);
-    }
 
     [Fact]
     public async Task FullCdrRequestLifecycle_Succeeds()
     {
         var id = await CreateCdrRequestAsync();
-        
+
         try
         {
             await ListCdrRequestsAsync(id);
@@ -38,7 +27,7 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
     public async Task Create_WithMinimalFields_Succeeds()
     {
         var id = await CreateCdrRequestAsync();
-        
+
         try
         {
             Assert.False(string.IsNullOrEmpty(id));
@@ -53,7 +42,7 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
     public async Task List_ReturnsCreatedRequest()
     {
         var id = await CreateCdrRequestAsync();
-        
+
         try
         {
             await ListCdrRequestsAsync(id);
@@ -68,7 +57,7 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
     public async Task Get_ExistingCdrRequest_ReturnsCorrectData()
     {
         var id = await CreateCdrRequestAsync();
-        
+
         try
         {
             await GetCdrRequestAsync(id);
@@ -94,14 +83,14 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
         {
             StartTime = now.AddHours(-1).ToString("o"),
             EndTime = now.ToString("o"),
-            CallTypes = new List<int> { 1 },
-            RecordTypes = new List<int> { 1 },
+            CallTypes = new List<CallType> { CallType.Inbound },
+            RecordTypes = new List<RecordType> { RecordType.Complete },
             Connections = new List<string> { "conn_1234567890" },
             ReportName = "TestReport_" + Guid.NewGuid(),
             Source = "calls"
         };
 
-        var resp = await _telnyxClient.V1
+        var resp = await Client.V1
             .CdrRequests
             .Create(req, CancellationToken.None);
 
@@ -113,7 +102,7 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
     private async Task ListCdrRequestsAsync(string expectedId)
     {
         var req = new ListCdrRequestsRequest { PageSize = 10 };
-        var list = await _telnyxClient
+        var list = await Client
             .V1
             .CdrRequests
             .List(req, CancellationToken.None);
@@ -124,7 +113,7 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
 
     private async Task GetCdrRequestAsync(string id)
     {
-        var resp = await _telnyxClient
+        var resp = await Client
             .V1
             .CdrRequests
             .Get(id, CancellationToken.None);
@@ -135,7 +124,7 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
 
     private async Task DeleteCdrRequestAsync(string id)
     {
-        var resp = await _telnyxClient
+        var resp = await Client
             .V1
             .CdrRequests
             .Delete(id, CancellationToken.None);
@@ -150,7 +139,7 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
         {
             try
             {
-                await _telnyxClient.V1.CdrRequests.Delete(id, CancellationToken.None);
+                await Client.V1.CdrRequests.Delete(id, CancellationToken.None);
             }
             catch (Exception ex)
             {
@@ -161,6 +150,6 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
 
     public void Dispose()
     {
-        _telnyxClient.Dispose();
+        Client.Dispose();
     }
 }
