@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace TelnyxSharp.Enums
@@ -9,6 +10,7 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Enum representing call types for CDR reports.
     /// </summary>
+    [JsonConverter(typeof(JsonNumberEnumConverter<CallType>))]
     public enum CallType
     {
         /// <summary>
