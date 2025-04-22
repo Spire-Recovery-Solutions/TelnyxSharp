@@ -4,7 +4,6 @@ namespace TelnyxSharp.Tests;
 public class CdrRequestsOperationsTests : IDisposable
 {
     private readonly TelnyxClient _telnyxClient;
-    private string? _createdCdrRequestId;
 
     public CdrRequestsOperationsTests()
     {
@@ -20,31 +19,63 @@ public class CdrRequestsOperationsTests : IDisposable
     public async Task FullCdrRequestLifecycle_Succeeds()
     {
         var id = await CreateCdrRequestAsync();
-
-        await ListCdrRequestsAsync(id);
-        await GetCdrRequestAsync(id);
-        await DeleteCdrRequestAsync(id);
+        
+        try
+        {
+            await ListCdrRequestsAsync(id);
+            await GetCdrRequestAsync(id);
+            await DeleteCdrRequestAsync(id);
+        }
+        catch
+        {
+            await CleanupCdrRequestAsync(id);
+            throw;
+        }
     }
 
     [Fact]
     public async Task Create_WithMinimalFields_Succeeds()
     {
-        _createdCdrRequestId = await CreateCdrRequestAsync();
-        Assert.False(string.IsNullOrEmpty(_createdCdrRequestId));
+        var id = await CreateCdrRequestAsync();
+        
+        try
+        {
+            Assert.False(string.IsNullOrEmpty(id));
+        }
+        finally
+        {
+            await CleanupCdrRequestAsync(id);
+        }
     }
 
     [Fact]
     public async Task List_ReturnsCreatedRequest()
     {
-        _createdCdrRequestId = await CreateCdrRequestAsync();
-        await ListCdrRequestsAsync(_createdCdrRequestId);
+        var id = await CreateCdrRequestAsync();
+        
+        try
+        {
+            await ListCdrRequestsAsync(id);
+        }
+        finally
+        {
+            await CleanupCdrRequestAsync(id);
+        }
     }
 
     [Fact]
     public async Task Get_ExistingCdrRequest_ReturnsCorrectData()
     {
-        _createdCdrRequestId = await CreateCdrRequestAsync();
-        await GetCdrRequestAsync(_createdCdrRequestId);
+        var id = await CreateCdrRequestAsync();
+        
+        try
+        {
+            await GetCdrRequestAsync(id);
+        }
+        finally
+        {
+            await CleanupCdrRequestAsync(id);
+        }
     }
 
     [Fact]
@@ -52,6 +83,7 @@ public class CdrRequestsOperationsTests : IDisposable
     {
         var id = await CreateCdrRequestAsync();
         await DeleteCdrRequestAsync(id);
+        // No need for cleanup as we just deleted it
     }
 
     private async Task<string> CreateCdrRequestAsync()
@@ -74,7 +106,6 @@ public class CdrRequestsOperationsTests : IDisposable
 
         Assert.NotNull(resp);
         Assert.False(string.IsNullOrEmpty(resp.Id));
-        _createdCdrRequestId = resp.Id;
         return resp.Id;
     }
 
@@ -112,26 +143,23 @@ public class CdrRequestsOperationsTests : IDisposable
         Assert.True(resp.Success, $"Expected deletion of CDR Request {id} to succeed, but got: {resp.Message}");
     }
 
-
-    public void Dispose()
+    private async Task CleanupCdrRequestAsync(string id)
     {
-        if (!string.IsNullOrEmpty(_createdCdrRequestId))
+        if (!string.IsNullOrEmpty(id))
         {
             try
             {
-                _telnyxClient.V1.CdrRequests
-                    .Delete(_createdCdrRequestId, CancellationToken.None)
-                    .GetAwaiter().GetResult();
+                await _telnyxClient.V1.CdrRequests.Delete(id, CancellationToken.None);
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
-                Console.WriteLine($"Failed to delete CDR Request {_createdCdrRequestId}: {ex.Message}");
-            }
-            finally
-            {
-                _createdCdrRequestId = null;
+                Console.WriteLine($"Failed to delete CDR Request {id} during cleanup: {ex.Message}");
             }
         }
+    }
+
+    public void Dispose()
+    {
         _telnyxClient.Dispose();
     }
 }
