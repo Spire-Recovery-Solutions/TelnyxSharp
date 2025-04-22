@@ -3,18 +3,6 @@ namespace TelnyxSharp.Tests;
 
 public class CdrRequestsOperationsTests : TelnyxTestBase
 {
-    private readonly TelnyxClient _telnyxClient;
-
-    public CdrRequestsOperationsTests()
-    {
-        var apiKey = "TELNYX_API_KEY"
-                         ?? throw new InvalidOperationException("TELNYX_API_KEY not set");
-        var v1ApiToken = "TELNYX_V1_API_TOKEN"
-                         ?? throw new InvalidOperationException("TELNYX_V1_API_TOKEN not set");
-
-        _telnyxClient = new TelnyxClient(apiKey, v1ApiToken);
-    }
-
     [Fact]
     public async Task FullCdrRequestLifecycle_Succeeds()
     {
@@ -100,7 +88,7 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
             Source = "calls"
         };
 
-        var resp = await _telnyxClient.V1
+        var resp = await Client.V1
             .CdrRequests
             .Create(req, CancellationToken.None);
 
@@ -112,7 +100,7 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
     private async Task ListCdrRequestsAsync(string expectedId)
     {
         var req = new ListCdrRequestsRequest { PageSize = 10 };
-        var list = await _telnyxClient
+        var list = await Client
             .V1
             .CdrRequests
             .List(req, CancellationToken.None);
@@ -123,7 +111,7 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
 
     private async Task GetCdrRequestAsync(string id)
     {
-        var resp = await _telnyxClient
+        var resp = await Client
             .V1
             .CdrRequests
             .Get(id, CancellationToken.None);
@@ -134,7 +122,7 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
 
     private async Task DeleteCdrRequestAsync(string id)
     {
-        var resp = await _telnyxClient
+        var resp = await Client
             .V1
             .CdrRequests
             .Delete(id, CancellationToken.None);
@@ -149,7 +137,7 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
         {
             try
             {
-                await _telnyxClient.V1.CdrRequests.Delete(id, CancellationToken.None);
+                await Client.V1.CdrRequests.Delete(id, CancellationToken.None);
             }
             catch (Exception ex)
             {
@@ -160,6 +148,6 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
 
     public void Dispose()
     {
-        _telnyxClient.Dispose();
+        Client.Dispose();
     }
 }
