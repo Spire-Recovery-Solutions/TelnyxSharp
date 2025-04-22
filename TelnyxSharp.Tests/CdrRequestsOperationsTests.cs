@@ -7,12 +7,13 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
 
     public CdrRequestsOperationsTests()
     {
-        var apiKey = "TELNYX_API_KEY"
+        var apiKey = "set me"
                          ?? throw new InvalidOperationException("TELNYX_API_KEY not set");
-        var v1ApiToken = "TELNYX_V1_API_TOKEN"
+        var v1ApiUser = "set me";
+        var v1ApiToken = "set me"
                          ?? throw new InvalidOperationException("TELNYX_V1_API_TOKEN not set");
 
-        _telnyxClient = new TelnyxClient(apiKey, v1ApiToken);
+        _telnyxClient = new TelnyxClient(apiKey, v1ApiUser, v1ApiToken);
     }
 
     [Fact]
