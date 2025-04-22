@@ -1,7 +1,7 @@
 ﻿using TelnyxSharp.V1Operations.Models.Requests;
 namespace TelnyxSharp.Tests;
 
-public class CdrRequestsOperationsTests : IDisposable
+public class CdrRequestsOperationsTests : TelnyxTestBase
 {
     private readonly TelnyxClient _telnyxClient;
 
