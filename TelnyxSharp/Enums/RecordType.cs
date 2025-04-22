@@ -1,8 +1,11 @@
-﻿namespace TelnyxSharp.Enums
+﻿using System.Text.Json.Serialization;
+
+namespace TelnyxSharp.Enums
 {
     /// <summary>
     /// Represents the type of record for CDR reports.
     /// </summary>
+    [JsonConverter(typeof(JsonNumberEnumConverter<RecordType>))]
     public enum RecordType
     {
         /// <summary>
