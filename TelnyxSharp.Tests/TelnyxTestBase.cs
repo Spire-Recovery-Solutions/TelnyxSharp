@@ -6,13 +6,13 @@
 
         protected TelnyxTestBase()
         {
-            var apiKey = "TELNYX_API_KEY"
-                ?? throw new InvalidOperationException("TELNYX_API_KEY environment variable not set");
+            var apiKey = "set me"
+                          ?? throw new InvalidOperationException("TELNYX_API_KEY not set");
+            var v1ApiUser = "set me";
+            var v1ApiToken = "set me"
+                             ?? throw new InvalidOperationException("TELNYX_V1_API_TOKEN not set");
 
-            var v1ApiToken = "TELNYX_V1_API_TOKEN"
-                ?? throw new InvalidOperationException("TELNYX_V1_API_TOKEN environment variable not set");
-
-            Client = new TelnyxClient(apiKey, v1ApiToken);
+            Client = new TelnyxClient(apiKey, v1ApiUser, v1ApiToken);
         }
 
         public void Dispose()
