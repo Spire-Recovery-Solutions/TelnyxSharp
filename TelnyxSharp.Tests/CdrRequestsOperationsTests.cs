@@ -1,12 +1,12 @@
 ﻿using TelnyxSharp.V1Operations.Models.Requests;
 namespace TelnyxSharp.Tests;
 
-public class CdrRequestsOperationsIntegrationTests : IDisposable
+public class CdrRequestsOperationsTests : IDisposable
 {
     private readonly TelnyxClient _telnyxClient;
     private string? _createdCdrRequestId;
 
-    public CdrRequestsOperationsIntegrationTests()
+    public CdrRequestsOperationsTests()
     {
         var apiKey = "TELNYX_API_KEY"
                          ?? throw new InvalidOperationException("TELNYX_API_KEY not set");
