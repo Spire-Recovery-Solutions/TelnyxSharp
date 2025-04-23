@@ -68,7 +68,7 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     public IDetailRecordsOperations DetailRecordsSearch => _detailRecordsSearch.Value;
     public IV1ApiOperations V1 => _v1Operations?.Value;
 
-    public TelnyxClient(string apiKey, string v1ApiToken = null)
+    public TelnyxClient(string? apiKey = null, string? v1ApiUser = null, string? v1ApiToken = null)
     {
         var v2Options = new RestClientOptions("https://api.telnyx.com/v2/")
         {
@@ -80,7 +80,7 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
         RestClientOptions v1Options = null;
         if (!string.IsNullOrEmpty(v1ApiToken))
         {
-            v1Options = new RestClientOptions("https://api.telnyx.com/v1/")
+            v1Options = new RestClientOptions("https://api.telnyx.com/")
             {
                 ThrowOnDeserializationError = false,
                 ThrowOnAnyError = false,
@@ -129,6 +129,7 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
         if (v1Options != null)
         {
             _v1Client = new RestClient(v1Options);
+            _v1Client.AddDefaultHeader("x-api-user", v1ApiUser);
             _v1Client.AddDefaultHeader("x-api-token", v1ApiToken);
         }
         else

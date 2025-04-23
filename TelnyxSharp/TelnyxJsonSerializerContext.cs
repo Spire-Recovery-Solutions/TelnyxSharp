@@ -1135,6 +1135,8 @@ namespace TelnyxSharp
     [JsonSerializable(typeof(Vertical))]
     [JsonSerializable(typeof(FilterOperator))]
     [JsonSerializable(typeof(DetailRecordType))]
+    [JsonSerializable(typeof(CallType))]
+    [JsonSerializable(typeof(RecordType))]
 
     //Events
     [JsonSerializable(typeof(TelnyxEvent))]

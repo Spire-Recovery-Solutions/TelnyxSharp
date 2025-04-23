@@ -1,7 +1,9 @@
 ﻿using System.Net;
 using System.Text.Json.Serialization;
 using TelnyxSharp.Base;
+using TelnyxSharp.Enums;
 using TelnyxSharp.Models;
+using TelnyxSharp.V1Operations.Models.Requests;
 
 namespace TelnyxSharp.V1Operations.Models.Responses
 {
@@ -69,19 +71,19 @@ namespace TelnyxSharp.V1Operations.Models.Responses
         /// Gets or sets the call types. Inbound = 1, Outbound = 2.
         /// </summary>
         [JsonPropertyName("call_types")]
-        public List<int> CallTypes { get; set; } = new List<int>();
+        public List<CallType> CallTypes { get; set; } = new List<CallType>();
 
         /// <summary>
         /// Gets or sets the record types. Complete = 1, Incomplete = 2, Errors = 3.
         /// </summary>
         [JsonPropertyName("record_types")]
-        public List<int> RecordTypes { get; set; } = new List<int>();
+        public List<RecordType> RecordTypes { get; set; } = new List<RecordType>();
 
         /// <summary>
         /// Gets or sets the connection IDs.
         /// </summary>
         [JsonPropertyName("connections")]
-        public List<string> Connections { get; set; } = new List<string>();
+        public List<long> Connections { get; set; } = new List<long>();
 
         /// <summary>
         /// Gets or sets the report name.
@@ -93,7 +95,7 @@ namespace TelnyxSharp.V1Operations.Models.Responses
         /// Gets or sets the status. Pending = 1, Complete = 2, Failed = 3, Expired = 4.
         /// </summary>
         [JsonPropertyName("status")]
-        public int Status { get; set; }
+        public CdrRequestStatus Status { get; set; }
 
         /// <summary>
         /// Gets or sets the URL to download the report.
@@ -105,7 +107,7 @@ namespace TelnyxSharp.V1Operations.Models.Responses
         /// Gets or sets the search criteria filters.
         /// </summary>
         [JsonPropertyName("filters")]
-        public string Filters { get; set; } = string.Empty;
+        public List<CdrFilter> Filters { get; set; } = new List<CdrFilter>();
 
         /// <summary>
         /// Gets or sets the creation timestamp.
@@ -119,4 +121,5 @@ namespace TelnyxSharp.V1Operations.Models.Responses
         [JsonPropertyName("updated_at")]
         public string UpdatedAt { get; set; } = string.Empty;
     }
+        
 }
