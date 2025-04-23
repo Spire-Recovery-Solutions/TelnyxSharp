@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using TelnyxSharp.Base;
+using TelnyxSharp.Enums;
 
 namespace TelnyxSharp.V1Operations.Models.Requests
 {
@@ -24,17 +25,15 @@ namespace TelnyxSharp.V1Operations.Models.Requests
 
         /// <summary>
         /// Gets or sets the call types for the report.
-        /// Inbound = 1, Outbound = 2.
         /// </summary>
         [JsonPropertyName("call_types")]
-        public List<int> CallTypes { get; set; }
+        public List<CallType> CallTypes { get; set; }
 
         /// <summary>
         /// Gets or sets the record types for the report.
-        /// Complete = 1, Incomplete = 2, Errors = 3.
         /// </summary>
         [JsonPropertyName("record_types")]
-        public List<int> RecordTypes { get; set; }
+        public List<RecordType> RecordTypes { get; set; }
 
         /// <summary>
         /// Gets or sets the list of connection IDs.
