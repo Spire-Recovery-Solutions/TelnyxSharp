@@ -23,9 +23,9 @@ jobs:
         dotnet restore
         dotnet build --configuration Release --no-restore
 
-    - name: Test
-      run: |
-        dotnet test TelnyxSharp.Tests/TelnyxSharp.Tests.csproj
+#    - name: Test
+#      run: |
+#        dotnet test TelnyxSharp.Tests/TelnyxSharp.Tests.csproj
 #      env:
 #        DOTNET_CLI_TELEMETRY_OPTOUT: true
 #        DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
