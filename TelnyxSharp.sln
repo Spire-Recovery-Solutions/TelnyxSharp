@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelnyxSharp", "TelnyxSharp\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelnyxSharp.Tests", "TelnyxSharp.Tests\TelnyxSharp.Tests.csproj", "{2C1FE733-2A8A-48A8-B8D7-68A280B90CC7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelnyxSharp.Components.BlazorWebRTC", "TelnyxSharp.Components.BlazorWebRTC\TelnyxSharp.Components.BlazorWebRTC.csproj", "{76A4892C-8A58-4DE0-AE0E-BF84DAF55055}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{2C1FE733-2A8A-48A8-B8D7-68A280B90CC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C1FE733-2A8A-48A8-B8D7-68A280B90CC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C1FE733-2A8A-48A8-B8D7-68A280B90CC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76A4892C-8A58-4DE0-AE0E-BF84DAF55055}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76A4892C-8A58-4DE0-AE0E-BF84DAF55055}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76A4892C-8A58-4DE0-AE0E-BF84DAF55055}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76A4892C-8A58-4DE0-AE0E-BF84DAF55055}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
