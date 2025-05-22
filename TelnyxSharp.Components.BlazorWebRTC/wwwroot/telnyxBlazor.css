@@ -1,0 +1,118 @@
+/* Telnyx Blazor Component Styles */
+.telnyx-rtc-container {
+    padding: 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+.telnyx-status {
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.telnyx-status.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.telnyx-status.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.telnyx-status.warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+.telnyx-status.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+.telnyx-media-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.telnyx-local-media,
+.telnyx-remote-media {
+    flex: 1;
+    text-align: center;
+}
+
+.telnyx-local-media video,
+.telnyx-local-media audio,
+.telnyx-remote-media video,
+.telnyx-remote-media audio {
+    width: 100%;
+    max-width: 400px;
+    background-color: #000;
+    border-radius: 4px;
+}
+
+.telnyx-controls {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.telnyx-dtmf-pad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.25rem;
+    margin-left: 1rem;
+}
+
+.telnyx-call-component {
+    padding: 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.call-info {
+    margin-bottom: 1rem;
+}
+
+.call-info h5 {
+    margin-bottom: 0.5rem;
+    color: #495057;
+}
+
+.call-info p {
+    margin-bottom: 0.25rem;
+    color: #6c757d;
+}
+
+.call-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 768px) {
+    .telnyx-media-container {
+        flex-direction: column;
+    }
+
+    .telnyx-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .telnyx-dtmf-pad {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 0.5rem;
+    }
+}
