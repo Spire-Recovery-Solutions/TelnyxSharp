@@ -1,0 +1,106 @@
+@using TelnyxSharp.Components.BlazorWebRTC.Models
+@using TelnyxSharp.Components.BlazorWebRTC.Services
+
+<div class="telnyx-call-component">
+    @if (Call != null)
+    {
+        <div class="call-info">
+            <h5>@(Call.Direction == "inbound" ? "Incoming Call" : "Outgoing Call")</h5>
+            <p>Status: @Call.State</p>
+            <p>Call ID: @Call.Id</p>
+        </div>
+
+        <div class="call-actions">
+            @if (Call.IsRinging && Call.Direction == "inbound")
+            {
+                <button class="btn btn-success" @onclick="AnswerAsync">
+                    <i class="fas fa-phone"></i> Answer
+                </button>
+                <button class="btn btn-danger" @onclick="RejectAsync">
+                    <i class="fas fa-phone-slash"></i> Reject
+                </button>
+            }
+            else if (Call.IsActive || Call.IsHeld)
+            {
+                <button class="btn btn-danger" @onclick="HangupAsync">
+                    <i class="fas fa-phone-slash"></i> Hang Up
+                </button>
+
+                @if (ShowAdvancedControls)
+                {
+                    <button class="btn btn-secondary" @onclick="ToggleHoldAsync">
+                        <i class="fas fa-pause"></i> @(Call.IsHeld ? "Resume" : "Hold")
+                    </button>
+
+                    <button class="btn btn-secondary" @onclick="ToggleMuteAsync">
+                        <i class="fas @(IsMuted ? "fa-microphone-slash" : "fa-microphone")"></i>
+                    </button>
+                }
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public CallState? Call { get; set; }
+    [Parameter] public ITelnyxService? Service { get; set; }
+    [Parameter] public bool ShowAdvancedControls { get; set; } = true;
+    [Parameter] public EventCallback<CallState> OnAnswer { get; set; }
+    [Parameter] public EventCallback<CallState> OnReject { get; set; }
+    [Parameter] public EventCallback<CallState> OnHangup { get; set; }
+    [Parameter] public EventCallback<CallState> OnHold { get; set; }
+    [Parameter] public EventCallback<CallState> OnResume { get; set; }
+    [Parameter] public EventCallback<CallState> OnToggleMute { get; set; }
+
+    private bool IsMuted = false;
+
+    private async Task AnswerAsync()
+    {
+        if (Service != null && Call != null)
+        {
+            await Service.AnswerCallAsync(Call.Id);
+            await OnAnswer.InvokeAsync(Call);
+        }
+    }
+
+    private async Task RejectAsync()
+    {
+        if (Service != null && Call != null)
+        {
+            await Service.HangupCallAsync(Call.Id);
+            await OnReject.InvokeAsync(Call);
+        }
+    }
+
+    private async Task HangupAsync()
+    {
+        if (Service != null && Call != null)
+        {
+            await Service.HangupCallAsync(Call.Id);
+            await OnHangup.InvokeAsync(Call);
+        }
+    }
+
+    private async Task ToggleHoldAsync()
+    {
+        if (Service != null && Call != null)
+        {
+            if (Call.IsHeld)
+            {
+                await Service.UnholdCallAsync(Call.Id);
+                await OnResume.InvokeAsync(Call);
+            }
+            else
+            {
+                await Service.HoldCallAsync(Call.Id);
+                await OnHold.InvokeAsync(Call);
+            }
+        }
+    }
+
+    private Task ToggleMuteAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+}

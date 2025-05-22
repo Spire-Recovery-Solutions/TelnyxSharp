@@ -1,0 +1,136 @@
+@page "/telnyx-demo"
+@using MudBlazor
+@using TelnyxSharp.Components.BlazorWebRTC.Components
+@using TelnyxSharp.Components.BlazorWebRTC.Models
+@using TelnyxSharp.Components.BlazorWebRTC.Services
+
+<PageTitle>Telnyx WebRTC Demo</PageTitle>
+
+<MudContainer>
+    <MudPaper Class="pa-4">
+        <MudText Typo="Typo.h4">Telnyx WebRTC Demo</MudText>
+        
+        <TelnyxRTC @ref="telnyxRTC"
+                   Options="@telnyxOptions"
+                   ShowMediaElements="true"
+                   ShowControls="true"
+                   ShowDTMF="true"
+                   EnableVideo="false"
+                   OnReady="OnTelnyxReady"
+                   OnError="OnTelnyxError"
+                   OnNotification="OnTelnyxNotification"
+                   OnCallUpdate="OnCallUpdate">
+            
+            <MudGrid Class="mt-4">
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="phoneNumber" 
+                                  Label="Phone Number" 
+                                  Variant="Variant.Outlined" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudButton Color="Color.Primary" 
+                               Variant="Variant.Filled"
+                               StartIcon="@Icons.Material.Filled.Phone"
+                               OnClick="MakeCall"
+                               Disabled="@(!isConnected || isCalling)">
+                        Call
+                    </MudButton>
+                </MudItem>
+            </MudGrid>
+            
+            @if (devices.Any())
+            {
+                <MudSelect T="string" Label="Microphone" Variant="Variant.Outlined" Class="mt-4">
+                    @foreach (var device in devices.Where(d => d.Kind == "audioinput"))
+                    {
+                        <MudSelectItem Value="@device.DeviceId">@device.Label</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+        </TelnyxRTC>
+        
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <MudAlert Severity="Severity.Error" Class="mt-4">@errorMessage</MudAlert>
+        }
+    </MudPaper>
+</MudContainer>
+
+@code {
+    private TelnyxRTC? telnyxRTC;
+    private TelnyxClientOptions telnyxOptions = new();
+    private string phoneNumber = "";
+    private bool isConnected = false;
+    private bool isCalling = false;
+    private string errorMessage = "";
+    private List<MediaDeviceInfo> devices = new();
+
+    protected override void OnInitialized()
+    {
+        // Configure Telnyx options
+        telnyxOptions = new TelnyxClientOptions
+        {
+            LoginToken = "your-jwt-token-here", // Or use Login/Password
+            RingtoneFile = "/sounds/ringtone.mp3",
+            RingbackFile = "/sounds/ringback.mp3",
+            Debug = true
+        };
+    }
+
+    private async Task OnTelnyxReady(ITelnyxService service)
+    {
+        isConnected = true;
+        
+        // Get available devices
+        devices = await service.GetDevicesAsync();
+        
+        // Check permissions
+        var hasPermissions = await service.CheckPermissionsAsync();
+        if (!hasPermissions)
+        {
+            errorMessage = "Please grant microphone permissions to make calls.";
+        }
+    }
+
+    private void OnTelnyxError(string error)
+    {
+        errorMessage = error;
+    }
+
+    private void OnTelnyxNotification(TelnyxNotification notification)
+    {
+        Console.WriteLine($"Notification: {notification.Type}");
+    }
+
+    private void OnCallUpdate(CallState call)
+    {
+        if (call.IsEnded)
+        {
+            isCalling = false;
+        }
+    }
+
+    private async Task MakeCall()
+    {
+        if (telnyxRTC == null || string.IsNullOrWhiteSpace(phoneNumber))
+            return;
+
+        isCalling = true;
+        errorMessage = "";
+
+        var callOptions = new CallOptions
+        {
+            DestinationNumber = phoneNumber,
+            CallerNumber = "+1234567890", // Your Telnyx number
+            Audio = true,
+            Video = false
+        };
+
+        var call = await telnyxRTC.NewCallAsync(callOptions);
+        if (call == null)
+        {
+            errorMessage = "Failed to initiate call";
+            isCalling = false;
+        }
+    }
+}

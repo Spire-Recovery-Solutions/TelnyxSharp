@@ -1,0 +1,340 @@
+
+@using Microsoft.JSInterop
+@using TelnyxSharp.Components.BlazorWebRTC.Models
+@using TelnyxSharp.Components.BlazorWebRTC.Services
+@implements IAsyncDisposable
+@inject IJSRuntime JSRuntime
+
+<div class="telnyx-rtc-container">
+@if (!string.IsNullOrEmpty(Status))
+{
+    <div class="telnyx-status @StatusClass">
+        @Status
+    </div>
+}
+
+@if (ShowMediaElements)
+    {
+        <div class="telnyx-media-container">
+            <div class="telnyx-local-media">
+                <h4>Local</h4>
+                @if (EnableVideo)
+                {
+                    <video id="@LocalElementId" autoplay muted playsinline></video>
+                }
+                else
+                {
+                    <audio id="@LocalElementId" autoplay muted></audio>
+                }
+            </div>
+            <div class="telnyx-remote-media">
+                <h4>Remote</h4>
+                @if (EnableVideo)
+                {
+                    <video id="@RemoteElementId" autoplay playsinline></video>
+                }
+                else
+                {
+                    <audio id="@RemoteElementId" autoplay></audio>
+                }
+            </div>
+        </div>
+    }
+
+    @if (ShowControls && CurrentCall != null)
+    {
+        <div class="telnyx-controls">
+            <button class="btn btn-danger" @onclick="HangupAsync" disabled="@(!CanHangup)">
+                <i class="fas fa-phone-slash"></i> Hang Up
+            </button>
+            
+            <button class="btn btn-secondary" @onclick="ToggleHoldAsync" disabled="@(!CanToggleHold)">
+                <i class="fas fa-pause"></i> @(IsOnHold ? "Unhold" : "Hold")
+            </button>
+            
+            <button class="btn btn-secondary" @onclick="ToggleMuteAsync" disabled="@(!CanToggleMute)">
+                <i class="fas @(IsMuted ? "fa-microphone-slash" : "fa-microphone")"></i> 
+                @(IsMuted ? "Unmute" : "Mute")
+            </button>
+
+            @if (ShowDTMF)
+            {
+                <div class="telnyx-dtmf-pad">
+                    @foreach (var digit in new[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "*", "0", "#" })
+                    {
+                        <button class="btn btn-sm btn-outline-secondary" @onclick="() => SendDTMFAsync(digit)">
+                            @digit
+                        </button>
+                    }
+                </div>
+            }
+        </div>
+    }
+
+    @ChildContent
+</div>
+
+@code {
+    private ITelnyxService? _telnyxService;
+    private CallState? CurrentCall;
+    private bool IsMuted;
+    private bool IsOnHold;
+    private string Status = "";
+    private string StatusClass = "";
+
+    [Parameter] public TelnyxClientOptions Options { get; set; } = new();
+    [Parameter] public bool ShowMediaElements { get; set; } = true;
+    [Parameter] public bool ShowControls { get; set; } = true;
+    [Parameter] public bool ShowDTMF { get; set; } = false;
+    [Parameter] public bool EnableVideo { get; set; } = false;
+    [Parameter] public string LocalElementId { get; set; } = $"local-media-{Guid.NewGuid()}";
+    [Parameter] public string RemoteElementId { get; set; } = $"remote-media-{Guid.NewGuid()}";
+    [Parameter] public bool AutoConnect { get; set; } = true;
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    // Events
+    [Parameter] public EventCallback<ITelnyxService> OnReady { get; set; }
+    [Parameter] public EventCallback<string> OnError { get; set; }
+    [Parameter] public EventCallback<TelnyxNotification> OnNotification { get; set; }
+    [Parameter] public EventCallback<CallState> OnCallUpdate { get; set; }
+    [Parameter] public EventCallback OnSocketOpen { get; set; }
+    [Parameter] public EventCallback OnSocketClose { get; set; }
+
+    // Computed properties
+    private bool CanHangup => CurrentCall != null && !CurrentCall.IsEnded;
+    private bool CanToggleHold => CurrentCall != null && CurrentCall.IsActive;
+    private bool CanToggleMute => CurrentCall != null && (CurrentCall.IsActive || CurrentCall.IsHeld);
+
+    protected override async Task OnInitializedAsync()
+    {
+        _telnyxService = new TelnyxService(JSRuntime);
+        
+        // Wire up events
+        _telnyxService.Ready += OnServiceReady;
+        _telnyxService.Error += OnServiceError;
+        _telnyxService.Notification += OnServiceNotification;
+        _telnyxService.SocketOpen += OnServiceSocketOpen;
+        _telnyxService.SocketClose += OnServiceSocketClose;
+
+        // Initialize the service
+        var initialized = await _telnyxService.InitializeAsync(Options);
+        if (!initialized)
+        {
+            UpdateStatus("Failed to initialize Telnyx client", "error");
+            return;
+        }
+
+        // Set media elements if enabled
+        if (ShowMediaElements)
+        {
+            await _telnyxService.SetLocalElementAsync(LocalElementId);
+            await _telnyxService.SetRemoteElementAsync(RemoteElementId);
+        }
+
+        // Auto-connect if enabled
+        if (AutoConnect)
+        {
+            await ConnectAsync();
+        }
+    }
+
+    public async Task ConnectAsync()
+    {
+        if (_telnyxService == null) return;
+        
+        UpdateStatus("Connecting...", "info");
+        await _telnyxService.ConnectAsync();
+    }
+
+    public async Task DisconnectAsync()
+    {
+        if (_telnyxService == null) return;
+        
+        await _telnyxService.DisconnectAsync();
+        UpdateStatus("Disconnected", "");
+    }
+
+    public async Task<CallState?> NewCallAsync(CallOptions options)
+    {
+        if (_telnyxService == null || !_telnyxService.IsConnected)
+        {
+            UpdateStatus("Not connected", "error");
+            return null;
+        }
+
+        try
+        {
+            options.LocalElement ??= LocalElementId;
+            options.RemoteElement ??= RemoteElementId;
+            options.Video = EnableVideo;
+            
+            var call = await _telnyxService.NewCallAsync(options);
+            CurrentCall = call;
+            UpdateStatus($"Calling {options.DestinationNumber}...", "info");
+            return call;
+        }
+        catch (Exception ex)
+        {
+            UpdateStatus($"Call failed: {ex.Message}", "error");
+            return null;
+        }
+    }
+
+    public async Task AnswerCallAsync(string callId)
+    {
+        if (_telnyxService == null) return;
+        
+        await _telnyxService.AnswerCallAsync(callId);
+        UpdateStatus("Call answered", "success");
+    }
+
+    public async Task HangupAsync()
+    {
+        if (_telnyxService == null || CurrentCall == null) return;
+        
+        await _telnyxService.HangupCallAsync(CurrentCall.Id);
+        CurrentCall = null;
+        IsMuted = false;
+        IsOnHold = false;
+        UpdateStatus("Call ended", "");
+    }
+
+    public async Task ToggleHoldAsync()
+    {
+        if (_telnyxService == null || CurrentCall == null) return;
+        
+        await _telnyxService.ToggleHoldAsync(CurrentCall.Id);
+        IsOnHold = !IsOnHold;
+        StateHasChanged();
+    }
+
+    public async Task ToggleMuteAsync()
+    {
+        if (_telnyxService == null || CurrentCall == null) return;
+        
+        await _telnyxService.ToggleAudioMuteAsync(CurrentCall.Id);
+        IsMuted = !IsMuted;
+        StateHasChanged();
+    }
+
+    public async Task SendDTMFAsync(string digit)
+    {
+        if (_telnyxService == null || CurrentCall == null) return;
+        
+        await _telnyxService.SendDTMFAsync(CurrentCall.Id, digit);
+    }
+
+    public async Task<List<MediaDeviceInfo>> GetDevicesAsync()
+    {
+        if (_telnyxService == null) return new();
+        return await _telnyxService.GetDevicesAsync();
+    }
+
+    public async Task<bool> CheckPermissionsAsync(bool audio = true, bool video = true)
+    {
+        if (_telnyxService == null) return false;
+        return await _telnyxService.CheckPermissionsAsync(audio, video);
+    }
+
+    // Event handlers
+    private void OnServiceReady(object? sender, EventArgs e)
+    {
+        UpdateStatus("Connected", "success");
+        InvokeAsync(async () =>
+        {
+            await OnReady.InvokeAsync(_telnyxService!);
+            StateHasChanged();
+        });
+    }
+
+    private void OnServiceError(object? sender, string error)
+    {
+        UpdateStatus($"Error: {error}", "error");
+        InvokeAsync(async () =>
+        {
+            await OnError.InvokeAsync(error);
+            StateHasChanged();
+        });
+    }
+
+    private void OnServiceNotification(object? sender, TelnyxNotification notification)
+    {
+        InvokeAsync(async () =>
+        {
+            if (notification.Type == "callUpdate" && notification.Call != null)
+            {
+                CurrentCall = notification.Call;
+                UpdateCallStatus(notification.Call);
+                await OnCallUpdate.InvokeAsync(notification.Call);
+            }
+            
+            await OnNotification.InvokeAsync(notification);
+            StateHasChanged();
+        });
+    }
+
+    private void OnServiceSocketOpen(object? sender, EventArgs e)
+    {
+        InvokeAsync(async () =>
+        {
+            await OnSocketOpen.InvokeAsync();
+            StateHasChanged();
+        });
+    }
+
+    private void OnServiceSocketClose(object? sender, EventArgs e)
+    {
+        UpdateStatus("Disconnected", "warning");
+        InvokeAsync(async () =>
+        {
+            await OnSocketClose.InvokeAsync();
+            StateHasChanged();
+        });
+    }
+
+    private void UpdateStatus(string status, string cssClass)
+    {
+        Status = status;
+        StatusClass = cssClass;
+        StateHasChanged();
+    }
+
+    private void UpdateCallStatus(CallState call)
+    {
+        var status = call.State switch
+        {
+            "new" => "Initializing call...",
+            "trying" => "Calling...",
+            "ringing" => call.Direction == "inbound" ? "Incoming call..." : "Ringing...",
+            "active" => "Connected",
+            "held" => "On hold",
+            "hangup" => "Call ended",
+            "destroy" => "Call ended",
+            _ => call.State
+        };
+        
+        var cssClass = call.State switch
+        {
+            "active" => "success",
+            "ringing" => "info",
+            "hangup" or "destroy" => "",
+            _ => "info"
+        };
+        
+        UpdateStatus(status, cssClass);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_telnyxService != null)
+        {
+            _telnyxService.Ready -= OnServiceReady;
+            _telnyxService.Error -= OnServiceError;
+            _telnyxService.Notification -= OnServiceNotification;
+            _telnyxService.SocketOpen -= OnServiceSocketOpen;
+            _telnyxService.SocketClose -= OnServiceSocketClose;
+            
+            await _telnyxService.DisposeAsync();
+        }
+    }
+}
