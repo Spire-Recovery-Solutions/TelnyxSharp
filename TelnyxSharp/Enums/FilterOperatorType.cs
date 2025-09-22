@@ -2,7 +2,7 @@
 
 namespace TelnyxSharp.Enums
 {
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<FilterOperator>))]
     public enum FilterOperator
     {
         /// <summary>

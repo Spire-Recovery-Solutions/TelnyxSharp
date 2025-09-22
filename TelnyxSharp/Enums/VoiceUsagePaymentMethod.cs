@@ -5,7 +5,7 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Enumeration for voice usage payment methods.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<VoiceUsagePaymentMethod>))]
     public enum VoiceUsagePaymentMethod
     {
         [JsonStringEnumMemberName("pay-per-minute")]

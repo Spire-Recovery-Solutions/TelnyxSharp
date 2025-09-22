@@ -5,7 +5,7 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Represents the types of events that can occur in the Telnyx system.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<EventType>))]
     public enum EventType
     {
         /// <summary>

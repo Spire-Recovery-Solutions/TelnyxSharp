@@ -5,7 +5,7 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Enum representing the different types of call tracks.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<Track>))]
     public enum Track
     {
         /// <summary>

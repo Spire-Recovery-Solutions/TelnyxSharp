@@ -5,7 +5,7 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Represents the different types of products available in the Telnyx system.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<ProductType>))]
     public enum ProductType
     {
         /// <summary>

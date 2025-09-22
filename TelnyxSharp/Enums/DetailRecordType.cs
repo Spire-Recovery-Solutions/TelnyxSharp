@@ -7,7 +7,7 @@ namespace TelnyxSharp.Enums
     /// These values correspond to different Telnyx product-specific record schemas.
     /// For example, "messaging" returns message detail records.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<DetailRecordType>))]
     public enum DetailRecordType
     {
         /// <summary>

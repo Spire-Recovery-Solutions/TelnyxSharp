@@ -5,7 +5,7 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Represents the status of a job or process, indicating its current state in the workflow.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<JobStatusType>))]
     public enum JobStatusType
     {
         /// <summary>

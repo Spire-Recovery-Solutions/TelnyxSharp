@@ -5,7 +5,7 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Enum representing various use case categories for messaging.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<UseCaseCategories>))]
     public enum UseCaseCategories
     {
         /// <summary>

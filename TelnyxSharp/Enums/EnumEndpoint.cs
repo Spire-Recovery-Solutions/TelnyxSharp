@@ -5,7 +5,7 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Represents the various endpoints used within the TelnyxSharp system.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<EnumEndpoint>))]
     public enum EnumEndpoint
     {
         /// <summary>

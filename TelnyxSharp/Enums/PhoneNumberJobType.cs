@@ -5,7 +5,7 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Represents the different types of phone number jobs that can be performed in the Telnyx API.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<PhoneNumberJobType>))]
     public enum PhoneNumberJobType
     {
         /// <summary>

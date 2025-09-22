@@ -6,7 +6,7 @@ namespace TelnyxSharp.Enums
     /// Enum representing the possible actions to check requirements for.
     /// This enum is used to specify the type of action when checking phone number requirements.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<RequirementActionType>))]
     public enum RequirementActionType
     {
         /// <summary>

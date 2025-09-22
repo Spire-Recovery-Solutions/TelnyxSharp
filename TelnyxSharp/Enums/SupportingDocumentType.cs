@@ -5,7 +5,7 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Represents the types of supporting documents that can be provided for port-out requests.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<SupportingDocumentType>))]
     public enum SupportingDocumentType
     {
         /// <summary>

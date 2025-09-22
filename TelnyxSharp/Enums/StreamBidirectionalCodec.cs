@@ -5,7 +5,7 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Enum representing the available bidirectional codecs for stream communication.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<StreamBidirectionalCodec>))]
     public enum StreamBidirectionalCodec
     {
         /// <summary>

@@ -5,7 +5,7 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Specifies the fields by which number configurations can be sorted in Telnyx API requests.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<SortNumberConfiguration>))]
     public enum SortNumberConfiguration
     {
         /// <summary>

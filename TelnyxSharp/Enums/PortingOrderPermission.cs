@@ -5,7 +5,7 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Specifies the permissions available for a porting order token.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<PortingOrderPermission>))]
     public enum PortingOrderPermission
     {
         /// <summary>

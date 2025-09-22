@@ -6,7 +6,7 @@ namespace TelnyxSharp.Enums
     /// Enum representing different anchor site overrides for the Telnyx service.
     /// This is used to specify the location override for the anchor site.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<AnchorsiteOverride>))]
     public enum AnchorsiteOverride
     {
         /// <summary>

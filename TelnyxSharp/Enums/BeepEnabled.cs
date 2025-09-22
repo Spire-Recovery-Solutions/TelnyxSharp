@@ -5,7 +5,7 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Enum representing the different settings for when a beep should be enabled in a conference call or communication system.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<BeepEnabled>))]
     public enum BeepEnabled
     {
         /// <summary>

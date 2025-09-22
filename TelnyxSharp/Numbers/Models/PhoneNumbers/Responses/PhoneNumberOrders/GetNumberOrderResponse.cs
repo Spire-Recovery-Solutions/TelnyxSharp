@@ -4,7 +4,7 @@ using TelnyxSharp.Models;
 namespace TelnyxSharp.Numbers.Models.PhoneNumbers.Responses.PhoneNumberOrders
 {
 
-    public partial class GetNumberOrderResponse : TelnyxResponse<List<GetNumberOrderData>>
+    public partial class GetNumberOrderResponse : TelnyxResponse<GetNumberOrderData>
     {
     }
 

@@ -21,7 +21,7 @@ namespace TelnyxSharp.Numbers.Models.PhoneNumbers.Responses.PhoneNumberConfigura
         /// Gets or sets the unique identifier for the phone number.
         /// </summary>
         [JsonPropertyName("id")]
-        public long Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>
         /// Gets or sets the type of record associated with the phone number.
@@ -99,7 +99,7 @@ namespace TelnyxSharp.Numbers.Models.PhoneNumbers.Responses.PhoneNumberConfigura
         /// Gets or sets the emergency address ID.
         /// </summary>
         [JsonPropertyName("emergency_address_id")]
-        public long? EmergencyAddressId { get; set; }
+        public string? EmergencyAddressId { get; set; }
 
         /// <summary>
         /// Gets or sets the status of emergency service provisioning.

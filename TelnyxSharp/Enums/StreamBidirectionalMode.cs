@@ -5,7 +5,7 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Enum representing the available modes for bidirectional stream communication.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<StreamBidirectionalMode>))]
     public enum StreamBidirectionalMode
     {
         /// <summary>

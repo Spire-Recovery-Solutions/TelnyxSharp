@@ -6,7 +6,7 @@ namespace TelnyxSharp.Enums
     /// Enum representing the different types of DTMF (Dual-tone multi-frequency) signaling.
     /// This is used to specify the method of DTMF signaling in voice communications.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<DtmfType>))]
     public enum DtmfType
     {
         /// <summary>

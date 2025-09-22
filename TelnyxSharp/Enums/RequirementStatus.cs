@@ -6,7 +6,7 @@ namespace TelnyxSharp.Enums
     /// Represents the status of a requirement, providing a standardized way to
     /// describe the approval or decline state of a given requirement.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<RequirementStatus>))]
     public enum RequirementStatus
     {
         /// <summary>

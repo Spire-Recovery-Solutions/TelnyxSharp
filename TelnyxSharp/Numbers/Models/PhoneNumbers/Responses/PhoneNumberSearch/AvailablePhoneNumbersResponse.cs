@@ -6,13 +6,8 @@ namespace TelnyxSharp.Numbers.Models.PhoneNumbers.Responses.PhoneNumberSearch
     /// <summary>
     /// Represents the response for available phone numbers from Telnyx API.
     /// </summary>
-    public partial class AvailablePhoneNumbersResponse : TelnyxResponse<List<AvailablePhoneNumbersDatum>>
+    public partial class AvailablePhoneNumbersResponse : TelnyxResponse<List<AvailablePhoneNumbersDatum>, AvailablePhoneNumbersMeta>
     {
-        /// <summary>
-        /// Gets or sets metadata associated with the available phone numbers response.
-        /// </summary>
-        [JsonPropertyName("meta")]
-        public AvailablePhoneNumbersMeta Meta { get; set; }
     }
 
     /// <summary>
@@ -90,13 +85,13 @@ namespace TelnyxSharp.Numbers.Models.PhoneNumbers.Responses.PhoneNumberSearch
         /// Gets or sets the upfront cost for the phone number.
         /// </summary>
         [JsonPropertyName("upfront_cost")]
-        public double UpfrontCost { get; set; }
+        public string? UpfrontCost { get; set; }
 
         /// <summary>
         /// Gets or sets the monthly cost for the phone number.
         /// </summary>
         [JsonPropertyName("monthly_cost")]
-        public double MonthlyCost { get; set; }
+        public string? MonthlyCost { get; set; }
 
         /// <summary>
         /// Gets or sets the currency for the cost information.

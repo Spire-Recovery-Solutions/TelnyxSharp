@@ -5,7 +5,7 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Enum representing different types of alternative business IDs used for verification.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<AltBusinessIdType>))]
     public enum AltBusinessIdType
     {
         /// <summary>

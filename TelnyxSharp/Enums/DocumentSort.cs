@@ -6,7 +6,7 @@ namespace TelnyxSharp.Enums
     /// Represents the sort order for results.
     /// Specifies fields by which results can be sorted in ascending or descending order.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<DocumentSort>))]
     public enum DocumentSort
     {
         /// <summary>

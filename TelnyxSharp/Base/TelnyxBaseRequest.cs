@@ -14,7 +14,7 @@ namespace TelnyxSharp.Base
 
     /// <summary>
     /// Base interface for all Telnyx API responses.
-    /// Contains basic status, error information, and pagination metadata.
+    /// Contains basic status and error information.
     /// </summary>
     public interface ITelnyxResponse
     {
@@ -37,16 +37,12 @@ namespace TelnyxSharp.Base
         /// Gets or sets any errors returned by the Telnyx API.
         /// </summary>
         TelnyxError[]? Errors { get; set; }
-
-        /// <summary>
-        /// Gets or sets pagination metadata for responses that support pagination.
-        /// </summary>
-        PaginationMeta? Meta { get; set; }
     }
 
     /// <summary>
     /// A generic extension of the base response interface for handling responses with data.
     /// This is used when the response includes specific data along with status and metadata.
+    /// Most Telnyx responses use PaginationMeta, but some use different meta structures.
     /// </summary>
     /// <typeparam name="TData">The type of data contained in the response.</typeparam>
     public interface ITelnyxResponse<TData> : ITelnyxResponse

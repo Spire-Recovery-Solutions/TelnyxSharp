@@ -6,7 +6,7 @@ namespace TelnyxSharp.Enums
     /// Enum representing various languages and their respective locale codes.
     /// Each value is associated with a specific language code for use in various services.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<Language>))]
     public enum Language
     {
         /// <summary>Arabic language (ARB)</summary>

@@ -7,14 +7,8 @@ namespace TelnyxSharp.Numbers.Models.PhoneNumbers.Responses.PhoneNumberSearch
     /// Represents the response for a request to retrieve available phone number blocks.
     /// Contains the main data and metadata related to the response.
     /// </summary>
-    public class ListAvailablePhoneNumberBlocksResponse : TelnyxResponse<ListAvailablePhoneNumberBlocksData>
+    public class ListAvailablePhoneNumberBlocksResponse : TelnyxResponse<List<ListAvailablePhoneNumberBlocksData>, AvailablePhoneNumbersMeta>
     {
-        /// <summary>
-        /// Gets or sets the metadata associated with the response.
-        /// Metadata includes additional information such as total results, pagination details, etc.
-        /// </summary>
-        [JsonPropertyName("meta")]
-        public new AvailablePhoneNumbersMeta? Meta { get; set; }
     }
 
     /// <summary>

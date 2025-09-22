@@ -643,6 +643,9 @@ namespace TelnyxSharp
     [JsonSerializable(typeof(GetNumberReservationResponse))]
 
     [JsonSerializable(typeof(ExtendNumberReservationResponse))]
+    
+    [JsonSerializable(typeof(ListNumberReservationsRequest))]
+    [JsonSerializable(typeof(ListNumberReservationsResponse))]
 
     [JsonSerializable(typeof(UpdateNumberOrderRequest))]
     [JsonSerializable(typeof(UpdateNumberOrderRegulatoryRequirement))]

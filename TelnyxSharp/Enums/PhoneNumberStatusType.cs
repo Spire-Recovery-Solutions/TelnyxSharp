@@ -5,7 +5,7 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Enumeration for phone number status.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<PhoneNumberStatusType>))]
     public enum PhoneNumberStatusType
     {
         [JsonStringEnumMemberName("purchase_pending")]

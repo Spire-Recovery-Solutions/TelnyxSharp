@@ -6,7 +6,7 @@ namespace TelnyxSharp.Enums
     /// Enum representing the settings for receiving SIP messages on a subdomain.
     /// Defines the access level for who can send SIP messages to the subdomain.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<SipSubdomainReceiveSettings>))]
     public enum SipSubdomainReceiveSettings
     {
         /// <summary>

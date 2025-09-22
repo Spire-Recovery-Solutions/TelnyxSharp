@@ -6,7 +6,7 @@ namespace TelnyxSharp.Enums
     /// Represents the types of events associated with port-out operations.
     /// Each event type corresponds to a specific action or update in the port-out process.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<PortoutEventType>))]
     public enum PortoutEventType
     {
         /// <summary>

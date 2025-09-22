@@ -5,7 +5,7 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Represents countries with specific ringtone patterns in telephony systems.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<RingtoneCountry>))]
     public enum RingtoneCountry
     {
         /// <summary>Austria</summary>

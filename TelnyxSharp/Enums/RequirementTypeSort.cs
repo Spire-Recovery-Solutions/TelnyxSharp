@@ -7,7 +7,7 @@ namespace TelnyxSharp.Enums
     /// This enumeration defines how requirement type data should be ordered,
     /// allowing for ascending or descending sorting based on various attributes.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<RequirementTypeSort>))]
     public enum RequirementTypeSort
     {
         /// <summary>

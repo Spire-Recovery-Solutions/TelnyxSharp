@@ -5,7 +5,7 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Supported languages for Telnyx transcription.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<TelnyxLanguage>))]
     public enum TelnyxLanguage
     {
         /// <summary> English language. </summary>

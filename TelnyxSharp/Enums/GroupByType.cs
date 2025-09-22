@@ -5,7 +5,7 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Specifies the grouping options for inventory coverage queries.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<GroupByType>))]
     public enum GroupByType
     {
         /// <summary>

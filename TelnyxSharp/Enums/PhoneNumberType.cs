@@ -5,7 +5,7 @@ namespace TelnyxSharp.Enums
     // <summary>
     /// Enum representing possible phone number types.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<PhoneNumberType>))]
     public enum PhoneNumberType
     {
         [JsonStringEnumMemberName("local")]

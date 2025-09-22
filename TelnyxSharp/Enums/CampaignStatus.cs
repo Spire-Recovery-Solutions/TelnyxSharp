@@ -5,7 +5,7 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Enum representing the different campaign statuses for Telnyx 10DLC campaigns.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<CampaignStatus>))]
     public enum CampaignStatus
     {
         /// <summary>

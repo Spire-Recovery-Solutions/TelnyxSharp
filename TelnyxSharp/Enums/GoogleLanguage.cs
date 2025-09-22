@@ -5,7 +5,7 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Supported languages for Google's speech recognition and transcription services.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<GoogleLanguage>))]
     public enum GoogleLanguage
     {
         /// <summary>Afrikaans</summary>

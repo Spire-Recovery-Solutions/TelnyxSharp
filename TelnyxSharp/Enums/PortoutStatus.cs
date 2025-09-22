@@ -6,7 +6,7 @@ namespace TelnyxSharp.Enums
     /// Represents the various statuses of a port-out request.
     /// Each status reflects the current state of the port-out process.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<PortoutStatus>))]
     public enum PortoutStatus
     {
         /// <summary>

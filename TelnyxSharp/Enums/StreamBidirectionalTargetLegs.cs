@@ -5,7 +5,7 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Enum representing the target legs for bidirectional stream communication.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<StreamBidirectionalTargetLegs>))]
     public enum StreamBidirectionalTargetLegs
     {
         /// <summary>

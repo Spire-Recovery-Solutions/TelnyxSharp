@@ -5,7 +5,7 @@ namespace TelnyxSharp.Enums
     /// <summary>
     /// Enum representing the different possible statuses of brand identity verification.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter<BrandIdentityStatus>))]
     public enum BrandIdentityStatus
     {
         /// <summary>
