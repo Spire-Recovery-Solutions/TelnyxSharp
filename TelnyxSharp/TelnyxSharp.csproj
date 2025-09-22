@@ -8,13 +8,14 @@
 		<Authors>Spire Recovery Solutions</Authors>
 		<Company>Spire Recovery Solutions</Company>
 		<Product>TelnyxSharp</Product>
-		<Description>Library for integrating Telnyx services into .NET applications.</Description>
-		<PackageTags>telnyx api rest client dotnet</PackageTags>
+		<Description>A comprehensive .NET SDK for the Telnyx API, providing seamless integration with Telnyx telephony services including SMS/MMS messaging, voice calls, number management, WebRTC, and more. Built for .NET 9 with full async support and built-in rate limiting.</Description>
+		<PackageTags>telnyx api rest client dotnet sms mms voice telephony webrtc messaging</PackageTags>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/Spire-Recovery-Solutions/TelnyxSharp</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/Spire-Recovery-Solutions/TelnyxSharp.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<PackageReleaseNotes>Please check the GitHub repository for release notes.</PackageReleaseNotes>
+		<PackageReleaseNotes>See https://github.com/Spire-Recovery-Solutions/TelnyxSharp/releases for detailed release notes.</PackageReleaseNotes>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -23,5 +24,9 @@
 		<PackageReference Include="RestSharp" Version="112.1.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.9" />
 		<PackageReference Include="Microsoft.Extensions.Options" Version="9.0.9" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="../README.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
 </Project>

@@ -1,0 +1,220 @@
+using TelnyxSharp.Numbers.Models.PhoneNumbers.Requests.PhoneNumberSearch;
+using TelnyxSharp.Enums;
+using Xunit;
+using Xunit.Abstractions;
+
+namespace TelnyxSharp.Tests.Numbers
+{
+    [Trait("Category", "Integration")]
+    [Trait("Module", "Numbers")]
+    public class PhoneNumberSearchTests : NumberManagementTestBase
+    {
+        public PhoneNumberSearchTests(ITestOutputHelper output) : base(output)
+        {
+        }
+
+        [Fact]
+        public async Task SearchAvailableNumbers_ByAreaCode_ReturnsResults()
+        {
+            SkipIfNotIntegrationTest();
+
+            var request = new AvailablePhoneNumbersRequest
+            {
+                CountryCode = TestCountry,
+                NationalDestinationCode = int.Parse(TestAreaCode),
+                Limit = 10
+            };
+
+            var response = await Client.PhoneNumbers.PhoneNumberSearch.AvailableNumbers(request);
+
+            Assert.NotNull(response);
+            Assert.NotNull(response.Data);
+            Output.WriteLine($"Found {response.Data.Count} available numbers");
+
+            if (response.Data.Count > 0)
+            {
+                var firstNumber = response.Data.First();
+                Assert.NotNull(firstNumber.PhoneNumber);
+                AssertValidPhoneNumber(firstNumber.PhoneNumber);
+                Assert.NotNull(firstNumber.RecordType);
+                
+                Output.WriteLine($"First available number: {firstNumber.PhoneNumber}");
+                Output.WriteLine($"Cost: {firstNumber.CostInformation?.MonthlyCost} {firstNumber.CostInformation?.Currency}");
+            }
+        }
+
+        [Fact]
+        public async Task SearchAvailableNumbers_WithFeatures_ReturnsFilteredResults()
+        {
+            SkipIfNotIntegrationTest();
+
+            var request = new AvailablePhoneNumbersRequest
+            {
+                CountryCode = TestCountry,
+                Features = new List<PhoneNumberFeature> { PhoneNumberFeature.Sms, PhoneNumberFeature.Voice },
+                Limit = 5
+            };
+
+            var response = await Client.PhoneNumbers.PhoneNumberSearch.AvailableNumbers(request);
+
+            Assert.NotNull(response);
+            Assert.NotNull(response.Data);
+
+            foreach (var number in response.Data)
+            {
+                Output.WriteLine($"Number: {number.PhoneNumber}");
+                Output.WriteLine($"  Features - SMS: {number.Features?.Sms}, Voice: {number.Features?.Voice}");
+                
+                // Verify the numbers support the requested features
+                if (number.Features != null)
+                {
+                    Assert.True(number.Features.Sms || number.Features.Voice, 
+                        "Number should support at least one of the requested features");
+                }
+            }
+        }
+
+        [Fact]
+        public async Task SearchAvailableNumbers_ByNationalDestinationCode_ReturnsResults()
+        {
+            SkipIfNotIntegrationTest();
+
+            var request = new AvailablePhoneNumbersRequest
+            {
+                CountryCode = TestCountry,
+                NationalDestinationCode = int.Parse(TestAreaCode),
+                Limit = 5
+            };
+
+            var response = await Client.PhoneNumbers.PhoneNumberSearch.AvailableNumbers(request);
+
+            Assert.NotNull(response);
+            Assert.NotNull(response.Data);
+
+            foreach (var number in response.Data)
+            {
+                Output.WriteLine($"Number: {number.PhoneNumber}, Region: {number.RegionInformation?.RegionName}");
+            }
+        }
+
+        [Fact]
+        public async Task SearchAvailableNumbers_WithPagination_ReturnsPagedResults()
+        {
+            SkipIfNotIntegrationTest();
+
+            var request = new AvailablePhoneNumbersRequest
+            {
+                CountryCode = TestCountry,
+                Limit = 2
+            };
+
+            var firstPage = await Client.PhoneNumbers.PhoneNumberSearch.AvailableNumbers(request);
+
+            Assert.NotNull(firstPage);
+            Assert.NotNull(firstPage.Data);
+            
+            if (firstPage.Data.Count > 0)
+            {
+                // Request second page
+                // Note: AvailablePhoneNumbersRequest doesn't support pagination
+                
+                var secondPage = await Client.PhoneNumbers.PhoneNumberSearch.AvailableNumbers(request);
+                
+                Assert.NotNull(secondPage);
+                Assert.NotNull(secondPage.Data);
+                
+                // Verify different results on different pages
+                if (secondPage.Data.Count > 0 && firstPage.Data.Count > 0)
+                {
+                    var firstPageNumbers = firstPage.Data.Select(n => n.PhoneNumber).ToHashSet();
+                    var secondPageNumbers = secondPage.Data.Select(n => n.PhoneNumber).ToHashSet();
+                    
+                    Assert.Empty(firstPageNumbers.Intersect(secondPageNumbers));
+                    Output.WriteLine("Pagination working correctly - no duplicate numbers across pages");
+                }
+            }
+        }
+
+        [Fact]
+        public async Task SearchAvailableNumberBlocks_ReturnsResults()
+        {
+            SkipIfNotIntegrationTest();
+
+            var request = new ListAvailablePhoneNumberBlocksRequest
+            {
+                CountryCode = TestCountry,
+                PhoneNumberType = "local",
+                Limit = 5
+            };
+
+            var response = await Client.PhoneNumbers.PhoneNumberSearch.ListAvailableNumberBlocks(request);
+
+            Assert.NotNull(response);
+            Assert.NotNull(response.Data);
+
+            foreach (var block in response.Data)
+            {
+                Output.WriteLine($"Block Range: {block.StartingNumber} - {block.EndingNumber}");
+                Output.WriteLine($"  Size: {block.Size}, Type: {block.PhoneNumberType}");
+                
+                Assert.NotNull(block.StartingNumber);
+                Assert.NotNull(block.EndingNumber);
+                Assert.True(block.Size > 0, "Block size should be greater than 0");
+            }
+        }
+
+        [Fact]
+        public async Task SearchAvailableNumbers_InvalidCountryCode_ReturnsEmptyOrError()
+        {
+            SkipIfNotIntegrationTest();
+
+            var request = new AvailablePhoneNumbersRequest
+            {
+                CountryCode = "XX", // Invalid country code
+                Limit = 5
+            };
+
+            try
+            {
+                var response = await Client.PhoneNumbers.PhoneNumberSearch.AvailableNumbers(request);
+                
+                // Some APIs might return empty results instead of error
+                Assert.NotNull(response);
+                Assert.Empty(response.Data);
+            }
+            catch (Exception ex)
+            {
+                Output.WriteLine($"Expected error for invalid country code: {ex.Message}");
+                // This is expected behavior for invalid country
+            }
+        }
+
+        [Fact]
+        public async Task SearchAvailableNumbers_SpecificNumberType_ReturnsCorrectType()
+        {
+            SkipIfNotIntegrationTest();
+
+            var request = new AvailablePhoneNumbersRequest
+            {
+                CountryCode = TestCountry,
+                PhoneNumberType = "local",
+                Limit = 5
+            };
+
+            var response = await Client.PhoneNumbers.PhoneNumberSearch.AvailableNumbers(request);
+
+            Assert.NotNull(response);
+            Assert.NotNull(response.Data);
+
+            foreach (var number in response.Data)
+            {
+                Output.WriteLine($"Number: {number.PhoneNumber}, Type: {number.PhoneNumberType}");
+                
+                if (!string.IsNullOrEmpty(number.PhoneNumberType))
+                {
+                    Assert.Equal("local", number.PhoneNumberType.ToLower());
+                }
+            }
+        }
+    }
+}

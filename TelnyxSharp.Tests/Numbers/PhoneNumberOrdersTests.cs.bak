@@ -1,0 +1,260 @@
+using TelnyxSharp.Numbers.Models.PhoneNumbers.Requests.PhoneNumberOrders;
+using TelnyxSharp.Numbers.Models.PhoneNumbers.Requests.PhoneNumberSearch;
+using TelnyxSharp.Enums;
+using Xunit;
+using Xunit.Abstractions;
+
+namespace TelnyxSharp.Tests.Numbers
+{
+    [Trait("Category", "Integration")]
+    [Trait("Module", "Numbers")]
+    [Trait("Cost", "PotentialCharges")]
+    public class PhoneNumberOrdersTests : NumberManagementTestBase
+    {
+        public PhoneNumberOrdersTests(ITestOutputHelper output) : base(output)
+        {
+        }
+
+        [Fact]
+        public async Task CreateNumberOrder_WithAvailableNumber_CreatesOrder()
+        {
+            SkipIfNotIntegrationTest();
+            SkipIfCostTestsNotAllowed(); // This test PURCHASES a phone number!
+
+            // First, search for an available number
+            var searchRequest = new AvailablePhoneNumbersRequest
+            {
+                CountryCode = TestCountry,
+                NationalDestinationCode = int.Parse(TestAreaCode),
+                Limit = 1
+            };
+
+            var searchResponse = await Client.PhoneNumbers.PhoneNumberSearch.AvailableNumbers(searchRequest);
+
+            if (searchResponse?.Data?.Count == 0)
+            {
+                Output.WriteLine("No available numbers found for testing");
+                return;
+            }
+
+            var availableNumber = searchResponse.Data.First();
+            Output.WriteLine($"Found available number: {availableNumber.PhoneNumber}");
+            Output.WriteLine($"WARNING: About to purchase this number - this will incur charges!");
+
+            // Create order for the available number
+            var orderRequest = new CreateNumberOrderRequest
+            {
+                PhoneNumbers = new List<CreateNumberOrderPhoneNumber>
+                {
+                    new CreateNumberOrderPhoneNumber
+                    {
+                        PhoneNumber = availableNumber.PhoneNumber
+                    }
+                }
+            };
+
+            var response = await Client.PhoneNumbers.PhoneNumberOrders.Create(orderRequest);
+
+            Assert.NotNull(response);
+            Assert.NotNull(response.Data);
+            Assert.NotNull(response.Data.Id);
+            
+            OrdersToCleanup.Add(response.Data.Id);
+            
+            Output.WriteLine($"Created order: {response.Data.Id}");
+            Output.WriteLine($"  Status: {response.Data.Status}");
+            Output.WriteLine($"  Created: {response.Data.CreatedAt}");
+            
+            // Track phone numbers for cleanup if order is successful
+            if (response.Data.PhoneNumbers != null)
+            {
+                foreach (var phoneNumber in response.Data.PhoneNumbers)
+                {
+                    if (!string.IsNullOrEmpty(phoneNumber.Id))
+                    {
+                        PhoneNumbersToCleanup.Add(phoneNumber.Id);
+                        Output.WriteLine($"  Phone Number ID for cleanup: {phoneNumber.Id}");
+                    }
+                }
+            }
+        }
+
+        [Fact]
+        public async Task ListNumberOrders_ReturnsOrders()
+        {
+            SkipIfNotIntegrationTest();
+            // This test is SAFE - only lists existing orders
+
+            var request = new ListNumberOrdersRequest
+            {
+                PageSize = 10
+            };
+
+            var response = await Client.PhoneNumbers.PhoneNumberOrders.List(request);
+
+            Assert.NotNull(response);
+            Assert.NotNull(response.Data);
+
+            Output.WriteLine($"Found {response.Data.Count} number orders");
+
+            foreach (var order in response.Data)
+            {
+                Output.WriteLine($"Order: {order.Id}");
+                Output.WriteLine($"  Status: {order.Status}");
+                Output.WriteLine($"  Created: {order.CreatedAt}");
+                Output.WriteLine($"  Phone Numbers Count: {order.PhoneNumbers?.Count ?? 0}");
+            }
+        }
+
+        [Fact]
+        public async Task GetNumberOrder_WithValidId_ReturnsOrderDetails()
+        {
+            SkipIfNotIntegrationTest();
+            // This test is SAFE - only reads order details
+
+            // First, get list of orders to find a valid ID
+            var listRequest = new ListNumberOrdersRequest { PageSize = 1 };
+            var listResponse = await Client.PhoneNumbers.PhoneNumberOrders.List(listRequest);
+
+            if (listResponse?.Data?.Count == 0)
+            {
+                Output.WriteLine("No number orders available for testing");
+                return;
+            }
+
+            var orderId = listResponse.Data.First().Id;
+
+            var response = await Client.PhoneNumbers.PhoneNumberOrders.Get(orderId);
+
+            Assert.NotNull(response);
+            Assert.NotNull(response.Data);
+            Assert.Equal(orderId, response.Data.Id);
+
+            Output.WriteLine($"Retrieved order: {response.Data.Id}");
+            Output.WriteLine($"  Status: {response.Data.Status}");
+            Output.WriteLine($"  Customer Reference: {response.Data.CustomerReference}");
+            
+            if (response.Data.PhoneNumbers != null)
+            {
+                foreach (var phoneNumber in response.Data.PhoneNumbers)
+                {
+                    Output.WriteLine($"  Phone Number: {phoneNumber.PhoneNumber}");
+                    Output.WriteLine($"    Status: {phoneNumber.Status}");
+                }
+            }
+        }
+
+        [Fact]
+        public async Task UpdateNumberOrder_ModifiesOrderDetails()
+        {
+            SkipIfNotIntegrationTest();
+            // This test is SAFE - only updates metadata
+
+            // First, get an order to update
+            var listRequest = new ListNumberOrdersRequest { PageSize = 1, FilterStatus = "pending" };
+            var listResponse = await Client.PhoneNumbers.PhoneNumberOrders.List(listRequest);
+
+            if (listResponse?.Data?.Count == 0)
+            {
+                Output.WriteLine("No pending orders available for testing update");
+                return;
+            }
+
+            var order = listResponse.Data.First();
+            var orderId = order.Id;
+
+            var updateRequest = new UpdateNumberOrderRequest
+            {
+                CustomerReference = $"{TestPrefix}updated_reference_{DateTime.UtcNow:yyyyMMddHHmmss}"
+            };
+
+            var response = await Client.PhoneNumbers.PhoneNumberOrders.Update(orderId, updateRequest);
+
+            Assert.NotNull(response);
+            Assert.NotNull(response.Data);
+            Assert.Equal(updateRequest.CustomerReference, response.Data.CustomerReference);
+
+            Output.WriteLine($"Updated order: {response.Data.Id}");
+            Output.WriteLine($"  New Customer Reference: {response.Data.CustomerReference}");
+        }
+
+        [Fact]
+        public async Task ListSubNumberOrders_ReturnsSubOrders()
+        {
+            SkipIfNotIntegrationTest();
+            // This test is SAFE - only lists sub-orders
+
+            var request = new ListSubNumberOrdersRequest
+            {
+                PageSize = 10
+            };
+
+            var response = await Client.PhoneNumbers.PhoneNumberOrders.ListSubNumber(request);
+
+            Assert.NotNull(response);
+            Assert.NotNull(response.Data);
+
+            Output.WriteLine($"Found {response.Data.Count} sub number orders");
+
+            foreach (var subOrder in response.Data)
+            {
+                Output.WriteLine($"Sub Order: {subOrder.Id}");
+                Output.WriteLine($"  Order Request ID: {subOrder.OrderRequestId}");
+                Output.WriteLine($"  Country Code: {subOrder.CountryCode}");
+                Output.WriteLine($"  Phone Numbers Type: {subOrder.PhoneNumbersType}");
+            }
+        }
+
+        [Fact]
+        public async Task CreateAndListComments_OnNumberOrder()
+        {
+            SkipIfNotIntegrationTest();
+            // This test is SAFE - only creates comments
+
+            // First, get an order to comment on
+            var listRequest = new ListNumberOrdersRequest { PageSize = 1 };
+            var listResponse = await Client.PhoneNumbers.PhoneNumberOrders.List(listRequest);
+
+            if (listResponse?.Data?.Count == 0)
+            {
+                Output.WriteLine("No number orders available for testing comments");
+                return;
+            }
+
+            var orderId = listResponse.Data.First().Id;
+
+            // Create a comment
+            var createCommentRequest = new CreateCommentRequest
+            {
+                Body = $"{TestPrefix}Integration test comment created at {DateTime.UtcNow:yyyy-MM-dd HH:mm:ss}",
+                CommentRecordType = "number_order",
+                CommentRecordId = orderId
+            };
+
+            var createResponse = await Client.PhoneNumbers.PhoneNumberOrders.CreateComment(createCommentRequest);
+
+            Assert.NotNull(createResponse);
+            Assert.NotNull(createResponse.Data);
+            Assert.NotNull(createResponse.Data.Id);
+            Assert.Equal(createCommentRequest.Body, createResponse.Data.Body);
+
+            Output.WriteLine($"Created comment: {createResponse.Data.Id}");
+
+            // List comments
+            var listCommentsRequest = new ListCommentsRequest
+            {
+                FilterCommentRecordType = "number_order",
+                FilterCommentRecordId = orderId,
+                PageSize = 10
+            };
+
+            var listCommentsResponse = await Client.PhoneNumbers.PhoneNumberOrders.ListComment(listCommentsRequest);
+
+            Assert.NotNull(listCommentsResponse);
+            Assert.NotNull(listCommentsResponse.Data);
+            Assert.Contains(listCommentsResponse.Data, c => c.Id == createResponse.Data.Id);
+
+            Output.WriteLine($"Found {listCommentsResponse.Data.Count} comments for order {orderId}");
+        }
+    }
+}
