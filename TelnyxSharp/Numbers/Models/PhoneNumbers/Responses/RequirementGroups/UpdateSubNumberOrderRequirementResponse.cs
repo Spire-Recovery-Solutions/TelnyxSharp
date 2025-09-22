@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using TelnyxSharp.Models;
+using TelnyxSharp.Numbers.Models.PhoneNumbers;
 using TelnyxSharp.Numbers.Models.PhoneNumbers.Responses.PhoneNumberOrders;
 
 namespace TelnyxSharp.Numbers.Models.PhoneNumbers.Responses.RequirementGroups
@@ -19,6 +20,6 @@ namespace TelnyxSharp.Numbers.Models.PhoneNumbers.Responses.RequirementGroups
         /// This property is serialized with the name "phone_numbers".
         /// </summary>
         [JsonPropertyName("phone_numbers")]
-        public List<PhoneNumberOrderData>? PhoneNumbers { get; set; }
+        public List<NumberOrderPhoneNumberDetail>? PhoneNumbers { get; set; }
     }
 }
