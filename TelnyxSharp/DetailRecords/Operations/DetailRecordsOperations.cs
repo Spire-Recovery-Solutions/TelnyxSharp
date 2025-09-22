@@ -11,7 +11,7 @@ namespace TelnyxSharp.DetailRecords.Operations
     : BaseOperations(client, rateLimitRetryPolicy), IDetailRecordsOperations
     {
         /// <inheritdoc />
-        public async Task<DetailRecordSearchResponse> Search(DetailRecordSearchRequest request, CancellationToken cancellationToken = default)
+        public async Task<DetailRecordSearchResponse?> Search(DetailRecordSearchRequest request, CancellationToken cancellationToken = default)
         {
             var req = new RestRequest("detail_records")
                 .AddPagination(request.PageSize)

@@ -68,11 +68,11 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     public IDetailRecordsOperations DetailRecordsSearch => _detailRecordsSearch.Value;
     public IV1ApiOperations V1 => _v1Operations?.Value;
 
-    public TelnyxClient(string? apiKey = null, string? v1ApiUser = null, string? v1ApiToken = null)
+    public TelnyxClient(string? apiKey = null, string? v1ApiUser = null, string? v1ApiToken = null, bool debugMode = false, string? debugLogPath = null)
     {
         var v2Options = new RestClientOptions("https://api.telnyx.com/v2/")
         {
-            Authenticator = new JwtAuthenticator(apiKey),
+            Authenticator = !string.IsNullOrEmpty(apiKey) ? new JwtAuthenticator(apiKey) : null,
             ThrowOnDeserializationError = false,
             ThrowOnAnyError = false,
         };
@@ -87,12 +87,12 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
             };
         }
 
-        const bool debugMode = false;
         if (debugMode)
         {
-            Directory.CreateDirectory(DefaultLogPath);
-            var logFileName = $"telnyx-debug-{DateTime.Now:yyyy-MM-dd}.log";
-            var logFilePath = Path.Combine(DefaultLogPath, logFileName);
+            var logPath = debugLogPath ?? DefaultLogPath;
+            Directory.CreateDirectory(logPath);
+            var logFileName = $"telnyx-debug-{DateTime.Now:yyyy-MM-dd-HH-mm-ss}.log";
+            var logFilePath = Path.Combine(logPath, logFileName);
 
             _logFileStream = new FileStream(logFilePath, FileMode.Append, FileAccess.Write, FileShare.Read);
             _logWriter = new StreamWriter(_logFileStream) { AutoFlush = true };
