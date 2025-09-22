@@ -2,6 +2,9 @@
 
 Welcome to the TelnyxSharp SDK! This library provides a simple and intuitive way to interact with the Telnyx API using .NET. 🚀
 
+[![NuGet](https://img.shields.io/nuget/v/TelnyxSharp.svg)](https://www.nuget.org/packages/TelnyxSharp/)
+[![Build Status](https://github.com/Spire-Recovery-Solutions/TelnyxSharp/workflows/Publish%20to%20NuGet/badge.svg)](https://github.com/Spire-Recovery-Solutions/TelnyxSharp/actions)
+
 ## Installation
 
 To install the TelnyxSharp SDK, you can use the NuGet package manager:
