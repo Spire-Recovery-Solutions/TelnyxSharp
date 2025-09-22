@@ -32,7 +32,7 @@ jobs:
 #        DOTNET_NOLOGO: true
     - name: Pack
       run: |
-        dotnet pack --configuration Release --no-restore --output nupkg /p:Version=1.0.0.${{ github.run_number }}
+        dotnet pack TelnyxSharp/TelnyxSharp.csproj --configuration Release --no-restore --output nupkg /p:Version=1.0.0.${{ github.run_number }}
 
     - name: Push to NuGet
       run: |
