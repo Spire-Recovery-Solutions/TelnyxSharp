@@ -37,9 +37,9 @@ public interface IEvent
 /// <summary>
 /// Represents a base event that implements the IEvent interface.
 /// This class includes properties for event type, ID, occurrence time,
-/// payload, and record type for all derived event classes.
+/// and record type for all derived event classes.
 /// </summary>
-public class BaseEvent : IEvent
+public abstract class BaseEvent : IEvent
 {
     /// <summary>
     /// Gets or sets the type of the event.
@@ -63,18 +63,25 @@ public class BaseEvent : IEvent
     public DateTimeOffset? OccurredAt { get; set; }
 
     /// <summary>
-    /// Gets or sets the payload associated with the event.
-    /// This can be any object related to the specific event type.
-    /// </summary>
-    [JsonPropertyName("payload")]
-    public object Payload { get; set; }
-
-    /// <summary>
     /// Gets or sets the record type of the event.
     /// Possible values: [event].
     /// </summary>
     [JsonPropertyName("record_type")]
     public string RecordType { get; set; }
+}
+
+/// <summary>
+/// Represents a strongly-typed base event with a specific payload type.
+/// This class provides type-safe access to event payloads.
+/// </summary>
+/// <typeparam name="TPayload">The type of the payload for this event</typeparam>
+public abstract class BaseEvent<TPayload> : BaseEvent
+{
+    /// <summary>
+    /// Gets or sets the strongly-typed payload associated with the event.
+    /// </summary>
+    [JsonPropertyName("payload")]
+    public TPayload Payload { get; set; }
 }
 
 /// <summary>

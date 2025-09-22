@@ -10,13 +10,8 @@ namespace TelnyxSharp.Messaging.Events
     /// Inherits from the base event class and contains the payload
     /// for the received message details.
     /// </summary>
-    public class MessageReceivedEvent : BaseEvent
+    public class MessageReceivedEvent : BaseEvent<MessageReceivedPayload>
     {
-        /// <summary>
-        /// Gets or sets the payload containing details about the received message.
-        /// </summary>
-        [JsonPropertyName("payload")]
-        public MessageReceivedPayload Payload { get; set; }
     }
 
     /// <summary>
