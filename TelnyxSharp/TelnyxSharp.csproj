@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -8,7 +8,7 @@
 		<Authors>Spire Recovery Solutions</Authors>
 		<Company>Spire Recovery Solutions</Company>
 		<Product>TelnyxSharp</Product>
-		<Description>A comprehensive .NET SDK for the Telnyx API, providing seamless integration with Telnyx telephony services including SMS/MMS messaging, voice calls, number management, WebRTC, and more. Built for .NET 9 with full async support and built-in rate limiting.</Description>
+		<Description>A comprehensive .NET SDK for the Telnyx API, providing seamless integration with Telnyx telephony services including SMS/MMS messaging, voice calls, number management, WebRTC, and more. Built for .NET 10 with full async support and built-in rate limiting.</Description>
 		<PackageTags>telnyx api rest client dotnet sms mms voice telephony webrtc messaging</PackageTags>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/Spire-Recovery-Solutions/TelnyxSharp</PackageProjectUrl>

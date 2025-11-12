@@ -83,7 +83,7 @@ The solution includes a Blazor WebRTC component library (`TelnyxSharp.Components
 
 ## Development Notes
 
-- Target Framework: .NET 9.0
+- Target Framework: .NET 10.0
 - Package dependencies managed via NuGet
 - Continuous deployment configured in `.github/workflows/publish.yml`
 - Rate limiting and retry policies are built into the client
