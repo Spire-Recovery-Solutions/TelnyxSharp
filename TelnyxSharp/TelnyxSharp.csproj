@@ -8,8 +8,8 @@
 		<Authors>Spire Recovery Solutions</Authors>
 		<Company>Spire Recovery Solutions</Company>
 		<Product>TelnyxSharp</Product>
-		<Description>A comprehensive .NET SDK for the Telnyx API, providing seamless integration with Telnyx telephony services including SMS/MMS messaging, voice calls, number management, WebRTC, and more. Built for .NET 9 with full async support and built-in rate limiting.</Description>
-		<PackageTags>telnyx api rest client dotnet sms mms voice telephony webrtc messaging</PackageTags>
+		<Description>A comprehensive .NET 9 SDK for the Telnyx API, providing seamless integration with Telnyx telephony services including SMS/MMS messaging, voice calls, number management, WebRTC, and more. Built exclusively for .NET 9 with full async support and built-in rate limiting. Requires .NET 9.0 or later.</Description>
+		<PackageTags>telnyx api rest client dotnet dotnet9 net9 sms mms voice telephony webrtc messaging sdk</PackageTags>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/Spire-Recovery-Solutions/TelnyxSharp</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/Spire-Recovery-Solutions/TelnyxSharp.git</RepositoryUrl>

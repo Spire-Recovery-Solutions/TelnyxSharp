@@ -6,38 +6,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 TelnyxSharp is a .NET SDK for the Telnyx API, providing a comprehensive client library for interacting with Telnyx telephony services including SMS/MMS, voice calls, number management, and WebRTC functionality.
 
-## Build and Development Commands
-
-**Note: dotnet CLI is located at `~/.dotnet/dotnet`**
-
-### Build the project
-```bash
-~/.dotnet/dotnet build
-~/.dotnet/dotnet build --configuration Release
-```
-
-### Run tests
-```bash
-~/.dotnet/dotnet test
-~/.dotnet/dotnet test TelnyxSharp.Tests/TelnyxSharp.Tests.csproj
-```
-
-### Run a single test
-```bash
-~/.dotnet/dotnet test --filter "FullyQualifiedName~TestClassName.TestMethodName"
-~/.dotnet/dotnet test --filter "DisplayName~TestName"
-```
-
-### Package creation
-```bash
-~/.dotnet/dotnet pack --configuration Release
-```
-
-### Restore dependencies
-```bash
-~/.dotnet/dotnet restore
-```
-
 ## Architecture Overview
 
 ### Core Structure

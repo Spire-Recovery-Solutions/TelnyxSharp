@@ -3,13 +3,14 @@ name: Publish to NuGet
 on:
   push:
     branches:
-      - main  # Trigger the workflow on push to the main branch
+      - main
+      - alpha
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    
+
     - name: Checkout code
       uses: actions/checkout@v5
 
@@ -17,6 +18,15 @@ jobs:
       uses: actions/setup-dotnet@v5
       with:
         dotnet-version: 9.0.x
+
+    - name: Set Branch-Specific Variables
+      id: branch_vars
+      run: |
+        if [[ "${{ github.ref }}" == "refs/heads/alpha" ]]; then
+          echo "version_postfix=-alpha" >> $GITHUB_ENV
+        else
+          echo "version_postfix=" >> $GITHUB_ENV
+        fi
 
     - name: Build
       run: |
@@ -30,9 +40,10 @@ jobs:
 #        DOTNET_CLI_TELEMETRY_OPTOUT: true
 #        DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 #        DOTNET_NOLOGO: true
+
     - name: Pack
       run: |
-        dotnet pack TelnyxSharp/TelnyxSharp.csproj --configuration Release --no-restore --output nupkg /p:Version=1.0.0.${{ github.run_number }}
+        dotnet pack TelnyxSharp/TelnyxSharp.csproj --configuration Release --no-restore --output nupkg /p:Version=1.0.0.${{ github.run_number }}${{ env.version_postfix }}
 
     - name: Push to NuGet
       run: |
