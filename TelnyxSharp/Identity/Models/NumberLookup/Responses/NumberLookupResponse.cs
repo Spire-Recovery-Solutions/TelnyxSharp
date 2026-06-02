@@ -128,6 +128,13 @@ public partial class NumberLookupCarrier
     /// </summary>
     [JsonPropertyName("error_code")]
     public string? ErrorCode { get; set; }
+
+    /// <summary>
+    /// If known to Telnyx and applicable, the primary network carrier (e.g., "AT&amp;T", "T-Mobile USA").
+    /// Collapses MVNO/reseller brands to the underlying host network. Nullable/best-effort.
+    /// </summary>
+    [JsonPropertyName("normalized_carrier")]
+    public string? NormalizedCarrier { get; set; }
 }
 
 /// <summary>
