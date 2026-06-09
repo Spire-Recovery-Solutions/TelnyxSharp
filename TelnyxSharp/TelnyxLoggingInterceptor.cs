@@ -1,15 +1,14 @@
-﻿using RestSharp.Interceptors;
 using System.Collections.Concurrent;
 using System.Text;
 
 namespace TelnyxSharp
 {
     /// <summary>
-    /// Interceptor for asynchronously logging Telnyx API requests and responses.
+    /// A <see cref="DelegatingHandler"/> for asynchronously logging Telnyx API requests and responses.
     /// Logs request and response details (headers, body, status) to a specified log writer.
     /// The logging is performed asynchronously in the background to avoid blocking API calls.
     /// </summary>
-    public class TelnyxAsyncLoggingInterceptor : Interceptor, IDisposable
+    public class TelnyxAsyncLoggingInterceptor : DelegatingHandler, IDisposable
     {
         private readonly StreamWriter _logWriter;
         private readonly ConcurrentQueue<string> _logQueue;
@@ -41,6 +40,18 @@ namespace TelnyxSharp
         }
 
         /// <summary>
+        /// Logs the outgoing request and incoming response around the inner handler.
+        /// </summary>
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
+            CancellationToken cancellationToken)
+        {
+            await LogRequestAsync(request, cancellationToken);
+            var response = await base.SendAsync(request, cancellationToken);
+            await LogResponseAsync(response, cancellationToken);
+            return response;
+        }
+
+        /// <summary>
         /// Processes and flushes queued log entries asynchronously.
         /// Logs are written to the <see cref="StreamWriter"/> at regular intervals.
         /// </summary>
@@ -65,7 +76,7 @@ namespace TelnyxSharp
                 }
                 catch (Exception ex)
                 {
-                    // Log processing error - in a production environment, 
+                    // Log processing error - in a production environment,
                     // you might want to emit this to a different error log
                     try
                     {
@@ -106,13 +117,9 @@ namespace TelnyxSharp
         }
 
         /// <summary>
-        /// Called before an HTTP request is sent. Logs the request details.
+        /// Logs the request details before it is sent.
         /// </summary>
-        /// <param name="requestMessage">The <see cref="HttpRequestMessage"/> to be sent.</param>
-        /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
-        /// <returns>A task that represents the asynchronous operation.</returns>
-        public override async ValueTask BeforeHttpRequest(HttpRequestMessage requestMessage,
-            CancellationToken cancellationToken)
+        private async Task LogRequestAsync(HttpRequestMessage requestMessage, CancellationToken cancellationToken)
         {
             if (_disposed) return;
 
@@ -164,13 +171,9 @@ namespace TelnyxSharp
         }
 
         /// <summary>
-        /// Called after an HTTP request has completed. Logs the response details.
+        /// Logs the response details after it has been received.
         /// </summary>
-        /// <param name="responseMessage">The <see cref="HttpResponseMessage"/> received.</param>
-        /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
-        /// <returns>A task that represents the asynchronous operation.</returns>
-        public override async ValueTask AfterHttpRequest(HttpResponseMessage responseMessage,
-            CancellationToken cancellationToken)
+        private async Task LogResponseAsync(HttpResponseMessage responseMessage, CancellationToken cancellationToken)
         {
             if (_disposed) return;
 
@@ -222,55 +225,64 @@ namespace TelnyxSharp
         /// <summary>
         /// Disposes of the interceptor, ensuring that the background task and resources are properly cleaned up.
         /// </summary>
-        public void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            if (_disposed) return;
+            if (_disposed)
+            {
+                base.Dispose(disposing);
+                return;
+            }
 
             _disposed = true;
 
-            try
+            if (disposing)
             {
-                // Signal the processing task to stop
-                _cancellationSource.Cancel();
-
-                // Wait for the processing task to complete (with timeout)
-                if (!_processTask.Wait(TimeSpan.FromSeconds(5)))
-                {
-                    // If task didn't complete in time, force a final flush
-                    while (_logQueue.TryDequeue(out var message))
-                    {
-                        _logWriter.WriteLine(message);
-                    }
-                    _logWriter.Flush();
-                }
-            }
-            catch
-            {
-                // If async wait failed, attempt one final synchronous flush
                 try
                 {
-                    while (_logQueue.TryDequeue(out var message))
+                    // Signal the processing task to stop
+                    _cancellationSource.Cancel();
+
+                    // Wait for the processing task to complete (with timeout)
+                    if (!_processTask.Wait(TimeSpan.FromSeconds(5)))
                     {
-                        _logWriter.WriteLine(message);
+                        // If task didn't complete in time, force a final flush
+                        while (_logQueue.TryDequeue(out var message))
+                        {
+                            _logWriter.WriteLine(message);
+                        }
+                        _logWriter.Flush();
                     }
-                    _logWriter.Flush();
                 }
                 catch
                 {
-                    // Ignore final flush errors
+                    // If async wait failed, attempt one final synchronous flush
+                    try
+                    {
+                        while (_logQueue.TryDequeue(out var message))
+                        {
+                            _logWriter.WriteLine(message);
+                        }
+                        _logWriter.Flush();
+                    }
+                    catch
+                    {
+                        // Ignore final flush errors
+                    }
+                }
+                finally
+                {
+                    _cancellationSource.Dispose();
+
+                    // Clear the tracking collections
+                    _processedRequests.Clear();
+                    _processedResponses.Clear();
+
+                    // Clear any remaining items in queue (should be empty at this point)
+                    while (_logQueue.TryDequeue(out _)) { }
                 }
             }
-            finally
-            {
-                _cancellationSource.Dispose();
 
-                // Clear the tracking collections
-                _processedRequests.Clear();
-                _processedResponses.Clear();
-
-                // Clear any remaining items in queue (should be empty at this point)
-                while (_logQueue.TryDequeue(out _)) { }
-            }
+            base.Dispose(disposing);
         }
     }
 }

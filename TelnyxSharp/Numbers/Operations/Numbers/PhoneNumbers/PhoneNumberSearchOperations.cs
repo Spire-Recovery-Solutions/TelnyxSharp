@@ -1,5 +1,4 @@
 ﻿using Polly.Retry;
-using RestSharp;
 using TelnyxSharp.Base;
 using TelnyxSharp.Numbers.Interfaces;
 using TelnyxSharp.Numbers.Models.PhoneNumbers.Requests.PhoneNumberSearch;
@@ -7,14 +6,14 @@ using TelnyxSharp.Numbers.Models.PhoneNumbers.Responses.PhoneNumberSearch;
 
 namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
 {
-    public class PhoneNumberSearchOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
+    public class PhoneNumberSearchOperations(HttpClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), IPhoneNumberSearchOperations
     {
         /// <inheritdoc />
         public async Task<AvailablePhoneNumbersResponse> AvailableNumbers(AvailablePhoneNumbersRequest request,
     CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("available_phone_numbers")
+            var req = new TelnyxRequest("available_phone_numbers")
                 .AddFilter("filter[administrative_area]", request.AdministrativeArea)
                 .AddFilter("filter[phone_number][contains]", request.Contains)
                 .AddFilter("filter[country_code]", request.CountryCode)
@@ -37,7 +36,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
         /// <inheritdoc />
         public async Task<ListAvailablePhoneNumberBlocksResponse> ListAvailableNumberBlocks(ListAvailablePhoneNumberBlocksRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("available_phone_number_blocks")
+            var req = new TelnyxRequest("available_phone_number_blocks")
                 .AddFilter("filter[locality]", request.Locality)
                 .AddFilter("filter[country_code]", request.CountryCode)
                 .AddFilter("filter[national_destination_code]", request.NationalDestinationCode)

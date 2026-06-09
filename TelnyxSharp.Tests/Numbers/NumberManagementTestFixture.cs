@@ -7,12 +7,10 @@ using TelnyxSharp;
 using TelnyxSharp.Numbers.Models.PhoneNumbers.Requests.PhoneNumberConfigurations;
 using TelnyxSharp.Numbers.Models.PhoneNumbers.Requests.PhoneNumberOrders;
 using TelnyxSharp.Numbers.Models.PhoneNumbers.Requests.PhoneNumberSearch;
-using Xunit;
-using Xunit.Abstractions;
 
 namespace TelnyxSharp.Tests.Numbers
 {
-    public class NumberManagementTestFixture : IAsyncLifetime
+    public class NumberManagementTestFixture
     {
         private readonly TelnyxClient _client;
         private readonly bool _runIntegrationTests;

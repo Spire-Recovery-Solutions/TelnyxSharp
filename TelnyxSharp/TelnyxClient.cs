@@ -1,8 +1,6 @@
 ﻿using Polly;
 using Polly.RateLimit;
-using RestSharp;
-using RestSharp.Authenticators;
-using RestSharp.Interceptors;
+using System.Net.Http.Headers;
 using TelnyxSharp.Base;
 using TelnyxSharp.DetailRecords.Interfaces;
 using TelnyxSharp.DetailRecords.Operations;
@@ -32,7 +30,8 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     private static readonly string DefaultLogPath = Path.Combine(Path.GetTempPath(), "TelnyxSDK", "logs");
     private readonly StreamWriter? _logWriter;
     private readonly FileStream? _logFileStream;
-    private readonly IRestClient? _v1Client;
+    private readonly HttpClient? _v1Client;
+    private readonly bool _debugMode;
 
     // Lazy-loaded API sections
     private readonly Lazy<ISmsMmsOperations> _smsmms;
@@ -70,22 +69,7 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
 
     public TelnyxClient(string? apiKey = null, string? v1ApiUser = null, string? v1ApiToken = null, bool debugMode = false, string? debugLogPath = null)
     {
-        var v2Options = new RestClientOptions("https://api.telnyx.com/v2/")
-        {
-            Authenticator = !string.IsNullOrEmpty(apiKey) ? new JwtAuthenticator(apiKey) : null,
-            ThrowOnDeserializationError = false,
-            ThrowOnAnyError = false,
-        };
-
-        RestClientOptions v1Options = null;
-        if (!string.IsNullOrEmpty(v1ApiToken))
-        {
-            v1Options = new RestClientOptions("https://api.telnyx.com/")
-            {
-                ThrowOnDeserializationError = false,
-                ThrowOnAnyError = false,
-            };
-        }
+        _debugMode = debugMode;
 
         if (debugMode)
         {
@@ -99,17 +83,6 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
 
             _logWriter.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] TelnyxSDK Debug Log File: {logFilePath}");
             _logWriter.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] Session Started: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
-
-            v2Options.Interceptors = new List<Interceptor> { new TelnyxAsyncLoggingInterceptor(_logWriter) };
-            v2Options.ThrowOnAnyError = debugMode;
-            v2Options.ThrowOnDeserializationError = debugMode;
-
-            if (v1Options != null)
-            {
-                v1Options.Interceptors = new List<Interceptor> { new TelnyxAsyncLoggingInterceptor(_logWriter) };
-                v1Options.ThrowOnAnyError = debugMode;
-                v1Options.ThrowOnDeserializationError = debugMode;
-            }
         }
 
         var rateLimitRetryPolicy = Policy
@@ -122,15 +95,27 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
                     return ex?.RetryAfter ?? TimeSpan.FromSeconds(1);
                 },
                 onRetryAsync: (exception, timeSpan, attempt, context) => Task.CompletedTask);
-        // Initialize base with configured optionsQ
-        base.Client = new RestClient(v2Options);
+
+        // Build the v2 client (replaces RestSharp JwtAuthenticator with a Bearer default header).
+        var v2Client = new HttpClient(BuildHandlerPipeline())
+        {
+            BaseAddress = new Uri("https://api.telnyx.com/v2/")
+        };
+        if (!string.IsNullOrEmpty(apiKey))
+            v2Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
+
+        base.Client = v2Client;
         base.RateLimitRetryPolicy = rateLimitRetryPolicy;
 
-        if (v1Options != null)
+        // Build the v1 client only when a v1 token is supplied.
+        if (!string.IsNullOrEmpty(v1ApiToken))
         {
-            _v1Client = new RestClient(v1Options);
-            _v1Client.AddDefaultHeader("x-api-user", v1ApiUser);
-            _v1Client.AddDefaultHeader("x-api-token", v1ApiToken);
+            _v1Client = new HttpClient(BuildHandlerPipeline())
+            {
+                BaseAddress = new Uri("https://api.telnyx.com/")
+            };
+            _v1Client.DefaultRequestHeaders.TryAddWithoutValidation("x-api-user", v1ApiUser);
+            _v1Client.DefaultRequestHeaders.TryAddWithoutValidation("x-api-token", v1ApiToken);
         }
         else
         {
@@ -203,6 +188,24 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
             }, LazyThreadSafetyMode.ExecutionAndPublication);
     }
 
+    /// <summary>
+    /// Builds the <see cref="HttpClient"/> handler pipeline, inserting the debug logging
+    /// <see cref="DelegatingHandler"/> in front of the primary handler when debug mode is enabled.
+    /// Each client gets its own handler chain (a <see cref="DelegatingHandler"/> instance cannot be shared);
+    /// in debug mode the interceptors share the single log writer.
+    /// </summary>
+    private HttpMessageHandler BuildHandlerPipeline()
+    {
+        var primary = new SocketsHttpHandler();
+
+        if (_debugMode && _logWriter != null)
+        {
+            return new TelnyxAsyncLoggingInterceptor(_logWriter) { InnerHandler = primary };
+        }
+
+        return primary;
+    }
+
     public void Dispose()
     {
         // Dispose any initialized components
@@ -268,10 +271,12 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
             disposableV1Operations.Dispose();
         }
 
-        _logWriter?.Dispose();
-        _logFileStream?.Dispose();
+        // Dispose the HttpClients first: this disposes their handler chains, including the
+        // logging interceptor, which performs its final flush to the still-open writer.
         Client?.Dispose();
         _v1Client?.Dispose();
+        _logWriter?.Dispose();
+        _logFileStream?.Dispose();
         GC.SuppressFinalize(this);
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Polly.Retry;
-using RestSharp;
 using System.Text.Json;
 using TelnyxSharp.Base;
 using TelnyxSharp.Messaging.Interfaces;
@@ -8,14 +7,14 @@ using TelnyxSharp.Messaging.Models.NumberConfigurations.Responses;
 
 namespace TelnyxSharp.Messaging.Operations.SmsMms
 {
-    public class NumberConfigurationOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
+    public class NumberConfigurationOperations(HttpClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), INumberConfigurationOperations
     {
         // <inheritdoc />
         public async Task<ListPhoneMessageSettingsResponse?> List(
             ListPhoneMessageSettingsRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("phone_numbers/messaging").AddPagination(request.PageSize);
+            var req = new TelnyxRequest("phone_numbers/messaging").AddPagination(request.PageSize);
 
             return await ExecuteAsync<ListPhoneMessageSettingsResponse>(req, cancellationToken);
         }
@@ -24,7 +23,7 @@ namespace TelnyxSharp.Messaging.Operations.SmsMms
         public async Task<RetrievePhoneMessageSettingsResponse?> Retrieve(string id,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"phone_numbers/{id}/messaging");
+            var req = new TelnyxRequest($"phone_numbers/{id}/messaging");
 
             return await ExecuteAsync<RetrievePhoneMessageSettingsResponse>(req, cancellationToken);
         }
@@ -33,7 +32,7 @@ namespace TelnyxSharp.Messaging.Operations.SmsMms
         public async Task<UpdatePhoneNumberMessagingResponse?> Update(string id,
             UpdatePhoneNumberMessagingRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"phone_numbers/{id}/messaging", Method.Patch);
+            var req = new TelnyxRequest($"phone_numbers/{id}/messaging", TelnyxMethod.Patch);
 
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
@@ -44,7 +43,7 @@ namespace TelnyxSharp.Messaging.Operations.SmsMms
         public async Task<UpdateNumbersMessagingBulkResponse?> UpdateMultipleNumbers(
             UpdateNumbersMessagingBulkRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("messaging_numbers_bulk_updates", Method.Post);
+            var req = new TelnyxRequest("messaging_numbers_bulk_updates", TelnyxMethod.Post);
 
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
@@ -55,7 +54,7 @@ namespace TelnyxSharp.Messaging.Operations.SmsMms
         public async Task<RetrieveBulkUpdateStatusResponse?> RetrieveBulkUpdateStatusAsync(string orderId,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"messaging_numbers_bulk_updates/{orderId}");
+            var req = new TelnyxRequest($"messaging_numbers_bulk_updates/{orderId}");
 
             return await ExecuteAsync<RetrieveBulkUpdateStatusResponse>(req, cancellationToken);
         }

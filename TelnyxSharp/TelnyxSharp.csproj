@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -8,8 +8,8 @@
 		<Authors>Spire Recovery Solutions</Authors>
 		<Company>Spire Recovery Solutions</Company>
 		<Product>TelnyxSharp</Product>
-		<Description>A comprehensive .NET 9 SDK for the Telnyx API, providing seamless integration with Telnyx telephony services including SMS/MMS messaging, voice calls, number management, WebRTC, and more. Built exclusively for .NET 9 with full async support and built-in rate limiting. Requires .NET 9.0 or later.</Description>
-		<PackageTags>telnyx api rest client dotnet dotnet9 net9 sms mms voice telephony webrtc messaging sdk</PackageTags>
+		<Description>A comprehensive .NET 10 SDK for the Telnyx API, providing seamless integration with Telnyx telephony services including SMS/MMS messaging, voice calls, number management, WebRTC, and more. Built exclusively for .NET 10 with full async support and built-in rate limiting. Requires .NET 10.0 or later.</Description>
+		<PackageTags>telnyx api rest client dotnet dotnet10 net10 sms mms voice telephony webrtc messaging sdk</PackageTags>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/Spire-Recovery-Solutions/TelnyxSharp</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/Spire-Recovery-Solutions/TelnyxSharp.git</RepositoryUrl>
@@ -21,9 +21,9 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
 		<PackageReference Include="Polly" Version="8.6.3" />
-		<PackageReference Include="RestSharp" Version="112.1.0" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.9" />
-		<PackageReference Include="Microsoft.Extensions.Options" Version="9.0.9" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="10.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="10.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>

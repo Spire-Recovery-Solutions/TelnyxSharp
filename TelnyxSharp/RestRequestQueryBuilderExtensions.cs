@@ -1,10 +1,10 @@
-﻿using RestSharp;
 using System.Text.Json;
+using TelnyxSharp.Base;
 using TelnyxSharp.Enums;
 namespace TelnyxSharp
 {
     /// <summary>
-    /// Provides extension methods for RestRequest to add query parameters and filters.
+    /// Provides extension methods for TelnyxRequest to add query parameters and filters.
     /// </summary>
     public static class RestRequestQueryBuilderExtensions
     {
@@ -16,7 +16,7 @@ namespace TelnyxSharp
         /// Adds a filter with an enum value to the request query parameters.
         /// Uses JsonPropertyName attribute value if available.
         /// </summary>
-        public static RestRequest AddFilter(this RestRequest request, string key, object? value = null, FilterOperator? filterOperator = null)
+        public static TelnyxRequest AddFilter(this TelnyxRequest request, string key, object? value = null, FilterOperator? filterOperator = null)
         {
             if (value == null || (value is string strValue && string.IsNullOrWhiteSpace(strValue)))
             {
@@ -49,7 +49,7 @@ namespace TelnyxSharp
         /// Adds a list of values as query parameters with array notation.
         /// Filters out null, empty, or whitespace-only values.
         /// </summary>
-        public static RestRequest AddFilterList(this RestRequest request, string key, List<string>? values)
+        public static TelnyxRequest AddFilterList(this TelnyxRequest request, string key, List<string>? values)
         {
             if (values == null || values.Count == 0) return request;
             foreach (var value in values.Where(v => !string.IsNullOrWhiteSpace(v)))
@@ -63,7 +63,7 @@ namespace TelnyxSharp
         /// Page size is constrained between 1 and 250, defaulting to 50.
         /// Page number always starts at 1.
         /// </summary>
-        public static RestRequest AddPagination(this RestRequest request, int? pageSize)
+        public static TelnyxRequest AddPagination(this TelnyxRequest request, int? pageSize)
         {
             var size = Math.Min(MaxPageSize,
                       Math.Max(MinPageSize,

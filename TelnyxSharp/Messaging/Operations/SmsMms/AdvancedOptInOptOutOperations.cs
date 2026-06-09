@@ -1,5 +1,4 @@
 ﻿using Polly.Retry;
-using RestSharp;
 using System.Text.Json;
 using TelnyxSharp.Base;
 using TelnyxSharp.Messaging.Interfaces;
@@ -8,7 +7,7 @@ using TelnyxSharp.Messaging.Models.AdvancedOptInOptOut.Responses;
 
 namespace TelnyxSharp.Messaging.Operations.SmsMms
 {
-    public class AdvancedOptInOptOutOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
+    public class AdvancedOptInOptOutOperations(HttpClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), IAdvancedOptInOptOutOperations
     {
         /// <inheritdoc />
@@ -20,7 +19,7 @@ namespace TelnyxSharp.Messaging.Operations.SmsMms
             var updatedAtGteFormatted = request.UpdatedAtGte?.ToString("yyyy-MM-ddTHH:mm:ss.ffffffzzz");
             var updatedAtLteFormatted = request.UpdatedAtLte?.ToString("yyyy-MM-ddTHH:mm:ss.ffffffzzz");
 
-            var req = new RestRequest($"messaging_profiles/{profileId}/autoresp_configs")
+            var req = new TelnyxRequest($"messaging_profiles/{profileId}/autoresp_configs")
                 .AddFilter("country_code", request.CountryCode)
                 .AddFilter("created_at[gte]", createdAtGteFormatted)
                 .AddFilter("created_at[lte]", createdAtLteFormatted)
@@ -35,7 +34,7 @@ namespace TelnyxSharp.Messaging.Operations.SmsMms
         public async Task<CreateAutoResponseSettingResponse?> Create(string profileId,
             CreateAutoResponseSettingRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"messaging_profiles/{profileId}/autoresp_configs", Method.Post);
+            var req = new TelnyxRequest($"messaging_profiles/{profileId}/autoresp_configs", TelnyxMethod.Post);
 
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
@@ -46,7 +45,7 @@ namespace TelnyxSharp.Messaging.Operations.SmsMms
         public async Task<GetAutoResponseSettingResponse?> Retrieve(string profileId,
             string autorespCfgId, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"messaging_profiles/{profileId}/autoresp_configs/{autorespCfgId}");
+            var req = new TelnyxRequest($"messaging_profiles/{profileId}/autoresp_configs/{autorespCfgId}");
 
             return await ExecuteAsync<GetAutoResponseSettingResponse>(req, cancellationToken);
         }
@@ -56,7 +55,7 @@ namespace TelnyxSharp.Messaging.Operations.SmsMms
             string autorespCfgId, UpdateAutoResponseSettingRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"messaging_profiles/{profileId}/autoresp_configs/{autorespCfgId}", Method.Put);
+            var req = new TelnyxRequest($"messaging_profiles/{profileId}/autoresp_configs/{autorespCfgId}", TelnyxMethod.Put);
 
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
@@ -67,8 +66,8 @@ namespace TelnyxSharp.Messaging.Operations.SmsMms
         public async Task<DeleteAutoResponseSettingResponse?> Delete(string profileId,
             string autorespCfgId, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"messaging_profiles/{profileId}/autoresp_configs/{autorespCfgId}",
-                Method.Delete);
+            var req = new TelnyxRequest($"messaging_profiles/{profileId}/autoresp_configs/{autorespCfgId}",
+                TelnyxMethod.Delete);
 
             return await ExecuteAsync<DeleteAutoResponseSettingResponse>(req, cancellationToken);
         }

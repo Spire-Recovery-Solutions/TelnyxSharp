@@ -1,13 +1,19 @@
 ﻿using TelnyxSharp.Enums;
 using TelnyxSharp.V1Operations.Models.Requests;
+using TUnit.Assertions;
+using TUnit.Assertions.Extensions;
+using TUnit.Core;
+
 namespace TelnyxSharp.Tests;
 
-public class CdrRequestsOperationsTests : TelnyxTestBase
+public sealed class CdrRequestsOperationsTests : TelnyxTestBase
 {
 
-    [Fact]
+    [Test]
     public async Task FullCdrRequestLifecycle_Succeeds()
     {
+        SkipIfNotIntegrationTest();
+
         var id = await CreateCdrRequestAsync();
 
         try
@@ -23,14 +29,16 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
         }
     }
 
-    [Fact]
+    [Test]
     public async Task Create_WithMinimalFields_Succeeds()
     {
+        SkipIfNotIntegrationTest();
+
         var id = await CreateCdrRequestAsync();
 
         try
         {
-            Assert.False(string.IsNullOrEmpty(id));
+            await Assert.That(string.IsNullOrEmpty(id)).IsFalse();
         }
         finally
         {
@@ -38,9 +46,11 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
         }
     }
 
-    [Fact]
+    [Test]
     public async Task List_ReturnsCreatedRequest()
     {
+        SkipIfNotIntegrationTest();
+
         var id = await CreateCdrRequestAsync();
 
         try
@@ -53,9 +63,11 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
         }
     }
 
-    [Fact]
+    [Test]
     public async Task Get_ExistingCdrRequest_ReturnsCorrectData()
     {
+        SkipIfNotIntegrationTest();
+
         var id = await CreateCdrRequestAsync();
 
         try
@@ -68,9 +80,11 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
         }
     }
 
-    [Fact]
+    [Test]
     public async Task Delete_ExistingCdrRequest_Succeeds()
     {
+        SkipIfNotIntegrationTest();
+
         var id = await CreateCdrRequestAsync();
         await DeleteCdrRequestAsync(id);
         // No need for cleanup as we just deleted it
@@ -94,8 +108,8 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
             .CdrRequests
             .Create(req, CancellationToken.None);
 
-        Assert.NotNull(resp);
-        Assert.False(string.IsNullOrEmpty(resp.Id));
+        await Assert.That(resp).IsNotNull();
+        await Assert.That(string.IsNullOrEmpty(resp.Id)).IsFalse();
         return resp.Id;
     }
 
@@ -107,8 +121,8 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
             .CdrRequests
             .List(req, CancellationToken.None);
 
-        Assert.NotNull(list);
-        Assert.Contains(list, r => r.Id == expectedId);
+        await Assert.That(list).IsNotNull();
+        await Assert.That(list.Any(r => r.Id == expectedId)).IsTrue();
     }
 
     private async Task GetCdrRequestAsync(string id)
@@ -118,8 +132,8 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
             .CdrRequests
             .Get(id, CancellationToken.None);
 
-        Assert.NotNull(resp);
-        Assert.Equal(id, resp.Id);
+        await Assert.That(resp).IsNotNull();
+        await Assert.That(resp.Id).IsEqualTo(id);
     }
 
     private async Task DeleteCdrRequestAsync(string id)
@@ -129,8 +143,8 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
             .CdrRequests
             .Delete(id, CancellationToken.None);
 
-        Assert.NotNull(resp);
-        Assert.True(resp.Success, $"Expected deletion of CDR Request {id} to succeed, but got: {resp.Message}");
+        await Assert.That(resp).IsNotNull();
+        await Assert.That(resp.Success).IsTrue();
     }
 
     private async Task CleanupCdrRequestAsync(string id)
@@ -148,8 +162,4 @@ public class CdrRequestsOperationsTests : TelnyxTestBase
         }
     }
 
-    public void Dispose()
-    {
-        Client.Dispose();
-    }
 }

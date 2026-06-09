@@ -1,5 +1,4 @@
 ﻿using Polly.Retry;
-using RestSharp;
 using System.Text.Json;
 using TelnyxSharp.Base;
 using TelnyxSharp.Messaging.Interfaces;
@@ -8,14 +7,14 @@ using TelnyxSharp.Messaging.Models.Campaign.Responses;
 
 namespace TelnyxSharp.Messaging.Operations.TenDlc
 {
-    public class CampaignOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
+    public class CampaignOperations(HttpClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), ICampaignOperations
     {
         // <inheritdoc />
         public async Task<ListCampaignsResponse?> List(ListCampaignsRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/campaign")
+            var req = new TelnyxRequest($"10dlc/campaign")
                 .AddFilter("recordsPerPage", request.PageSize)
                 .AddFilter("sort", request.Sort)
                 .AddFilter("brandId", request.BrandId);
@@ -26,7 +25,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         public async Task<GetCampaignResponse?> Get(string campaignId,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/campaign/{campaignId}");
+            var req = new TelnyxRequest($"10dlc/campaign/{campaignId}");
 
             return await ExecuteAsync<GetCampaignResponse>(req, cancellationToken);
         }
@@ -35,7 +34,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         public async Task<UpdateCampaignResponse?> Update(string campaignId, UpdateCampaignRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/campaign/{campaignId}", Method.Put);
+            var req = new TelnyxRequest($"10dlc/campaign/{campaignId}", TelnyxMethod.Put);
 
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
@@ -46,7 +45,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         public async Task<DeactivateCampaignResponse?> Deactivate(string campaignId,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/campaign/{campaignId}", Method.Delete);
+            var req = new TelnyxRequest($"10dlc/campaign/{campaignId}", TelnyxMethod.Delete);
 
             return await ExecuteAsync<DeactivateCampaignResponse>(req, cancellationToken);
         }
@@ -55,7 +54,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         public async Task<GetCampaignOperationStatusResponse?> RetrieveOperationStatus(string campaignId,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/campaign/{campaignId}/operationStatus");
+            var req = new TelnyxRequest($"10dlc/campaign/{campaignId}/operationStatus");
 
             return await ExecuteAsync<GetCampaignOperationStatusResponse>(req, cancellationToken);
         }
@@ -64,7 +63,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         public async Task<GetCampaignOsrAttributesResponse?> RetrieveOsrAttributes(string campaignId,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/campaign/{campaignId}/osr/attributes");
+            var req = new TelnyxRequest($"10dlc/campaign/{campaignId}/osr/attributes");
 
             return await ExecuteAsync<GetCampaignOsrAttributesResponse>(req, cancellationToken);
         }
@@ -73,7 +72,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         public async Task<GetCampaignCostResponse?> GetCost(GetCampaignCostRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/campaign/usecase/cost").AddFilter("usecase", request.UseCase);
+            var req = new TelnyxRequest($"10dlc/campaign/usecase/cost").AddFilter("usecase", request.UseCase);
 
             return await ExecuteAsync<GetCampaignCostResponse>(req, cancellationToken);
         }
@@ -82,7 +81,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         public async Task<SubmitCampaignResponse?> Submit(SubmitCampaignRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("10dlc/campaignBuilder", Method.Post);
+            var req = new TelnyxRequest("10dlc/campaignBuilder", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<SubmitCampaignResponse>(req, cancellationToken);
@@ -92,7 +91,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         public async Task<QualifyCampaignByUsecaseResponse?> QualifyByUsecase(string brandId,
             string usecase, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/campaignBuilder/brand/{brandId}/usecase/{usecase}");
+            var req = new TelnyxRequest($"10dlc/campaignBuilder/brand/{brandId}/usecase/{usecase}");
 
             return await ExecuteAsync<QualifyCampaignByUsecaseResponse>(req, cancellationToken);
         }
@@ -101,7 +100,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         public async Task<GetCampaignMnoMetadataResponse?> GetCampaignMnoMetadataAsync(string campaignId,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/campaign/{campaignId}/mnoMetadata");
+            var req = new TelnyxRequest($"10dlc/campaign/{campaignId}/mnoMetadata");
 
             return await ExecuteAsync<GetCampaignMnoMetadataResponse>(req, cancellationToken);
         }
@@ -109,7 +108,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         /// <inheritdoc />
         public async Task<AcceptSharedCampaignResponse?> AcceptSharedCampaignAsync(string campaignId, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/campaign/acceptSharing/{campaignId}", Method.Post);
+            var req = new TelnyxRequest($"10dlc/campaign/acceptSharing/{campaignId}", TelnyxMethod.Post);
 
             return await ExecuteAsync<AcceptSharedCampaignResponse>(req, cancellationToken);
         }
@@ -118,7 +117,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         public async Task<GetCampaignSharingStatusResponse?> GetSharingStatus(string campaignId,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/campaign/{campaignId}/sharing");
+            var req = new TelnyxRequest($"10dlc/campaign/{campaignId}/sharing");
 
             return await ExecuteAsync<GetCampaignSharingStatusResponse>(req, cancellationToken);
         }

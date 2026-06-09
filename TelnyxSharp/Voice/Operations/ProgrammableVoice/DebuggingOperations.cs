@@ -1,5 +1,4 @@
 ﻿using Polly.Retry;
-using RestSharp;
 using TelnyxSharp.Base;
 using TelnyxSharp.Voice.Interfaces;
 using TelnyxSharp.Voice.Models.Debugging.Requests;
@@ -7,13 +6,13 @@ using TelnyxSharp.Voice.Models.Debugging.Responses;
 
 namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
 {
-    internal class DebuggingOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
+    internal class DebuggingOperations(HttpClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), IDebuggingOperations
     {
         /// <inheritdoc />
         public async Task<ListCallEventsResponse?> ListCallEvents(ListCallEventsRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("call_events")
+            var req = new TelnyxRequest("call_events")
             .AddFilter("filter[leg_id]", request.LegId)
             .AddFilter("filter[application_session_id]", request.ApplicationSessionId)
             .AddFilter("filter[connection_id]", request.ConnectionId)

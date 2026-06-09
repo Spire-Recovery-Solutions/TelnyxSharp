@@ -1,5 +1,4 @@
 ﻿using Polly.Retry;
-using RestSharp;
 using TelnyxSharp.Base;
 using TelnyxSharp.Numbers.Interfaces;
 
@@ -8,7 +7,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
     /// <summary>
     /// Provides operations related to managing toll-free numbers, including toll-free verification.
     /// </summary>
-    public class PhoneNumberOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
+    public class PhoneNumberOperations(HttpClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), IPhoneNumberOperations
     {
         private readonly Lazy<IPhoneNumberSearchOperations> _phoneNumberSearchOperations = new(() =>

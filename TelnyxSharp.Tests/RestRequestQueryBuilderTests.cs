@@ -1,12 +1,15 @@
-﻿using RestSharp;
 using System.Text.Json.Serialization;
+using TelnyxSharp.Base;
 using TelnyxSharp.Enums;
+using TUnit.Assertions;
+using TUnit.Assertions.Extensions;
+using TUnit.Core;
 
 namespace TelnyxSharp.Tests
 {
-    public class RestRequestQueryBuilderTests
+    public sealed class RestRequestQueryBuilderTests
     {
-        private readonly RestRequest _sut = new();
+        private readonly TelnyxRequest _sut = new("");
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         private enum TestStatus
@@ -26,7 +29,7 @@ namespace TelnyxSharp.Tests
             Third
         }
 
-        private string GetQueryString(RestRequest request)
+        private static string GetQueryString(TelnyxRequest request)
         {
             var parameters = request.Parameters
                 .Where(p => p.Type == ParameterType.QueryString)
@@ -36,97 +39,97 @@ namespace TelnyxSharp.Tests
             return string.Join("&", parameters);
         }
 
-        [Fact]
-        public void AddFilter_WithEnum_GeneratesCorrectQueryString()
+        [Test]
+        public async Task AddFilter_WithEnum_GeneratesCorrectQueryString()
         {
             var request = _sut.AddFilter("status", TestStatus.Active);
-            Assert.Equal("status=active_status", GetQueryString(request));
+            await Assert.That(GetQueryString(request)).IsEqualTo("status=active_status");
         }
 
-        [Fact]
-        public void AddFilter_WithPlainEnum_GeneratesCorrectQueryString()
+        [Test]
+        public async Task AddFilter_WithPlainEnum_GeneratesCorrectQueryString()
         {
             var request = _sut.AddFilter("level", PlainEnum.First);
-            Assert.Equal("level=First", GetQueryString(request));
+            await Assert.That(GetQueryString(request)).IsEqualTo("level=First");
         }
 
-        [Fact]
-        public void AddFilter_WithNullEnum_GeneratesEmptyQueryString()
+        [Test]
+        public async Task AddFilter_WithNullEnum_GeneratesEmptyQueryString()
         {
             var request = _sut.AddFilter("status", null as TestStatus?);
-            Assert.Equal("", GetQueryString(request));
+            await Assert.That(GetQueryString(request)).IsEqualTo("");
         }
 
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData(" ")]
-        [InlineData("   ")]
-        [InlineData("\t")]
-        [InlineData("\n")]
-        [InlineData("\r\n")]
-        public void AddFilter_WithNullOrWhitespace_GeneratesEmptyQueryString(string? value)
+        [Test]
+        [Arguments(null)]
+        [Arguments("")]
+        [Arguments(" ")]
+        [Arguments("   ")]
+        [Arguments("\t")]
+        [Arguments("\n")]
+        [Arguments("\r\n")]
+        public async Task AddFilter_WithNullOrWhitespace_GeneratesEmptyQueryString(string? value)
         {
             var request = _sut.AddFilter("key", value);
-            Assert.Equal("", GetQueryString(request));
+            await Assert.That(GetQueryString(request)).IsEqualTo("");
         }
 
-        [Theory]
-        [InlineData("simple", "value", "simple=value")]
-        [InlineData("key with space", "value with space", "key with space=value with space")]
-        [InlineData("key", "!@#$%", "key=!@#$%")]
-        [InlineData("key", "value&more", "key=value&more")]
-        [InlineData("key", " value ", "key= value ")] // Preserves meaningful whitespace
-        public void AddFilter_WithValidString_GeneratesCorrectQueryString(string key, string value, string expected)
+        [Test]
+        [Arguments("simple", "value", "simple=value")]
+        [Arguments("key with space", "value with space", "key with space=value with space")]
+        [Arguments("key", "!@#$%", "key=!@#$%")]
+        [Arguments("key", "value&more", "key=value&more")]
+        [Arguments("key", " value ", "key= value ")] // Preserves meaningful whitespace
+        public async Task AddFilter_WithValidString_GeneratesCorrectQueryString(string key, string value, string expected)
         {
             var request = _sut.AddFilter(key, value);
-            Assert.Equal(expected, GetQueryString(request));
+            await Assert.That(GetQueryString(request)).IsEqualTo(expected);
         }
 
-        [Fact]
-        public void AddFilterList_WithNullList_GeneratesEmptyQueryString()
+        [Test]
+        public async Task AddFilterList_WithNullList_GeneratesEmptyQueryString()
         {
             var request = _sut.AddFilterList("tags", null);
-            Assert.Equal("", GetQueryString(request));
+            await Assert.That(GetQueryString(request)).IsEqualTo("");
         }
 
-        [Fact]
-        public void AddFilterList_WithEmptyList_GeneratesEmptyQueryString()
+        [Test]
+        public async Task AddFilterList_WithEmptyList_GeneratesEmptyQueryString()
         {
             var request = _sut.AddFilterList("tags", new List<string>());
-            Assert.Equal("", GetQueryString(request));
+            await Assert.That(GetQueryString(request)).IsEqualTo("");
         }
 
-        [Fact]
-        public void AddFilterList_WithValues_GeneratesArrayStyleQueryString()
+        [Test]
+        public async Task AddFilterList_WithValues_GeneratesArrayStyleQueryString()
         {
             var values = new List<string> { "one", "two", "three" };
             var request = _sut.AddFilterList("items", values);
-            Assert.Equal("items[]=one&items[]=two&items[]=three", GetQueryString(request));
+            await Assert.That(GetQueryString(request)).IsEqualTo("items[]=one&items[]=two&items[]=three");
         }
 
-        [Fact]
-        public void AddFilterList_WithMixedValues_FiltersOutInvalidValues()
+        [Test]
+        public async Task AddFilterList_WithMixedValues_FiltersOutInvalidValues()
         {
-            var values = new List<string> { "valid", "", null, "also-valid", " ", "\t", "  valid-too  " };
+            var values = new List<string> { "valid", "", null!, "also-valid", " ", "\t", "  valid-too  " };
             var request = _sut.AddFilterList("tags", values);
-            Assert.Equal("tags[]=valid&tags[]=also-valid&tags[]=  valid-too  ", GetQueryString(request));
+            await Assert.That(GetQueryString(request)).IsEqualTo("tags[]=valid&tags[]=also-valid&tags[]=  valid-too  ");
         }
 
-        [Theory]
-        [InlineData(10, "page[number]=1&page[size]=10")]
-        [InlineData(0, "page[number]=1&page[size]=1")]    // Below minimum
-        [InlineData(-1, "page[number]=1&page[size]=1")]   // Below minimum
-        [InlineData(300, "page[number]=1&page[size]=250")] // Above maximum
-        [InlineData(null, "page[number]=1&page[size]=50")] // Default value
-        public void AddPagination_GeneratesCorrectQueryString(int? pageSize, string expected)
+        [Test]
+        [Arguments(10, "page[number]=1&page[size]=10")]
+        [Arguments(0, "page[number]=1&page[size]=1")]    // Below minimum
+        [Arguments(-1, "page[number]=1&page[size]=1")]   // Below minimum
+        [Arguments(300, "page[number]=1&page[size]=250")] // Above maximum
+        [Arguments(null, "page[number]=1&page[size]=50")] // Default value
+        public async Task AddPagination_GeneratesCorrectQueryString(int? pageSize, string expected)
         {
             var request = _sut.AddPagination(pageSize);
-            Assert.Equal(expected, GetQueryString(request));
+            await Assert.That(GetQueryString(request)).IsEqualTo(expected);
         }
 
-        [Fact]
-        public void QueryBuilder_CombiningMultipleFilters_GeneratesCorrectQueryString()
+        [Test]
+        public async Task QueryBuilder_CombiningMultipleFilters_GeneratesCorrectQueryString()
         {
             var request = _sut
                 .AddFilter("status", TestStatus.Active)
@@ -135,51 +138,51 @@ namespace TelnyxSharp.Tests
                 .AddPagination(50);
 
             var queryString = GetQueryString(request);
-            Assert.Equal("page[number]=1&page[size]=50&status=active_status&tags[]=new&tags[]=vip&type=customer", queryString);
+            await Assert.That(queryString).IsEqualTo("page[number]=1&page[size]=50&status=active_status&tags[]=new&tags[]=vip&type=customer");
         }
 
-        [Fact]
-        public void QueryBuilder_WithSpecialCharacters_GeneratesCorrectQueryString()
+        [Test]
+        public async Task QueryBuilder_WithSpecialCharacters_GeneratesCorrectQueryString()
         {
             var request = _sut.AddFilter("complex", "Hello & World!")
                             .AddFilterList("tags", new List<string> { "tag&value", "special!char" });
 
-            Assert.Equal("complex=Hello & World!&tags[]=tag&value&tags[]=special!char", GetQueryString(request));
+            await Assert.That(GetQueryString(request)).IsEqualTo("complex=Hello & World!&tags[]=tag&value&tags[]=special!char");
         }
 
 
-        [Fact]
-        public void AddFilter_WithOperator_GeneratesCorrectQueryString()
+        [Test]
+        public async Task AddFilter_WithOperator_GeneratesCorrectQueryString()
         {
             var request = _sut.AddFilter("filter[created_at]", "2023-01-01", FilterOperator.StartsWith);
-            Assert.Equal("filter[created_at][starts_with]=2023-01-01", GetQueryString(request));
+            await Assert.That(GetQueryString(request)).IsEqualTo("filter[created_at][starts_with]=2023-01-01");
         }
 
-        [Fact]
-        public void AddFilter_WithEnumAndOperator_GeneratesCorrectQueryString()
+        [Test]
+        public async Task AddFilter_WithEnumAndOperator_GeneratesCorrectQueryString()
         {
             var request = _sut.AddFilter("filter[status]", TestStatus.Active, FilterOperator.Equals);
-            Assert.Equal("filter[status][eq]=active_status", GetQueryString(request));
+            await Assert.That(GetQueryString(request)).IsEqualTo("filter[status][eq]=active_status");
         }
 
-        [Fact]
-        public void AddFilter_WithPreformattedKeyAndOperator_AppendsOperatorCorrectly()
+        [Test]
+        public async Task AddFilter_WithPreformattedKeyAndOperator_AppendsOperatorCorrectly()
         {
             var request = _sut.AddFilter("custom_key", "value", FilterOperator.Contains);
-            Assert.Equal("custom_key[contains]=value", GetQueryString(request));
+            await Assert.That(GetQueryString(request)).IsEqualTo("custom_key[contains]=value");
         }
 
-        [Fact]
-        public void AddFilter_WithMultipleOperators_GeneratesDistinctParameters()
+        [Test]
+        public async Task AddFilter_WithMultipleOperators_GeneratesDistinctParameters()
         {
             var request = _sut
                 .AddFilter("filter[created_at]", "2023-01-01", FilterOperator.GreaterThanOrEqualTo)
                 .AddFilter("filter[created_at]", "2023-12-31", FilterOperator.LessThanOrEqualTo);
-            Assert.Equal("filter[created_at][gte]=2023-01-01&filter[created_at][lte]=2023-12-31", GetQueryString(request));
+            await Assert.That(GetQueryString(request)).IsEqualTo("filter[created_at][gte]=2023-01-01&filter[created_at][lte]=2023-12-31");
         }
 
-        [Fact]
-        public void AddFilter_WithComplexFilterChain_GeneratesCorrectQueryString()
+        [Test]
+        public async Task AddFilter_WithComplexFilterChain_GeneratesCorrectQueryString()
         {
             var request = _sut
                 .AddFilter("filter[record_type]", DetailRecordType.Conference)
@@ -189,17 +192,17 @@ namespace TelnyxSharp.Tests
                 .AddFilter("filter[status]", TestStatus.Active)
                 .AddFilter("sort", "created_at");
 
-            Assert.Equal("filter[created_at][gte]=2023-01-01&filter[created_at][lte]=2023-12-31&filter[direction]=inbound&filter[record_type]=conference&filter[status]=active_status&sort=created_at", GetQueryString(request));
+            await Assert.That(GetQueryString(request)).IsEqualTo("filter[created_at][gte]=2023-01-01&filter[created_at][lte]=2023-12-31&filter[direction]=inbound&filter[record_type]=conference&filter[status]=active_status&sort=created_at");
         }
 
-        [Fact]
-        public void AddFilter_MultipleConditionsForSameField_GeneratesCorrectQueryString()
+        [Test]
+        public async Task AddFilter_MultipleConditionsForSameField_GeneratesCorrectQueryString()
         {
             var request = _sut
                 .AddFilter("filter[started_at]", "2022-02-02", FilterOperator.GreaterThan)
                 .AddFilter("filter[started_at]", "2022-03-01", FilterOperator.LessThan);
 
-            Assert.Equal("filter[started_at][gt]=2022-02-02&filter[started_at][lt]=2022-03-01", GetQueryString(request));
+            await Assert.That(GetQueryString(request)).IsEqualTo("filter[started_at][gt]=2022-02-02&filter[started_at][lt]=2022-03-01");
         }
     }
 }

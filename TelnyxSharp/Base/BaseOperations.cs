@@ -1,7 +1,7 @@
-﻿using Polly.RateLimit;
+using Polly.RateLimit;
 using Polly.Retry;
-using RestSharp;
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Text.Json;
 using TelnyxSharp.Models;
@@ -14,7 +14,7 @@ namespace TelnyxSharp.Base
     /// </summary>
     public abstract class BaseOperations
     {
-        protected IRestClient Client { get; set; }
+        protected HttpClient Client { get; set; }
         protected AsyncRetryPolicy RateLimitRetryPolicy { get; set; }
 
         /// <summary>
@@ -25,9 +25,9 @@ namespace TelnyxSharp.Base
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseOperations"/> class with the specified client and rate limit retry policy.
         /// </summary>
-        /// <param name="client">The RestSharp client used for making API requests.</param>
+        /// <param name="client">The <see cref="HttpClient"/> used for making API requests.</param>
         /// <param name="rateLimitRetryPolicy">The retry policy for rate-limiting.</param>
-        protected BaseOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
+        protected BaseOperations(HttpClient client, AsyncRetryPolicy rateLimitRetryPolicy)
         {
             Client = client;
             RateLimitRetryPolicy = rateLimitRetryPolicy;
@@ -38,10 +38,16 @@ namespace TelnyxSharp.Base
         /// Handles rate-limiting, response deserialization, and pagination.
         /// </summary>
         /// <typeparam name="T">The type of the response model to deserialize into.</typeparam>
-        /// <param name="request">The RestSharp request to execute.</param>
+        /// <param name="request">The request builder to execute.</param>
         /// <param name="cancellationToken">A token to cancel the request, if needed.</param>
         /// <returns>A task representing the asynchronous operation, with a result of type <typeparamref name="T"/>.</returns>
-        protected async Task<T> ExecuteAsync<T>(RestRequest request, CancellationToken cancellationToken = default)
+        [UnconditionalSuppressMessage("Trimming", "IL2070",
+            Justification = "Pagination reflects over Meta/Data on response types preserved by the source-gen context.")]
+        [UnconditionalSuppressMessage("Trimming", "IL2075",
+            Justification = "Pagination reflects over Meta/Data on response types preserved by the source-gen context.")]
+        [UnconditionalSuppressMessage("AOT", "IL3050",
+            Justification = "Pagination builds a List<> for the response's data element type; element types are concrete and preserved.")]
+        protected async Task<T> ExecuteAsync<T>(TelnyxRequest request, CancellationToken cancellationToken = default)
             where T : ITelnyxResponse, new()
         {
             return await RateLimitRetryPolicy.ExecuteAsync(async () =>
@@ -49,39 +55,38 @@ namespace TelnyxSharp.Base
                 // Add a unique correlation ID header for tracking.
                 request.AddOrUpdateHeader("X-Correlation-ID", Guid.NewGuid());
 
-                var response = await Client.ExecuteAsync(request, cancellationToken);
+                using var requestMessage = request.BuildHttpRequestMessage();
+                var response = await Client.SendAsync(requestMessage, cancellationToken);
+                var content = await response.Content.ReadAsStringAsync(cancellationToken);
 
                 // Initialize the result with the response's basic status information.
+                // ErrorMessage is left null on HTTP error status (matching RestSharp): the
+                // deserialized Errors[] carries detail.
                 var result = new T
                 {
                     StatusCode = response.StatusCode,
-                    IsSuccessful = response.IsSuccessful,
-                    ErrorMessage = response.ErrorMessage
+                    IsSuccessful = response.IsSuccessStatusCode,
+                    ErrorMessage = null
                 };
 
                 // Handle rate-limiting by checking for 429 Too Many Requests status.
                 if (response.StatusCode == HttpStatusCode.TooManyRequests)
                 {
-                    var resetSeconds = response.Headers?
-                        .FirstOrDefault(h => h.Name.Equals("x-ratelimit-reset", StringComparison.OrdinalIgnoreCase))?
-                        .Value?.ToString();
-
-                    var delay = int.TryParse(resetSeconds, out var parsedDelay) ? parsedDelay : 1;
-                    throw new RateLimitRejectedException(TimeSpan.FromSeconds(delay));
+                    throw new RateLimitRejectedException(TimeSpan.FromSeconds(GetRateLimitResetSeconds(response)));
                 }
 
                 // If the response is successful and contains content, attempt to deserialize it.
-                if (response is not { IsSuccessful: true, Content: not null }) return result;
+                if (!response.IsSuccessStatusCode || string.IsNullOrEmpty(content)) return result;
 
                 var deserializedResult =
-                    JsonSerializer.Deserialize<T>(response.Content, TelnyxJsonSerializerContext.Default.Options);
+                    JsonSerializer.Deserialize<T>(content, TelnyxJsonSerializerContext.Default.Options);
 
                 if (deserializedResult == null) return result;
 
                 result = deserializedResult;
                 result.StatusCode = response.StatusCode;
-                result.IsSuccessful = response.IsSuccessful;
-                result.ErrorMessage = response.ErrorMessage;
+                result.IsSuccessful = response.IsSuccessStatusCode;
+                result.ErrorMessage = null;
 
                 // Handle pagination if the response includes paginated data.
                 var pageParam = request.Parameters.FirstOrDefault(p => p.Name == "page[number]");
@@ -93,7 +98,7 @@ namespace TelnyxSharp.Base
 
                 var dataType = dataProperty.PropertyType.GetGenericArguments()[0];
                 var listType = typeof(List<>).MakeGenericType(dataType);
-                var allData = (IList)Activator.CreateInstance(listType);
+                var allData = (IList)Activator.CreateInstance(listType)!;
 
                 if (dataProperty.GetValue(result) is IEnumerable initialData)
                     foreach (var item in initialData)
@@ -107,29 +112,26 @@ namespace TelnyxSharp.Base
                         request.AddOrUpdateHeader("X-Correlation-ID", Guid.NewGuid());
                         request.RemoveParameter(pageParam);
                         request.AddParameter("page[number]", meta.PageNumber + 1);
-                        response = await Client.ExecuteAsync(request, cancellationToken);
 
-                        if (response.StatusCode != HttpStatusCode.TooManyRequests) return Task.CompletedTask;
+                        using var pageMessage = request.BuildHttpRequestMessage();
+                        response = await Client.SendAsync(pageMessage, cancellationToken);
+                        content = await response.Content.ReadAsStringAsync(cancellationToken);
 
-                        var resetSeconds = response.Headers?
-                            .FirstOrDefault(h =>
-                                h.Name.Equals("x-ratelimit-reset", StringComparison.OrdinalIgnoreCase))?
-                            .Value?.ToString();
+                        if (response.StatusCode != HttpStatusCode.TooManyRequests) return;
 
-                        var delay = int.TryParse(resetSeconds, out var parsedDelay) ? parsedDelay : 1;
-                        throw new RateLimitRejectedException(TimeSpan.FromSeconds(delay));
+                        throw new RateLimitRejectedException(TimeSpan.FromSeconds(GetRateLimitResetSeconds(response)));
                     });
 
                     // If the response is not successful, break the loop.
-                    if (!response.IsSuccessful || response.Content == null)
+                    if (!response.IsSuccessStatusCode || string.IsNullOrEmpty(content))
                     {
                         result.IsSuccessful = false;
                         result.StatusCode = response.StatusCode;
-                        result.ErrorMessage = response.ErrorMessage;
+                        result.ErrorMessage = null;
                         break;
                     }
 
-                    var nextResult = JsonSerializer.Deserialize<T>(response.Content,
+                    var nextResult = JsonSerializer.Deserialize<T>(content,
                         TelnyxJsonSerializerContext.Default.Options);
                     if (nextResult == null) break;
 
@@ -139,13 +141,25 @@ namespace TelnyxSharp.Base
                             allData.Add(item);
 
                     metaProperty.SetValue(result, metaProperty.GetValue(nextResult));
-                    meta = (PaginationMeta)metaProperty.GetValue(result);
+                    meta = (PaginationMeta)metaProperty.GetValue(result)!;
                     pageParam = request.Parameters.FirstOrDefault(p => p.Name == "page[number]");
                 }
 
                 dataProperty.SetValue(result, allData);
                 return result;
             });
+        }
+
+        /// <summary>
+        /// Reads the <c>x-ratelimit-reset</c> header (in seconds) from a response, defaulting to 1.
+        /// </summary>
+        private static int GetRateLimitResetSeconds(HttpResponseMessage response)
+        {
+            string? resetSeconds = null;
+            if (response.Headers.TryGetValues("x-ratelimit-reset", out var values))
+                resetSeconds = values.FirstOrDefault();
+
+            return int.TryParse(resetSeconds, out var parsedDelay) ? parsedDelay : 1;
         }
     }
 }

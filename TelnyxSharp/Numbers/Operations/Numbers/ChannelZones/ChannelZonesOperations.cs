@@ -1,5 +1,4 @@
 ﻿using Polly.Retry;
-using RestSharp;
 using System.Text.Json;
 using TelnyxSharp.Base;
 using TelnyxSharp.Numbers.Interfaces;
@@ -8,7 +7,7 @@ using TelnyxSharp.Numbers.Models.ChannelZones.Responses;
 
 namespace TelnyxSharp.Numbers.Operations.Numbers.ChannelZones
 {
-    public class ChannelZonesOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
+    public class ChannelZonesOperations(HttpClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), IChannelZonesOperations
     {
         /// <inheritdoc />
@@ -16,7 +15,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.ChannelZones
            CancellationToken cancellationToken = default)
         {
 
-            var req = new RestRequest("phone_numbers/channel_zones")
+            var req = new TelnyxRequest("phone_numbers/channel_zones")
                             .AddPagination(request.PageSize);
 
             return await ExecuteAsync<ListChannelZonesResponse>(req, cancellationToken);
@@ -26,7 +25,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.ChannelZones
         public async Task<GetChannelZonesResponse> Get(string channelZoneId,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"phone_numbers/channel_zones/{channelZoneId}");
+            var req = new TelnyxRequest($"phone_numbers/channel_zones/{channelZoneId}");
             return await ExecuteAsync<GetChannelZonesResponse>(req, cancellationToken);
         }
 
@@ -34,7 +33,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.ChannelZones
         public async Task<UpdateChannelZoneResponse> Update(string channelZoneId, UpdateChannelZoneRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"phone_numbers/channel_zones/{channelZoneId}", Method.Patch);
+            var req = new TelnyxRequest($"phone_numbers/channel_zones/{channelZoneId}", TelnyxMethod.Patch);
 
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<UpdateChannelZoneResponse>(req, cancellationToken);
@@ -44,7 +43,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.ChannelZones
         public async Task<GetChannelZonePhoneNumbersResponse> ListPhoneNumbers(string channelZoneId, GetChannelZonePhoneNumbersRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"phone_numbers/channel_zones/{channelZoneId}/channel_zone_phone_numbers")
+            var req = new TelnyxRequest($"phone_numbers/channel_zones/{channelZoneId}/channel_zone_phone_numbers")
                                 .AddPagination(request.PageSize);
 
             return await ExecuteAsync<GetChannelZonePhoneNumbersResponse>(req, cancellationToken);
@@ -54,7 +53,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.ChannelZones
         public async Task<AssignPhoneNumberToChannelZoneResponse> AssignPhoneNumber(string channelZoneId, AssignPhoneNumberToChannelZoneRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"phone_numbers/channel_zones/{channelZoneId}/channel_zone_phone_numbers", Method.Post);
+            var req = new TelnyxRequest($"phone_numbers/channel_zones/{channelZoneId}/channel_zone_phone_numbers", TelnyxMethod.Post);
 
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<AssignPhoneNumberToChannelZoneResponse>(req, cancellationToken);
@@ -64,7 +63,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.ChannelZones
         public async Task<UnassignPhoneNumberResponse> UnassignPhoneNumber(string channelZoneId, string phoneNumber,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"phone_numbers/channel_zones/{channelZoneId}/channel_zone_phone_numbers/{phoneNumber}", Method.Delete);
+            var req = new TelnyxRequest($"phone_numbers/channel_zones/{channelZoneId}/channel_zone_phone_numbers/{phoneNumber}", TelnyxMethod.Delete);
 
             return await ExecuteAsync<UnassignPhoneNumberResponse>(req, cancellationToken);
         }

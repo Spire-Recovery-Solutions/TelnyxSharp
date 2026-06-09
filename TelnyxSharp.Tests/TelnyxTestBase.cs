@@ -1,6 +1,4 @@
-﻿using Xunit;
-
-namespace TelnyxSharp.Tests
+﻿namespace TelnyxSharp.Tests
 {
     public abstract class TelnyxTestBase : IDisposable
     {
@@ -41,7 +39,9 @@ namespace TelnyxSharp.Tests
         {
             if (!IsIntegrationTest)
             {
-                return; // Skip test - integration tests require TELNYX_API_KEY environment variable
+                // Integration tests require the TELNYX_API_KEY environment variable.
+                throw new global::TUnit.Core.Exceptions.SkipTestException(
+                    "TELNYX_API_KEY not set - skipping integration test");
             }
         }
 

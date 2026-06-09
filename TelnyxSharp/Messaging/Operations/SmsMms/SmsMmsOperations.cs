@@ -1,5 +1,4 @@
 using Polly.Retry;
-using RestSharp;
 using TelnyxSharp.Base;
 using TelnyxSharp.Messaging.Interfaces;
 
@@ -9,7 +8,7 @@ namespace TelnyxSharp.Messaging.Operations.SmsMms
     /// Provides operations for managing SMS/MMS-related resources including messaging profiles, messages, short codes, URL domains, and number configurations.
     /// Implements the <see cref="ISmsMmsOperations"/> interface.
     /// </summary>
-    public class SmsMmsOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy) : BaseOperations(client, rateLimitRetryPolicy), ISmsMmsOperations
+    public class SmsMmsOperations(HttpClient client, AsyncRetryPolicy rateLimitRetryPolicy) : BaseOperations(client, rateLimitRetryPolicy), ISmsMmsOperations
     {
         // Lazy initialization for various operations, ensuring thread safety and lazy loading of instances.
 

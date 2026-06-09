@@ -1,20 +1,14 @@
 using TelnyxSharp.Numbers.Models.PhoneNumbers.Requests.PhoneNumberOrders;
 using TelnyxSharp.Numbers.Models.PhoneNumbers.Requests.PhoneNumberSearch;
-using Xunit;
-using Xunit.Abstractions;
+using TUnit.Assertions;
+using TUnit.Assertions.Extensions;
+using TUnit.Core;
 
 namespace TelnyxSharp.Tests.Numbers
 {
-    [Trait("Category", "Integration")]
-    [Trait("Module", "Numbers")]
-    [Trait("Cost", "PotentialCharges")]
-    public class PhoneNumberOrdersTests : NumberManagementTestBase
+    public sealed class PhoneNumberOrdersTests : NumberManagementTestBase
     {
-        public PhoneNumberOrdersTests(ITestOutputHelper output) : base(output)
-        {
-        }
-
-        [Fact]
+        [Test]
         public async Task CreateNumberOrder_WithAvailableNumber_CreatesOrder()
         {
             SkipIfNotIntegrationTest();
@@ -54,8 +48,8 @@ namespace TelnyxSharp.Tests.Numbers
 
             var response = await Client.PhoneNumbers.PhoneNumberOrders.Create(orderRequest);
 
-            Assert.NotNull(response);
-            Assert.NotNull(response.Data);
+            await Assert.That(response).IsNotNull();
+            await Assert.That(response.Data).IsNotNull();
             
             Output.WriteLine($"Created order");
             
@@ -66,7 +60,7 @@ namespace TelnyxSharp.Tests.Numbers
             }
         }
 
-        [Fact]
+        [Test]
         public async Task ListNumberOrders_ReturnsOrders()
         {
             SkipIfNotIntegrationTest();
@@ -79,8 +73,8 @@ namespace TelnyxSharp.Tests.Numbers
 
             var response = await Client.PhoneNumbers.PhoneNumberOrders.List(request);
 
-            Assert.NotNull(response);
-            Assert.NotNull(response.Data);
+            await Assert.That(response).IsNotNull();
+            await Assert.That(response.Data).IsNotNull();
 
             Output.WriteLine($"Found number orders");
 
@@ -90,7 +84,7 @@ namespace TelnyxSharp.Tests.Numbers
             }
         }
 
-        [Fact]
+        [Test]
         public async Task GetNumberOrder_WithValidId_ReturnsOrderDetails()
         {
             SkipIfNotIntegrationTest();
@@ -110,7 +104,7 @@ namespace TelnyxSharp.Tests.Numbers
             Output.WriteLine("Order details test would run here if orders exist");
         }
 
-        [Fact]
+        [Test]
         public async Task CreateAndListComments_OnNumberOrder()
         {
             SkipIfNotIntegrationTest();

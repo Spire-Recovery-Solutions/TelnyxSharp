@@ -1,5 +1,4 @@
 ﻿using Polly.Retry;
-using RestSharp;
 using System.Text.Json;
 using TelnyxSharp.Base;
 using TelnyxSharp.Numbers.Interfaces;
@@ -8,13 +7,13 @@ using TelnyxSharp.Numbers.Models.PhoneNumbers.Responses.PhoneNumberConfiguration
 
 namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
 {
-    public class PhoneNumberConfigurationOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
+    public class PhoneNumberConfigurationOperations(HttpClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), IPhoneNumberConfigurationOperations
     {
         /// <inheritdoc />
         public async Task<ListNumbersResponse> List(ListNumbersRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("phone_numbers")
+            var req = new TelnyxRequest("phone_numbers")
                 .AddFilterList("filter[tag]", request.Tags)
                 .AddFilter("filter[phone_number]", request.PhoneNumber)
                 .AddFilter("filter[status]", request.Status)
@@ -37,7 +36,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
         /// <inheritdoc />
         public async Task<SlimListNumbersResponse> SlimList(SlimListNumbersRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("phone_numbers/slim")
+            var req = new TelnyxRequest("phone_numbers/slim")
                 .AddPagination(request.PageSize)
                 .AddFilter("include_connection", request.IncludeConnection)
                 .AddFilter("include_tags", request.IncludeTags)
@@ -62,7 +61,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
         /// <inheritdoc />
         public async Task<GetNumberResponse> Get(string id, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"phone_numbers/{id}");
+            var req = new TelnyxRequest($"phone_numbers/{id}");
             return await ExecuteAsync<GetNumberResponse>(req, cancellationToken);
         }
 
@@ -71,7 +70,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
            ListNumbersWithVoiceSettingsRequest request,
            CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("phone_numbers/voice")
+            var req = new TelnyxRequest("phone_numbers/voice")
                             .AddPagination(request.PageSize)
                             .AddFilter("filter[phone_number]", request.PhoneNumber)
                             .AddFilter("filter[connection_name][contains]", request.ConnectionNameContains)
@@ -85,7 +84,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
         /// <inheritdoc />
         public async Task<GetNumberVoiceSettingsResponse> GetNumberVoiceSettings(string phoneNumberId, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"phone_numbers/{phoneNumberId}/voice");
+            var req = new TelnyxRequest($"phone_numbers/{phoneNumberId}/voice");
             return await ExecuteAsync<GetNumberVoiceSettingsResponse>(req, cancellationToken);
         }
 
@@ -93,7 +92,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
         public async Task<UpdateNumberVoiceSettingsResponse> UpdateNumberVoiceSettings(string phoneNumberId,
             UpdateNumberVoiceSettingsRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"phone_numbers/{phoneNumberId}/voice", Method.Patch);
+            var req = new TelnyxRequest($"phone_numbers/{phoneNumberId}/voice", TelnyxMethod.Patch);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<UpdateNumberVoiceSettingsResponse>(req, cancellationToken);
@@ -102,7 +101,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
         /// <inheritdoc />
         public async Task<EnableEmergencyResponse> EnableEmergency(string phoneNumberId, EnableEmergencyRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"phone_numbers/{phoneNumberId}/actions/enable_emergency", Method.Post);
+            var req = new TelnyxRequest($"phone_numbers/{phoneNumberId}/actions/enable_emergency", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<EnableEmergencyResponse>(req, cancellationToken);
@@ -111,7 +110,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
         /// <inheritdoc />
         public async Task<ChangeBundleStatusResponse> ChangeBundleStatus(long phoneNumberId, ChangeBundleStatusRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"phone_numbers/{phoneNumberId}/actions/bundle_status_change", Method.Patch);
+            var req = new TelnyxRequest($"phone_numbers/{phoneNumberId}/actions/bundle_status_change", TelnyxMethod.Patch);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<ChangeBundleStatusResponse>(req, cancellationToken);
@@ -122,7 +121,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
         public async Task<UpdateNumberConfigurationResponse> Update(string phoneNumberId,
             UpdateNumberConfigurationRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"phone_numbers/{phoneNumberId}", Method.Patch);
+            var req = new TelnyxRequest($"phone_numbers/{phoneNumberId}", TelnyxMethod.Patch);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<UpdateNumberConfigurationResponse>(req, cancellationToken);
@@ -132,7 +131,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
         public async Task<DeletePhoneNumberResponse> Delete(string numberOrObjectId,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"phone_numbers/{numberOrObjectId}", Method.Delete);
+            var req = new TelnyxRequest($"phone_numbers/{numberOrObjectId}", TelnyxMethod.Delete);
 
             return await ExecuteAsync<DeletePhoneNumberResponse>(req, cancellationToken);
         }

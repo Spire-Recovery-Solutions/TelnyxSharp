@@ -1,5 +1,4 @@
 ﻿using Polly.Retry;
-using RestSharp;
 using System.Text.Json;
 using TelnyxSharp.Base;
 using TelnyxSharp.Messaging.Interfaces;
@@ -8,14 +7,14 @@ using TelnyxSharp.Messaging.Models.PhoneNumberCampaign.Responses;
 
 namespace TelnyxSharp.Messaging.Operations.TenDlc
 {
-    public class PhoneNumberCampaignOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
+    public class PhoneNumberCampaignOperations(HttpClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), IPhoneNumberCampaignOperations
     {
         /// <inheritdoc />
         public async Task<RetrievePhoneNumberCampaignsResponse?> Retrieve(
             RetrievePhoneNumberCampaignsRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("10dlc/phone_number_campaigns")
+            var req = new TelnyxRequest("10dlc/phone_number_campaigns")
                 .AddFilter("filter[telnyx_campaign_id]", request.FilterTelnyxCampaignId)
                 .AddFilter("filter[telnyx_brand_id]", request.FilterTelnyxBrandId)
                 .AddFilter("filter[tcr_campaign_id]", request.FilterTcrCampaignId)
@@ -30,7 +29,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         public async Task<CreatePhoneNumberCampaignResponse?> Create(
             CreatePhoneNumberCampaignRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("10dlc/phone_number_campaigns", Method.Post);
+            var req = new TelnyxRequest("10dlc/phone_number_campaigns", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<CreatePhoneNumberCampaignResponse>(req, cancellationToken);
@@ -40,7 +39,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         public async Task<GetPhoneNumberCampaignResponse?> Get(string phoneNumber,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/phone_number_campaigns/{phoneNumber}");
+            var req = new TelnyxRequest($"10dlc/phone_number_campaigns/{phoneNumber}");
 
             return await ExecuteAsync<GetPhoneNumberCampaignResponse>(req, cancellationToken);
         }
@@ -49,7 +48,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         public async Task<UpdatePhoneNumberCampaignResponse?> Update(string phoneNumber,
             UpdatePhoneNumberCampaignRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/phone_number_campaigns/{phoneNumber}", Method.Put);
+            var req = new TelnyxRequest($"10dlc/phone_number_campaigns/{phoneNumber}", TelnyxMethod.Put);
 
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
@@ -60,7 +59,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         public async Task<DeletePhoneNumberCampaignResponse?> Delete(string phoneNumber,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/phone_number_campaigns/{phoneNumber}", Method.Delete);
+            var req = new TelnyxRequest($"10dlc/phone_number_campaigns/{phoneNumber}", TelnyxMethod.Delete);
 
             return await ExecuteAsync<DeletePhoneNumberCampaignResponse>(req, cancellationToken);
         }

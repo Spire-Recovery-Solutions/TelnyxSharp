@@ -1,5 +1,4 @@
 ﻿using Polly.Retry;
-using RestSharp;
 using System.Text.Json;
 using TelnyxSharp.Base;
 using TelnyxSharp.Numbers.Interfaces;
@@ -8,14 +7,14 @@ using TelnyxSharp.Numbers.Models.NumberPortout.Responses;
 
 namespace TelnyxSharp.Numbers.Operations.Numbers.NumberPortout
 {
-    public class NumberPortoutOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
+    public class NumberPortoutOperations(HttpClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), INumberPortoutOperations
     {
         /// <inheritdoc />
         public async Task<ListPortoutResponse> List(ListPortoutRequest request,
             CancellationToken cancellationToken = default)
         {
-            var restRequest = new RestRequest("portouts")
+            var restRequest = new TelnyxRequest("portouts")
                 .AddFilter("filter[carrier_name]", request.CarrierName)
                 .AddFilter("filter[spid]", request.Spid)
                 .AddFilter("filter[status]", request.Status)
@@ -37,7 +36,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.NumberPortout
         public async Task<GetPortoutResponse> Get(string portoutId,
             CancellationToken cancellationToken = default)
         {
-            var restRequest = new RestRequest($"portouts/{portoutId}");
+            var restRequest = new TelnyxRequest($"portouts/{portoutId}");
             return await ExecuteAsync<GetPortoutResponse>(restRequest, cancellationToken);
         }
 
@@ -45,7 +44,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.NumberPortout
         public async Task<UpdatePortoutStatusResponse> UpdateStatus(string portoutId, string status, UpdatePortoutStatusRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"portouts/{portoutId}/{status}", Method.Patch);
+            var req = new TelnyxRequest($"portouts/{portoutId}/{status}", TelnyxMethod.Patch);
 
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<UpdatePortoutStatusResponse>(req, cancellationToken);
@@ -55,7 +54,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.NumberPortout
         public async Task<PortoutCommentsResponse> ListPortoutComments(string portoutId,
             CancellationToken cancellationToken = default)
         {
-            var restRequest = new RestRequest($"portouts/{portoutId}/comments");
+            var restRequest = new TelnyxRequest($"portouts/{portoutId}/comments");
             return await ExecuteAsync<PortoutCommentsResponse>(restRequest, cancellationToken);
         }
 
@@ -63,7 +62,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.NumberPortout
         public async Task<CreatePortoutCommentResponse> CreatePortoutComments(string portoutId, CreatePortoutCommentRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"portouts/{portoutId}/comments", Method.Post);
+            var req = new TelnyxRequest($"portouts/{portoutId}/comments", TelnyxMethod.Post);
 
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<CreatePortoutCommentResponse>(req, cancellationToken);
@@ -73,7 +72,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.NumberPortout
         public async Task<ListPortoutSupportingDocumentsResponse> ListSupportingDocuments(string portoutId,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"portouts/{portoutId}/supporting_documents");
+            var req = new TelnyxRequest($"portouts/{portoutId}/supporting_documents");
 
             return await ExecuteAsync<ListPortoutSupportingDocumentsResponse>(req, cancellationToken);
         }
@@ -82,7 +81,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.NumberPortout
         public async Task<CreatePortoutSupportingDocumentsResponse> CreateSupportingDocuments(string portoutId, CreatePortoutSupportingDocumentsRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"portouts/{portoutId}/supporting_documents", Method.Post);
+            var req = new TelnyxRequest($"portouts/{portoutId}/supporting_documents", TelnyxMethod.Post);
 
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<CreatePortoutSupportingDocumentsResponse>(req, cancellationToken);
@@ -92,7 +91,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.NumberPortout
         public async Task<ListPortoutReportsResponse> ListPortoutReports(ListPortoutReportsRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("portouts/reports")
+            var req = new TelnyxRequest("portouts/reports")
                             .AddFilter("filter[report_type]", request.ReportType)
                             .AddFilter("filter[status]", request.Status)
                             .AddPagination(request.PageSize);
@@ -104,7 +103,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.NumberPortout
         public async Task<CreatePortoutReportResponse> CreatePortoutReports(CreatePortoutReportRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("portouts/reports", Method.Post);
+            var req = new TelnyxRequest("portouts/reports", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<CreatePortoutReportResponse>(req, cancellationToken);
@@ -114,7 +113,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.NumberPortout
         public async Task<GetPortoutReportResponse> GetPortoutReports(string reportId,
            CancellationToken cancellationToken = default)
         {
-            var restRequest = new RestRequest($"portouts/reports/{reportId}");
+            var restRequest = new TelnyxRequest($"portouts/reports/{reportId}");
 
             return await ExecuteAsync<GetPortoutReportResponse>(restRequest, cancellationToken);
         }
@@ -123,7 +122,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.NumberPortout
         public async Task<ListPortoutRejectionCodesResponse> ListRejectionCodes(string portoutId, ListPortoutRejectionCodesRequest request,
                 CancellationToken cancellationToken = default)
         {
-            var restRequest = new RestRequest($"portouts/rejections/{portoutId}")
+            var restRequest = new TelnyxRequest($"portouts/rejections/{portoutId}")
                 .AddFilter("filter[code]", request?.Code)
                 .AddFilter("filter[code][in]", request?.CodesIn);
 
@@ -134,7 +133,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.NumberPortout
         public async Task<ListPortoutEventsResponse> ListEvent(ListPortoutEventsRequest request,
           CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("portouts/events")
+            var req = new TelnyxRequest("portouts/events")
                 .AddFilter("filter[event_type]", request.EventType)
                 .AddFilter("filter[portout_id]", request.PortoutId)
                 .AddPagination(request.PageSize)
@@ -148,7 +147,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.NumberPortout
         public async Task<GetPortoutEventResponse> GetEvent(string eventId,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"portouts/events/{eventId}");
+            var req = new TelnyxRequest($"portouts/events/{eventId}");
             return await ExecuteAsync<GetPortoutEventResponse>(req, cancellationToken);
         }
 
@@ -156,7 +155,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.NumberPortout
         public async Task<RepublishPortoutEventResponse> RepublishEvent(string eventId,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"portouts/events/{eventId}/republish");
+            var req = new TelnyxRequest($"portouts/events/{eventId}/republish");
             return await ExecuteAsync<RepublishPortoutEventResponse>(req, cancellationToken);
         }
     }
