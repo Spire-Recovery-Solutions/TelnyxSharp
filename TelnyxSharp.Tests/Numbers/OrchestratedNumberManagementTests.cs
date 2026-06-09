@@ -4,8 +4,9 @@ using TelnyxSharp.Numbers.Models.PhoneNumbers.Requests.PhoneNumberOrders;
 using TelnyxSharp.Numbers.Models.PhoneNumbers.Requests.PhoneNumberReservations;
 using TelnyxSharp.Numbers.Models.PhoneNumbers.Requests.PhoneNumberSearch;
 using TelnyxSharp.Numbers.Models.PhoneNumbers.Responses.PhoneNumberOrders;
-using Xunit;
-using Xunit.Abstractions;
+using TUnit.Assertions;
+using TUnit.Assertions.Extensions;
+using TUnit.Core;
 
 namespace TelnyxSharp.Tests.Numbers
 {
@@ -16,23 +17,20 @@ namespace TelnyxSharp.Tests.Numbers
     /// Phase 2: Purchase one number and test configurations
     /// Phase 3: Optional reservation tests
     /// Phase 4: Cleanup
-    /// 
+    ///
     /// NOTE: Tests are named with Phase_XX prefix to control execution order
     /// </summary>
-    [Collection("NumberManagement")]
-    [Trait("Category", "Integration")]
-    [Trait("Module", "Numbers")]
-    public class OrchestratedNumberManagementTests : IClassFixture<NumberManagementTestFixture>, IAsyncLifetime
+    public sealed class OrchestratedNumberManagementTests
     {
-        private readonly ITestOutputHelper _output;
+        private readonly TestOutput _output = new();
         private readonly TelnyxClient _client;
         private readonly bool _runIntegrationTests;
         private readonly bool _purchaseTestNumber;
         private readonly bool _testReservations;
         private readonly string _testAreaCode;
         private readonly string _testCountry;
-        private readonly NumberManagementTestFixture _fixture;
-        
+        private readonly NumberManagementTestFixture _fixture = new();
+
         // Shared state across test phases (now from fixture)
         private string? _availableNumberToPurchase => _fixture.AvailableNumberToPurchase;
         private string? _purchasedNumberId => _fixture.PurchasedNumberId;
@@ -41,11 +39,8 @@ namespace TelnyxSharp.Tests.Numbers
         private string? _reservationId;
         private readonly ConcurrentBag<string> _commentsToCleanup = new();
 
-        public OrchestratedNumberManagementTests(ITestOutputHelper output, NumberManagementTestFixture fixture)
+        public OrchestratedNumberManagementTests()
         {
-            _output = output;
-            _fixture = fixture;
-            
             // Load configuration
             _runIntegrationTests = Environment.GetEnvironmentVariable("TELNYX_RUN_INTEGRATION_TESTS")?.ToLower() == "true";
             _purchaseTestNumber = Environment.GetEnvironmentVariable("TELNYX_PURCHASE_TEST_NUMBER")?.ToLower() == "true";
@@ -68,7 +63,7 @@ namespace TelnyxSharp.Tests.Numbers
 
         #region Phase 1: Read-Only Tests (No Purchase Required)
 
-        [Fact]
+        [Test]
         public async Task Phase1_01_SearchAvailableNumbers_ByAreaCode()
         {
             if (!_runIntegrationTests) return;
@@ -85,8 +80,8 @@ namespace TelnyxSharp.Tests.Numbers
 
             var response = await _client.PhoneNumbers.PhoneNumberSearch.AvailableNumbers(request);
             
-            Assert.NotNull(response);
-            Assert.NotNull(response.Data);
+            await Assert.That(response).IsNotNull();
+            await Assert.That(response.Data).IsNotNull();
             _output.WriteLine($"Found {response.Data.Count} available numbers");
             
             // Numbers are handled by the fixture now
@@ -101,7 +96,7 @@ namespace TelnyxSharp.Tests.Numbers
             }
         }
 
-        [Fact]
+        [Test]
         public async Task Phase1_02_SearchAvailableNumbers_WithFeatures()
         {
             if (!_runIntegrationTests) return;
@@ -117,8 +112,8 @@ namespace TelnyxSharp.Tests.Numbers
 
             var response = await _client.PhoneNumbers.PhoneNumberSearch.AvailableNumbers(request);
             
-            Assert.NotNull(response);
-            Assert.NotNull(response.Data);
+            await Assert.That(response).IsNotNull();
+            await Assert.That(response.Data).IsNotNull();
             
             foreach (var number in response.Data)
             {
@@ -126,7 +121,7 @@ namespace TelnyxSharp.Tests.Numbers
             }
         }
 
-        [Fact]
+        [Test]
         public async Task Phase1_03_SearchAvailableNumberBlocks()
         {
             if (!_runIntegrationTests) return;
@@ -140,12 +135,12 @@ namespace TelnyxSharp.Tests.Numbers
 
             var response = await _client.PhoneNumbers.PhoneNumberSearch.ListAvailableNumberBlocks(request);
             
-            Assert.NotNull(response);
-            Assert.NotNull(response.Data);
+            await Assert.That(response).IsNotNull();
+            await Assert.That(response.Data).IsNotNull();
             _output.WriteLine($"Number blocks response received");
         }
 
-        [Fact]
+        [Test]
         public async Task Phase1_04_ListExistingOrders()
         {
             if (!_runIntegrationTests) return;
@@ -159,12 +154,12 @@ namespace TelnyxSharp.Tests.Numbers
 
             var response = await _client.PhoneNumbers.PhoneNumberOrders.List(request);
             
-            Assert.NotNull(response);
-            Assert.NotNull(response.Data);
+            await Assert.That(response).IsNotNull();
+            await Assert.That(response.Data).IsNotNull();
             _output.WriteLine($"Found existing orders in account");
         }
 
-        [Fact]
+        [Test]
         public async Task Phase1_05_ListExistingReservations()
         {
             if (!_runIntegrationTests) return;
@@ -178,12 +173,12 @@ namespace TelnyxSharp.Tests.Numbers
 
             var response = await _client.PhoneNumbers.PhoneNumberReservations.List(request);
             
-            Assert.NotNull(response);
-            Assert.NotNull(response.Data);
+            await Assert.That(response).IsNotNull();
+            await Assert.That(response.Data).IsNotNull();
             _output.WriteLine($"Found existing reservations in account");
         }
 
-        [Fact]
+        [Test]
         public async Task Phase1_06_ListOwnedPhoneNumbers()
         {
             if (!_runIntegrationTests) return;
@@ -197,8 +192,8 @@ namespace TelnyxSharp.Tests.Numbers
 
             var response = await _client.PhoneNumbers.PhoneNumberConfiguration.List(request);
             
-            Assert.NotNull(response);
-            Assert.NotNull(response.Data);
+            await Assert.That(response).IsNotNull();
+            await Assert.That(response.Data).IsNotNull();
             
             _output.WriteLine($"Account currently owns {response.Data?.Count ?? 0} phone numbers");
             
@@ -215,7 +210,7 @@ namespace TelnyxSharp.Tests.Numbers
 
         #region Phase 2: Purchase & Configure (Requires TELNYX_PURCHASE_TEST_NUMBER=true)
 
-        [Fact]
+        [Test]
         public async Task Phase2_01_CheckTestNumber()
         {
             if (!_runIntegrationTests || !_purchaseTestNumber) 
@@ -230,17 +225,17 @@ namespace TelnyxSharp.Tests.Numbers
             if (!string.IsNullOrEmpty(_purchasedNumber))
             {
                 _output.WriteLine($"Using test number: {_purchasedNumber} (ID: {_purchasedNumberId})");
-                Assert.NotNull(_purchasedNumber);
-                Assert.NotNull(_purchasedNumberId);
+                await Assert.That(_purchasedNumber).IsNotNull();
+                await Assert.That(_purchasedNumberId).IsNotNull();
             }
             else
             {
                 _output.WriteLine("ERROR: No test number available - fixture failed to initialize");
-                Assert.NotNull(_purchasedNumber);
+                await Assert.That(_purchasedNumber).IsNotNull();
             }
         }
 
-        [Fact]
+        [Test]
         public async Task Phase2_02_GetPurchasedNumberDetails()
         {
             if (!_runIntegrationTests || !_purchaseTestNumber || string.IsNullOrEmpty(_purchasedNumber)) return;
@@ -269,8 +264,8 @@ namespace TelnyxSharp.Tests.Numbers
                 if (!string.IsNullOrEmpty(_purchasedNumberId))
                 {
                     var details = await _client.PhoneNumbers.PhoneNumberConfiguration.Get(_purchasedNumberId);
-                    Assert.NotNull(details);
-                    Assert.NotNull(details.Data);
+                    await Assert.That(details).IsNotNull();
+                    await Assert.That(details.Data).IsNotNull();
                 }
             }
             else
@@ -279,7 +274,7 @@ namespace TelnyxSharp.Tests.Numbers
             }
         }
 
-        [Fact]
+        [Test]
         public async Task Phase2_03_UpdatePhoneNumberConfiguration()
         {
             if (!_runIntegrationTests || !_purchaseTestNumber) 
@@ -315,8 +310,8 @@ namespace TelnyxSharp.Tests.Numbers
 
             var response = await _client.PhoneNumbers.PhoneNumberConfiguration.Update(_purchasedNumberId!, updateRequest);
             
-            Assert.NotNull(response);
-            Assert.NotNull(response.Data);
+            await Assert.That(response).IsNotNull();
+            await Assert.That(response.Data).IsNotNull();
             
             _output.WriteLine($"Updated configuration with tags");
             if (response.Data.Tags != null)
@@ -328,7 +323,7 @@ namespace TelnyxSharp.Tests.Numbers
             }
         }
 
-        [Fact]
+        [Test]
         public async Task Phase2_04_CreateCommentOnOrder()
         {
             if (!_runIntegrationTests || !_purchaseTestNumber || string.IsNullOrEmpty(_orderId)) return;
@@ -344,8 +339,8 @@ namespace TelnyxSharp.Tests.Numbers
 
             var response = await _client.PhoneNumbers.PhoneNumberOrders.CreateComment(createCommentRequest);
             
-            Assert.NotNull(response);
-            Assert.NotNull(response.Data);
+            await Assert.That(response).IsNotNull();
+            await Assert.That(response.Data).IsNotNull();
             
             _output.WriteLine($"Created comment on order {_orderId}");
         }
@@ -354,7 +349,7 @@ namespace TelnyxSharp.Tests.Numbers
 
         #region Phase 3: Reservation Tests (Optional)
 
-        [Fact]
+        [Test]
         public async Task Phase3_01_CreateReservation()
         {
             if (!_runIntegrationTests || !_testReservations) 
@@ -396,8 +391,8 @@ namespace TelnyxSharp.Tests.Numbers
 
             var response = await _client.PhoneNumbers.PhoneNumberReservations.Create(reservationRequest);
             
-            Assert.NotNull(response);
-            Assert.NotNull(response.Data);
+            await Assert.That(response).IsNotNull();
+            await Assert.That(response.Data).IsNotNull();
             
             if (response.Data != null && !string.IsNullOrEmpty(response.Data.Id))
             {
@@ -412,12 +407,14 @@ namespace TelnyxSharp.Tests.Numbers
 
         #region Lifecycle Management
 
-        public Task InitializeAsync()
+        [Before(Test)]
+        public async Task InitializeAsync()
         {
             _output.WriteLine("\n=== Test Suite Initialization ===");
-            return Task.CompletedTask;
+            await _fixture.InitializeAsync();
         }
 
+        [After(Test)]
         public async Task DisposeAsync()
         {
             // No automatic cleanup - numbers tracked in PURCHASE_TRACKING.md for manual cleanup

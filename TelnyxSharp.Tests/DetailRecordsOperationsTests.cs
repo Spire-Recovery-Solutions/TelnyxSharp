@@ -1,13 +1,18 @@
-﻿using TelnyxSharp.DetailRecords.Models.Requests;
+using TelnyxSharp.DetailRecords.Models.Requests;
 using TelnyxSharp.DetailRecords.Models.Responses;
 using TelnyxSharp.Enums;
 using TelnyxSharp.Tests;
+using TUnit.Assertions;
+using TUnit.Assertions.Extensions;
+using TUnit.Core;
 
-public class DetailRecordsOperationsTests : TelnyxTestBase
+public sealed class DetailRecordsOperationsTests : TelnyxTestBase
 {
-    [Fact]
+    [Test]
     public async Task Search_WithMinimalParams_ReturnsResults()
     {
+        SkipIfNotIntegrationTest();
+
         // Arrange
         var request = new DetailRecordSearchRequest
         {
@@ -19,26 +24,29 @@ public class DetailRecordsOperationsTests : TelnyxTestBase
         var response = await Client.DetailRecordsSearch.Search(request);
 
         // Assert
-        Assert.NotNull(response);
-        Assert.NotEmpty(response.Data);
-        Assert.NotNull(response.Meta);
-        Assert.InRange(response.Meta.PageNumber, 1, int.MaxValue);
-        Assert.InRange(response.Meta.PageSize, 1, 50);
+        await Assert.That(response).IsNotNull();
+        await Assert.That(response.Data).IsNotEmpty();
+        await Assert.That(response.Meta).IsNotNull();
+        await Assert.That(response.Meta.PageNumber).IsGreaterThanOrEqualTo(1);
+        await Assert.That(response.Meta.PageSize).IsBetween(1, 50);
 
-        Assert.All(response.Data, record =>
+        foreach (var record in response.Data)
         {
-            var msg = Assert.IsType<MessageDetailRecord>(record);
-            Assert.NotNull(msg.Uuid);
-            Assert.NotNull(msg.Status);
-            Assert.NotNull(msg.Cld);
-            Assert.NotNull(msg.Cli);
-            Assert.NotEqual(default, msg.CreatedAt);
-        });
+            await Assert.That(record).IsTypeOf<MessageDetailRecord>();
+            var msg = (MessageDetailRecord)record;
+            await Assert.That(msg.Uuid).IsNotNull();
+            await Assert.That(msg.Status).IsNotNull();
+            await Assert.That(msg.Cld).IsNotNull();
+            await Assert.That(msg.Cli).IsNotNull();
+            await Assert.That(msg.CreatedAt).IsNotEqualTo(default);
+        }
     }
 
-    [Fact]
+    [Test]
     public async Task Search_WithFilters_ReturnsFilteredResults()
     {
+        SkipIfNotIntegrationTest();
+
         // Arrange
         var startTime = DateTime.UtcNow.AddDays(-1);
         var request = new DetailRecordSearchRequest
@@ -66,18 +74,21 @@ public class DetailRecordsOperationsTests : TelnyxTestBase
         var response = await Client.DetailRecordsSearch.Search(request);
 
         // Assert
-        Assert.NotNull(response);
-        Assert.All(response.Data, record =>
+        await Assert.That(response).IsNotNull();
+        foreach (var record in response.Data)
         {
-            var msg = Assert.IsType<MessageDetailRecord>(record);
-            Assert.Equal("delivered", msg.Status);
-            Assert.True(msg.CreatedAt >= startTime);
-        });
+            await Assert.That(record).IsTypeOf<MessageDetailRecord>();
+            var msg = (MessageDetailRecord)record;
+            await Assert.That(msg.Status).IsEqualTo("delivered");
+            await Assert.That(msg.CreatedAt >= startTime).IsTrue();
+        }
     }
 
-    [Fact]
+    [Test]
     public async Task Search_WithPagination_WorksCorrectly()
     {
+        SkipIfNotIntegrationTest();
+
         // Arrange
         var firstPageRequest = new DetailRecordSearchRequest
         {
@@ -97,18 +108,18 @@ public class DetailRecordsOperationsTests : TelnyxTestBase
         var firstPage = await Client.DetailRecordsSearch.Search(firstPageRequest);
         var secondPage = await Client.DetailRecordsSearch.Search(secondPageRequest);
 
-        Assert.NotNull(firstPage);
-        Assert.NotNull(secondPage);
-        Assert.NotEmpty(firstPage.Data);
-        Assert.NotEmpty(secondPage.Data);
-        
-        Assert.Equal(1, firstPage.Meta.PageNumber);
-        Assert.Equal(2, secondPage.Meta.PageNumber);
-        Assert.Equal(5, firstPage.Meta.PageSize);
-        Assert.Equal(5, secondPage.Meta.PageSize);
+        await Assert.That(firstPage).IsNotNull();
+        await Assert.That(secondPage).IsNotNull();
+        await Assert.That(firstPage.Data).IsNotEmpty();
+        await Assert.That(secondPage.Data).IsNotEmpty();
+
+        await Assert.That(firstPage.Meta.PageNumber).IsEqualTo(1);
+        await Assert.That(secondPage.Meta.PageNumber).IsEqualTo(2);
+        await Assert.That(firstPage.Meta.PageSize).IsEqualTo(5);
+        await Assert.That(secondPage.Meta.PageSize).IsEqualTo(5);
 
         var firstPageIds = firstPage.Data.Cast<MessageDetailRecord>().Select(d => d.Uuid);
         var secondPageIds = secondPage.Data.Cast<MessageDetailRecord>().Select(d => d.Uuid);
-        Assert.Empty(firstPageIds.Intersect(secondPageIds));
+        await Assert.That(firstPageIds.Intersect(secondPageIds)).IsEmpty();
     }
 }

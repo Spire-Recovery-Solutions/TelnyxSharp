@@ -1,18 +1,13 @@
 using TelnyxSharp.Numbers.Models.PhoneNumbers.Requests.PhoneNumberSearch;
-using Xunit;
-using Xunit.Abstractions;
+using TUnit.Assertions;
+using TUnit.Assertions.Extensions;
+using TUnit.Core;
 
 namespace TelnyxSharp.Tests.Numbers
 {
-    [Trait("Category", "Integration")]
-    [Trait("Module", "Numbers")]
-    public class PhoneNumberSearchTests : NumberManagementTestBase
+    public sealed class PhoneNumberSearchTests : NumberManagementTestBase
     {
-        public PhoneNumberSearchTests(ITestOutputHelper output) : base(output)
-        {
-        }
-
-        [Fact]
+        [Test]
         public async Task SearchAvailableNumbers_ByAreaCode_ReturnsResults()
         {
             SkipIfNotIntegrationTest();
@@ -29,16 +24,16 @@ namespace TelnyxSharp.Tests.Numbers
             try
             {
                 var responseStrict = await Client.PhoneNumbers.PhoneNumberSearch.AvailableNumbers(requestStrict);
-                Assert.NotNull(responseStrict);
-                Assert.NotNull(responseStrict.Data);
+                await Assert.That(responseStrict).IsNotNull();
+                await Assert.That(responseStrict.Data).IsNotNull();
                 Output.WriteLine($"[Strict mode] Found {responseStrict.Data.Count} available numbers");
-                
+
                 if (responseStrict.Data.Count > 0)
                 {
                     var firstNumber = responseStrict.Data.First();
-                    Assert.NotNull(firstNumber.PhoneNumber);
-                    AssertValidPhoneNumber(firstNumber.PhoneNumber);
-                    Assert.NotNull(firstNumber.RecordType);
+                    await Assert.That(firstNumber.PhoneNumber).IsNotNull();
+                    await AssertValidPhoneNumber(firstNumber.PhoneNumber);
+                    await Assert.That(firstNumber.RecordType).IsNotNull();
                     Output.WriteLine($"First available number: {firstNumber.PhoneNumber}");
                     Output.WriteLine($"Cost: {firstNumber.CostInformation?.MonthlyCost} {firstNumber.CostInformation?.Currency}");
                 }
@@ -57,13 +52,13 @@ namespace TelnyxSharp.Tests.Numbers
                 };
                 
                 var responseBestEffort = await Client.PhoneNumbers.PhoneNumberSearch.AvailableNumbers(requestBestEffort);
-                Assert.NotNull(responseBestEffort);
-                Assert.NotNull(responseBestEffort.Data);
+                await Assert.That(responseBestEffort).IsNotNull();
+                await Assert.That(responseBestEffort.Data).IsNotNull();
                 Output.WriteLine($"[Best effort mode] Found {responseBestEffort.Data.Count} available numbers");
             }
         }
 
-        [Fact]
+        [Test]
         public async Task SearchAvailableNumbers_WithFeatures_ReturnsFilteredResults()
         {
             SkipIfNotIntegrationTest();
@@ -77,8 +72,8 @@ namespace TelnyxSharp.Tests.Numbers
 
             var response = await Client.PhoneNumbers.PhoneNumberSearch.AvailableNumbers(request);
 
-            Assert.NotNull(response);
-            Assert.NotNull(response.Data);
+            await Assert.That(response).IsNotNull();
+            await Assert.That(response.Data).IsNotNull();
 
             foreach (var number in response.Data)
             {
@@ -90,7 +85,7 @@ namespace TelnyxSharp.Tests.Numbers
             }
         }
 
-        [Fact]
+        [Test]
         public async Task SearchAvailableNumbers_ByNationalDestinationCode_ReturnsResults()
         {
             SkipIfNotIntegrationTest();
@@ -107,8 +102,8 @@ namespace TelnyxSharp.Tests.Numbers
             {
                 // Try without best_effort first
                 var response = await Client.PhoneNumbers.PhoneNumberSearch.AvailableNumbers(request);
-                Assert.NotNull(response);
-                Assert.NotNull(response.Data);
+                await Assert.That(response).IsNotNull();
+                await Assert.That(response.Data).IsNotNull();
                 Output.WriteLine($"[Strict mode] Found {response.Data.Count} numbers");
                 
                 foreach (var number in response.Data)
@@ -127,8 +122,8 @@ namespace TelnyxSharp.Tests.Numbers
                 
                 request.BestEffort = true;
                 var response = await Client.PhoneNumbers.PhoneNumberSearch.AvailableNumbers(request);
-                Assert.NotNull(response);
-                Assert.NotNull(response.Data);
+                await Assert.That(response).IsNotNull();
+                await Assert.That(response.Data).IsNotNull();
                 Output.WriteLine($"[Best effort mode] Found {response.Data.Count} numbers");
                 
                 foreach (var number in response.Data)
@@ -142,7 +137,7 @@ namespace TelnyxSharp.Tests.Numbers
             }
         }
 
-        [Fact]
+        [Test]
         public async Task SearchAvailableNumbers_WithPagination_ReturnsPagedResults()
         {
             SkipIfNotIntegrationTest();
@@ -155,13 +150,13 @@ namespace TelnyxSharp.Tests.Numbers
 
             var firstPage = await Client.PhoneNumbers.PhoneNumberSearch.AvailableNumbers(request);
 
-            Assert.NotNull(firstPage);
-            Assert.NotNull(firstPage.Data);
+            await Assert.That(firstPage).IsNotNull();
+            await Assert.That(firstPage.Data).IsNotNull();
             
             Output.WriteLine($"Found {firstPage.Data.Count} numbers in first request");
         }
 
-        [Fact]
+        [Test]
         public async Task SearchAvailableNumberBlocks_ReturnsResults()
         {
             SkipIfNotIntegrationTest();
@@ -174,13 +169,13 @@ namespace TelnyxSharp.Tests.Numbers
 
             var response = await Client.PhoneNumbers.PhoneNumberSearch.ListAvailableNumberBlocks(request);
 
-            Assert.NotNull(response);
-            Assert.NotNull(response.Data);
+            await Assert.That(response).IsNotNull();
+            await Assert.That(response.Data).IsNotNull();
 
             Output.WriteLine($"Number blocks response received");
         }
 
-        [Fact]
+        [Test]
         public async Task SearchAvailableNumbers_InvalidCountryCode_ReturnsEmptyOrError()
         {
             SkipIfNotIntegrationTest();
@@ -196,10 +191,10 @@ namespace TelnyxSharp.Tests.Numbers
                 var response = await Client.PhoneNumbers.PhoneNumberSearch.AvailableNumbers(request);
                 
                 // Some APIs might return empty results instead of error
-                Assert.NotNull(response);
+                await Assert.That(response).IsNotNull();
                 if (response.Data != null)
                 {
-                    Assert.Empty(response.Data);
+                    await Assert.That(response.Data).IsEmpty();
                 }
             }
             catch (Exception ex)
@@ -209,7 +204,7 @@ namespace TelnyxSharp.Tests.Numbers
             }
         }
 
-        [Fact]
+        [Test]
         public async Task SearchAvailableNumbers_SpecificNumberType_ReturnsCorrectType()
         {
             SkipIfNotIntegrationTest();
@@ -223,16 +218,16 @@ namespace TelnyxSharp.Tests.Numbers
 
             var response = await Client.PhoneNumbers.PhoneNumberSearch.AvailableNumbers(request);
 
-            Assert.NotNull(response);
-            Assert.NotNull(response.Data);
+            await Assert.That(response).IsNotNull();
+            await Assert.That(response.Data).IsNotNull();
 
             foreach (var number in response.Data)
             {
                 Output.WriteLine($"Number: {number.PhoneNumber}, Type: {number.PhoneNumberType}");
-                
+
                 if (!string.IsNullOrEmpty(number.PhoneNumberType))
                 {
-                    Assert.Equal("local", number.PhoneNumberType.ToLower());
+                    await Assert.That(number.PhoneNumberType.ToLower()).IsEqualTo("local");
                 }
             }
         }

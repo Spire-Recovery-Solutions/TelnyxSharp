@@ -1,5 +1,4 @@
 ﻿using Polly.Retry;
-using RestSharp;
 using TelnyxSharp.Base;
 using TelnyxSharp.V1Operations.Interfaces;
 
@@ -9,7 +8,7 @@ namespace TelnyxSharp.V1Operations.Operations
     /// Provides operations for interacting with Telnyx v1 endpoints.
     /// Currently exposes only the CDR Request operations.
     /// </summary>
-    public class V1ApiOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy) : BaseOperations(client, rateLimitRetryPolicy), IV1ApiOperations
+    public class V1ApiOperations(HttpClient client, AsyncRetryPolicy rateLimitRetryPolicy) : BaseOperations(client, rateLimitRetryPolicy), IV1ApiOperations
     {
         private readonly Lazy<ICdrRequestsOperations> _cdrRequests = new(() =>
             new CdrRequestsOperations(client, rateLimitRetryPolicy),

@@ -1,5 +1,4 @@
 ﻿using Polly.Retry;
-using RestSharp;
 using TelnyxSharp.Base;
 using TelnyxSharp.Messaging.Interfaces;
 
@@ -9,7 +8,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
     /// Provides operations related to TenDLC (10-Digit Long Code) messaging campaigns.
     /// This includes managing campaigns, phone number campaigns, bulk phone number campaigns, shared campaigns, and ENUM operations.
     /// </summary>
-    public class TenDlcOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy) : BaseOperations(client, rateLimitRetryPolicy), ITenDlcOperations
+    public class TenDlcOperations(HttpClient client, AsyncRetryPolicy rateLimitRetryPolicy) : BaseOperations(client, rateLimitRetryPolicy), ITenDlcOperations
     {
         private readonly Lazy<IBrandOperations> _brandOperations = new(() =>
             new BrandOperations(client, rateLimitRetryPolicy), LazyThreadSafetyMode.ExecutionAndPublication);

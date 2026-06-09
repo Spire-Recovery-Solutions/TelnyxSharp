@@ -1,5 +1,4 @@
 ﻿using Polly.Retry;
-using RestSharp;
 using TelnyxSharp.Base;
 using TelnyxSharp.DetailRecords.Interfaces;
 using TelnyxSharp.DetailRecords.Models.Requests;
@@ -7,13 +6,13 @@ using TelnyxSharp.DetailRecords.Models.Responses;
 
 namespace TelnyxSharp.DetailRecords.Operations
 {
-    public class DetailRecordsOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
+    public class DetailRecordsOperations(HttpClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), IDetailRecordsOperations
     {
         /// <inheritdoc />
         public async Task<DetailRecordSearchResponse?> Search(DetailRecordSearchRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("detail_records")
+            var req = new TelnyxRequest("detail_records")
                 .AddPagination(request.PageSize)
                 .AddFilter("filter[record_type]", request.RecordType)
                 .AddFilter("filter[date_range]", request.DateRange);

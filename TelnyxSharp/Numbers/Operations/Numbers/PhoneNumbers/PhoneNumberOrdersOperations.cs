@@ -1,5 +1,4 @@
 ﻿using Polly.Retry;
-using RestSharp;
 using System.Text.Json;
 using TelnyxSharp.Base;
 using TelnyxSharp.Numbers.Interfaces;
@@ -8,13 +7,13 @@ using TelnyxSharp.Numbers.Models.PhoneNumbers.Responses.PhoneNumberOrders;
 
 namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
 {
-    public class PhoneNumberOrdersOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
+    public class PhoneNumberOrdersOperations(HttpClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), IPhoneNumberOrdersOperations
     {
         /// <inheritdoc />
         public async Task<ListNumberOrdersResponse> List(ListNumberOrdersRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("number_orders")
+            var req = new TelnyxRequest("number_orders")
                 .AddFilter("filter[status]", request.Status)
                 .AddFilter("filter[created_at][gt]", request.CreatedAfter)
                 .AddFilter("filter[created_at][lt]", request.CreatedBefore)
@@ -31,7 +30,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
         public async Task<CreateNumberOrderResponse> Create(CreateNumberOrderRequest request,
         CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("number_orders", Method.Post);
+            var req = new TelnyxRequest("number_orders", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<CreateNumberOrderResponse>(req, cancellationToken);
         }
@@ -40,14 +39,14 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
         public async Task<GetNumberOrderResponse> Get(string numberOrderId,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"number_orders/{numberOrderId}");
+            var req = new TelnyxRequest($"number_orders/{numberOrderId}");
             return await ExecuteAsync<GetNumberOrderResponse>(req, cancellationToken);
         }
 
         /// <inheritdoc />
         public async Task<UpdateNumberOrderResponse> Update(string numberOrderId, UpdateNumberOrderRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"number_orders/{numberOrderId}", Method.Patch);
+            var req = new TelnyxRequest($"number_orders/{numberOrderId}", TelnyxMethod.Patch);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<UpdateNumberOrderResponse>(req, cancellationToken);
@@ -56,7 +55,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
         /// <inheritdoc />
         public async Task<ListSubNumberOrdersResponse> ListSubNumber(ListSubNumberOrdersRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("sub_number_orders")
+            var req = new TelnyxRequest("sub_number_orders")
                 .AddFilter("filter[status]", request.Status)
                 .AddFilter("filter[order_request_id]", request.OrderRequestId)
                 .AddFilter("filter[country_code]", request.CountryCode)
@@ -69,7 +68,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
         /// <inheritdoc />
         public async Task<GetSubNumberOrderResponse> GetSubNumber(string subNumberOrderId, GetSubNumberOrderRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"sub_number_orders/{subNumberOrderId}")
+            var req = new TelnyxRequest($"sub_number_orders/{subNumberOrderId}")
                 .AddFilter("filter[include_phone_numbers]", request.IncludePhoneNumbers);
 
             return await ExecuteAsync<GetSubNumberOrderResponse>(req, cancellationToken);
@@ -78,7 +77,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
         /// <inheritdoc />
         public async Task<UpdateSubNumberOrderResponse> UpdateSubNumber(string subNumberOrderId, UpdateSubNumberOrderRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"sub_number_orders/{subNumberOrderId}", Method.Patch);
+            var req = new TelnyxRequest($"sub_number_orders/{subNumberOrderId}", TelnyxMethod.Patch);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<UpdateSubNumberOrderResponse>(req, cancellationToken);
@@ -87,14 +86,14 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
         /// <inheritdoc />
         public async Task<CancelNumberOrderResponse> CancelSubNumber(string subNumberOrderId, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"sub_number_orders/{subNumberOrderId}/cancel", Method.Patch);
+            var req = new TelnyxRequest($"sub_number_orders/{subNumberOrderId}/cancel", TelnyxMethod.Patch);
             return await ExecuteAsync<CancelNumberOrderResponse>(req, cancellationToken);
         }
 
         /// <inheritdoc />
         public async Task<ListNumberOrderPhonesResponse> ListNumberAssociatedOrders(ListNumberOrderPhonesRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("number_order_phone_numbers")
+            var req = new TelnyxRequest("number_order_phone_numbers")
                 .AddFilter("filter[country_code]", request.CountryCode);
 
             return await ExecuteAsync<ListNumberOrderPhonesResponse>(req, cancellationToken);
@@ -103,14 +102,14 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
         /// <inheritdoc />
         public async Task<SingleNumberOrderPhoneResponse> GetNumberAssociatedOrders(string numberOrderPhoneNumberId, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"number_order_phone_numbers/{numberOrderPhoneNumberId}");
+            var req = new TelnyxRequest($"number_order_phone_numbers/{numberOrderPhoneNumberId}");
             return await ExecuteAsync<SingleNumberOrderPhoneResponse>(req, cancellationToken);
         }
 
         /// <inheritdoc />
         public async Task<UpdateNumberOrderPhoneResponse> UpdateNumberAssociatedOrders(string numberOrderPhoneNumberId, UpdateNumberOrderPhoneRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"number_order_phone_numbers/{numberOrderPhoneNumberId}", Method.Patch);
+            var req = new TelnyxRequest($"number_order_phone_numbers/{numberOrderPhoneNumberId}", TelnyxMethod.Patch);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<UpdateNumberOrderPhoneResponse>(req, cancellationToken);
         }
@@ -118,7 +117,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
         /// <inheritdoc />
         public async Task<CreateCommentResponse> CreateComment(CreateCommentRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("comments", Method.Post);
+            var req = new TelnyxRequest("comments", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<CreateCommentResponse>(req, cancellationToken);
         }
@@ -126,7 +125,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
         /// <inheritdoc />
         public async Task<ListCommentsResponse> ListComment(ListCommentsRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("comments")
+            var req = new TelnyxRequest("comments")
                 .AddFilter("filter[comment_record_type]", request.CommentRecordType)
                 .AddFilter("filter[comment_record_id]", request.CommentRecordId);
 
@@ -136,14 +135,14 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
         /// <inheritdoc />
         public async Task<GetCommentResponse> GetComment(string id, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"comments/{id}");
+            var req = new TelnyxRequest($"comments/{id}");
             return await ExecuteAsync<GetCommentResponse>(req, cancellationToken);
         }
 
         /// <inheritdoc />
         public async Task<MarkCommentReadResponse> MarkCommentAsRead(string id, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"comments/{id}/read", Method.Patch);
+            var req = new TelnyxRequest($"comments/{id}/read", TelnyxMethod.Patch);
             return await ExecuteAsync<MarkCommentReadResponse>(req, cancellationToken);
         }
     }

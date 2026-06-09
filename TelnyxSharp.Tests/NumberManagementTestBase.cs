@@ -1,11 +1,14 @@
 using System.Collections.Concurrent;
-using Xunit.Abstractions;
+using System.Text.RegularExpressions;
+using TUnit.Assertions;
+using TUnit.Assertions.Extensions;
+using TUnit.Core;
 
 namespace TelnyxSharp.Tests
 {
-    public abstract class NumberManagementTestBase : TelnyxTestBase, IAsyncLifetime
+    public abstract class NumberManagementTestBase : TelnyxTestBase
     {
-        protected readonly ITestOutputHelper Output;
+        protected readonly TestOutput Output = new();
         protected readonly ConcurrentBag<string> PhoneNumbersToCleanup = new();
         protected readonly ConcurrentBag<string> ReservationsToCleanup = new();
         protected readonly ConcurrentBag<string> OrdersToCleanup = new();
@@ -16,9 +19,8 @@ namespace TelnyxSharp.Tests
         protected readonly bool AllowCostIncurringTests;
         protected readonly bool AllowVolatileTests;
 
-        protected NumberManagementTestBase(ITestOutputHelper output)
+        protected NumberManagementTestBase()
         {
-            Output = output;
             TestAreaCode = Environment.GetEnvironmentVariable("TELNYX_TEST_AREA_CODE") ?? "212";
             TestCountry = Environment.GetEnvironmentVariable("TELNYX_TEST_COUNTRY") ?? "US";
             MaxTestNumbers = int.TryParse(Environment.GetEnvironmentVariable("TELNYX_TEST_MAX_NUMBERS"), out var max) ? max : 5;
@@ -36,12 +38,8 @@ namespace TelnyxSharp.Tests
             Output.WriteLine($"  COST TESTS ALLOWED: {AllowCostIncurringTests}");
         }
 
-        public virtual Task InitializeAsync()
-        {
-            return Task.CompletedTask;
-        }
-
-        public virtual async Task DisposeAsync()
+        [After(Test)]
+        public virtual async Task NumberManagementCleanupAsync()
         {
             if (!EnableCleanup || !IsIntegrationTest)
             {
@@ -104,7 +102,9 @@ namespace TelnyxSharp.Tests
         {
             if (!AllowCostIncurringTests)
             {
-                return; // Skip test - cost-incurring tests require TELNYX_ALLOW_COST_TESTS=true environment variable
+                // Cost-incurring tests require TELNYX_ALLOW_COST_TESTS=true.
+                throw new global::TUnit.Core.Exceptions.SkipTestException(
+                    "TELNYX_ALLOW_COST_TESTS not set - skipping cost-incurring test");
             }
         }
 
@@ -112,24 +112,29 @@ namespace TelnyxSharp.Tests
         {
             if (!AllowVolatileTests)
             {
-                return; // Skip test - volatile tests require TELNYX_ALLOW_VOLATILE_TESTS=true environment variable
+                // Volatile tests require TELNYX_ALLOW_VOLATILE_TESTS=true.
+                throw new global::TUnit.Core.Exceptions.SkipTestException(
+                    "TELNYX_ALLOW_VOLATILE_TESTS not set - skipping volatile test");
             }
         }
 
-        protected void AssertNotEmpty(string value, string fieldName)
+        protected static async Task AssertNotEmpty(string value, string fieldName)
         {
-            Assert.False(string.IsNullOrWhiteSpace(value), $"{fieldName} should not be empty");
+            await Assert.That(string.IsNullOrWhiteSpace(value)).IsFalse();
         }
 
-        protected void AssertValidPhoneNumber(string phoneNumber)
+        protected static async Task AssertValidPhoneNumber(string phoneNumber)
         {
-            Assert.NotNull(phoneNumber);
-            Assert.Matches(@"^\+?[1-9]\d{1,14}$", phoneNumber);
+            await Assert.That(phoneNumber).IsNotNull();
+            await Assert.That(Regex.IsMatch(phoneNumber, @"^\+?[1-9]\d{1,14}$")).IsTrue();
         }
+    }
 
-        public override void Dispose()
-        {
-            base.Dispose();
-        }
+    /// <summary>
+    /// Lightweight replacement for xUnit's ITestOutputHelper that writes to the console.
+    /// </summary>
+    public sealed class TestOutput
+    {
+        public void WriteLine(string message) => Console.WriteLine(message);
     }
 }

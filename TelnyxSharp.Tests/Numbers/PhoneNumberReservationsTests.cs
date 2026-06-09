@@ -1,20 +1,14 @@
 using TelnyxSharp.Numbers.Models.PhoneNumbers.Requests.PhoneNumberReservations;
 using TelnyxSharp.Numbers.Models.PhoneNumbers.Requests.PhoneNumberSearch;
-using Xunit;
-using Xunit.Abstractions;
+using TUnit.Assertions;
+using TUnit.Assertions.Extensions;
+using TUnit.Core;
 
 namespace TelnyxSharp.Tests.Numbers
 {
-    [Trait("Category", "Integration")]
-    [Trait("Module", "Numbers")]
-    [Trait("Cost", "PotentialCharges")]
-    public class PhoneNumberReservationsTests : NumberManagementTestBase
+    public sealed class PhoneNumberReservationsTests : NumberManagementTestBase
     {
-        public PhoneNumberReservationsTests(ITestOutputHelper output) : base(output)
-        {
-        }
-
-        [Fact]
+        [Test]
         public async Task CreateReservation_WithAvailableNumbers_CreatesReservation()
         {
             SkipIfNotIntegrationTest();
@@ -52,8 +46,8 @@ namespace TelnyxSharp.Tests.Numbers
 
             var response = await Client.PhoneNumbers.PhoneNumberReservations.Create(reservationRequest);
 
-            Assert.NotNull(response);
-            Assert.NotNull(response.Data);
+            await Assert.That(response).IsNotNull();
+            await Assert.That(response.Data).IsNotNull();
             
             if (response.Data != null && !string.IsNullOrEmpty(response.Data.Id))
             {
@@ -64,7 +58,7 @@ namespace TelnyxSharp.Tests.Numbers
             }
         }
 
-        [Fact]
+        [Test]
         public async Task ListReservations_ReturnsReservations()
         {
             SkipIfNotIntegrationTest();
@@ -77,8 +71,8 @@ namespace TelnyxSharp.Tests.Numbers
 
             var response = await Client.PhoneNumbers.PhoneNumberReservations.List(request);
 
-            Assert.NotNull(response);
-            Assert.NotNull(response.Data);
+            await Assert.That(response).IsNotNull();
+            await Assert.That(response.Data).IsNotNull();
 
             Output.WriteLine($"Reservations list retrieved");
 
@@ -86,7 +80,7 @@ namespace TelnyxSharp.Tests.Numbers
             // The actual structure needs to be determined at runtime
         }
 
-        [Fact]
+        [Test]
         public async Task GetReservation_WithValidId_ReturnsReservationDetails()
         {
             SkipIfNotIntegrationTest();
@@ -106,7 +100,7 @@ namespace TelnyxSharp.Tests.Numbers
             Output.WriteLine("Reservation details test would run here if reservations exist");
         }
 
-        [Fact]
+        [Test]
         public async Task ExtendReservation_ExtendsExpirationTime()
         {
             SkipIfNotIntegrationTest();
@@ -149,14 +143,14 @@ namespace TelnyxSharp.Tests.Numbers
 
                 var extendResponse = await Client.PhoneNumbers.PhoneNumberReservations.Extend(reservationId);
 
-                Assert.NotNull(extendResponse);
-                Assert.NotNull(extendResponse.Data);
+                await Assert.That(extendResponse).IsNotNull();
+                await Assert.That(extendResponse.Data).IsNotNull();
                 
                 Output.WriteLine($"Extended reservation successfully");
             }
         }
 
-        [Fact]
+        [Test]
         public async Task ReservationExpiration_TracksExpirationTime()
         {
             SkipIfNotIntegrationTest();
@@ -188,7 +182,7 @@ namespace TelnyxSharp.Tests.Numbers
 
             var response = await Client.PhoneNumbers.PhoneNumberReservations.Create(request);
 
-            Assert.NotNull(response?.Data);
+            await Assert.That(response?.Data).IsNotNull();
             
             if (response.Data != null && !string.IsNullOrEmpty(response.Data.Id))
             {

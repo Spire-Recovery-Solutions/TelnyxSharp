@@ -1,11 +1,10 @@
 ﻿using Polly.Retry;
-using RestSharp;
 using TelnyxSharp.Base;
 using TelnyxSharp.Numbers.Interfaces;
 
 namespace TelnyxSharp.Numbers.Operations.Numbers.Documents
 {
-    public class DocumentsOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
+    public class DocumentsOperations(HttpClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), IDocumentsOperations
     {
         private readonly Lazy<IDocumentOperations> _documentOperations = new(() =>

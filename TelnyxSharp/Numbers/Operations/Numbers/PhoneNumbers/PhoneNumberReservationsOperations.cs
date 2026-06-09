@@ -1,5 +1,4 @@
 ﻿using Polly.Retry;
-using RestSharp;
 using System.Text.Json;
 using TelnyxSharp.Base;
 using TelnyxSharp.Numbers.Interfaces;
@@ -8,13 +7,13 @@ using TelnyxSharp.Numbers.Models.PhoneNumbers.Responses.PhoneNumberReservartions
 
 namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
 {
-    public class PhoneNumberReservationsOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
+    public class PhoneNumberReservationsOperations(HttpClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), IPhoneNumberReservationsOperations
     {
         /// <inheritdoc />
         public async Task<ListNumberReservationsResponse> List(ListNumberReservationsRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("number_reservations")
+            var req = new TelnyxRequest("number_reservations")
                 .AddFilter("filter[status]", request.Status)
                 .AddFilter("filter[created_at][gt]", request.CreatedAfter)
                 .AddFilter("filter[created_at][lt]", request.CreatedBefore)
@@ -29,7 +28,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
         public async Task<CreateNumberReservationResponse> Create(
             CreateNumberReservationRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"number_reservations", Method.Post);
+            var req = new TelnyxRequest($"number_reservations", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<CreateNumberReservationResponse>(req, cancellationToken);
         }
@@ -37,14 +36,14 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.PhoneNumbers
         /// <inheritdoc />
         public async Task<GetNumberReservationResponse> Get(string numberReservationId, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"number_reservations/{numberReservationId}");
+            var req = new TelnyxRequest($"number_reservations/{numberReservationId}");
             return await ExecuteAsync<GetNumberReservationResponse>(req, cancellationToken);
         }
 
         /// <inheritdoc />
         public async Task<ExtendNumberReservationResponse> Extend(string numberReservationId, CancellationToken cancellationToken = default)
         {
-            var request = new RestRequest($"number_reservations/{numberReservationId}/actions/extend", Method.Post);
+            var request = new TelnyxRequest($"number_reservations/{numberReservationId}/actions/extend", TelnyxMethod.Post);
 
             return await ExecuteAsync<ExtendNumberReservationResponse>(request, cancellationToken);
         }

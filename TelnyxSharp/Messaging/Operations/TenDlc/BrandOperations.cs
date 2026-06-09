@@ -1,5 +1,4 @@
 ﻿using Polly.Retry;
-using RestSharp;
 using System.Text.Json;
 using TelnyxSharp.Base;
 using TelnyxSharp.Messaging.Interfaces;
@@ -8,14 +7,14 @@ using TelnyxSharp.Messaging.Models.Brands.Responses;
 
 namespace TelnyxSharp.Messaging.Operations.TenDlc
 {
-    public class BrandOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
+    public class BrandOperations(HttpClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), IBrandOperations
     {
         /// <inheritdoc />
         public async Task<ListBrandsResponse?> ListBrandsAsync(ListBrandsRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/brand")
+            var req = new TelnyxRequest($"10dlc/brand")
                 .AddFilter("recordsPerPage", request.PageSize)
                 .AddFilter("sort", request.Sort)
                 .AddFilter("displayName", request.DisplayName)
@@ -32,7 +31,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         public async Task<CreateBrandResponse?> Create(CreateBrandRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("10dlc/brand", Method.Post);
+            var req = new TelnyxRequest("10dlc/brand", TelnyxMethod.Post);
 
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
@@ -43,7 +42,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         public async Task<GetBrandResponse?> Retrieve(string brandId,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/brand/{brandId}");
+            var req = new TelnyxRequest($"10dlc/brand/{brandId}");
 
             return await ExecuteAsync<GetBrandResponse>(req, cancellationToken);
         }
@@ -52,7 +51,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         public async Task<UpdateBrandResponse?> Update(string brandId, UpdateBrandRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/brand/{brandId}", Method.Put);
+            var req = new TelnyxRequest($"10dlc/brand/{brandId}", TelnyxMethod.Put);
 
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
@@ -63,7 +62,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         public async Task<DeleteBrandResponse?> Delete(string brandId,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/brand/{brandId}", Method.Delete);
+            var req = new TelnyxRequest($"10dlc/brand/{brandId}", TelnyxMethod.Delete);
 
             return await ExecuteAsync<DeleteBrandResponse>(req, cancellationToken);
         }
@@ -72,7 +71,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         public async Task<ResendBrand2FAEmailResponse?> Resend2FAEmailAsync(string brandId,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/brand/{brandId}/2faEmail", Method.Post);
+            var req = new TelnyxRequest($"10dlc/brand/{brandId}/2faEmail", TelnyxMethod.Post);
 
             return await ExecuteAsync<ResendBrand2FAEmailResponse>(req, cancellationToken);
         }
@@ -81,7 +80,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         public async Task<RevetBrandResponse?> Revet(string brandId,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/brand/{brandId}/revet", Method.Put);
+            var req = new TelnyxRequest($"10dlc/brand/{brandId}/revet", TelnyxMethod.Put);
 
             return await ExecuteAsync<RevetBrandResponse>(req, cancellationToken);
         }
@@ -90,7 +89,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         public async Task<ListExternalVettingResponse?> ListExternalVetting(string brandId,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/brand/{brandId}/externalVetting");
+            var req = new TelnyxRequest($"10dlc/brand/{brandId}/externalVetting");
 
             return await ExecuteAsync<ListExternalVettingResponse>(req, cancellationToken);
         }
@@ -99,7 +98,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         public async Task<ImportExternalVettingResponse?> ImportExternalVettingRecord(string brandId,
             ImportExternalVettingRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/brand/{brandId}/externalVetting", Method.Put);
+            var req = new TelnyxRequest($"10dlc/brand/{brandId}/externalVetting", TelnyxMethod.Put);
 
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
@@ -110,7 +109,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         public async Task<OrderExternalVettingResponse?> OrderExternalVetting(string brandId,
             OrderExternalVettingRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/brand/{brandId}/externalVetting", Method.Post);
+            var req = new TelnyxRequest($"10dlc/brand/{brandId}/externalVetting", TelnyxMethod.Post);
 
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
@@ -121,7 +120,7 @@ namespace TelnyxSharp.Messaging.Operations.TenDlc
         public async Task<GetBrandFeedbackResponse?> GetFeedback(string brandId,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"10dlc/brand/feedback/{brandId}");
+            var req = new TelnyxRequest($"10dlc/brand/feedback/{brandId}");
 
             return await ExecuteAsync<GetBrandFeedbackResponse>(req, cancellationToken);
         }

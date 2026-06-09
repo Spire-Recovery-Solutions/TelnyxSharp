@@ -1,18 +1,13 @@
 using TelnyxSharp.Numbers.Models.PhoneNumbers.Requests.PhoneNumberConfigurations;
-using Xunit;
-using Xunit.Abstractions;
+using TUnit.Assertions;
+using TUnit.Assertions.Extensions;
+using TUnit.Core;
 
 namespace TelnyxSharp.Tests.Numbers
 {
-    [Trait("Category", "Integration")]
-    [Trait("Module", "Numbers")]
-    public class PhoneNumberConfigurationTests : NumberManagementTestBase
+    public sealed class PhoneNumberConfigurationTests : NumberManagementTestBase
     {
-        public PhoneNumberConfigurationTests(ITestOutputHelper output) : base(output)
-        {
-        }
-
-        [Fact]
+        [Test]
         public async Task ListPhoneNumbers_ReturnsOwnedNumbers()
         {
             SkipIfNotIntegrationTest();
@@ -24,8 +19,8 @@ namespace TelnyxSharp.Tests.Numbers
 
             var response = await Client.PhoneNumbers.PhoneNumberConfiguration.List(request);
 
-            Assert.NotNull(response);
-            Assert.NotNull(response.Data);
+            await Assert.That(response).IsNotNull();
+            await Assert.That(response.Data).IsNotNull();
 
             Output.WriteLine($"Found {response.Data?.Count ?? 0} owned phone numbers");
 
@@ -37,19 +32,19 @@ namespace TelnyxSharp.Tests.Numbers
                     Output.WriteLine($"  Status: {number.Status}");
                     Output.WriteLine($"  Connection: {number.ConnectionName}");
                     Output.WriteLine($"  Messaging Profile: {number.MessagingProfileName}");
-                    
+
                     // ID is a string UUID
-                    Assert.NotNull(number.Id);
-                    Assert.NotEmpty(number.Id);
+                    await Assert.That(number.Id).IsNotNull();
+                    await Assert.That(number.Id).IsNotEmpty();
                     if (!string.IsNullOrEmpty(number.PhoneNumber))
                     {
-                        AssertValidPhoneNumber(number.PhoneNumber);
+                        await AssertValidPhoneNumber(number.PhoneNumber);
                     }
                 }
             }
         }
 
-        [Fact]
+        [Test]
         public async Task GetPhoneNumber_WithValidId_ReturnsDetails()
         {
             SkipIfNotIntegrationTest();
@@ -73,9 +68,9 @@ namespace TelnyxSharp.Tests.Numbers
 
             var response = await Client.PhoneNumbers.PhoneNumberConfiguration.Get(phoneNumberId);
 
-            Assert.NotNull(response);
-            Assert.NotNull(response.Data);
-            Assert.Equal(phoneNumberId, response.Data.Id);
+            await Assert.That(response).IsNotNull();
+            await Assert.That(response.Data).IsNotNull();
+            await Assert.That(response.Data.Id).IsEqualTo(phoneNumberId);
             
             Output.WriteLine($"Retrieved phone number: {response.Data.PhoneNumber}");
             Output.WriteLine($"  Type: {response.Data.PhoneNumberType}");
@@ -83,7 +78,7 @@ namespace TelnyxSharp.Tests.Numbers
             Output.WriteLine($"  Created: {response.Data.CreatedAt}");
         }
 
-        [Fact]
+        [Test]
         public async Task UpdatePhoneNumberConfiguration_ModifiesSettings()
         {
             SkipIfNotIntegrationTest();
@@ -116,11 +111,11 @@ namespace TelnyxSharp.Tests.Numbers
 
             var response = await Client.PhoneNumbers.PhoneNumberConfiguration.Update(phoneNumberId, updateRequest);
 
-            Assert.NotNull(response);
-            Assert.NotNull(response.Data);
+            await Assert.That(response).IsNotNull();
+            await Assert.That(response.Data).IsNotNull();
             if (response.Data.Tags != null)
             {
-                Assert.Contains($"{TestPrefix}integration_test", response.Data.Tags);
+                await Assert.That(response.Data.Tags).Contains($"{TestPrefix}integration_test");
             }
 
             // Restore original tags
@@ -133,7 +128,7 @@ namespace TelnyxSharp.Tests.Numbers
             Output.WriteLine("Restored original configuration");
         }
 
-        [Fact]
+        [Test]
         public async Task ListPhoneNumbers_WithFilters_ReturnsFilteredResults()
         {
             SkipIfNotIntegrationTest();
@@ -146,18 +141,18 @@ namespace TelnyxSharp.Tests.Numbers
 
             var response = await Client.PhoneNumbers.PhoneNumberConfiguration.List(request);
 
-            Assert.NotNull(response);
-            Assert.NotNull(response.Data);
+            await Assert.That(response).IsNotNull();
+            await Assert.That(response.Data).IsNotNull();
 
             if (response.Data != null)
             {
                 foreach (var number in response.Data)
                 {
                     Output.WriteLine($"Number: {number.PhoneNumber}, Status: {number.Status}");
-                    
+
                     if (!string.IsNullOrEmpty(number.Status))
                     {
-                        Assert.Equal("active", number.Status.ToLower());
+                        await Assert.That(number.Status.ToLower()).IsEqualTo("active");
                     }
                 }
             }

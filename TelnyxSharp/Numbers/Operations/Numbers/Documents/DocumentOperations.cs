@@ -1,5 +1,4 @@
 ﻿using Polly.Retry;
-using RestSharp;
 using System.Text.Json;
 using TelnyxSharp.Base;
 using TelnyxSharp.Numbers.Interfaces;
@@ -9,14 +8,14 @@ using TelnyxSharp.Numbers.Models.PhoneNumbers.Responses.Documents;
 
 namespace TelnyxSharp.Numbers.Operations.Numbers.Documents
 {
-    public class DocumentOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
+    public class DocumentOperations(HttpClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), IDocumentOperations
     {
         /// <inheritdoc />
         public async Task<ListDocumentsResponse> List(ListDocumentsRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("documents")
+            var req = new TelnyxRequest("documents")
                 .AddFilter("filter[filename][contains]", request.FilenameContains)
                 .AddFilter("filter[customer_reference][eq]", request.CustomerReference)
                 .AddFilter("filter[customer_reference][in][]", request.CustomerReferences)
@@ -31,7 +30,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.Documents
         /// <inheritdoc />
         public async Task<UploadDocumentResponse> Upload(UploadDocumentRequest request, string fileName, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("documents", Method.Post)
+            var req = new TelnyxRequest("documents", TelnyxMethod.Post)
                 .AddFile("file", request.File, fileName)
                 .AddParameter("customer_reference", request.CustomerReference)
                 .AddHeader("Content-Type", "multipart/form-data");
@@ -42,14 +41,14 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.Documents
         /// <inheritdoc />
         public async Task<GetDocumentResponse> Get(string documentId, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"documents/{documentId}");
+            var req = new TelnyxRequest($"documents/{documentId}");
             return await ExecuteAsync<GetDocumentResponse>(req, cancellationToken);
         }
 
         /// <inheritdoc />
         public async Task<DeleteDocumentResponse> Delete(string documentId, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"documents/{documentId}", Method.Delete);
+            var req = new TelnyxRequest($"documents/{documentId}", TelnyxMethod.Delete);
             return await ExecuteAsync<DeleteDocumentResponse>(req, cancellationToken);
         }
 
@@ -57,7 +56,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.Documents
         public async Task<UpdateDocumentResponse> Update(string id, UpdateDocumentRequest request,
            CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"documents/{id}", Method.Patch);
+            var req = new TelnyxRequest($"documents/{id}", TelnyxMethod.Patch);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<UpdateDocumentResponse>(req, cancellationToken);
         }
@@ -65,7 +64,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.Documents
         /// <inheritdoc />
         public async Task<DownloadDocumentResponse> Download(string id, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"documents/{id}/dowload", Method.Patch);
+            var req = new TelnyxRequest($"documents/{id}/dowload", TelnyxMethod.Patch);
             return await ExecuteAsync<DownloadDocumentResponse>(req, cancellationToken);
         }
 
@@ -73,7 +72,7 @@ namespace TelnyxSharp.Numbers.Operations.Numbers.Documents
         public async Task<ListDocumentLinksResponse> ListDocumentLinks(ListDocumentLinksRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("document_links")
+            var req = new TelnyxRequest("document_links")
                 .AddPagination(request.PageSize)
                 .AddFilter("filter[document_id]", request.DocumentId)
                 .AddFilter("filter[linked_record_type]", request.LinkedRecordType)

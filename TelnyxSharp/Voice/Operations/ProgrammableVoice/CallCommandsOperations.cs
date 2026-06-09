@@ -1,5 +1,4 @@
 ﻿using Polly.Retry;
-using RestSharp;
 using System.Text.Json;
 using TelnyxSharp.Base;
 using TelnyxSharp.Voice.Interfaces;
@@ -8,13 +7,13 @@ using TelnyxSharp.Voice.Models.CallCommands.Responses;
 
 namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
 {
-    public class CallCommandsOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
+    public class CallCommandsOperations(HttpClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), ICallCommandsOperations
     {
         /// <inheritdoc />
         public async Task<DialResponse> Dial(DialRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("calls", Method.Post);
+            var req = new TelnyxRequest("calls", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<DialResponse>(req, cancellationToken);
         }
@@ -23,7 +22,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
         public async Task<CallCommandsResponse> AnswerCall(string callControlId, AnswerCallRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/answer", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/answer", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
         }
@@ -32,7 +31,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
         public async Task<CallCommandsResponse?> BridgeCall(string callControlId, BridgeCallRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/bridge", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/bridge", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
         }
@@ -41,7 +40,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
         public async Task<CallCommandsResponse?> EnqueueCall(string callControlId, EnqueueCallRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/enqueue", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/enqueue", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             var result = await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
             return result;
@@ -51,7 +50,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
         public async Task<CallCommandsResponse?> StartForking(string callControlId, ForkMediaRequest request,
              CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/fork_start", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/fork_start", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
         }
@@ -60,7 +59,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
         public async Task<CallCommandsResponse?> StopForking(string callControlId, ForkStopRequest request,
                 CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/fork_stop", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/fork_stop", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
         }
@@ -69,7 +68,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
         public async Task<CallCommandsResponse?> Gather(string callControlId, GatherRequest request,
                  CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/gather", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/gather", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
         }
@@ -78,7 +77,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
         public async Task<CallCommandsResponse?> GatherUsingAudio(string callControlId, GatherUsingAudioRequest request,
                 CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/gather_using_audio", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/gather_using_audio", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
@@ -88,7 +87,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
         public async Task<CallCommandsResponse?> GatherUsingSpeak(string callControlId, GatherUsingSpeakRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/gather_using_speak", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/gather_using_speak", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
         }
@@ -99,7 +98,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
             GatherUsingAiRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/gather_using_ai", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/gather_using_ai", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
         }
@@ -110,7 +109,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
             GatherStopRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/gather_stop", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/gather_stop", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
         }
@@ -121,7 +120,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
             AiAssistantStartRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/ai_assistant_start", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/ai_assistant_start", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
         }
@@ -132,7 +131,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
             AiAssistantStartRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/ai_assistant_stop", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/ai_assistant_stop", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
         }
@@ -143,7 +142,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
             UpdateClientStateRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/client_state_update", Method.Put);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/client_state_update", TelnyxMethod.Put);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
         }
@@ -154,7 +153,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
             SipReferRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/refer", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/refer", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
         }
@@ -165,7 +164,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
             SiprecStartRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/siprec_start", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/siprec_start", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
@@ -177,7 +176,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
             SiprecStopRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/siprec_stop", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/siprec_stop", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
@@ -189,7 +188,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
             StreamingStartRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/streaming_start", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/streaming_start", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
@@ -201,7 +200,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
                StreamingStopRequest request,
                CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/streaming_stop", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/streaming_stop", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
@@ -213,7 +212,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
             NoiseSuppressionStartRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/suppression_start", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/suppression_start", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
@@ -225,7 +224,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
                 NoiseSuppressionStopRequest request,
                 CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/suppression_stop", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/suppression_stop", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
@@ -237,7 +236,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
             TranscriptionStopRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/transcription_stop", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/transcription_stop", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
@@ -247,7 +246,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
         public async Task<CallCommandsResponse> HangupCall(string callControlId, HangupCallRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/hangup", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/hangup", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
         }
@@ -256,7 +255,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
         public async Task<CallCommandsResponse> RejectCall(string callControlId, RejectCallRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/reject", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/reject", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
         }
@@ -265,7 +264,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
         public async Task<CallCommandsResponse?> SpeakText(string callControlId, SpeakTextRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/speak", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/speak", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
@@ -275,7 +274,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
         public async Task<CallCommandsResponse?> PlaybackStart(string callControlId, PlaybackStartRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/playback_start", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/playback_start", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
@@ -285,7 +284,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
         public async Task<CallCommandsResponse?> StopAudioPlayback(string callControlId,
             StopAudioPlaybackRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/playback_stop", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/playback_stop", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
@@ -297,7 +296,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
             RecordingStartRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/record_start", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/record_start", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
         }
@@ -308,7 +307,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
             RecordPauseRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/record_pause", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/record_pause", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
@@ -320,7 +319,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
             RecordResumeRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/record_resume", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/record_resume", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
@@ -332,7 +331,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
             RecordStopRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/record_stop", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/record_stop", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
@@ -344,7 +343,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
             SendDtmfRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/send_dtmf", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/send_dtmf", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
@@ -356,7 +355,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
             SendSipInfoRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/send_sip_info", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/send_sip_info", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
@@ -366,7 +365,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
         public async Task<CallCommandsResponse?> RemoveCallFromQueue(string callControlId,
             RemoveCallFromQueueRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/leave_queue", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/leave_queue", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);
@@ -376,7 +375,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
         public async Task<CallCommandsResponse?> TransferCall(string callControlId, TransferCallRequest request,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"calls/{callControlId}/actions/transfer", Method.Post);
+            var req = new TelnyxRequest($"calls/{callControlId}/actions/transfer", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<CallCommandsResponse>(req, cancellationToken);

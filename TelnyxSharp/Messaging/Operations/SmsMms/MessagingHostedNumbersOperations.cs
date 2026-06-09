@@ -1,5 +1,4 @@
 ﻿using Polly.Retry;
-using RestSharp;
 using System.Text.Json;
 using TelnyxSharp.Base;
 using TelnyxSharp.Messaging.Interfaces;
@@ -8,14 +7,14 @@ using TelnyxSharp.Messaging.Models.MessagingHostedNumber.Responses;
 
 namespace TelnyxSharp.Messaging.Operations.SmsMms
 {
-    public class MessagingHostedNumbersOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
+    public class MessagingHostedNumbersOperations(HttpClient client, AsyncRetryPolicy rateLimitRetryPolicy)
     : BaseOperations(client, rateLimitRetryPolicy), IMessagingHostedNumbersOperations
     {
         /// <inheritdoc />
         public async Task<DeleteHostedNumberResponse?> Delete(string id,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"messaging_hosted_numbers/{id}", Method.Delete);
+            var req = new TelnyxRequest($"messaging_hosted_numbers/{id}", TelnyxMethod.Delete);
 
             return await ExecuteAsync<DeleteHostedNumberResponse>(req, cancellationToken);
         }
@@ -24,7 +23,7 @@ namespace TelnyxSharp.Messaging.Operations.SmsMms
         public async Task<GetHostedNumberOrderResponse?> List(
             GetHostedNumberOrderRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"messaging_hosted_number_orders").AddPagination(request.PageSize);
+            var req = new TelnyxRequest($"messaging_hosted_number_orders").AddPagination(request.PageSize);
 
             return await ExecuteAsync<GetHostedNumberOrderResponse>(req, cancellationToken);
         }
@@ -33,7 +32,7 @@ namespace TelnyxSharp.Messaging.Operations.SmsMms
         public async Task<CreateHostedNumberOrderResponse?> Create(
             CreateHostedNumberOrderRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest("messaging_hosted_number_orders", Method.Post);
+            var req = new TelnyxRequest("messaging_hosted_number_orders", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<CreateHostedNumberOrderResponse>(req, cancellationToken);
@@ -43,7 +42,7 @@ namespace TelnyxSharp.Messaging.Operations.SmsMms
         public async Task<RetrieveHostedNumberOrderResponse?> Retrieve(string id,
             CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"messaging_hosted_number_orders/{id}");
+            var req = new TelnyxRequest($"messaging_hosted_number_orders/{id}");
 
             return await ExecuteAsync<RetrieveHostedNumberOrderResponse>(req, cancellationToken);
         }
@@ -52,7 +51,7 @@ namespace TelnyxSharp.Messaging.Operations.SmsMms
         public async Task<UploadFileHostedNumberOrderResponse?> UploadFileRequired(string id,
             UploadFileHostedNumberOrderRequest request, CancellationToken cancellationToken = default)
         {
-            var req = new RestRequest($"messaging_hosted_number_orders/{id}/actions/file_upload", Method.Post);
+            var req = new TelnyxRequest($"messaging_hosted_number_orders/{id}/actions/file_upload", TelnyxMethod.Post);
             req.AddBody(JsonSerializer.Serialize(request, TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<UploadFileHostedNumberOrderResponse>(req, cancellationToken);

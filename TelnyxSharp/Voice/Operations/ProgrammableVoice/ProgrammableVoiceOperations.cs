@@ -1,5 +1,4 @@
 ﻿using Polly.Retry;
-using RestSharp;
 using TelnyxSharp.Base;
 using TelnyxSharp.Voice.Interfaces;
 
@@ -9,7 +8,7 @@ namespace TelnyxSharp.Voice.Operations.ProgrammableVoice
     /// Implementation of programmable voice operations.
     /// Provides access to call commands and manages resource disposal.
     /// </summary>
-    public class ProgrammableVoiceOperations(IRestClient client, AsyncRetryPolicy rateLimitRetryPolicy)
+    public class ProgrammableVoiceOperations(HttpClient client, AsyncRetryPolicy rateLimitRetryPolicy)
         : BaseOperations(client, rateLimitRetryPolicy), IProgrammableVoiceOperations
     {
         /// <summary>
