@@ -26,6 +26,9 @@ namespace TelnyxSharp.Identity.Operations.NumberLookup
                     case NumberLookupType.Carrier:
                         req.AddFilter("type", "carrier");
                         break;
+                    case NumberLookupType.Portability:
+                        req.AddFilter("type", "portability");
+                        break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
