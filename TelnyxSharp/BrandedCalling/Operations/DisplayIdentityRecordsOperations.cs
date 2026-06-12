@@ -113,6 +113,9 @@ namespace TelnyxSharp.BrandedCalling.Operations
                 using var requestMessage = req.BuildHttpRequestMessage();
                 using var response = await Client.SendAsync(requestMessage, cancellationToken);
 
+                // Always drain the body (mirrors ExecuteAsync) so the connection can be reused.
+                var content = await response.Content.ReadAsByteArrayAsync(cancellationToken);
+
                 if (response.StatusCode == HttpStatusCode.TooManyRequests)
                 {
                     string? resetSeconds = null;
@@ -131,7 +134,7 @@ namespace TelnyxSharp.BrandedCalling.Operations
                 };
 
                 if (response.IsSuccessStatusCode)
-                    result.Content = await response.Content.ReadAsByteArrayAsync(cancellationToken);
+                    result.Content = content;
 
                 return result;
             });

@@ -29,10 +29,13 @@ namespace TelnyxSharp.BrandedCalling.Operations
         public async Task<ValidateCallReasonsResponse> ValidateCallReasons(ValidateCallReasonsRequest request,
             CancellationToken cancellationToken = default)
         {
+            if (request.CallReasons == null || request.CallReasons.Count == 0)
+                throw new ArgumentException("CallReasons must contain between 1 and 10 entries.", nameof(request));
+
             var req = new TelnyxRequest("call_reasons/validate", TelnyxMethod.Post);
 
             // The endpoint expects a bare JSON array of strings, not an object.
-            req.AddBody(JsonSerializer.Serialize(request.CallReasons ?? new List<string>(),
+            req.AddBody(JsonSerializer.Serialize(request.CallReasons,
                 TelnyxJsonSerializerContext.Default.Options));
 
             return await ExecuteAsync<ValidateCallReasonsResponse>(req, cancellationToken);
