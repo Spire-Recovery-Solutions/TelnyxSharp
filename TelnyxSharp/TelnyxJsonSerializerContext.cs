@@ -1,5 +1,29 @@
 ﻿using System.Text.Json.Serialization;
 using TelnyxSharp.Base;
+using TelnyxSharp.BrandedCalling.Models;
+using TelnyxSharp.BrandedCalling.Models.Comments;
+using TelnyxSharp.BrandedCalling.Models.Comments.Requests;
+using TelnyxSharp.BrandedCalling.Models.Comments.Responses;
+using TelnyxSharp.BrandedCalling.Models.DisplayIdentityRecords;
+using TelnyxSharp.BrandedCalling.Models.DisplayIdentityRecords.Requests;
+using TelnyxSharp.BrandedCalling.Models.DisplayIdentityRecords.Responses;
+using TelnyxSharp.BrandedCalling.Models.Enterprises;
+using TelnyxSharp.BrandedCalling.Models.Enterprises.Requests;
+using TelnyxSharp.BrandedCalling.Models.Enterprises.Responses;
+using TelnyxSharp.BrandedCalling.Models.InfringementClaims;
+using TelnyxSharp.BrandedCalling.Models.InfringementClaims.Requests;
+using TelnyxSharp.BrandedCalling.Models.InfringementClaims.Responses;
+using TelnyxSharp.BrandedCalling.Models.PhoneNumberBatches;
+using TelnyxSharp.BrandedCalling.Models.PhoneNumberBatches.Requests;
+using TelnyxSharp.BrandedCalling.Models.PhoneNumberBatches.Responses;
+using TelnyxSharp.BrandedCalling.Models.PhoneNumbers;
+using TelnyxSharp.BrandedCalling.Models.PhoneNumbers.Requests;
+using TelnyxSharp.BrandedCalling.Models.PhoneNumbers.Responses;
+using TelnyxSharp.BrandedCalling.Models.ReferenceData;
+using TelnyxSharp.BrandedCalling.Models.ReferenceData.Requests;
+using TelnyxSharp.BrandedCalling.Models.ReferenceData.Responses;
+using TelnyxSharp.BrandedCalling.Models.TermsOfService;
+using TelnyxSharp.BrandedCalling.Models.TermsOfService.Responses;
 using TelnyxSharp.DetailRecords.Models.Requests;
 using TelnyxSharp.DetailRecords.Models.Responses;
 using TelnyxSharp.Enums;
@@ -1072,7 +1096,102 @@ namespace TelnyxSharp
 
     [JsonSerializable(typeof(RepublishPortingEventsResponse))]
 
+    // Branded Calling
+    [JsonSerializable(typeof(DirDocument))]
+    [JsonSerializable(typeof(RejectionReason))]
+
+    [JsonSerializable(typeof(Enterprise))]
+    [JsonSerializable(typeof(OrganizationContact))]
+    [JsonSerializable(typeof(BillingContact))]
+    [JsonSerializable(typeof(PhysicalAddress))]
+
+    [JsonSerializable(typeof(ListEnterprisesRequest))]
+    [JsonSerializable(typeof(ListEnterprisesResponse))]
+
+    [JsonSerializable(typeof(CreateEnterpriseRequest))]
+    [JsonSerializable(typeof(UpdateEnterpriseRequest))]
+    [JsonSerializable(typeof(EnterpriseResponse))]
+    [JsonSerializable(typeof(DeleteEnterpriseResponse))]
+
+    [JsonSerializable(typeof(Dir))]
+    [JsonSerializable(typeof(CallReason))]
+
+    [JsonSerializable(typeof(ListDirsRequest))]
+    [JsonSerializable(typeof(ListDirsResponse))]
+
+    [JsonSerializable(typeof(CreateDirRequest))]
+    [JsonSerializable(typeof(UpdateDirRequest))]
+    [JsonSerializable(typeof(DirResponse))]
+    [JsonSerializable(typeof(DeleteDirResponse))]
+
+    [JsonSerializable(typeof(RenderDirLoaRequest))]
+    [JsonSerializable(typeof(LoaAgent))]
+    [JsonSerializable(typeof(LoaSignature))]
+    [JsonSerializable(typeof(RenderDirLoaResponse))]
+
+    [JsonSerializable(typeof(DirPhoneNumber))]
+
+    [JsonSerializable(typeof(ListDirPhoneNumbersRequest))]
+    [JsonSerializable(typeof(ListDirPhoneNumbersResponse))]
+
+    [JsonSerializable(typeof(AddDirPhoneNumbersRequest))]
+    [JsonSerializable(typeof(AddDirPhoneNumbersResponse))]
+
+    [JsonSerializable(typeof(DeleteDirPhoneNumbersRequest))]
+    [JsonSerializable(typeof(DeleteDirPhoneNumbersResponse))]
+    [JsonSerializable(typeof(DeleteDirPhoneNumbersMeta))]
+    [JsonSerializable(typeof(DirPhoneNumberItemError))]
+
+    [JsonSerializable(typeof(DirPhoneNumberBatch))]
+
+    [JsonSerializable(typeof(ListDirPhoneNumberBatchesRequest))]
+    [JsonSerializable(typeof(ListDirPhoneNumberBatchesResponse))]
+    [JsonSerializable(typeof(DirPhoneNumberBatchResponse))]
+
+    [JsonSerializable(typeof(DirComment))]
+
+    [JsonSerializable(typeof(ListDirCommentsRequest))]
+    [JsonSerializable(typeof(ListDirCommentsResponse))]
+
+    [JsonSerializable(typeof(CreateDirCommentRequest))]
+    [JsonSerializable(typeof(DirCommentResponse))]
+
+    [JsonSerializable(typeof(InfringementClaim))]
+    [JsonSerializable(typeof(InfringementClaimDirRef))]
+    [JsonSerializable(typeof(ContestSubmission))]
+
+    [JsonSerializable(typeof(ListInfringementClaimsRequest))]
+    [JsonSerializable(typeof(ListInfringementClaimsResponse))]
+
+    [JsonSerializable(typeof(UpdateDirInfringementRequest))]
+    [JsonSerializable(typeof(ContestInfringementClaimRequest))]
+    [JsonSerializable(typeof(InfringementClaimResponse))]
+
+    [JsonSerializable(typeof(CallReasonReference))]
+    [JsonSerializable(typeof(DirDocumentTypeReference))]
+
+    [JsonSerializable(typeof(ListCallReasonsRequest))]
+    [JsonSerializable(typeof(ListCallReasonsResponse))]
+
+    [JsonSerializable(typeof(ValidateCallReasonsRequest))]
+    [JsonSerializable(typeof(ValidateCallReasonsResponse))]
+    [JsonSerializable(typeof(ValidateCallReasonsData))]
+
+    [JsonSerializable(typeof(ListDirDocumentTypesResponse))]
+
+    [JsonSerializable(typeof(TosAgreement))]
+    [JsonSerializable(typeof(TosAgreementResponse))]
+
+    [JsonSerializable(typeof(List<string>))]
+
     //Enums
+    [JsonSerializable(typeof(DirStatus))]
+    [JsonSerializable(typeof(DirPhoneNumberStatus))]
+    [JsonSerializable(typeof(DirCommentType))]
+    [JsonSerializable(typeof(InfringementClaimStatus))]
+    [JsonSerializable(typeof(InfringementClaimType))]
+    [JsonSerializable(typeof(InfringementClaimResolution))]
+    [JsonSerializable(typeof(TosProductType))]
     [JsonSerializable(typeof(PhoneNumberFeature))]
     [JsonSerializable(typeof(PortingOrderPermission))]
     [JsonSerializable(typeof(PortingOrderStatus))]
