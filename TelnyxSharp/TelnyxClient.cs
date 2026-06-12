@@ -2,6 +2,8 @@
 using Polly.RateLimit;
 using System.Net.Http.Headers;
 using TelnyxSharp.Base;
+using TelnyxSharp.BrandedCalling.Interfaces;
+using TelnyxSharp.BrandedCalling.Operations;
 using TelnyxSharp.DetailRecords.Interfaces;
 using TelnyxSharp.DetailRecords.Operations;
 using TelnyxSharp.Identity.Interfaces;
@@ -48,6 +50,7 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     private readonly Lazy<IDocumentsOperations> _documents;
     private readonly Lazy<IPortingOrderOperations> _portingOrder;
     private readonly Lazy<IDetailRecordsOperations> _detailRecordsSearch;
+    private readonly Lazy<IBrandedCallingOperations> _brandedCalling;
     private readonly Lazy<IV1ApiOperations> _v1Operations;
 
     // Public properties
@@ -65,6 +68,7 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
     public IDocumentsOperations Documents => _documents.Value;
     public IPortingOrderOperations PortingOrder => _portingOrder.Value;
     public IDetailRecordsOperations DetailRecordsSearch => _detailRecordsSearch.Value;
+    public IBrandedCallingOperations BrandedCalling => _brandedCalling.Value;
     public IV1ApiOperations V1 => _v1Operations?.Value;
 
     public TelnyxClient(string? apiKey = null, string? v1ApiUser = null, string? v1ApiToken = null, bool debugMode = false, string? debugLogPath = null)
@@ -179,6 +183,10 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
             new DetailRecordsOperations(Client, RateLimitRetryPolicy),
             LazyThreadSafetyMode.ExecutionAndPublication);
 
+        _brandedCalling = new Lazy<IBrandedCallingOperations>(() =>
+            new BrandedCallingOperations(Client, RateLimitRetryPolicy),
+            LazyThreadSafetyMode.ExecutionAndPublication);
+
         _v1Operations = new Lazy<IV1ApiOperations>(() =>
             {
                 if (_v1Client == null)
@@ -265,6 +273,10 @@ public class TelnyxClient : BaseOperations, ITelnyxClient
         if (_detailRecordsSearch.IsValueCreated && _detailRecordsSearch.Value is IDisposable disposableDetailRecordsSearch)
         {
             disposableDetailRecordsSearch.Dispose();
+        }
+        if (_brandedCalling.IsValueCreated && _brandedCalling.Value is IDisposable disposableBrandedCalling)
+        {
+            disposableBrandedCalling.Dispose();
         }
         if (_v1Operations.IsValueCreated && _v1Operations.Value is IDisposable disposableV1Operations)
         {
