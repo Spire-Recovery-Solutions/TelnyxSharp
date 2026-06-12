@@ -111,7 +111,7 @@ namespace TelnyxSharp.BrandedCalling.Operations
                 req.AddOrUpdateHeader("X-Correlation-ID", Guid.NewGuid());
 
                 using var requestMessage = req.BuildHttpRequestMessage();
-                var response = await Client.SendAsync(requestMessage, cancellationToken);
+                using var response = await Client.SendAsync(requestMessage, cancellationToken);
 
                 if (response.StatusCode == HttpStatusCode.TooManyRequests)
                 {
