@@ -76,7 +76,40 @@ namespace TelnyxSharp.Base
                 }
 
                 // If the response is successful and contains content, attempt to deserialize it.
-                if (!response.IsSuccessStatusCode || string.IsNullOrEmpty(content)) return result;
+                if (!response.IsSuccessStatusCode || string.IsNullOrEmpty(content))
+                {
+                    // Telnyx returns a JSON "errors" array on failure responses (e.g. 422
+                    // validation errors). Deserialize it the same way the success path does, so
+                    // callers see the underlying error(s) via Errors[] instead of only the
+                    // synthetic "telnyx-command-failed" default. Reassigning `result` (rather than
+                    // copying just the Errors property) matters: several response types redeclare
+                    // Errors/Data/Meta to hide the ITelnyxResponse-inherited members, so a copy
+                    // through the generic T reference would write the wrong (base) property.
+                    if (!string.IsNullOrEmpty(content))
+                    {
+                        try
+                        {
+                            var errorResult = JsonSerializer.Deserialize<T>(content,
+                                TelnyxJsonSerializerContext.Default.Options);
+
+                            if (errorResult != null)
+                            {
+                                result = errorResult;
+                                result.StatusCode = response.StatusCode;
+                                result.IsSuccessful = response.IsSuccessStatusCode;
+                                result.ErrorMessage = null;
+                            }
+                        }
+                        catch (JsonException)
+                        {
+                            // Non-2xx body wasn't the expected JSON error envelope (e.g. an
+                            // upstream gateway's HTML/plain-text error page). Keep the
+                            // synthetic result already populated above.
+                        }
+                    }
+
+                    return result;
+                }
 
                 var deserializedResult =
                     JsonSerializer.Deserialize<T>(content, TelnyxJsonSerializerContext.Default.Options);

@@ -261,6 +261,49 @@ namespace TelnyxSharp.Tests
         }
 
         [Test]
+        public async Task ExecuteAsync_NonSuccessWithErrorBody_PopulatesErrors()
+        {
+            const string body =
+                "{\"errors\":[{\"code\":10015,\"title\":\"Invalid parameter\"," +
+                "\"detail\":\"amd.total_analysis_time_millis must be between 500 and 30000\"," +
+                "\"source\":{\"pointer\":\"/amd/total_analysis_time_millis\"}}]}";
+            var handler = new RecordingHandler(() => Json(HttpStatusCode.UnprocessableEntity, body));
+            using var client = ClientWith(handler);
+            var ops = new TestOperations(client, NoRetryPolicy());
+
+            var request = new TelnyxRequest("messaging_url_domains").AddPagination(2);
+
+            var result = await ops.Run<ListMessagingUrlDomainsResponse>(request);
+
+            await Assert.That(result.IsSuccessful).IsFalse();
+            await Assert.That(result.StatusCode).IsEqualTo(HttpStatusCode.UnprocessableEntity);
+            await Assert.That(result.Errors).IsNotNull();
+            await Assert.That(result.Errors!.Single().Title).IsEqualTo("Invalid parameter");
+            await Assert.That(result.Errors!.Single().Detail)
+                .IsEqualTo("amd.total_analysis_time_millis must be between 500 and 30000");
+        }
+
+        [Test]
+        public async Task ExecuteAsync_NonSuccessWithNonJsonBody_LeavesErrorsNullAndDoesNotThrow()
+        {
+            var handler = new RecordingHandler(() =>
+                new HttpResponseMessage(HttpStatusCode.BadGateway)
+                {
+                    Content = new StringContent("<html>502 Bad Gateway</html>", Encoding.UTF8, "text/html")
+                });
+            using var client = ClientWith(handler);
+            var ops = new TestOperations(client, NoRetryPolicy());
+
+            var request = new TelnyxRequest("messaging_url_domains").AddPagination(2);
+
+            var result = await ops.Run<ListMessagingUrlDomainsResponse>(request);
+
+            await Assert.That(result.IsSuccessful).IsFalse();
+            await Assert.That(result.StatusCode).IsEqualTo(HttpStatusCode.BadGateway);
+            await Assert.That(result.Errors).IsNull();
+        }
+
+        [Test]
         public async Task ExecuteAsync_429ThenSuccess_RetriesAndSucceeds()
         {
             // First send is throttled (429), retry succeeds. ZeroDelayRetryPolicy avoids real waits.
