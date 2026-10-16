@@ -1,4 +1,4 @@
-using System.Net;
+﻿using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 using Polly;
@@ -281,6 +281,28 @@ namespace TelnyxSharp.Tests
             await Assert.That(result.Errors!.Single().Title).IsEqualTo("Invalid parameter");
             await Assert.That(result.Errors!.Single().Detail)
                 .IsEqualTo("amd.total_analysis_time_millis must be between 500 and 30000");
+        }
+
+        [Test]
+        public async Task ExecuteAsync_NonSuccessWithStringErrorCode_PopulatesErrors()
+        {
+            // Telnyx sends error codes as JSON strings; an int-only Code discarded the whole body.
+            const string body =
+                "{\"errors\":[{\"code\":\"10005\",\"title\":\"Resource not found\"," +
+                "\"detail\":\"The requested resource or URL could not be found.\"}]}";
+            var handler = new RecordingHandler(() => Json(HttpStatusCode.NotFound, body));
+            using var client = ClientWith(handler);
+            var ops = new TestOperations(client, NoRetryPolicy());
+
+            var request = new TelnyxRequest("messaging_url_domains").AddPagination(2);
+
+            var result = await ops.Run<ListMessagingUrlDomainsResponse>(request);
+
+            await Assert.That(result.IsSuccessful).IsFalse();
+            await Assert.That(result.StatusCode).IsEqualTo(HttpStatusCode.NotFound);
+            await Assert.That(result.Errors).IsNotNull();
+            await Assert.That(result.Errors!.Single().Code).IsEqualTo(10005);
+            await Assert.That(result.Errors!.Single().Title).IsEqualTo("Resource not found");
         }
 
         [Test]

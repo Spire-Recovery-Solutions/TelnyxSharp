@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using TelnyxSharp.Converters;
 
 namespace TelnyxSharp.Models
 {
@@ -11,6 +12,7 @@ namespace TelnyxSharp.Models
         /// The error code.
         /// </summary>
         [JsonPropertyName("code")]
+        [JsonConverter(typeof(StringOrNumberIntConverter))]
         public int Code { get; set; }
 
         /// <summary>
