@@ -9,6 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
 
     - name: Checkout code
@@ -46,6 +49,6 @@ jobs:
       run: |
         dotnet pack TelnyxSharp/TelnyxSharp.csproj --configuration Release --no-restore --output nupkg /p:Version=1.0.0.${{ github.run_number }}${{ env.version_postfix }}
 
-    - name: Push to NuGet
+    - name: Push to GitHub Packages
       run: |
-        dotnet nuget push nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+        dotnet nuget push nupkg/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/Spire-Recovery-Solutions/index.json --skip-duplicate
